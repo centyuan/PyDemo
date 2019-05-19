@@ -14,8 +14,6 @@ def main(page):
     for item in items:
         write_itemToFile(item)
 
-
-
 def request_dandan(url):
     try: #检查try语句中的错误，从而让except捕获异常 #如果你不想在异常发生时结束你的程序，只需在try里捕获它。
         response=requests.get(url)
