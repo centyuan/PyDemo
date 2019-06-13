@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
-
+#args可变位置参数
+#kwargs可变关键字参数
 def fun_var_args(farg, *args):
     print("arg:", farg)
     print(args)
@@ -9,9 +10,8 @@ def fun_var_args(farg, *args):
         print( "another arg:", value)
         print(type(value))
 
-
-
 fun_var_args(1, "two", 3)
+
 
 def fun_var_kwargs(farg, **kwargs):
     print("arg:", farg)
@@ -22,5 +22,11 @@ def fun_var_kwargs(farg, **kwargs):
     for key in kwargs:
         print( "another keyword arg: %s: %s" % (key, kwargs[key]))
         print(key)
+def au_login(hot=False,statusStorageDir='itchat.pkl',
+            enableCmdQR=False):
+    print("hot:",hot)
+    print("statusStorageDir:",statusStorageDir)
+    print("enableCmdQR:",enableCmdQR)
 
 fun_var_kwargs(farg=1, myarg2="two", myarg3=3)  # myarg2和myarg3被视为key， 感觉**kwargs可以当作容纳多个key和value的dictionary
+au_login(True)#使用关键字参数，可以不传入参数名，按顺序一样

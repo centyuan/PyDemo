@@ -12,3 +12,12 @@ new = [x ** 2 for x in old if not x % 2] #%取摸   not x%2是否为空
 print(new)
 print('abcd'*2)
 print([item for item in old])
+
+curentValues=[1,2,3,4,5,6]
+resultValues=[7,8,9]
+isEvent=True
+resultValues.append(curentValues[::-1]) if isEvent else resultValues.append(curentValues)
+print(resultValues)
+a=[]
+a.append(curentValues)
+print(a)

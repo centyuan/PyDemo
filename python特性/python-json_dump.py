@@ -3,7 +3,9 @@
 # author centyuan
 # @time 19-5-12 下午3:53
 #dumps是将dict转化成str格式，loads是将str转化成dict格式。
-#json.dumps()函数是将一个Python数据类型列表进行json格式的编码
+#json在python里面看成字符串
+#json.loads()将已编码的 JSON 字符串解码为 Python 对象
+#json.dumps()函数是将一个Python 对象编码成 JSON 字符串
 import  json
 a = {'name': 'wang', 'age': 29}
 b = json.dumps(a)
