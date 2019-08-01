@@ -2,7 +2,7 @@
 
 val1=1
 val2=3
-intval=2
+intval=1
 
 print("a if b>1 else c:" ,val1 if intval >1 else val2)
 print("a and b or c:",intval>1 and val1 or val2)

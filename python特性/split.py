@@ -10,7 +10,7 @@
 # num -- 分割次数。默认为 -1, 即分隔所有
 #返回值
 #返回分割后的字符串列表。
-str = "Line1-abcdef \nLine2-abc \nLine4-abcd";
+str = "Line1-abcdef \nLine2-abc \nLin e4-abcd";
 print(str.split( ))       # 以空格为分隔符，包含 \n
 print(str.split(' ', 1 )) # 以空格为分隔符，分隔成两个
 a=str.split()

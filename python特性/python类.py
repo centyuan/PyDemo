@@ -19,6 +19,7 @@ class Human:
         """
 
     def pr(self):
+        print('父类pr方法')
         pass
 class Student(Human):
 

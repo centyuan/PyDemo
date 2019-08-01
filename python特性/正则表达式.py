@@ -21,6 +21,8 @@ d="""centyuan
    """
 s="ip='230.192.168.78',version='1.0.0',ip='230.192.168.20',version='1.0.0'，ip='230.192.168.100',version='1.0.0'"
 result=re.findall("ip='(?P<ip>\d+.\d+.\d+.\d+)",s) ##正则表达式分组(?P<name>)分组命名
+result1=re.findall("(?P<ip>\d+.\d+.\d+.\d+)",s)
+print("result1",result1)
 print(result[1])
 print(re.search("ip='(?P<ip>\d+.\d+.\d+.\d+)",s).group('ip'))
 a1=re.findall('Python',a)

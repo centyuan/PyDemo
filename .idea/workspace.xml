@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/python小案例/python test.py" line="30" mnemonic="9" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="f780cb6f-d323-4767-996b-a97c31116233" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/python小案例/func_test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python小案例/python 12306查询/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python小案例/python 12306查询/searchTrain.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python小案例/python 12306查询/station.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python小案例/python ajax操作.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python小案例/python itchat.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python小案例/python itchat_拼接头像.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python小案例/python lovePrinter.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python小案例/python smtp.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python小案例/python taobao下单.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python小案例/python test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python小案例/python tuling_itchat.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python小案例/python 美团商家信息爬取.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python小案例/python代理池.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python小案例/多进程实现豆瓣爬取.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python特性/os.path.dirname.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python特性/python .format %.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python特性/python .join.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python特性/sys.path.insert和sys.path.append.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/剑指offer/把二叉树打印成多行.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/py_test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/py_test.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python小案例/pycharm调试代码实例.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python小案例/python itchat捕捉图片.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python小案例/python md5私钥加密.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python小案例/python url编码.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python小案例/python 图片转字符画.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python小案例/python 生成二维码.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python特性/one_test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python特性/python emoji.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python特性/python socket client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python特性/python socket server.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python特性/python sys.argv.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python特性/python 三种格式化输出.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python特性/python 多线程之锁.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python特性/python 多进程.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python特性/replace.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python特性/strip.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python特性/upper or lower.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python特性/url编码和解码.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python特性/删除list里面重复的元素.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python特性/字典合并.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python小案例/python xlwt.py" beforeDir="false" afterPath="$PROJECT_DIR$/python小案例/python xlwt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python特性/[::-1]翻转or[:-1].py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/[::-1]翻转or[:-1].py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python特性/a and b or c.py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/a and b or c.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python特性/args_kwargs.py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/args_kwargs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python特性/dict排序.py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/dict排序.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python特性/item for item in list.py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/item for item in list.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python特性/python-json_dump.py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/python-json_dump.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python特性/python多进程实现.py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/python多进程实现.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/python特性/python多线程池之队列实现.py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/python多线程池之队列实现.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/python特性/python多进程实现.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/python特性/python类.py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/python类.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/python特性/python静态方法和类方法.py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/python静态方法和类方法.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python特性/range和xrange.py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/range和xrange.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/python特性/sorted.py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/sorted.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python特性/split.py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/split.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/剑指offer/按字形顺序打印二叉树.py" beforeDir="false" afterPath="$PROJECT_DIR$/剑指offer/按之字形顺序打印二叉树.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/python特性/time.py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/time.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/python特性/字典遍历.py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/字典遍历.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/python特性/正则表达式.py" beforeDir="false" afterPath="$PROJECT_DIR$/python特性/正则表达式.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,18 +48,22 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/py_test$one_test.coverage" NAME="one_test Coverage Results" MODIFIED="1563794479147" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
     <SUITE FILE_PATH="coverage/py_test$json_dump.coverage" NAME="json_dump Coverage Results" MODIFIED="1553247097749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/py_test$python_.coverage" NAME="python 美团商家信息爬取 Coverage Results" MODIFIED="1559611794812" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
+    <SUITE FILE_PATH="coverage/py_test$python_socket_client.coverage" NAME="python socket client Coverage Results" MODIFIED="1563707295194" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
+    <SUITE FILE_PATH="coverage/py_test$python_.coverage" NAME="python 生成二维码 Coverage Results" MODIFIED="1563771578370" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
     <SUITE FILE_PATH="coverage/py_test$urllib_parse_quote.coverage" NAME="urllib_parse_quote Coverage Results" MODIFIED="1534415629577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/py_test$fuleiclass.coverage" NAME="fuleiclass Coverage Results" MODIFIED="1554886666582" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/py_test$args_kwargs.coverage" NAME="args_kwargs Coverage Results" MODIFIED="1560045169550" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
-    <SUITE FILE_PATH="coverage/py_test$python.coverage" NAME="python代理池 Coverage Results" MODIFIED="1559565865787" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
+    <SUITE FILE_PATH="coverage/py_test$python_emoji.coverage" NAME="python emoji Coverage Results" MODIFIED="1562232897803" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
+    <SUITE FILE_PATH="coverage/py_test$args_kwargs.coverage" NAME="args_kwargs Coverage Results" MODIFIED="1564402833320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
+    <SUITE FILE_PATH="coverage/py_test$python_socket_server.coverage" NAME="python socket server Coverage Results" MODIFIED="1562211024599" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
+    <SUITE FILE_PATH="coverage/py_test$python.coverage" NAME="python类 Coverage Results" MODIFIED="1562833865551" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
     <SUITE FILE_PATH="coverage/py_test$python_xlwt.coverage" NAME="python xlwt Coverage Results" MODIFIED="1559564369071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
-    <SUITE FILE_PATH="coverage/py_test$python_itchat.coverage" NAME="python itchat Coverage Results" MODIFIED="1560066416204" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
+    <SUITE FILE_PATH="coverage/py_test$python_itchat.coverage" NAME="python itchat捕捉图片 Coverage Results" MODIFIED="1560499969038" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
     <SUITE FILE_PATH="coverage/py_test$python_json_dump.coverage" NAME="python-json_dump Coverage Results" MODIFIED="1559634278937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
     <SUITE FILE_PATH="coverage/py_test$new.coverage" NAME="new Coverage Results" MODIFIED="1534402054415" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/py_test$____1_or___1_.coverage" NAME="[::-1]翻转or[:-1] Coverage Results" MODIFIED="1558686097263" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
-    <SUITE FILE_PATH="coverage/py_test$split.coverage" NAME="split Coverage Results" MODIFIED="1560221656926" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
+    <SUITE FILE_PATH="coverage/py_test$split.coverage" NAME="split Coverage Results" MODIFIED="1562226060603" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
     <SUITE FILE_PATH="coverage/py_test$repitle.coverage" NAME="repitle Coverage Results" MODIFIED="1533030223618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/py_test$ziclass.coverage" NAME="ziclass Coverage Results" MODIFIED="1532782656428" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/py_test$item_for_item_in_list.coverage" NAME="item for item in list Coverage Results" MODIFIED="1558599321802" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
@@ -66,23 +75,26 @@
     <SUITE FILE_PATH="coverage/py_test$python__format__.coverage" NAME="python .format % Coverage Results" MODIFIED="1559620418682" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
     <SUITE FILE_PATH="coverage/py_test$three.coverage" NAME="three Coverage Results" MODIFIED="1532781620556" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/py_test$function.coverage" NAME="function Coverage Results" MODIFIED="1534478999226" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/py_test$python_sys_argv.coverage" NAME="python sys.argv Coverage Results" MODIFIED="1562120618710" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
     <SUITE FILE_PATH="coverage/py_test$python_smtp.coverage" NAME="python smtp Coverage Results" MODIFIED="1560136413356" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
     <SUITE FILE_PATH="coverage/py_test$second.coverage" NAME="second Coverage Results" MODIFIED="1534400604032" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/py_test$zhuangshiqi.coverage" NAME="zhuangshiqi Coverage Results" MODIFIED="1533124043667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/py_test$sorted.coverage" NAME="sorted Coverage Results" MODIFIED="1534228254336" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/py_test$python__join.coverage" NAME="python .join Coverage Results" MODIFIED="1559613292780" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
-    <SUITE FILE_PATH="coverage/py_test$a_and_b_or_c.coverage" NAME="a and b or c Coverage Results" MODIFIED="1534401994455" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/py_test$sorted.coverage" NAME="sorted Coverage Results" MODIFIED="1563792698405" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
+    <SUITE FILE_PATH="coverage/py_test$python__join.coverage" NAME="python .join Coverage Results" MODIFIED="1563795340480" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
+    <SUITE FILE_PATH="coverage/py_test$a_and_b_or_c.coverage" NAME="a and b or c Coverage Results" MODIFIED="1561709085400" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
+    <SUITE FILE_PATH="coverage/py_test$test.coverage" NAME="test Coverage Results" MODIFIED="1564067317828" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/py_test$reptile.coverage" NAME="reptile Coverage Results" MODIFIED="1532854730853" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/py_test$top250.coverage" NAME="爬取豆瓣电影top250 Coverage Results" MODIFIED="1558080307992" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
     <SUITE FILE_PATH="coverage/py_test$first.coverage" NAME="first Coverage Results" MODIFIED="1532699160520" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/py_test$python_taobao.coverage" NAME="python taobao下单 Coverage Results" MODIFIED="1559721686770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
     <SUITE FILE_PATH="coverage/py_test$python_selenium.coverage" NAME="python selenium Coverage Results" MODIFIED="1558233880068" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
-    <SUITE FILE_PATH="coverage/py_test$time.coverage" NAME="time Coverage Results" MODIFIED="1559534127460" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
     <SUITE FILE_PATH="coverage/py_test$func_test.coverage" NAME="func_test Coverage Results" MODIFIED="1559553789361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
+    <SUITE FILE_PATH="coverage/py_test$time.coverage" NAME="time Coverage Results" MODIFIED="1564385793197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
+    <SUITE FILE_PATH="coverage/py_test$replace.coverage" NAME="replace Coverage Results" MODIFIED="1564219633492" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
     <SUITE FILE_PATH="coverage/py_test$type__.coverage" NAME="type()创建类 Coverage Results" MODIFIED="1554890149438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/py_test$test123.coverage" NAME="test123 Coverage Results" MODIFIED="1533535975798" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/py_test$dict.coverage" NAME="dict排序 Coverage Results" MODIFIED="1559636590990" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
-    <SUITE FILE_PATH="coverage/py_test$.coverage" NAME="多进程实现豆瓣爬取 Coverage Results" MODIFIED="1558268794858" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
+    <SUITE FILE_PATH="coverage/py_test$dict.coverage" NAME="dict排序 Coverage Results" MODIFIED="1564214389253" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
+    <SUITE FILE_PATH="coverage/py_test$.coverage" NAME="字典合并 Coverage Results" MODIFIED="1564472213437" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
     <SUITE FILE_PATH="coverage/py_test$python_BeautifulSoup.coverage" NAME="python BeautifulSoup Coverage Results" MODIFIED="1558060709744" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
     <SUITE FILE_PATH="coverage/py_test$tumple.coverage" NAME="tumple Coverage Results" MODIFIED="1533115034684" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/py_test$filter_map_reduce.coverage" NAME="filter-map-reduce Coverage Results" MODIFIED="1554971343350" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -93,7 +105,7 @@
     <SUITE FILE_PATH="coverage/py_test$python_ajax.coverage" NAME="python ajax操作 Coverage Results" MODIFIED="1559532885041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
     <SUITE FILE_PATH="coverage/py_test$lamdbda.coverage" NAME="lamdbda匿名函数 Coverage Results" MODIFIED="1557651824605" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
     <SUITE FILE_PATH="coverage/py_test$dict_test.coverage" NAME="dict_test Coverage Results" MODIFIED="1557649119212" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/py_test$python_test.coverage" NAME="python test Coverage Results" MODIFIED="1560083034025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
+    <SUITE FILE_PATH="coverage/py_test$python_test.coverage" NAME="python test Coverage Results" MODIFIED="1560501229417" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python小案例" />
     <SUITE FILE_PATH="coverage/py_test$excel.coverage" NAME="excel Coverage Results" MODIFIED="1533111085247" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/py_test$rangexrange.coverage" NAME="range和xrange Coverage Results" MODIFIED="1559612430141" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python特性" />
     <SUITE FILE_PATH="coverage/py_test$list.coverage" NAME="list Coverage Results" MODIFIED="1533114593185" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -102,65 +114,86 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/python小案例/python test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="798">
-              <caret line="50" column="16" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
-              <folding>
-                <element signature="e#82#95#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/python小案例/python itchat.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
-              <caret line="46" column="19" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
-              <folding>
-                <element signature="e#82#95#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/python小案例/python itchat_拼接头像.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/python小案例/python smtp.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="370">
-              <caret line="28" column="19" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
-              <folding>
-                <element signature="e#83#97#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/python特性/split.py">
+        <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="16" column="7" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
+            <state relative-caret-position="280">
+              <caret line="33" column="21" lean-forward="true" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file:///usr/lib/python3.6/smtplib.py">
+        <entry file="file://$PROJECT_DIR$/python特性/dict排序.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5958">
-              <caret line="342" column="18" selection-start-line="342" selection-start-column="18" selection-end-line="342" selection-end-column="18" />
+            <state relative-caret-position="24">
+              <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/python特性/字典合并.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/python特性/time.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
+              <folding>
+                <element signature="e#23#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/python特性/python-json_dump.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="324">
+              <caret line="18" column="16" lean-forward="true" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/python特性/range和xrange.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/python特性/one_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="324">
+              <caret line="18" selection-start-line="18" selection-end-line="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/python小案例/pycharm调试代码实例.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="756">
+              <caret line="42" column="22" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/python小案例/知乎模拟登录.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -182,6 +215,7 @@
       <find>setDaemon</find>
       <find>南澳新区</find>
       <find>chatrom</find>
+      <find>sort</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -190,63 +224,62 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/python远程登录.py" />
-        <option value="$PROJECT_DIR$/pygame_test.py" />
-        <option value="$PROJECT_DIR$/剑指offer/输出斐波那契數列前n个数.py" />
-        <option value="$PROJECT_DIR$/dandan正则" />
-        <option value="$PROJECT_DIR$/zhengze.py" />
-        <option value="$PROJECT_DIR$/python文件读写.py" />
-        <option value="$PROJECT_DIR$/dict_test.py" />
-        <option value="$PROJECT_DIR$/python-json_dump.py" />
-        <option value="$PROJECT_DIR$/爬取当当.py" />
-        <option value="$PROJECT_DIR$/python特性/正则表达式.py" />
-        <option value="$PROJECT_DIR$/python小案例/爬取当当.py" />
-        <option value="$PROJECT_DIR$/python小案例/python BeautifulSoup.py" />
-        <option value="$PROJECT_DIR$/python小案例/python selenium.py" />
-        <option value="$PROJECT_DIR$/python小案例/selenium b站爬取国光.py" />
-        <option value="$PROJECT_DIR$/python小案例/多进程实现豆瓣爬取.py" />
-        <option value="$PROJECT_DIR$/python特性/python多进程实现.py" />
-        <option value="$PROJECT_DIR$/剑指offer/二叉树以及遍历.py" />
-        <option value="$PROJECT_DIR$/python特性/item for item in list.py" />
-        <option value="$PROJECT_DIR$/剑指offer/按之字形顺序打印二叉树.py" />
-        <option value="$PROJECT_DIR$/python特性/[::-1]翻转or[:-1].py" />
-        <option value="$PROJECT_DIR$/剑指offer/把二叉树打印成多行.py" />
-        <option value="$PROJECT_DIR$/python特性/sys.path.insert和sys.path.append.py" />
-        <option value="$PROJECT_DIR$/python小案例/python 美团.py" />
-        <option value="$PROJECT_DIR$/python小案例/python ajax操作.py" />
-        <option value="$PROJECT_DIR$/python小案例/爬取豆瓣电影top250.py" />
-        <option value="$PROJECT_DIR$/python小案例/func_test.py" />
-        <option value="$PROJECT_DIR$/python小案例/python 美团商家信息爬取.py" />
-        <option value="$PROJECT_DIR$/python小案例/python xlwt.py" />
-        <option value="$PROJECT_DIR$/python小案例/python代理池.py" />
-        <option value="$PROJECT_DIR$/python小案例/python love Printer.py" />
-        <option value="$PROJECT_DIR$/python特性/range和xrange.py" />
         <option value="$PROJECT_DIR$/python特性/python .join.py" />
         <option value="$PROJECT_DIR$/python小案例/python lovePrinter.py" />
         <option value="$PROJECT_DIR$/python小案例/python 12306查询/searchTration.py" />
         <option value="$PROJECT_DIR$/python特性/python .format %.py" />
         <option value="$PROJECT_DIR$/python小案例/python 12306查询/station.py" />
         <option value="$PROJECT_DIR$/python特性/python-json_dump.py" />
-        <option value="$PROJECT_DIR$/python特性/dict排序.py" />
         <option value="$PROJECT_DIR$/python小案例/python 12306查询/searchTrain.py" />
         <option value="$PROJECT_DIR$/python小案例/python taobao下单.py" />
-        <option value="$PROJECT_DIR$/python特性/args_kwargs.py" />
         <option value="$PROJECT_DIR$/python小案例/python itchat.py" />
-        <option value="$PROJECT_DIR$/python特性/a and b or c.py" />
         <option value="$PROJECT_DIR$/python小案例/python tuling_itchat.py" />
         <option value="$PROJECT_DIR$/python小案例/python itchat_群发.py" />
         <option value="$PROJECT_DIR$/python小案例/python itchat_好友删除检测.py" />
         <option value="$PROJECT_DIR$/python特性/os.path.dirname.py" />
         <option value="$PROJECT_DIR$/python小案例/python itchat_拼接头像.py" />
-        <option value="$PROJECT_DIR$/python小案例/python test.py" />
         <option value="$PROJECT_DIR$/python小案例/python smtp.py" />
+        <option value="$PROJECT_DIR$/python小案例/python test.py" />
+        <option value="$PROJECT_DIR$/python小案例/python itchat捕捉图片.py" />
+        <option value="$PROJECT_DIR$/python特性/a and b or c.py" />
+        <option value="$PROJECT_DIR$/python特性/python sys.argv.py" />
+        <option value="$PROJECT_DIR$/python特性/python多进程实现.py" />
+        <option value="$PROJECT_DIR$/python特性/python多线程池之队列实现.py" />
+        <option value="$PROJECT_DIR$/python特性/python 多进程.py" />
+        <option value="$PROJECT_DIR$/python特性/python 多线程之锁.py" />
+        <option value="$PROJECT_DIR$/python特性/python socket server.py" />
         <option value="$PROJECT_DIR$/python特性/split.py" />
+        <option value="$PROJECT_DIR$/python特性/strip.py" />
+        <option value="$PROJECT_DIR$/python特性/python emoji.py" />
+        <option value="$PROJECT_DIR$/python小案例/python 图片转字符画.py" />
+        <option value="$PROJECT_DIR$/python特性/python类.py" />
+        <option value="$PROJECT_DIR$/python特性/正则表达式.py" />
+        <option value="$PROJECT_DIR$/python特性/python socket client.py" />
+        <option value="$PROJECT_DIR$/python特性/args_kwargs.py" />
+        <option value="$PROJECT_DIR$/python小案例/python 生成二维码.py" />
+        <option value="$PROJECT_DIR$/python小案例/python调试代码实例.py" />
+        <option value="$PROJECT_DIR$/python小案例/pycharm调试代码实例.py" />
+        <option value="$PROJECT_DIR$/python特性/one_test.py" />
+        <option value="$PROJECT_DIR$/python小案例/python url编码.py" />
+        <option value="$PROJECT_DIR$/python特性/字典遍历.py" />
+        <option value="$PROJECT_DIR$/python特性/sorted.py" />
+        <option value="$PROJECT_DIR$/python特性/dict排序.py" />
+        <option value="$PROJECT_DIR$/python特性/range和xrange.py" />
+        <option value="$PROJECT_DIR$/python特性/upper or lower.py" />
+        <option value="$PROJECT_DIR$/python小案例/python md5私钥加密.py" />
+        <option value="$PROJECT_DIR$/python特性/url编码和解码.py" />
+        <option value="$PROJECT_DIR$/python特性/python 三种格式化输出.py" />
+        <option value="$PROJECT_DIR$/python特性/replace.py" />
+        <option value="$PROJECT_DIR$/python特性/python静态方法和类方法.py" />
+        <option value="$PROJECT_DIR$/python特性/time.py" />
+        <option value="$PROJECT_DIR$/python特性/字典合并.py" />
+        <option value="$PROJECT_DIR$/python特性/删除list里面重复的元素.py" />
+        <option value="$PROJECT_DIR$/test.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1600" />
-    <option name="width" value="1366" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="width" value="1346" />
     <option name="height" value="768" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -257,6 +290,22 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="py_test" type="b2602c69:ProjectViewProjectNode" />
+              <item name="py_test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="py_test" type="b2602c69:ProjectViewProjectNode" />
+              <item name="py_test" type="462c0819:PsiDirectoryNode" />
+              <item name="python特性" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Project Files">
           <expand>
@@ -287,32 +336,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="py_test" type="b2602c69:ProjectViewProjectNode" />
-              <item name="py_test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="py_test" type="b2602c69:ProjectViewProjectNode" />
-              <item name="py_test" type="462c0819:PsiDirectoryNode" />
-              <item name="image" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="py_test" type="b2602c69:ProjectViewProjectNode" />
-              <item name="py_test" type="462c0819:PsiDirectoryNode" />
-              <item name="python特性" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/centyuanblog" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sc_api" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
@@ -322,6 +350,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/python小案例" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -337,7 +366,73 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.split">
+  <component name="RunManager" selected="Python.字典合并">
+    <configuration name="字典合并" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="py_test" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/python特性" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/python特性/字典合并.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="args_kwargs" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="py_test" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/python特性" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/python特性/args_kwargs.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="dict排序" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="py_test" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/python特性" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/python特性/dict排序.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="os.path.dirname" type="PythonConfigurationType" factoryName="Python">
       <module name="py_test" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -360,95 +455,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="python itchat" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="py_test" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/python小案例" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/python小案例/python itchat.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="python itchat_拼接头像" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="py_test" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/python小案例" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/python小案例/python itchat_拼接头像.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="python smtp" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="py_test" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/python小案例" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/python小案例/python smtp.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="python test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="py_test" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/python小案例" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/python小案例/python test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="split" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="replace" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="py_test" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -461,7 +468,29 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/python特性/split.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/python特性/replace.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="time" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="py_test" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/python特性" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/python特性/time.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -472,19 +501,19 @@
     </configuration>
     <list>
       <item itemvalue="Python.os.path.dirname" />
-      <item itemvalue="Python.python itchat" />
-      <item itemvalue="Python.python itchat_拼接头像" />
-      <item itemvalue="Python.python test" />
-      <item itemvalue="Python.python smtp" />
-      <item itemvalue="Python.split" />
+      <item itemvalue="Python.dict排序" />
+      <item itemvalue="Python.time" />
+      <item itemvalue="Python.replace" />
+      <item itemvalue="Python.args_kwargs" />
+      <item itemvalue="Python.字典合并" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.split" />
-        <item itemvalue="Python.python smtp" />
-        <item itemvalue="Python.python test" />
-        <item itemvalue="Python.python itchat_拼接头像" />
-        <item itemvalue="Python.python itchat" />
+        <item itemvalue="Python.字典合并" />
+        <item itemvalue="Python.args_kwargs" />
+        <item itemvalue="Python.time" />
+        <item itemvalue="Python.replace" />
+        <item itemvalue="Python.dict排序" />
       </list>
     </recent_temporary>
   </component>
@@ -541,11 +570,44 @@
       <workItem from="1560045135175" duration="27742000" />
       <workItem from="1560152759135" duration="647000" />
       <workItem from="1560155869237" duration="5244000" />
+      <workItem from="1560487414648" duration="860000" />
+      <workItem from="1560499320386" duration="6379000" />
+      <workItem from="1560849835455" duration="2025000" />
+      <workItem from="1561101337485" duration="384000" />
+      <workItem from="1561356855684" duration="15515000" />
+      <workItem from="1562133078260" duration="20609000" />
+      <workItem from="1562323645779" duration="2369000" />
+      <workItem from="1562574496173" duration="3045000" />
+      <workItem from="1562669647348" duration="609000" />
+      <workItem from="1562725444355" duration="595000" />
+      <workItem from="1562746780744" duration="595000" />
+      <workItem from="1562749989197" duration="596000" />
+      <workItem from="1562769312379" duration="2396000" />
+      <workItem from="1562946885239" duration="2864000" />
+      <workItem from="1563022104467" duration="7688000" />
+      <workItem from="1563290011940" duration="2583000" />
+      <workItem from="1563376477657" duration="597000" />
+      <workItem from="1563438893864" duration="589000" />
+      <workItem from="1563456455645" duration="1813000" />
+      <workItem from="1563530800434" duration="585000" />
+      <workItem from="1563680447681" duration="6434000" />
+      <workItem from="1563771505034" duration="13965000" />
+      <workItem from="1563861405687" duration="1794000" />
+      <workItem from="1563867112754" duration="587000" />
+      <workItem from="1563957214472" duration="1306000" />
+      <workItem from="1563976340851" duration="587000" />
+      <workItem from="1564033683372" duration="590000" />
+      <workItem from="1564049808506" duration="4683000" />
+      <workItem from="1564138399624" duration="597000" />
+      <workItem from="1564153395837" duration="10267000" />
+      <workItem from="1564318409515" duration="7724000" />
+      <workItem from="1564460835036" duration="4739000" />
+      <workItem from="1564543891177" duration="5821000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="262048000" />
+    <option name="totallyTimeSpent" value="393838000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -557,25 +619,26 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1600" y="0" width="1366" height="768" extended-state="6" />
+    <frame x="0" y="0" width="1366" height="768" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25037935" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28755692" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32967034" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49924126" visible="true" weight="0.28257456" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.37833595" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49772382" visible="true" weight="0.28414443" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.16797489" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32967034" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49924126" weight="0.32967034" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5007587" side_tool="true" weight="0.28257456" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49924126" weight="0.10832025" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5022762" side_tool="true" weight="0.422292" />
       <window_info anchor="bottom" id="Version Control" order="11" sideWeight="0.49924126" weight="0.32967034" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49924126" weight="0.32967034" />
+      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.32967034" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24962063" />
@@ -584,22 +647,23 @@
       <window_info anchor="right" id="Coverage" order="5" side_tool="true" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24279211" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23975721" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32967034" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49924126" visible="true" weight="0.35949764" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.37833595" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32967034" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49924126" weight="0.32967034" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5007587" side_tool="true" weight="0.28257456" />
-      <window_info anchor="bottom" id="Version Control" order="11" sideWeight="0.49924126" weight="0.32967034" />
-      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49924126" weight="0.32967034" />
+      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="0" weight="0.32967034" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.32967034" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49924126" visible="true" weight="0.37362638" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.16797489" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" weight="0.32967034" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49924126" weight="0.544741" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5007587" side_tool="true" weight="0.28257456" />
+      <window_info anchor="bottom" id="Version Control" order="12" sideWeight="0.49924126" weight="0.32967034" />
+      <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49924126" weight="0.32967034" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24962063" />
@@ -613,6 +677,18 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/python特性/args_kwargs.py</url>
+          <line>38</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/python特性/args_kwargs.py</url>
+          <line>40</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint suspend="NONE" type="python-exception">
           <properties exception="BaseException" />
@@ -621,229 +697,18 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/剑指offer/按之字形顺序打印二叉树.py">
+    <entry file="file://$PROJECT_DIR$/python小案例/python tuling_itchat.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="42" column="29" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/剑指offer/把二叉树打印成多行.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="16" column="9" lean-forward="true" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/剑指offer/二叉树以及遍历.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="44" column="18" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python特性/sys.path.insert和sys.path.append.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/python远程登录.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/主播排名repitle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-216" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/image/captcha.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/meituan_id.csv">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/area_ia" />
-    <entry file="file://$PROJECT_DIR$/python小案例/rent.csv" />
-    <entry file="file://$PROJECT_DIR$/python特性/time.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="19" column="31" lean-forward="true" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
-          <folding>
-            <element signature="e#23#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/python ajax操作.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        <state relative-caret-position="463">
+          <caret line="28" column="24" lean-forward="true" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
           <folding>
             <element signature="e#83#98#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/haikou.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="57" lean-forward="true" selection-start-line="8" selection-start-column="50" selection-end-line="8" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/python xlwt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/python代理池.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-          <folding>
-            <element signature="e#82#97#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/爬取当当.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
-          <folding>
-            <element signature="e#82#97#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/func_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python特性/range和xrange.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python特性/python .join.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python特性/正则表达式.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/多进程实现豆瓣爬取.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
-          <folding>
-            <element signature="e#83#99#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python特性/python .format %.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/python lovePrinter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" column="18" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/python 美团商家信息爬取.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="22" column="130" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="130" />
-          <folding>
-            <element signature="e#84#94#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/requests模块.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="654">
-          <caret line="45" column="38" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python特性/python-json_dump.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python特性/dict排序.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python特性/item for item in list.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/python 12306查询/searchTrain.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="622">
-          <caret line="46" column="8" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
-          <folding>
-            <element signature="e#318#343#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/python 12306查询/station.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-          <folding>
-            <element signature="e#83#92#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python特性/字典遍历.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/python taobao下单.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-          <folding>
-            <element signature="e#82#112#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/python小案例/weixinTemp.jpg">
+      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/python小案例/selenium b站爬取国光.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -855,126 +720,350 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/爬取豆瓣电影top250.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="24" column="24" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
-          <folding>
-            <element signature="e#84#100#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python特性/a and b or c.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="14" column="50" selection-start-line="14" selection-start-column="50" selection-end-line="14" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.virtualenvs/virtual-py_test/lib/python3.6/site-packages/requests/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-612">
-          <caret line="62" column="19" selection-start-line="62" selection-start-column="19" selection-end-line="62" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python特性/args_kwargs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="31" column="37" selection-start-line="31" selection-start-column="37" selection-end-line="31" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/python itchat_好友删除检测.py" />
-    <entry file="file://$PROJECT_DIR$/python小案例/python tuling_itchat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="28" column="24" lean-forward="true" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
-          <folding>
-            <element signature="e#83#98#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.virtualenvs/virtual-py_test/lib/python3.6/site-packages/itchat/core.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="182" column="66" selection-start-line="182" selection-start-column="26" selection-end-line="182" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python特性/os.path.dirname.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.virtualenvs/virtual-py_test/lib/python3.6/site-packages/itchat/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="34" column="48" selection-start-line="34" selection-start-column="48" selection-end-line="34" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/9202320.txt" />
-    <entry file="file://$PROJECT_DIR$/python小案例/9202354.txt" />
-    <entry file="file:///usr/lib/python3.6/email/mime/text.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="677">
-          <caret line="39" column="30" lean-forward="true" selection-start-line="39" selection-start-column="30" selection-end-line="39" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/lib/python3.6/smtplib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5958">
-          <caret line="342" column="18" selection-start-line="342" selection-start-column="18" selection-end-line="342" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/python smtp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="28" column="19" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
-          <folding>
-            <element signature="e#83#97#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/python test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="798">
-          <caret line="50" column="16" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
-          <folding>
-            <element signature="e#82#95#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/python小案例/python itchat.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="46" column="19" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
+        <state relative-caret-position="-180">
+          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
           <folding>
             <element signature="e#82#95#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/python小案例/python itchat_拼接头像.py">
+    <entry file="file://$PROJECT_DIR$/python特性/python多进程实现.py" />
+    <entry file="file:///usr/lib/python3.6/multiprocessing/pool.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+        <state relative-caret-position="890">
+          <caret line="275" column="8" selection-start-line="275" selection-start-column="8" selection-end-line="275" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/python多线程池之队列实现.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="38" column="35" lean-forward="true" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
+          <folding>
+            <element signature="e#108#124#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/python 多进程.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="56" column="6" selection-start-line="56" selection-start-column="6" selection-end-line="56" selection-end-column="6" />
+          <folding>
+            <element signature="e#82#86#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/strip.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="41" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/python emoji.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="29" lean-forward="true" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2018.3/system/python_stubs/-2026767268/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="273" column="4" selection-start-line="273" selection-start-column="4" selection-end-line="273" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/python类.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="22" column="12" lean-forward="true" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python小案例/python 图片转字符画.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding>
+            <element signature="e#83#104#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python小案例/多进程实现豆瓣爬取.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="61" column="11" selection-start-line="61" selection-start-column="11" selection-end-line="61" selection-end-column="11" />
+          <folding>
+            <element signature="e#83#99#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/python多线程.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="47" selection-start-line="47" selection-end-line="47" />
+          <folding>
+            <element signature="e#214#242#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python小案例/ascii_dora_qrcode.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python小案例/qrcode.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/python socket client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/正则表达式.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="24" column="24" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.virtualenvs/virtual-py_test/lib/python3.6/site-packages/MyQR/myqr.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python小案例/ascii_dora.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python小案例/yuan.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/python socket server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="9" column="53" selection-start-line="9" selection-start-column="53" selection-end-line="9" selection-end-column="53" />
+          <folding>
+            <element signature="e#82#96#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/python特性/split.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python小案例/python 生成二维码.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="11" column="27" lean-forward="true" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/python 多线程之锁.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="30" column="18" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python小案例/requests模块.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python小案例/爬取当当.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="16" lean-forward="true" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python小案例/python 美团商家信息爬取.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="22" column="14" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
+          <folding>
+            <element signature="e#84#94#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/python .join.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="20" lean-forward="true" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/python .format %.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python小案例/python url编码.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+          <folding>
+            <element signature="e#83#107#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/sorted.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="45" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/字典遍历.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/url编码和解码.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="26" lean-forward="true" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+          <folding>
+            <element signature="e#105#129#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python小案例/python md5私钥加密.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/replace.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="2" lean-forward="true" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/upper or lower.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
-          <caret line="16" column="7" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
+          <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/python 三种格式化输出.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/args_kwargs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="756">
+          <caret line="42" selection-start-line="42" selection-end-line="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/python静态方法和类方法.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="22" column="17" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/time.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#23#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/python-json_dump.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" column="16" lean-forward="true" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/range和xrange.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/one_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" selection-start-line="18" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python小案例/pycharm调试代码实例.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="756">
+          <caret line="42" column="22" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python小案例/知乎模拟登录.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/字典合并.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/dict排序.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python特性/删除list里面重复的元素.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="22" column="4" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="33" column="21" lean-forward="true" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
         </state>
       </provider>
     </entry>
