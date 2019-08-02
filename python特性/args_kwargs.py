@@ -2,8 +2,9 @@
 
 
 #主要是前面的 *
-#args可变位置参数
-#kwargs可变关键字参数
+#args可变参数,传入的参数数量是可变的,可以多个,可以0个
+#kwargs关键字参数
+
 def fun_var_args(farg, *args):
     print("arg:", farg)
     print(args)
