@@ -24,3 +24,8 @@ for k,v in d1.items():
 for k,v in d2.items():
     d3[k] = v
 print('四:',d3)
+
+response_dict={'data': {'trade_no': '3678497566409883648', 'total_fee': '100.00', 'paytype': 103, 'payurl': 'http://tpay.szspzc.xyz/gopay/index?trade_no=3678497566409883648', 'out_trade_no': '201906100156', 'mark': '13218', 'createdate': '2019-08-04 17:16:04'}, 'error': 0, 'msg': '', 'serverTime': 1564910160, 'sign': '93053fee773ba517131d5029eabdaa47'}
+print(response_dict['data']['trade_no'])
+print(response_dict['error'])
+print(response_dict["data"]["total_fee"])

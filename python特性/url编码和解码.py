@@ -30,3 +30,7 @@ print(str2)                #str2=haha%E5%93%88%E5%93%88
 str3 = parse.unquote(str2) #解码字符串
 print(str3)                #str3=haha哈哈
 
+test_str='red=5&blue=0&green='
+
+print(parse(test_str))
+print(parse.unquote(test_str))

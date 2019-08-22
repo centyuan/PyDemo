@@ -37,11 +37,16 @@ print(student1.age)
 student1.pr()
 
 class A(object):
+    number=1
     def __init__(self):
         self.a = 5
 
     def function_a(self):
         print('I am from A, my value is %d' % self.a)
+    def edit_number(self,paras):
+        print(self.number)
+        self
+
 
 
 class B(A):
@@ -53,10 +58,6 @@ class B(A):
         self.function_a()    # 调用类A的方法，出错
 
 
-
-# if __name__ == '__main__':
-#     b = B()
-#     b.function_b()
 
 b=B()
 b.function_a()#会报错AttributeError: 'B' object has no attribute 'a'
@@ -73,3 +74,16 @@ b.function_a()#会报错AttributeError: 'B' object has no attribute 'a'
 # 方法二不太直观，但可以解决多继承问题，会一次性的执行所有的父类的对应方法
 
 
+#修改类的属性
+class myclass():
+    i=12345
+    def f(self,a):
+       print("self.i",self.i)
+       self.i=a
+       print("self.i",self.i)
+       print("myclass.i",myclass.i)
+       myclass.i=a
+       print("myclass.i",myclass.i)
+
+ab1=myclass()
+ab2=myclass()

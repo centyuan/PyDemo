@@ -4,7 +4,11 @@
 #主要是前面的 *
 #args可变参数,传入的参数数量是可变的,可以多个,可以0个
 #kwargs关键字参数
+#但必须按顺序写，否则会报错，顺序为（位置参数，默认参数，可变参数，命名关键字参数，关键字参数）
+#位置参数,默认参数(默认参数必须指向不变对象,int string,tuple),可变参数,命名关键字参数,关键字参数
+#在tuple或list前加一个*，构造出可变参数,在dict前加两个*，构造关键字参数。
 
+L=(1,2,3)
 def fun_var_args(farg, *args):
     print("arg:", farg)
     print(args)
@@ -14,7 +18,7 @@ def fun_var_args(farg, *args):
         print(type(value))
 
 fun_var_args(1, "two", 3)
-
+fun_var_args(1,*L) #L为元组#或列表
 #前面的 **的用法
 bl={
     'myarg2':'myarg2_num',
@@ -29,6 +33,7 @@ def fun_var_kwargs(farg, **kwargs):
     print(a)
     for key in kwargs:
         print( "another keyword arg: %s: %s" % (key, kwargs[key]))
+
 
 
 def au_login(hot=False,statusStorageDir='itchat.pkl',

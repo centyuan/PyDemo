@@ -26,13 +26,13 @@ s.bind((host,port)) #绑定端口
 s.listen(5)     #等待客户端连接
 while True:
     c,addr=s.accept() #返回connect对象
-    # print("连接地址",addr)
-    # c.send("欢迎访问".encode())
-    # c.close()
+    print("连接地址",addr)
+    c.send("欢迎访问".encode())
+    c.close()
     #可以使用多线程处理tcp连接
-    t=threading.Thread(target=tcplink,args=(c,addr))
-    t.start()
-    t.join()
+    # t=threading.Thread(target=tcplink,args=(c,addr))
+    # t.start()
+    # t.join()
     #由于 client 在服务器返回前主动断开连接会报BrokenPipeError: [Errno 32] Broken pipe错误
 
 

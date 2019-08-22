@@ -9,9 +9,16 @@ python函数的几种参数可以任意组合，
 
 """
 #参考:https://segmentfault.com/a/1190000013117996
-"""
-当你正常调用时，结果似乎不错：
+#位置参数,默认参数(默认参数必须指向不变对象,int string,tuple),可变参数,命名关键字参数,关键字参数
+#在tuple或list前加一个*，构造出可变参数,在dict前加两个*，构造关键字参数。
 
+
+"""
+def  add_end(L=[]):
+    L.append('END')
+    return L
+    
+当你正常调用时，结果似乎不错：
 >>> add_end([1, 2, 3])
 [1, 2, 3, 'END']
 >>> add_end(['x', 'y', 'z'])
@@ -29,7 +36,6 @@ python函数的几种参数可以任意组合，
 
 #默认参数必须指向不变对象
 要修改上面的例子，我们可以用None这个不变对象来实现：
-
 def add_end(L=None):
     if L is None:
         L = []

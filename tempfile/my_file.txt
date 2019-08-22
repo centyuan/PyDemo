@@ -1,0 +1,11 @@
+[program:my-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/worker/job --param=a,b,c
+autostart=true
+autorestart=true
+stopwaitsecs=10
+user=worker
+stopsignal=TERM
+numprocs=1
+stdout_logfile=/var/log/supervisor/worker.log
+stderr_logfile=/var/log/supervisor/worker-error.log
