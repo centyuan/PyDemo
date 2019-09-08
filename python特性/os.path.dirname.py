@@ -4,6 +4,7 @@
 # @time 19-5-29 上午11:07
 import  os
 
+os.environ.setdefault("PERSONAL_MODULE","")
 print(__file__) #获取当前文件的路径
 print(os.path.abspath(__file__))#返回绝对路径
 print(os.path.dirname(__file__))#得到当前文件所在目录

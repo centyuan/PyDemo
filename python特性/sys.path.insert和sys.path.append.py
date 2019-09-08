@@ -3,6 +3,7 @@
 # author centyuan
 # @time 19-5-29 上午11:23
 import sys
+import os
 #sys.path模块是动态的修改系统路径
 
 """
@@ -17,3 +18,5 @@ sys.path是个列表，所以在末尾添加目录是很容易的，用sys.path.
 如同解决方案所示，可以选择用sys.path.insert(0,…)，这样新添加的目录会优先于其他目录被import检查。
 
 """
+print(sys.path)
+print(os.environ)

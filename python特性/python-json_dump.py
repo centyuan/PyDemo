@@ -8,9 +8,9 @@
 #json.dumps()函数是将一个Python 对象编码成 JSON 字符串
 import  json
 #一:python对象变成json字符串
-a = {'name': 'wang', 'age': 29}
+a = {'name': 'wang', 'age': 29,'gender':"男"}
 s_temp4 = {'city':{'country':'china','provider':'chendu'},'name':'zhongba','nums':20}
-b = json.dumps(a)
+b = json.dumps(a,ensure_ascii=False) #{"name": "wang", "age": 29, "gender": "\u7537"} 加个ensure_ascii=False
 json_temp4=json.dumps(s_temp4)
 print(b)
 print(type(b))

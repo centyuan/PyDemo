@@ -10,6 +10,8 @@
 
 
 class Num:
+    var = "变量"
+    _variable = "私有变量"
     # 普通方法：能用Num调用而不能用实例化对象调用,
     def one():
         print('1')
@@ -34,6 +36,11 @@ Num.one()  # 1
 # Num.two()         #TypeError: two() missing 1 required positional argument: 'self'
 Num.three()  # 3
 Num.go()  # 3
+print(dir(Num))
+if not hasattr(Num,'var'):
+    print("no")
+else:
+    print("yes")
 
 i = Num() #类实例化
 # i.one()           #TypeError: one() takes 0 positional arguments but 1 was given
