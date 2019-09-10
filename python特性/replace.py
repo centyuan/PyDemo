@@ -17,3 +17,5 @@ print(str.replace("is", "was"))
 print(str.replace("is", "was", 3))
 print(str)
 
+
+
