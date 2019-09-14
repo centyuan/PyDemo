@@ -2,10 +2,14 @@
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-4-10 上午9:18
-#常用的多线程模块
-# _thread threading Queue(_thread有的，threading都有，thread在python2中3中改为_thread)
-#在 python 中
-#可以使用 ThreadPoolExecutor 来实现线程池
+
+#1.常用的多线程模块
+# _thread(python2 thread,ps:thread在python2中3中改为_thread)
+# threading
+# Queue
+#thread提供了低级别的、原始的线程以及一个简单的锁。_thread有的，threading都有，
+
+#2.可以使用 ThreadPoolExecutor 来实现线程池
 
 import  threading #子类继承的方式实现
 import _thread  #try 创建函数except
@@ -26,9 +30,9 @@ class MyThread(threading.Thread):
         self.counter=counter
 
     def run(self):
-        print('开始线程:'+self.name)
+        print('开始线程(类实现):'+self.name)
         fuck(self.name,self.counter,10)
-        print('退出线程:'+self.name)
+        print('退出线程(类实现):'+self.name)
 
 def fuck(threadName,delay,counter):
         while counter:
@@ -36,15 +40,19 @@ def fuck(threadName,delay,counter):
             print("%s 开始fuck %s" %(threadName,time.strftime("%Y-%m-%d %H:%M:%S")))
             counter -=1
 
-thread1=MyThread(1,'cent',1)
-thread2=MyThread(2,'yuan',2)
+thread_cent = MyThread(1,'线程类实现cent',1)
+thread_yuan = MyThread(2,'线程类实现yuan',2)
+thread3 = threading.Thread(target=fuck,args=('线程函数实现',2,4))
 #开启新线程
-thread1.start()
-thread2.start()
+print("开始主线程A")
+thread_cent.start()
+thread_yuan.start()
+thread3.start()
 # 等待至线程中止
-thread1.join() #主线程A会在调用的地方等待，直到子线程B完成操作后，才可以接着往下执行
-thread2.join()
-print ("退出主线程")
+thread_cent.join() #主线程A会在调用的地方等待，直到子线程B完成操作后，才可以接着往下执行
+# thread_yuan.join()
+# thread3.join()
+print ("退出主线程A")
 
 if __name__=='__main__':
     pool=ThreadPoolExecutor(20)#创建20个的线程池

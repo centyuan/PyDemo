@@ -19,6 +19,9 @@ setter
 #我们就拥有一个可控的属性操作
 class Student(object):
 
+    def __init__(self,score):
+        self.score = score
+
     @property
     def score(self):
         return self._score
@@ -31,10 +34,10 @@ class Student(object):
             raise ValueError('score must between 0 ~ 100!')
         self._score = value
 
-s = Student()
-s.score = 60 #实际转化为s.set_score(60)
+s = Student(30)
+#s.score = 60 #实际转化为s.set_score(60)
 print(s.score)
-
+print(dir(s))
 #还可以定义只读属性，只定义getter方法，不定义setter方法就是一个只读属性：
 class Student(object):
 
