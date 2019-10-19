@@ -18,6 +18,8 @@ isinstance(variable,generator)
 L = [x*x for x in range(10)] #列表生成式或列表推导式
 
 g = (x*x for x in range(10)) #简单的创建生成器
+for item in g:
+    print(item)
 
 #打印:next(g)或for item in g:generator也是可迭代对象
 
@@ -37,13 +39,17 @@ for n in fib(6):
 
 """
 next()函数调用并不断返回下一个值的对象称为迭代器：Iterator
-isinstance(variable,Iterator)
-生成器都是Iterator对象,list、dict、str虽然是Iterable，却不是Iterator
+isinstance(variable,Iterator)来判断是否是迭代器对象
+生成器都是Iterator对象,
+list、dict、str虽然是Iterable，却不是Iterator
 把list、dict、str等Iterable变成Iterator可以使用iter()函数
 凡是可作用于for循环的对象都是Iterable类型；
 
 凡是可作用于next()函数的对象都是Iterator类型，它们表示一个惰性计算的序列；
 Python的for循环本质上就是通过不断调用next()函数实现的
+
+迭代器就是不但可以作用于for循环，还可以被next()不断的调用并返回下一个值，
+直到最后抛出一个错误StopIteration错误，表示无法继续返回下一个值。
 
 """
 # 首先获得Iterator对象:

@@ -23,5 +23,5 @@ print (calendar.month(2018, 2))
 
 #获取当前时间
 print(time.strftime("%Y-%m-%d %H:%M:%S"))
-
+print(type(time.strftime("%Y%m%d%H%M%S")))
 
