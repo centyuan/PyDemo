@@ -30,5 +30,3 @@ class Solution:
             flag.left = self.reConstructBinaryTree(pre[1:tin.index(pre[0]+1)],tin[:tin.index(pre[0])])
             flag.right = self.reConstructBinaryTree(pre[tin.index(pre[0]) + 1:], tin[tin.index(pre[0]) + 1:])
             return flag
-
-        pass
