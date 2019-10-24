@@ -3,7 +3,7 @@
 # author centyuan
 # @time 19-8-23 下午5:17
 
-from django.utils.timezone import now,datetime,timedelta
+from django_import.utils.timezone import now,datetime,timedelta
 
 """
 .strftime 将<date,datetime,timezone.now()等类型处理转化为字符串类型

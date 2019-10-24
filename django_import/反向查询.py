@@ -2,8 +2,8 @@
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-9-2 下午8:15
-from django.shortcuts import HttpResponse, render, redirect
-from django.db import models
+from django_import.shortcuts import HttpResponse, render, redirect
+from django_import.db import models
 
 
 class Class(models.Model):

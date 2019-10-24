@@ -22,7 +22,7 @@ money=0
 for item in yatou:
     money +=float(item.amount)
 
-from django.db.models import Sum
+from django_import.db.models import Sum
 import lottery
 queryset_1=lottery.models.MemberFundLog.objects.all()
 yatou1=queryset_1.filter(member='815',cause='代理返点',create_time__gte='2019-07-26',create_time__lt='2019-07-27')
@@ -31,7 +31,7 @@ yatou1=queryset_1.filter(member='815',cause='代理返点',create_time__gte='201
 #     money +=float(item.amount)
 money1=yatou1.aggregate(Sum('amount'))
 
-from django.db.models import Sum
+from django_import.db.models import Sum
 report=lottery.models.MemberSpeciesV2Report.objects.all()
 V2=report.filter(member='815',create_time__gte='2019-07-26',create_time__lt='2019-07-27')
 proxy_rebate=0
@@ -44,7 +44,7 @@ for item in V2:
     rebate +=float(item.rebate)
 
 
-from django.db.models import Sum
+from django_import.db.models import Sum
 from decimal import Decimal
 import datetime
 import lottery
@@ -151,7 +151,7 @@ lottery_calculate_contract_bill
 #计算分红
 from decimal import Decimal
 from lottery.models import Result
-from django.utils.timezone import timedelta, now
+from django_import.utils.timezone import timedelta, now
 from celery import shared_task
 import lottery.models
 import utils
@@ -159,11 +159,11 @@ from lotterymanage.species.scheduler import Scheduler
 from lotterymanage.species.openresult import OpenResult
 from lotterymanage.species.loop import loop
 import enterprise.models
-from django.db.models import Count, Sum
+from django_import.db.models import Count, Sum
 import random
 import json
 from lotterymanage.models import perform_create
-from django.core.cache import cache
+from django_import.core.cache import cache
 import lottery.api.serializers
 from restful.exceptions import SCError
 import lottery.api.channel
@@ -181,10 +181,10 @@ data = lottery.models.ContractBill.calculate_bill(bill)
 from hashlib import md5
 from requests import post
 from decimal import Decimal
-from django.http import HttpResponse
-from django.db import transaction
-from django.core.cache import cache
-from django.db.models import Sum, Count
+from django_import.http import HttpResponse
+from django_import.db import transaction
+from django_import.core.cache import cache
+from django_import.db.models import Sum, Count
 from rest_framework.generics import ListCreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView, CreateAPIView
 from rest_framework.reverse import reverse
 from rest_framework.response import Response
@@ -503,8 +503,8 @@ import lottery
 from decimal import Decimal
 import re
 import json
-from django.utils.translation import ugettext_lazy as _
-from django.db.models import Sum
+from django_import.utils.translation import ugettext_lazy as _
+from django_import.db.models import Sum
 from rest_framework import serializers
 from restful.exceptions import SCError
 from lottery.models import RebateLevel, Member, RedRebateLevel, ChessRebateLevel, VideoRebateLevel
@@ -567,8 +567,8 @@ if validated_data['amount'] + total_transfer_amount > activity_amount + rebate +
         '工资转账金额超过最大可转账金额数目')
 
 import lottery
-from django.utils.timezone import now,datetime,timedelta
-from django.db import transaction
+from django_import.utils.timezone import now,datetime,timedelta
+from django_import.db import transaction
 
 with transaction.atomic():
     time = datetime.strptime("2019-07-04 00:00:00", "%Y-%m-%d %H:%M:%S")
@@ -578,8 +578,8 @@ with transaction.atomic():
     lottery.models.Contract.objects.filter(interval=1, next_start_time=time).update(next_start_time=next_start)
 
 import lottery
-from django.utils.timezone import now,datetime,timedelta
-from django.db import transaction
+from django_import.utils.timezone import now,datetime,timedelta
+from django_import.db import transaction
 with transaction.atomic():
     #修改contract
     # 删除时间错误的ContractBill,开始时间(2019-08-01 00:00:00+08到2019-08-31 23:59:59.999999+08)
@@ -603,7 +603,7 @@ all_contractbill.update(start_time=start,end_time=end)
 
 
 #筛选
-from django.db.models import Sum
+from django_import.db.models import Sum
 import  lottery
 one = datetime.strptime("2019-07-01 00:00:00", "%Y-%m-%d %H:%M:%S")
 two = datetime.strptime("2019-07-02 00:00:00", "%Y-%m-%d %H:%M:%S")
@@ -619,7 +619,7 @@ two_contract = lottery.models.ContractBill.objects.filter(start_time=two,amount_
 #2019-08-23 00:00:00+08	2019-08-23 23:59:59.999999+08
 import  lottery
 from decimal import Decimal
-from django.utils.timezone import now,datetime,timedelta
+from django_import.utils.timezone import now,datetime,timedelta
 
 bill = lottery.models.ContractBill.objects.get(id='47941') #
 contract = bill.contract
@@ -745,8 +745,8 @@ if amount == Decimal('0'):
 
 import  lottery
 from decimal import Decimal
-from django.utils.timezone import now,datetime,timedelta
-from django.db import transaction
+from django_import.utils.timezone import now,datetime,timedelta
+from django_import.db import transaction
 
 
 with transaction.atomic():
@@ -782,9 +782,9 @@ with transaction.atomic():
 import lottery
 from lottery.api.utils import get_ordernum
 from decimal import Decimal
-from django.utils.timezone import now,datetime,timedelta
-from django.db import transaction
-from django.db.models import Sum
+from django_import.utils.timezone import now,datetime,timedelta
+from django_import.db import transaction
+from django_import.db.models import Sum
 with transaction.atomic():
 amount = '1000'
 member = lottery.models.Member.objects.get(id='14153')
@@ -811,11 +811,11 @@ membercny.less_balance(
 )
 
 #提现，消费之ag
-from django.db.models import Sum
+from django_import.db.models import Sum
 from decimal import  Decimal
 from utils import transform_string_to_datetime
 import lottery
-from django.utils.timezone import datetime,timedelta
+from django_import.utils.timezone import datetime,timedelta
 
 member = lottery.models.Member.objects.get(id='14210')
 

@@ -8,7 +8,7 @@
 #计算分红
 from decimal import Decimal
 from lottery.models import Result
-from django.utils.timezone import timedelta, now
+from django_import.utils.timezone import timedelta, now
 from celery import shared_task
 import lottery.models
 import utils
@@ -17,11 +17,11 @@ from lotterymanage.species.openresult import OpenResult
 from lotterymanage.species.loop import loop
 from lottery.models import ContractBill
 import enterprise.models
-from django.db.models import Count, Sum
+from django_import.db.models import Count, Sum
 import random
 import json
 from lotterymanage.models import perform_create
-from django.core.cache import cache
+from django_import.core.cache import cache
 import lottery.api.serializers
 from restful.exceptions import SCError
 import lottery.api.channel
