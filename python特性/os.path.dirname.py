@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-5-29 上午11:07
-import  os
+import os
 
 os.environ.setdefault("PERSONAL_MODULE","")
 print(__file__) #获取当前文件的路径

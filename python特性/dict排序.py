@@ -11,6 +11,7 @@ post_data = {
     'return_url': "http://domain/returnUrl",
     'sign': "签名信息",
 }
+
 po_da = sorted(post_data.items(), key=lambda x: x[0])
 print(po_da)
 

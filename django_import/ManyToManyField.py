@@ -58,7 +58,7 @@ class BookAuthor(models.Model):
         db_table = "book_author_relationship"  # 使用自定义名称
 
 # 1：如何添加和删除
-#添加作者
+# 添加作者
 author_1 = Author.objects.create(name='gene', email='gene@qq.com')
 author_2 = Author.objects.create(name='paul', email='paul@qq.com')
 
@@ -67,7 +67,7 @@ book_1 = Book.objects.create(title='effective book')
 # m1 = BookAuthor.objects,create(author=paul,book=book1)
 # m1.save()
 m1 = BookAuthor.objects.create(author=author_1, book=book_1)
-#当我们使用多对多的中间模型之后，
+# 当我们使用多对多的中间模型之后，
 # add(),remove(),create()这些方法都会被禁用，所以在创建这种类型的关系的时候唯一的方法就是通过创建中间模型的实例
 
 

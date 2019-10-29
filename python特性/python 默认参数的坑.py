@@ -1,4 +1,4 @@
-#！/usr/bin/python3
+# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-8-2 下午2:47
@@ -8,9 +8,9 @@ python函数的几种参数可以任意组合，
 但必须按顺序写，否则会报错，顺序为（位置参数，默认参数，可变参数，命名关键字参数，关键字参数）
 
 """
-#参考:https://segmentfault.com/a/1190000013117996
-#位置参数,默认参数(默认参数必须指向不变对象,int string,tuple),可变参数,命名关键字参数,关键字参数
-#在tuple或list前加一个*，构造出可变参数,在dict前加两个*，构造关键字参数。
+# 参考:https://segmentfault.com/a/1190000013117996
+# 位置参数,默认参数(默认参数必须指向不变对象,int string,tuple),可变参数,命名关键字参数,关键字参数
+# 在tuple或list前加一个*，构造出可变参数,在dict前加两个*，构造关键字参数。
 
 
 """
