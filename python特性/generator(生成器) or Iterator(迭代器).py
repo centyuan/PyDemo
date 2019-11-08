@@ -14,21 +14,21 @@
 
 isinstance(variable,generator)
 """
-#一:
-L = [x*x for x in range(10)] #列表生成式或列表推导式
+# 一:
+L = [x*x for x in range(10)] # 列表生成式或列表推导式
 
-g = (x*x for x in range(10)) #简单的创建生成器
+g = (x*x for x in range(10)) # 简单的创建生成器
 for item in g:
     print(item)
 
-#打印:next(g)或for item in g:generator也是可迭代对象
+# 打印:next(g)或for item in g:generator也是可迭代对象
 
-#二:函数形式生成器
-#如果函数定义中包含yield关键字,那么这个函数就不再是普通函数,而是一个generator
+# 二:函数形式生成器
+# 如果函数定义中包含yield关键字,那么这个函数就不再是普通函数,而是一个generator
 def fib(max):
     n,a,b = 0,0,1
     while n < max:
-        yield b #遇到yield返回,再次执行时从这继续
+        yield b # 遇到yield返回,再次执行时从这继续
         a,b = b,a+b
         n = n+1
     return 'done'
