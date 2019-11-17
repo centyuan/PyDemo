@@ -25,3 +25,4 @@ print (calendar.month(2018, 2))
 print(time.strftime("%Y-%m-%d %H:%M:%S"))
 print(type(time.strftime("%Y%m%d%H%M%S")))
 
+print('time.strftime--%Y%m%d %H%M%S:',time.strftime("%Y%m%d%H%M%S"))

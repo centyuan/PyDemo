@@ -5,13 +5,15 @@
 class Student():
 
     #在类内部定义的属性属于类本身的,由操作系统只分配一块内存空间,大家公用这一块内存空间。
-    count = 0
-    count1=0
-    name=1
-    namestr='abc123'
-    gender='gender'
+    count = 2
+    count1 = 3
+    name = 1
+    namestr = 'namestr'
+    gender = 'man'
     def __init__(self,name,age):
+        print("before Student.__init__ name:", name, self.name)
         self.name = name
+        print("after Student.__init__ name:", name, self.name)
         self.age = age
         Student.count +=1
         #self.count1 +=1
@@ -19,8 +21,11 @@ class Student():
         #self.name={2:2}
         #self.namestr='efg123x'
         self.gender=self.gender
-        print(self.gender)
-        print(self.namestr)
+        print("Student.__init__ gender", self.gender)
+        print("Student.__init__ namestr", self.namestr)
+        print("Student.__init__ Student.count,Student.count1：", self.count,self.count1)
+        print(self.count, self.count1)
+
 class Data_test2(object):
     day=0
     month=0
@@ -33,7 +38,7 @@ class Data_test2(object):
     @classmethod
     def get_date(cls,data_as_string):
         #这里第一个参数是cls， 表示调用当前的类名
-        year,month,day=map(int,string_date.split('-'))
+        year,month,day=map(int,data_as_string.split('-'))
         date1=cls(year,month,day)
         #返回的是一个初始化后的类
         return date1
@@ -48,11 +53,11 @@ class Data_test2(object):
 
 if __name__ == '__main__':
     student1 = Student("lidong",25)
-    print(student1.__dict__)
+    print("student1.__dict__:", student1.__dict__)
     student2 = Student("wangwu",28)
     print(student2.__dict__)
-    print(Student.count)
-    print(Student.count1,end='--')
+    print("student2.count:", Student.count)
+    print("student2.count:", Student.count1,end='--')
     print(Student.namestr)
     print(id(Student.name))
     print(student1.namestr)

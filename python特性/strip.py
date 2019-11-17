@@ -19,9 +19,10 @@ chars -- 移除字符串头尾指定的字符序列。
 """
 str = "00000003210Runoob01230000000";
 print(str.strip('0'))  # 去除首尾字符 0
-
+print(str)
 str2 = "   Runoob      "  # 去除首尾空格
 print(str2.strip())
+print(str2)
 
 # 3210Runoob0123
 # Runoob
