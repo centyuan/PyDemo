@@ -4,6 +4,7 @@
 import time
 import MySQLdb
 import random
+import datetime
 
 if __name__ == '__main__':
     while 1:
@@ -16,10 +17,10 @@ if __name__ == '__main__':
         )
         cur = conn.cursor()
         sql = '''
-        INSERT into dede_diyform1 (ren, dz, sszf, dkje, dkytu, sjian, day, datasource) 
-        SELECT ren, dz, sszf, dkje, dkytu, sjian, day, datasource from dede_diyform1_source where sjian <= NOW() and inuse=0 ORDER BY sjian DESC LIMIT 1;
+        INSERT into dede_diyform1 (ren, dz, sszf, dkje, dkqxian, dkytu, sjian, day, datasource) 
+        SELECT ren, dz, sszf, dkje, dkqxian, dkytu, '%s' sjian, day, datasource from dede_diyform1_source where sjian <= NOW() and inuse=0 ORDER BY sjian DESC LIMIT 1;
         update dede_diyform1_source set inuse=1 where inuse=0 AND dz in(SELECT dz from dede_diyform1);
-        '''
+        '''%(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         cur.execute(sql)
         cur.close()
         conn.commit()

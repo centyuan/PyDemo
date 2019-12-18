@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-7-22 下午6:53
+
 post_data = {
     'mn': 'shanghu01',
     'mark': "20180927104432780",
