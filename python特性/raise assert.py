@@ -9,11 +9,9 @@ raise 手动抛出异常
 系统是否要引发异常，可能需要根据应用的业务需求来决定
 (如果程序中的数据、执行与既定的业务需求不符，这就是一种异常。
 由于与业务需求不符而产生的异常，必须由程序员来决定引发，系统无法引发这种异常)
-
 该语句的基本语法格式为：
+
 raise [exceptionName [(reason)]]
-
-
 """
 
 
@@ -32,7 +30,7 @@ except ValueError as e:
     print('ValueError:', e)
 except ZeroDivisionError as e: #可以有多个except来捕获不同类型的异常
     print('ZeroDivisionError:', e)
-else:  #没有错误发生
+else:   # 没有错误发生
     print('no error!')
 finally:  #都会执行
     print('finally...')

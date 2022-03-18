@@ -5,7 +5,7 @@
 from multiprocessing import  Process,Pool
 import time,random,os
 
-#一创建Process实例,传入任务执行函数
+#1. 创建Process实例,传入任务执行函数
 # 子进程要执行的代码
 def run_proc(name):
     print('Run child process %s (%s)...' % (name, os.getpid()))
@@ -40,7 +40,7 @@ if __name__=='__main__':
     #main()2
 
 
-#二派生Process的子类,重写run方法
+#2. 派生Process的子类,重写run方法
 class MyProcess(Process):
     def __init__(self):
         Process.__init__()

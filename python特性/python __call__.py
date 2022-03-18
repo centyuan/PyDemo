@@ -16,7 +16,7 @@ class Person(object):
         self.gender = gender
 
     def __call__(self, friend, *args, **kwargs):
-        print("my friend is:%s"%(friend))
+        print("Person __call__ :%s"%(friend))
 
 p = Person('Bob', 'male')
 p("cob")

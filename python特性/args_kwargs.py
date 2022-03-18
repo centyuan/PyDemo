@@ -10,12 +10,12 @@
 
 L=(1,2,3)
 def fun_var_args(farg, *args):
-    print("arg:", farg)
-    print(args)
-    print(type(args))#元组tuple
+    print("fun_var_args farq:", farg)
+    print('func_var_args args:',args)
+    print('type(args):',type(args))#元组tuple
     for value in args:
-        print( "another arg:", value)
-        print(type(value))
+        print( "another arg:", value,type(value))
+
 
 fun_var_args(1, "two", 3)
 fun_var_args(1,*L) #L为元组#或列表
@@ -26,8 +26,8 @@ bl={
     'test':'test_num',
 }
 def fun_var_kwargs(farg, **kwargs):
-    print("arg:", farg)
-    print(type(kwargs))#kwargs为字典dict
+    print("fun_var_kwargs arg:", farg)
+    print('func_var_kwargs:',type(kwargs))#kwargs为字典dict
     a=kwargs["myarg3"]
     print(kwargs["myarg2"])
     print(a)

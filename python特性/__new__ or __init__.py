@@ -1,4 +1,4 @@
-#！/usr/bin/python3
+   #！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-9-5 下午7:54
@@ -12,7 +12,7 @@
 class Student(object):
     def __init__(self, name):
         self.name = name
-        print("这是__init__方法")
+        print("1.这是__init__方法")
 
 
 s = Student("tom")
@@ -30,10 +30,10 @@ s = Student("tom")
 class Student(object):
     def __init__(self, name):
         self.name = name
-        print("这是__init__方法")
+        print("2.这是__init__方法")
 
     def __new__(cls, *args, **kwargs):
-        print("这是__new__方法")
+        print("2.这是__new__方法")
         return object.__new__(cls)
 
 
@@ -50,17 +50,17 @@ s = Student("tom")
 class Student(object):
     def __init__(self, name):
         self.name = name
-        print("这是__init__方法")
+        print("3.这是__init__方法")
 
     def __new__(cls, *args, **kwargs):
-        print("这是__new__方法")
+        print("3.这是__new__方法")
         id = object.__new__(cls)
-        print(id)  # 打印这个__new__创建并返回的实例在内存中的地址
+        print('__new__:',id)  # 打印这个__new__创建并返回的实例在内存中的地址
         return id
 
 
 s1 = Student("JACK")
-print(s1)
+print('s1:',s1)
 '''
 这是__new__方法
 <__main__.Student object at 0x000001EC6C8C8748>

@@ -8,7 +8,7 @@ sys.argv[]说白了就是一个从程序外部获取参数的桥梁，这个“�
 所以获得的是一个列表（list)，也就是说sys.argv其实可以看作是一个列表，所以才能用[]提取其中的元素。
 其第一个元素是程序本身，随后才依次是外部给予的参数。
 """
-import  sys
+import sys
 a=sys.argv[0]
 print(a)
 print(sys.argv[2],sys.argv[1])

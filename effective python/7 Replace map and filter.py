@@ -27,10 +27,10 @@ print(clile_len_set)
 matrix = [[1,2,3],[4,5,6],[7,8,9]]
 flat = [x for row in matrix for x in row]
 #flat1 = [x for x in row for row in matrix] 错误
-print(flat)
+print('flat:',flat)
 
 squared = [[x**2 for x in row] for row in matrix] #可以理解为嵌套处理
-print(squared)
+print('squared:',squared)
 
 #列表表达式支持多个if条件
 a = [1,2,3,4,5,6,7,8,9,10]

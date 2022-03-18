@@ -19,8 +19,10 @@ x = 'hello main'
 print('main1', x, id(x))
 func()
 print('main2', x, id(x))
-# 在函数内部使用了与全局变量同名的变量，如果不对该变量赋值（修改变量），
-# 那么该变量就是全局变量，如果对该变量进行赋值，那么该变量就是局部变量。
+'''
+ 在函数内部使用了与全局变量同名的变量，如果不对该变量赋值（修改变量），
+ 那么该变量就是全局变量，如果对该变量进行赋值(重新创建一个该变量对象)，那么该变量就是局部变量。
+'''
 def func():
     global x
     x = 'hello func'
@@ -37,7 +39,7 @@ def func():
     x = "hello func"
     print("func1", x, id(x))
     def ifunc():
-        nonlocal x
+        #nonlocal x
         x = "hello ifunc"
         print("ifunc", x, id(x))
     ifunc()
@@ -46,3 +48,7 @@ x = "hello main"
 print("main1", x, id(x))
 func()
 print("main2", x, id(x))
+"""
+Python 中只有模块（module），类（class）以及函数（def、lambda）才会引入新的作用域，
+其它的代码块（如 if/elif/else/、try/except、for/while等）是不会引入新的作用域的，也就是说这些语句内定义的变量，外部也可以访问
+"""

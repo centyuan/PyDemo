@@ -4,6 +4,7 @@
 # @time 19-8-17 下午8:34
 
 """
+推导式
 通过列表生成式，我们可以直接创建一个列表。但是，受到内存限制，列表容量肯定是有限的。
 而且，创建一个包含100万个元素的列表，不仅占用很大的存储空间，如果我们仅仅需要访问前面几个元素，
 那后面绝大多数元素占用的空间都白白浪费了。
@@ -19,12 +20,13 @@ L = [x*x for x in range(10)] # 列表生成式或列表推导式
 
 g = (x*x for x in range(10)) # 简单的创建生成器
 for item in g:
-    print(item)
+    print('列表：',item)
 
 # 打印:next(g)或for item in g:generator也是可迭代对象
 
 # 二:函数形式生成器
 # 如果函数定义中包含yield关键字,那么这个函数就不再是普通函数,而是一个generator
+#斐波拉契数列
 def fib(max):
     n,a,b = 0,0,1
     while n < max:
@@ -34,7 +36,7 @@ def fib(max):
     return 'done'
 
 for n in fib(6):
-    print(n)
+    print('函数形式生成器:',n)
 
 
 """
@@ -47,7 +49,6 @@ list、dict、str虽然是Iterable，却不是Iterator
 
 凡是可作用于next()函数的对象都是Iterator类型，它们表示一个惰性计算的序列；
 Python的for循环本质上就是通过不断调用next()函数实现的
-
 迭代器就是不但可以作用于for循环，还可以被next()不断的调用并返回下一个值，
 直到最后抛出一个错误StopIteration错误，表示无法继续返回下一个值。
 

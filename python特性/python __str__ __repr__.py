@@ -2,6 +2,9 @@
 # Author centyuan
 # Date 2019/11/21 15:32
 
+"""
+__repr__和__str__这两个方法都是用于显示的，__str__是面向用户的，而__repr__面向程序员
+"""
 class Me(object):
     def __init__(self, name, hobby):
         self.name = name
@@ -13,6 +16,6 @@ class Me(object):
 
 # 两个方法一定return
 me = Me('freename', 'modify')
-print(me)
-print(str(me))
-print(repr(me))
+print('me:',me)
+print('str:',str(me))
+print('repr:',repr(me))
