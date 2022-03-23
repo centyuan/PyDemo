@@ -2,6 +2,7 @@
 
 # 倒序
 var = 'abcde'
+print('var[2]:',var[2])
 print('var',var[:-1]) # abcd
 print('var',var[-2:]) # de
 print('var',var[::-1]) # edcba 倒序

@@ -3,29 +3,21 @@
 # author centyuan
 # @time 19-8-17 下午8:34
 
-"""
-推导式
-通过列表生成式，我们可以直接创建一个列表。但是，受到内存限制，列表容量肯定是有限的。
-而且，创建一个包含100万个元素的列表，不仅占用很大的存储空间，如果我们仅仅需要访问前面几个元素，
-那后面绝大多数元素占用的空间都白白浪费了。
-所以，如果列表元素可以按照某种算法推算出来，那我们是否可以在循环的过程中不断推算出后续的元素呢？
-这样就不必创建完整的list，从而节省大量的空间。
 
+#迭代器：iter()和nexdt()
+
+list = [1,4,6,7]
+it = iter(list) #创建迭代器对象
+# for n in range(len(list)):
+#     print(next(it))
+for x in it:  #迭代器直接遍历 不用next()
+    print(x,end=' ')
+
+"""
 在Python中，这种一边循环一边计算的机制，称为生成器：generator
-
-isinstance(variable,generator)
+使用yield的函数被称为生成器(生成器是一个返回迭代器对象的函数,简单来说生成器就是一个迭代器)
+每次遇到 yield 时函数会暂停并保存当前所有的运行信息，返回 yield 的值, 并在下一次执行 next() 方法时从当前位置继续运行。
 """
-# 一:
-L = [x*x for x in range(10)] # 列表生成式或列表推导式
-
-g = (x*x for x in range(10)) # 简单的创建生成器
-for item in g:
-    print('列表：',item)
-
-# 打印:next(g)或for item in g:generator也是可迭代对象
-
-# 二:函数形式生成器
-# 如果函数定义中包含yield关键字,那么这个函数就不再是普通函数,而是一个generator
 #斐波拉契数列
 def fib(max):
     n,a,b = 0,0,1
@@ -35,8 +27,15 @@ def fib(max):
         n = n+1
     return 'done'
 
-for n in fib(6):
+for n in fib(6): # f=fib(6)是一个迭代器，有生成器返回
     print('函数形式生成器:',n)
+for n in range(7):
+    next(   )
+# 推导式:
+L = [x*x for x in range(10)] # 列表生成式或列表推导式
+g = (x*x for x in range(10)) # 简单的创建生成器
+for item in g:
+    print('列表：',item)
 
 
 """
