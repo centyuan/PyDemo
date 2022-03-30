@@ -15,3 +15,6 @@ def print_all():
 print_all()
 print(print_all.__name__)
 print(__name__)
+import os
+
+print(os.environ)

@@ -7,7 +7,8 @@ import os
 import time
 import cv2
 
-sendMsg = u"{消息助手}：暂时无法回复"
+#网页版微信不能登录 parser.Parse(string,True) 解析不了
+sendMsg = u"{消息助手}：p暂时无法回复"
 usageMsg = u"使用方法：\n1.运行CMD命令：cmd xxx (xxx为命令)\n" \
            u"-例如关机命令:\ncmd shutdown -s -t 0 \n" \
            u"2.获取当前电脑用户：cap\n3.启用消息助手(默认关闭)：ast\n" \

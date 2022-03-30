@@ -33,9 +33,6 @@ for result in results:
 print("Time:", now()-start)
 
 
-
-
-
 # 2
 
 import asyncio

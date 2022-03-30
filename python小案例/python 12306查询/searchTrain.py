@@ -23,7 +23,7 @@ Example:
 from docopt import docopt
 from station import stations
 from prettytable import PrettyTable
-import  requests
+import requests
 import json
 
 class TrainCollection:

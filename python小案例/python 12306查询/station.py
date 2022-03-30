@@ -13,4 +13,4 @@ html=requests.get(url)
 #print(dir(html))
 station = re.findall(u'([\u4e00-\u9fa5]+)\|([A-Z]+)', html.text)#[\u4e00-\u9fa5]+匹配中文
 stations = dict(station)
-pprint(stations,indent = 4)
+pprint(stations,indent=4)

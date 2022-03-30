@@ -13,8 +13,8 @@ def Check_stat():
     #获取无线网卡
     ifaces = wifi.interfaces()[0]
 
-    print(ifaces.status()) #无线网卡状态
-    print(ifaces.name()) #无线网卡名称
+    print('status:',ifaces.status()) #无线网卡状态
+    print('name',ifaces.name()) #无线网卡名称
 
     if ifaces.status() == 4:
         print('已连接无线')

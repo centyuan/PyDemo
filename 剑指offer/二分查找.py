@@ -15,3 +15,13 @@ def bin_search(data_set,value,low,high):
     else:
         return
 
+
+def bin_search(data_set,value,low,high):
+    if low<=high:
+        mid = (low+high)//2
+        if data_set[mid]==value:
+            return mid
+        elif data_set[mid] > value:
+            bin_search(data_set,value,low,mid-1)
+        elif data_set[mid] < value:
+            bin_search(data_set,value,mid+1,high)
