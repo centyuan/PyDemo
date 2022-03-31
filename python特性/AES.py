@@ -10,6 +10,7 @@ import base64
 2.当秘钥，iv偏移量，待加密的明文，字节长度不够16字节或者16字节倍数的时候需要进行补全。
 
 3. CBC模式需要重新生成AES对象，为了防止这类错误，我写代码无论是什么模式都重新生成AES对象。
+ECB性能更快，CBC更安全
 """
 class Encrypt:
     def __init__(self, key, iv):
