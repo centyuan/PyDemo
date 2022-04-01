@@ -9,6 +9,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.authentication import TokenAuthentication
 #authenticate认证成功返回(request.user,request.auth)=>(django user,rest_framework.authtoken.models.Token 实例)
 #自定义认证
+from rest_framework.authentication import BaseAuthentication
 """
 要实现自定义的认证方案，
 要继承BaseAuthentication类并且重写.authenticate(self, request) 方法。
