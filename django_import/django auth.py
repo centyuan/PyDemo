@@ -7,8 +7,8 @@ from django.contrib.auth import login,logout #登入 登出
 from django.contrib.auth.models import Permission #权限
 # authenticate如何实现的
 # 1.__get_backends获取当前系统定义的认证后端，并以此迭代（系统默认的认证后端是ModelBackend）
-#AUTHENTICATION_BACKENDS 可以定义认证后端
-from django.contrib.auth.backends import ModelBackend #用户认证后端
+#AUTHENTICATION_BACKENDS 可以自定义认证后端
+from django.contrib.auth.backends import ModelBackend #django默认用户认证后端
 #2.ModelBackend里使用get_user_model 获取当前系统定义的用户模型
 # get_user_model()实际获取的是settings.AUTH_USER_MODEL指定的User model
 
