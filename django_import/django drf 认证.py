@@ -12,13 +12,25 @@ from rest_framework.authentication import TokenAuthentication
 #authenticate认证成功返回(request.user,request.auth)=>(django user,rest_framework.authtoken.models.Token 实例)
 
 #自定义认证
+#https://www.cnblogs.com/eric_yi/p/8422373.html
 from rest_framework.authentication import BaseAuthentication
 """
 要实现自定义的认证方案，
 要继承BaseAuthentication类并且重写.authenticate(self, request) 方法。
 如果认证成功，该方法应返回(user, auth)的二元元组，否则返回None
-"""
 
+认证流程
+1.拿到用户模型User = get_user_model()
+2.将用户名密码取出来credentials = {
+            self.username_field: attrs.get(self.username_field),
+            'password': attrs.get('password')
+        }
+3.调用authenticate方法将用户名密码传递过去
+4.使用_get_backends获取认证信息类(setting.py中配置的)
+5.使用jwt认证类下面的authenticate方法校验数据
+
+
+"""
 
 #https://www.w3cschool.cn/lxraw/lxraw-bw2j35ou.html
 #1:设置全局的认证方案

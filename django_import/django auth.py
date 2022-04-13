@@ -1,7 +1,7 @@
 # _*_ coding:utf-8 _*_
 # @Author : centyuan
 # @Time : 2022/4/1 20:47
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,AbstractUser
 from django.contrib.auth import authenticate # 用户认证
 from django.contrib.auth import login,logout #登入 登出
 from django.contrib.auth.models import Permission #权限

@@ -94,7 +94,7 @@ if __name__ == '__main__':
     loop.run_until_complete(asyncio.wait(tasks))
     loop.close()
 
-# 4. gevent 遇到耗时的操作，自动切换协程
+# 4. gevent(greenlet需要人工切换) 遇到耗时的操作，自动切换协程
 import gevent
 from gevent import monkey;monkey.patch_all(thread=False)
 
