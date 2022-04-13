@@ -9,7 +9,7 @@ from selenium.webdriver.support.wait import WebDriverWait as WAIT
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
-bili_browser=webdriver.Chrome()
+bili_browser= webdriver.Chrome()
 bili_browser.get("https://www.bilibili.com/")
 # search_input=bili_browser.find_element_by_css_selector("#search-keyword")
 # search_input.send_keys("国光")
