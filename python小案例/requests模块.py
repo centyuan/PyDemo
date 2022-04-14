@@ -33,7 +33,7 @@ print(response.url)
 response = requests.post('http://www.baidu.com/')
 
 #可以传入data response = requests.post('http://www.baidu.com/',data=data)
-#print(response.text)
+print(response.text)
 
 #Cookies
 

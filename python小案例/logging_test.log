@@ -1,0 +1,11 @@
+2022-04-13 18:54:22,488 - python logging模块.py[line:46] - ERROR: Exception occurred
+Traceback (most recent call last):
+  File "D:/BaiduNetdiskDownload/python-demo/python小案例/python logging模块.py", line 43, in <module>
+    open("sklearn.txt","rb")
+FileNotFoundError: [Errno 2] No such file or directory: 'sklearn.txt'
+2022-04-13 18:54:22,492 - python logging模块.py[line:47] - ERROR: Exception occurred
+Traceback (most recent call last):
+  File "D:/BaiduNetdiskDownload/python-demo/python小案例/python logging模块.py", line 43, in <module>
+    open("sklearn.txt","rb")
+FileNotFoundError: [Errno 2] No such file or directory: 'sklearn.txt'
+2022-04-13 18:54:22,492 - python logging模块.py[line:54] - INFO: Finish

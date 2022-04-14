@@ -2,26 +2,31 @@
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-5-19 下午8:17
-import  requests
+import requests
 from bs4 import BeautifulSoup
 import xlwt
 import time
-import multiprocessing
+from  multiprocessing import Pool,Process
 
-def main(url):
+def main(url,headers):
     print(url)
-    html=request_douban(url)
+    html=request_douban(url,headers)
+    print('main-----')
     soup=BeautifulSoup(html,'lxml')
+    print('main_soup')
     save_to_excel(soup)
 
-def request_douban(url):
+def request_douban(url,headers):
     try:
-        response=requests.get(url)
+        print('request_douban')
+        response=requests.get(url,headers=headers)
         if response.status_code==200:
+            print('request_douban',response.status_code)
             return response.text
     except requests.RequestException:
+        print('request_requestException', response.status_code)
         return None
-    pass
+
 
 def save_to_excel(soup):
     index=0
@@ -51,7 +56,8 @@ def save_to_excel(soup):
             movie_sheet.write(index+1,3,item_score)
             movie_sheet.write(index+1,4,item_author)
             #movie_sheet.write(index+1,5,item_intr)
-    movie_book.save('多进程豆瓣电影250.xlsx')
+    movie_book.save("多进程豆瓣电影250.xls")
+    print('save_to_ex')
 
 
 
@@ -59,11 +65,16 @@ def save_to_excel(soup):
 
 if __name__=="__main__":
     start=time.time()
-    urls=[]
-    pool=multiprocessing.Pool(multiprocessing.cpu_count())#创建相应的进程池
+    urls = []
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"}
+    pool=Pool(4)#创建相应的进程池
     for i in range(0,10):
         url = 'https://movie.douban.com/top250?start=' + str(i * 25) + '&filter='
-        urls.append(url)
-    pool.map(main,urls)
+        pool.apply_async(main,args=(url,headers))
     pool.close()#不在创建进程
     pool.join()#让进程池的进程执行完毕再结束
+
+    # for i in range(0, 10):
+    #     url = 'https://movie.douban.com/top250?start=' + str(i * 25) + '&filter='
+    #     main(url,headers=headers)

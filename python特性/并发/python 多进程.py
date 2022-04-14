@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-7-3 下午2:07
-from multiprocessing import  Process,Pool
+from multiprocessing import Process,Pool
 import time,random,os
 
 #1. 创建Process实例,传入任务执行函数
