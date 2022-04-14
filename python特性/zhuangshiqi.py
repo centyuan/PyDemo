@@ -44,17 +44,26 @@ funB("http://c.biancheng.net/python")
 def funA(fn):
     # 定义一个嵌套函数
     def say(*args,**kwargs):
+        print('funA 中say')
         fn(*args,**kwargs)
     return say
 @funA
 def funB(arc):
-    print("C语言中文网：",arc)
+    print("funB:C语言中文网：",arc)
 @funA
 def other_funB(name,arc):
     print(name,arc)
 funB("http://c.biancheng.net")
-other_funB("Python教程：","http://c.biancheng.net/python")
+other_funB("other_funB:Python教程：","http://c.biancheng.net/python")
 
 if __name__ == '__main__':
     print(funB)
 
+"""
+使用装饰器时，有一些细节需要注意：被装饰后的函数其实已经是另一个函数了，它的函数名及属性等，都是属于新函数，
+所以,Python的functools包中提供了一个叫wraps的装饰器来消除这样的副作用
+例如打印:
+被装饰函数的.__doc__
+被装饰函数的.__name__
+
+"""

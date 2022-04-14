@@ -85,4 +85,4 @@ if __name__ == '__main__':
     pool = ThreadPoolExecutor(20)  # 创建20个的线程池
     for i in range(1, 5):
         #fuck为线程任务
-        pool.submit(fuck('线程' + str(i), 2, 3))
+        pool.submit(fuck('线程池' + str(i), 2, 3))
