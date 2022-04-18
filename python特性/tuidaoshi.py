@@ -24,6 +24,9 @@ def main():
     """
     a = {x for x in 'abracadabra' if x not in 'abc'}
     print(a)
+    """
+    生成器表达式来初始化元组、数组或其他序列类型
+    """
     #元组推导式
     """
     (expression for item in Sequence )
@@ -59,3 +62,9 @@ if __name__ == '__main__':
     printinfo(20,30,40,a=1,b=2)
     import sys
     print(sys.path)
+    #使用生成器表达式计算笛卡尔积
+    colors = ['black','white']
+    sizes = ['S','M','L']
+    for Tshirt in ('%s %s'%(c,s) for c in colors for s in sizes):
+        printinfo(Tshirt)
+    

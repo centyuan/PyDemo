@@ -18,5 +18,7 @@ is_exists=os.path.dirname(__file__)
 # os.listdir(path)用于返回指定的文件夹包含的文件或文件夹的名字的列表。这个列表以字母顺序。
 # 它不包括 '.' 和'..' 即使它在文件夹中。
 # print(os.listdir(path))
-
+# print(os.path.join(path1,path2,path3))
 print(os.environ)
+#os.path.split 返回一个路径和文件名的元组
+_,filename = os.path.split('D:\BaiduNetdiskDownload\python-demo\python特性\os.path.dirname.py')
