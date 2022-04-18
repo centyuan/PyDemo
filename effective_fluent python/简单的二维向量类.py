@@ -1,4 +1,4 @@
-from math import  hypot
+from math import hypot
 
 """
 即便其他程序要使用这个类的这些方法，也不会直接调用它们，

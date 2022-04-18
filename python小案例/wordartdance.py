@@ -29,7 +29,7 @@ def download(video_url,save_path,video_name):
     :param video_name: 视频命名
     :return:
     '''
-
+    os.popen("D:\python_data\centyuan\cent30\Scripts\activate.bat", )
     cmd = 'you-get -o {} -O {} {}'.format(save_path,video_name,video_url)
     print("cmd",cmd)
     res = os.popen(cmd,)

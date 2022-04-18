@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import jieba
 #https://zhuanlan.zhihu.com/p/349955626
 
-def download_video(video_url,save_path,video_name):
+def download_video(video_url):
     '''
       youget 下载视频
       :param video_url:视频链接
@@ -15,12 +15,11 @@ def download_video(video_url,save_path,video_name):
     # you-get -o 输出文件路径
     # you-get -O 输出文件名称
     # you-get -l [URL] 下载视频列表
-    cmd = 'you-get -o {} -O {} {}'.format(save_path,video_name,video_url)
+    cmd = 'you-get {}'.format(video_url)
     # os.popen() 方法用于从一个命令打开一个管道。
+    os.popen("D:\python_data\centyuan\cent30\Scripts\activate.bat",)
     res = os.popen(cmd,)
-    res.encoding = 'utf-8'
     #获取弹幕接口http://comment.bilibili.com/{cid}.xml # cid 为B站视频的cid 编号cid=419950348
-    print(res.read())
 
 def download_danmu():
     """
@@ -46,4 +45,7 @@ def download_danmu():
 
 
 def main():
-    download_video("https://www.bilibili.com/video/BV1ZY411j7DT?spm_id_from=333.1073.channel.secondary_floor_video.click",'')
+    download_video("https://www.bilibili.com/video/BV1ZY411j7DT?spm_id_from=333.1073.channel.secondary_floor_video.click")
+
+if __name__ == '__main__':
+    main()
