@@ -6,10 +6,8 @@ import base64
 
 """
 1. 在Python中进行AES加密解密时，所传入的密文、明文、秘钥、iv偏移量、都需要是bytes（字节型）数据。python 在构建aes对象时也只能接受bytes类型数据。
-
 2.当秘钥，iv偏移量，待加密的明文，字节长度不够16字节或者16字节倍数的时候需要进行补全。
-
-3. CBC模式需要重新生成AES对象，为了防止这类错误，我写代码无论是什么模式都重新生成AES对象。
+3. CBC模式需要重新生成AES对象，为了防止这类错误，写代码无论是什么模式都重新生成AES对象。
 ECB性能更快，CBC更安全
 """
 class Encrypt:
@@ -25,14 +23,17 @@ class Encrypt:
         padding_size = length if (bytes_length == length) else bytes_length
         #需要填充几位
         padding = bs - padding_size % bs
+        #chr 整数返回对应字符
+        #ord 字符串（Unicode 字符）作为参数，返回对应的 ASCII 数值，或者 Unicode 数值。
         padding_text = chr(padding) * padding
         self.coding = chr(padding)
         return text + padding_text
 
     def aes_encrypt(self, content):
         """ AES加密 """
-        #cipher = AES.new(self.key, AES.MODE_CBC, self.iv)
-        cipher = AES.new(self.key,AES.MODE_ECB)
+
+        #cipher = AES.new(self.key, AES.MODE_CBC, self.iv)  #CBC模式
+        cipher = AES.new(self.key,AES.MODE_ECB)  #ECB模式
         # 处理明文
         content_padding = self.pkcs7padding(content)
         # 加密
@@ -45,7 +46,7 @@ class Encrypt:
         """AES解密 """
         #cipher = AES.new(self.key, AES.MODE_CBC, self.iv)
         cipher = AES.new(self.key,AES.MODE_ECB)
-        #base64解码
+        #   
         content = base64.b64decode(content)
         #解密
         text = cipher.decrypt(content).decode('utf-8')
