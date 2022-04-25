@@ -23,8 +23,9 @@ sys.path在python脚本执行时动态生成，包括以下3个部分：
 3、安装python时的依赖位置
 """
 
-print(sys.path)
-print(os.environ)
+print(sys.path) # sys.path.append("")备注:这个添加只是临时添加，如果退出当前会话，或者当前的shell，就会消失。
+print("PATH",os.environ['PATH']) #os.environ["PATH"] += "新系统环境值"，
+print("PYTHONPATH",os.environ['PYTHONPATH'])
 
 sys.path.append('引用模块的地址')
 sys.path.insert(0, '引用模块的地址') #优先与其他被important检查

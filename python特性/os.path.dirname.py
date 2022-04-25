@@ -19,6 +19,10 @@ is_exists=os.path.dirname(__file__)
 # 它不包括 '.' 和'..' 即使它在文件夹中。
 # print(os.listdir(path))
 # print(os.path.join(path1,path2,path3))
-print(os.environ)
+#os.environ.setdefault("")
+print("os.environ",os.environ)
+print(os.getenv("APPDATA"))
+
+
 #os.path.split 返回一个路径和文件名的元组
 _,filename = os.path.split('D:\BaiduNetdiskDownload\python-demo\python特性\os.path.dirname.py')

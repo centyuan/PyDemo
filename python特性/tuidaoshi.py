@@ -16,7 +16,7 @@ def main():
     """
     listdemo = ['Google', 'Runoob', 'Taobao']
     newdict = {key:len(key) for key in listdemo}
-    print(newdict)
+    print("_______",newdict)
     #集合推导式
     """
     { expression for item in Sequence }
@@ -67,4 +67,15 @@ if __name__ == '__main__':
     sizes = ['S','M','L']
     for Tshirt in ('%s %s'%(c,s) for c in colors for s in sizes):
         printinfo(Tshirt)
-    
+    Firewall_data = [
+        {"name":'Y',"type":'FireWall',"create_time":"2022-09-10"},
+        {"name": 'B', "type": 'FireWall', "create_time": "2022-09-11"},
+        {"name": 'A', "type": 'FireWall', "create_time": "2022-09-12"},
+        {"name": 'D', "type": 'FireWall', "create_time": "2022-09-13"},
+                     ]
+    result = [
+        {"name": item.get("name"), "type": 'FireWall', "create_time": item.get("create_time")} for item in Firewall_data
+    ]
+    # for item in Firewall_data:
+    #     print(item.get("name"))
+    print("+++++++++",type(result),result)
