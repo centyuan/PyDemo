@@ -23,6 +23,5 @@ is_exists=os.path.dirname(__file__)
 print("os.environ",os.environ)
 print(os.getenv("APPDATA"))
 
-
 #os.path.split 返回一个路径和文件名的元组
 _,filename = os.path.split('D:\BaiduNetdiskDownload\python-demo\python特性\os.path.dirname.py')
