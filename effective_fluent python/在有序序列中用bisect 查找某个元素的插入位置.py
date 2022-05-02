@@ -20,7 +20,20 @@ if __name__ == '__main__':
     demo(bisect_fn)
 
 #实际例子 bisect(haystack, needle) 二分法查找needle在haystack中的位置索引
-#分数和成绩对应起来,后根据一个分数找到对应的成绩等级
-def grade(score,breakpoints=[60,70,80,90],grades='FDCBA'):
-    i = bisect.bisect(breakpoints,score)
-    return grades(i)
+
+
+"""1:分数和成绩对应起来,后根据一个分数找到对应的成绩等级"""
+def grade(score, breakpoints=[60, 70, 80, 90], grades='FDCBA'):
+    i = bisect.bisect(breakpoints, score)
+    return grades[i]
+
+print([grade(score) for score in [33, 99, 77, 70, 89, 90, 100]])
+
+"""2:插入元素并保持有序(排序很耗时)"""
+import random
+SIZE = 7
+my_list = []
+for i in range(SIZE):
+    new_item = random.randrange(SIZE*2)
+    bisect.insort(my_list,new_item)
+    print('%2d ->'%new_item,my_list)

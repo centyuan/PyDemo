@@ -46,3 +46,22 @@ fun_var_kwargs(farg=1, myarg2="two", myarg3=3)
 # myarg2和myarg3被视为key， 感觉**kwargs可以当作容纳多个key和value的dictionary
 fun_var_kwargs(farg=1,**bl)
 au_login(True)#使用关键字参数，可以不传入参数名，按顺序一样
+
+
+# args kwargs 两种传参方式
+def test_args(*info):
+    print(info)
+def test_kwargs(**info):
+    print(info,info.keys(),info.values())
+tuple_data = ("name","age","man")
+dict_data = {'name':'yuan','age':20,'sex':'man'}
+
+test_args("name","age","man")
+test_args(*tuple_data)
+
+test_kwargs(**dict_data)
+test_kwargs(a="a",b="123",c="234")
+
+port = "200-300"
+a=port.split("-")[0]
+print(a,port)

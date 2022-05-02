@@ -50,3 +50,7 @@ answers = ['lancelot','the holy grail','blue']
 for q,a in zip(questions,answers):
     print(f'What is your {q} It is {a}')
     #print('What is your {0}?  It is {1}.'.format(q, a))
+
+d = {"google": [{"name":"yuan","age":12}]}
+key = list(d.keys())[0]
+print(key)
