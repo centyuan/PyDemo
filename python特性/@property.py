@@ -13,7 +13,6 @@ class test(object):
         del self.__num
     num = property(getNum,setNum,delNum)
 
-
 class test_2(object):
     def __init__(self):
         self.__num = 0

@@ -67,5 +67,4 @@ print('s1:',s1)
 这是__init__方法
 <__main__.Student object at 0x000001EC6C8C8748>
 '''
-
 #总结：很明显，这两个实例的内存地址一样，所以__init__接受的实例就是__new__创建的。

@@ -26,21 +26,23 @@ setting_changed  配置文件改变时
 template_rendered 模板执行渲染操作时
 5 Datebase_Wrapped
 connection_created 创建数据库连接时
-
-
+"""
+"""
 from django.db.models.signals import post_save,finished
 from django.dispathc import receiver
 #对于每个唯一的dispatch_uid,接收器都只被信号调用一次
 @receiver(post_save,sender=MyModel,dispatch_uid='my_unique_identifier')
 def my_handler(sender,instance,**kwargs):
     print('hello world')
-#装饰器
+    
 @receiver(request_finished)
 def my_callback(sender,**kwargs):
     print('request finished')
 #手动连接信号
 request_finished.connect(my_callback)
+"""
 
+"""
 #自定义信号
 from django.dispatch import Signal
 #定义信号
