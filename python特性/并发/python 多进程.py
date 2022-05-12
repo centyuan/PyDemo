@@ -39,7 +39,6 @@ if __name__=='__main__':
     #二
     #main()2
 
-
 #2. 派生Process的子类,重写run方法
 class MyProcess(Process):
     def __init__(self):

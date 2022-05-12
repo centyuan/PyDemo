@@ -7,7 +7,7 @@ print('var',var[:-1]) # abcd
 print('var',var[-2:]) # de
 print('var',var[::-1]) # edcba 倒序
 print('var',var[1::-1]) # ba 第0,1的倒序
-print('var',var[::-1][-2:]) # ba 先倒序，在去倒序两位
+print('var',var[::-1][-2:]) # ba 先倒序，在取后两位
 print('var',var[::-1][:-2]) # edc
 print('var',var[0:2][::-1]) # 先取正两位，在倒序
 

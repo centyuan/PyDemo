@@ -21,4 +21,20 @@ class Person(object):
 p = Person('Bob', 'male')
 p("cob")
 
+"""判断对象是否可被调用"""
+#1内置函数 callable(func)
+def functest():
+    pass
+print(callable(functest))
 
+#2判断对象是否是FunctionType
+
+from types import FunctionType
+if type(functest) is FunctionType:
+    print(True)
+if isinstance(functest,FunctionType):
+    print(True)
+
+#3判断对象是否实现__call__方法
+if hasattr(functest,'__call__'):
+    print('hasattr',True)

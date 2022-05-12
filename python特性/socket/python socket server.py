@@ -21,6 +21,7 @@ def tcplink(sock,addr):
 
 s=socket.socket() #创建socket对象
 #host=socket.gethostname() #获取本地主机名
+print(socket.gethostname())
 ip_host = ('127.0.0.1',12345)      #设置端口
 s.bind(ip_host) #绑定端口
 print("ip_host:",ip_host)

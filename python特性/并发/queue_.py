@@ -17,6 +17,7 @@ class Producer(threading.Thread):
         self.queue.put(random_int)
         print('producer add {}:'.format(random_int))
         time.sleep(random.random())
+
 class Consumer(threading.Thread):
     def __init__(self,queue):
         threading.Thread.__init__(self)

@@ -5,7 +5,7 @@ print(random.randint(1, 10))  #1到10之间的随机整数
 print(random.choice('tomorrow')) #从序列中随机取一个元素
 
 print(random.randrange(0, 101, 2)) # 随机选取0到100间的偶数：
-print( random.randrange(1,100,2) ) # 随机从1到100的间的奇数
+print(random.randrange(1,100,2) ) # 随机从1到100的间的奇数
 # 多个字符中生成指定数量的随机字符：
 print(random.sample('zyxwvutsrqponmlkjihgfedcba',5))
 # 从a-zA-Z0-9生成指定数量的随机字符：

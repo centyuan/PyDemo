@@ -3,6 +3,9 @@
 # @Time : 2022/3/21 8:56
 
 from queue import Queue
+from lxml import etree
+import requests
+import csv
 """
 Queue.full() 表示队列满了返回True
 Queue.put()

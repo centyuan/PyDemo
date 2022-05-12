@@ -58,30 +58,29 @@ class MyThread(threading.Thread):
 
 def fuck(thread_name, delay, counter):
     while counter:
-
         time.sleep(delay)
         print("%s 开始fuck %s" % (thread_name, time.strftime("%Y-%m-%d %H:%M:%S")))
         counter -= 1
 
 
 def thr_run():
-    thread_cent = MyThread(1, '线程类实现cent', 1)
-    thread_yuan = MyThread(2, '线程类实现yuan', 2)
-    thread3 = threading.Thread(target=fuck, args=('线程函数实现', 2, 4))
+    thread_1 = MyThread(1, 'thread_1', 1)
+    thread_2 = MyThread(2, 'thread_2', 2)
+    thread_3 = threading.Thread(target=fuck, args=('线程函数实现', 2, 4))
     # 开启新线程
     print("开始主线程A")
-    thread_cent.start()
-    thread_yuan.start()
-    thread3.start()
+    thread_1.start()
+    thread_2.start()
+    thread_3.start()
     # 主线程A会在调用的地方等待，直到子线程B完成操作后，才可以接着往下执行
-    #阻塞shi调用
-    thread_cent.join()
-    thread_yuan.join()
-    thread3.join()
+    # 阻塞shi调用
+    thread_1.join()
+    thread_2.join()
+    thread_3.join()
     print("退出主线程A")
 
 if __name__ == '__main__':
-    thr_run()
+    # thr_run()
     pool = ThreadPoolExecutor(20)  # 创建20个的线程池
     for i in range(1, 5):
         #fuck为线程任务

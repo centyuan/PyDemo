@@ -1,7 +1,11 @@
 # _*_ coding:utf-8 _*_
 # @Author : centyuan
 # @Time : 2022/2/28 19:05
+"""
+property
+将函数变为一个属性,不带()调用函数
 
+"""
 class test(object):
     def __init__(self):
         self.__num = 0

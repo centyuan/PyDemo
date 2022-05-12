@@ -45,7 +45,6 @@ print('END')
 """
 class FooError(ValueError):
     pass
-
 def foo(s):
     n = int(s)
     if n==0:
@@ -54,24 +53,18 @@ def foo(s):
 
 foo('0')
 
-
-
-
 def foo(s):
     n = int(s)
     if n==0:
         raise ValueError('invalid value: %s' % s)
     return 10 / n
-
 def bar():
     try:
         foo('0')
     except ValueError as e:
         print('ValueError!')
         raise
-
 bar()
-
 
 #三:assert
 """
@@ -92,3 +85,7 @@ assert type(a) == str,'a is type of int'
 #     assert type(a) == str,'a is type of int'
 # AssertionError: a is type of int
 
+"""
+raise 与raise..from的区别主要在于：
+在显示错误信息时，raise只显示错误类型，raise...from...还会显示导致错误的原因（原因是from 后面的部分）
+"""

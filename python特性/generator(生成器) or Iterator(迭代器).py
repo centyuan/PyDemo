@@ -4,7 +4,7 @@
 # @time 19-8-17 下午8:34
 
 
-#迭代器：iter()和nexdt()
+#迭代器：iter()和next()
 
 list = [1,4,6,7]
 it = iter(list) #创建迭代器对象
@@ -30,7 +30,7 @@ def fib(max):
 for n in fib(6): # f=fib(6)是一个迭代器，有生成器返回
     print('函数形式生成器:',n)
 for n in range(7):
-    next(   )
+    next()
 # 推导式:
 L = [x*x for x in range(10)] # 列表生成式或列表推导式
 g = (x*x for x in range(10)) # 简单的创建生成器

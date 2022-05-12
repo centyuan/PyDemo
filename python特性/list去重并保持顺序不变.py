@@ -19,7 +19,7 @@ value -- 可选参数, 设置键序列（seq）的值。
 # 且顺序保持不变
 a=[1,2,4,2,4,5,6,5,7,8,9,0]
 b={}
-b=b.fromkeys(a) #默认值为None
+b.fromkeys(a) #默认值为None
 c=list(b.keys())
 
 #2.
@@ -31,18 +31,13 @@ for it in a_list:
 
 #3.使用set 且保持顺序不变
 test_list = ['cc', 'sss','ddd','bbbb', 'shafa','afa', 'sss', 'bbbb', 'cc', 'shafa']
-list_1 = list(set(test_list))
-list_1.sort(key=test_list.index)
-print(list_1) #['cc', 'sss', 'ddd', 'bbbb', 'shafa', 'afa']
-
 list_2 = sorted(set(test_list),key=test_list.index)
 print(list_2)
 ['cc', 'sss', 'ddd', 'bbbb', 'shafa', 'afa']
+
 #4.使用 set(集合是一个无序的不重复的元素序列) 但不保持顺序不变
 
 print('set',list(set(a)))
-
-
 a = ['a','c','d']
 b = ['d','f','e']
 m = zip(a,b)

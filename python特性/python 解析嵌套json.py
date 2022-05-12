@@ -32,13 +32,13 @@ def _get_value(key, val, tmp_list):
             _get_value(key, val_, tmp_list)   # 传入数据的value值是列表或者元组，则调用自身
 
 if __name__ == "__main__":
-    test_dict='{"employees": [{ "firstName":"Bill" , "lastName":"Gates" },{ "firstName":"George" , "lastName":"Bush" },{ "firstName":"Thomas" , "lastName":"Carter" }]}'
-    test_dic={
+    test_1='{"employees": [{ "firstName":"Bill" , "lastName":"Gates" },{ "firstName":"George" , "lastName":"Bush" },{ "firstName":"Thomas" , "lastName":"Carter" }]}'
+    test_2={
         'a':'1',
         'b':'2',
         'c':{'d':[{'e':'3'}]}
     }
-    test_di={"mchid":10010, "data":{ "paytype": 100, "out_trade_no": "20190610001"}}
-    print(get_target_value('firstName',test_dict,[]))
-    print(get_target_value('d',test_dic,[]))
-    print(get_target_value('paytype',test_di,[]))
+    test_3={"mchid":10010, "data":{ "paytype": 100, "out_trade_no": "20190610001"}}
+    print(get_target_value('firstName',test_1,[]))
+    print(get_target_value('d',test_2,[]))
+    print(get_target_value('paytype',test_3,[]))

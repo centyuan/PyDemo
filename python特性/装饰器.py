@@ -63,7 +63,6 @@ def deco02(func):
     def wrapper(*args, **kwargs):
         func(*args, **kwargs)
         print("装饰器2")
-
         print("装饰器2结束")
     return wrapper
 
