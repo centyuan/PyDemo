@@ -1,0 +1,101 @@
+"""
+mlsql数据库
+mysql -u root -p
+
+　　-u 表示选择登陆的用户名， -p 表示登陆的用户密码，上面命令输入之后会提示输入密码，此时输入密码就可以登录到mysql。
+
+postgresql数据库
+sudo -u postgres psql
+sudo su postgres
+
+
+postgresql:
+登录:
+ psql -U dbuser -d exampledb -h 127.0.0.1 -p 5432
+
+/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data/  初始化数据库
+/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data -l logfile start
+
+配置数据库允许远程连接访问:
+1修改监听地址
+sudo gedit /etc/postgresql/10/main/postgresql.conf
+ #将listen_addresses='localhost'改为listen_addresses='*'
+2修改可访问用户的IP段
+sudo gedit /etc/postgresql/10/main/pg_hba.conf
+ #在文件末尾添加 host all all 0.0.0.0 0.0.0.0 md5 #表示允许任何IP连接
+
+备份：
+ pg_dump  –h 127.0.0.1  -p  5432  -U  postgres -c  –f  dbname.sql  dbname
+ pg_dump -h 164.82.233.54 -U postgres databasename > C:\databasename.bak
+    使用如下命令可对全部pg数据库进行备份：
+    pg_dumpall –h 127.0.0.1 –p 5432 -U postgres –c –f db_bak.sql
+
+
+恢复：
+ windows:
+
+  psql -h localhost -U postgres -d new_db  -f "C:/emoneysit.bak"
+
+ ubuntu:
+
+  psql -h localhost -U emmweb -d emmweb < /home/jianghai/Desktop/emmweb.bak 
+
+-h：数据库服务器地址；
+
+-p：数据库端口号；
+
+-U：U 大写,表示用户名；
+
+-d：数据库名称；
+
+-f：把备份文件放在哪里；
+
+\password:设置密码
+\q:退出
+\l:列出所有数据库
+\d:列出当前数据库的所有表格
+\d [table_name]:列出某一张表结构
+\du:列出所有用户
+\h:查看SQl命令的解释，比如 \h select
+\?:查看psql命令列表
+\c [database_name]:切换数据库
+\c - [user_name]:切换用户
+
+修改管理员密码
+alter user postgres with password '123456';
+
+添加数据库新用户
+create user centyuan with password '123456';
+
+创建数据库
+create database exampledb owner centyuan;
+
+将example数据库所有权限赋予centyuan,否则centyuan只能登录，没有任何数据库操作权限。
+
+grant all privileges on database exampledb to centyuan;
+
+# 创建新表
+CREATE TABLE user_tbl(name VARCHAR(20), signup_date DATE);
+# 插入数据
+INSERT INTO user_tbl(name, signup_date) VALUES('张三', '2013-12-22');
+# 选择记录
+SELECT * FROM user_tbl;
+# 更新数据
+UPDATE user_tbl set name = '李四' WHERE name = '张三';
+# 删除记录
+DELETE FROM user_tbl WHERE name = '李四' ;
+# 添加栏位
+ALTER TABLE user_tbl ADD email VARCHAR(40);
+# 更新结构
+ALTER TABLE user_tbl ALTER COLUMN signup_date SET NOT NULL;
+# 更名栏位
+ALTER TABLE user_tbl RENAME COLUMN signup_date TO signup;
+# 删除栏位
+ALTER TABLE user_tbl DROP COLUMN email;
+# 表格更名
+ALTER TABLE user_tbl RENAME TO backup_tbl;
+# 删除表格
+DROP TABLE IF EXISTS backup_tbl;
+
+
+"""

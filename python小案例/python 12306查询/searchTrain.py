@@ -70,9 +70,6 @@ class TrainCollection:
 
 def cli():
     """command-line interface centyuan"""
-    #print(help(cli))可以获取函数注释内容，且注释内容为三双引号 三单引号均可 ,但 # 的不行
-    #print(cli.__doc__)
-    #print(__doc__)  # 输出文件开头注释内容
     arguments=docopt(__doc__)
     print(arguments)
     print(arguments['<from>'])
@@ -83,9 +80,6 @@ def cli():
         date, from_station, to_station
     )
     html=requests.get(url,verify=False)
-    # print(json.loads(str(html.text)))
-    # print(type(html))
-    # print(dir(html))
     #print(html.json())#.json()将json数据转化为python字典
     available_trains=html.json()['data']['result']
     available_places=html.json()['data']['map']

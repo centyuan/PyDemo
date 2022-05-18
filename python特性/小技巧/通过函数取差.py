@@ -3,4 +3,4 @@
 # @Time : 2022/3/28 23:54
 
 def difference(a,b,fn):
-    b = set(map(fn,b))
+    b = set(map(fn,a))

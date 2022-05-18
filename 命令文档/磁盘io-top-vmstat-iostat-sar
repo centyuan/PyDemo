@@ -1,0 +1,180 @@
+第一种：用 top 命令 中的cpu 信息观察
+  第一行
+   load average
+若是 load < 0.7 并不会去关注他；
+若是 0.7< load < 1 的时候我们就需要稍微关注一下了，虽然还可以应付但是这个值已经离临界不远了；
+若是 load = 1 的时候我们就需要警惕了，因为这个时候已经没有更多的资源的了，已经在全力以赴了；
+若是 load > 5 的时候系统已经快不行了，这个时候你需要加班解决问题了
+
+　　Top可以看到的cpu信息有：
+
+　第二行　Tasks: 29 total, 1 running, 28 sleeping, 0 stopped, 0 zombie
+
+　第三行  Cpu(s): 0.3% us, 1.0% sy, 0.0% ni, 98.7% id, 0.0% wa, 0.0% hi, 0.0% si
+
+　　具体的解释如下：
+
+　　Tasks: 29 total 进程总数
+
+　　1 running 正在运行的进程数
+
+　　28 sleeping 睡眠的进程数
+
+　　0 stopped 停止的进程数
+
+　　0 zombie 僵尸进程数
+
+　　Cpu(s):
+
+　　0.3% us 用户空间占用CPU百分比
+
+　　1.0% sy 内核空间占用CPU百分比
+
+　　0.0% ni 用户进程空间内改变过优先级的进程占用CPU百分比
+
+　　98.7% id 空闲CPU百分比
+
+　　0.0% wa 等待输入输出的CPU时间百分比
+
+　　0.0% hi 硬中断(Hardware IRQ)占用cpu的百分比
+
+　　0.0% si 软中断(Software IRQ)占用cpu的百分比
+    0.0% st (Steal time)是hypervisor等虚拟服务中,虚拟cpu等待实际cpu的时间的百分比
+
+　　0.0% wa 的百分比可以大致的体现出当前的磁盘io请求是否频繁。如果 wa的数量比较大，说明等待输入输出的的io比较多。
+第四行
+8176740 total	物理内存总量
+8032104 used	使用的物理内存总量
+144636 free	空闲内存总量
+313088 buffers	用作内核缓存的内存量
+第五行
+total	交换区总量
+used	使用的交换区总量
+free	空闲交换区总量
+cached	缓冲的交换区总量,内存中的内容被换出到交换区，而后又被换入到内存，但使用过的交换区尚未被覆盖
+最后
+列名	解释
+PID	进程id
+USER	该进程的所属用户
+PR	该进程执行的优先级 priority 值
+NI	该进程的 nice 值
+VIRT	该进程任务所使用的虚拟内存的总数
+RES	该进程所使用的物理内存数，也称之为驻留内存数
+SHR	该进程共享内存的大小
+S	该进程进程的状态: S=sleep R=running Z=zombie
+%CPU	该进程CPU的利用率
+%MEM	该进程内存的利用率
+TIME+	该进程活跃的总时间
+COMMAND	该进程运行的名字
+NICE 值叫做静态优先级，是用户空间的一个优先级值，其取值范围是-20至19。这个值越小，表示进程”优先级”越高，而值越大“优先级”越低。nice值中的 -20 到 19，中 -20 优先级最高， 0 是默认的值，而 19 优先级最低
+NICE 值叫做静态优先级，是用户空间的一个优先级值，其取值范围是-20至19。这个值越小，表示进程”优先级”越高，而值越大“优先级”越低。nice值中的 -20 到 19，中 -20 优先级最高， 0 是默认的值，而 19 优先级最低
+top交互命令
+q	退出程序
+I	切换显示平均负载和启动时间的信息
+P	根据CPU使用百分比大小进行排序
+M	根据驻留内存大小进行排序
+i	忽略闲置和僵死的进程，这是一个开关式命令
+k	终止一个进程，系统提示输入 PID 及发送的信号值。一般终止进程用 15 信号，不能正常结束则使用 9 信号。安全模式下该命令被屏蔽。
+
+ iostat:
+   iostat -d -k 1 10
+参数 -d 表示，显示设备（磁盘）使用状态；-k某些使用block为单位的列强制使用Kilobytes为单位；1 10表示，数据显示每隔1秒刷新一次，共显示10次。
+tps：该设备每秒的传输次数（Indicate the number of transfers per second that were issued to the device.）。“一次传输”意思是“一次I/O请求”。多个逻辑请求可能会被合并为“一次I/O请求”。“一次传输”请求的大小是未知的。
+
+kB_read/s：每秒从设备（drive expressed）读取的数据量；kB_wrtn/s：每秒向设备（drive expressed）写入的数据量；kB_read：读取的总数据量；kB_wrtn：写入的总数量数据量；这些单位都为Kilobytes。
+
+   iostat -d -x -k 1 10 使用-x参数我们可以获得更多统计信息。
+rrqm/s：每秒这个设备相关的读取请求有多少被Merge了（当系统调用需要读取数据的时候，VFS将请求发到各个FS，如果FS发现不同的读取请求读取的是相同Block的数据，FS会将这个请求合并Merge）；wrqm/s：每秒这个设备相关的写入请求有多少被Merge了。
+
+rsec/s：每秒读取的扇区数；wsec/：每秒写入的扇区数。r/s：The number of read requests that were issued to the device per second；w/s：The number of write requests that were issued to the device per second；
+
+await：每一个IO请求的处理的平均时间（单位是微秒毫秒）。这里可以理解为IO的响应时间，一般地系统IO响应时间应该低于5ms，如果大于10ms就比较大了。
+
+%util：在统计时间内所有处理IO时间，除以总共统计时间。例如，如果统计间隔1秒，该设备有0.8秒在处理IO，而0.2秒闲置，那么该设备的%util = 0.8/1 = 80%，所以该参数暗示了设备的繁忙程度。一般地，如果该参数是100%表示设备已经接近满负荷运行了（当然如果是多磁盘，即使%util是100%，因为磁盘的并发能力，所以磁盘使用未必就到了瓶颈）。
+
+   iostat -c 1 10 ostat还可以用来获取cpu部分状态值
+
+
+sar:
+sar(System Activity Reporter系统活动情况报告):是目前Linux上最为全面的系统性能分析工具之一，包括：文件读写情况，系统调用使用情况，磁盘I/O，cpu效率，内存使用情况，进程活动级IPC有关的活动等。
+sar [options] [-A] [-o file] t [n]
+t为采样间隔，n为采样次数，默认值是1；
+-o file表示将命令结果以二进制格式存放在文件中，file 是文件名。
+options 为命令行选项如下：
+-A：所有报告的总和
+
+-u：输出CPU使用情况的统计信息
+
+-v：输出inode、文件和其他内核表的统计信息
+
+-d：输出每一个块设备的活动信息
+
+-r：输出内存和交换空间的统计信息
+
+-b：显示I/O和传送速率的统计信息
+
+-a：文件读写情况
+
+-c：输出进程统计信息，每秒创建的进程数
+
+-R：输出内存页面的统计信息
+
+-y：终端设备活动情况
+
+-w：输出系统交换活动信息
+
+
+一：CPU资源监控
+ sar -u -o test 10 3  (每10秒采样一次，连续采样3次，观察CPU 的使用情况，并将采样结果以二进制形式存入当前目录下的文件test中)
+CPU：all 表示统计信息为所有 CPU 的平均值。
+
+%user：显示在用户级别(application)运行使用 CPU 总时间的百分比。
+
+%nice：显示在用户级别，用于nice操作，所占用 CPU 总时间的百分比。
+
+%system：在核心级别(kernel)运行所使用 CPU 总时间的百分比。
+
+%iowait：显示用于等待I/O操作占用 CPU 总时间的百分比。
+
+%steal：管理程序(hypervisor)为另一个虚拟进程提供服务而等待虚拟 CPU 的百分比。
+
+%idle：显示 CPU 空闲时间占用 CPU 总时间的百分比。
+
+1. 若 %iowait 的值过高，表示硬盘存在I/O瓶颈
+
+2. 若 %idle 的值高但系统响应慢时，有可能是 CPU 等待分配内存，此时应加大内存容量
+
+3. 若 %idle 的值持续低于1，则系统的 CPU 处理能力相对较低，表明系统中最需要解决的资源是 CPU 。
+如果要查看二进制文件test中的内容，需键入如下sar命令：
+
+sar -u -f test
+
+二: inode、文件和其他内核表监控
+sar -v 10 3
+输出项说明：
+
+dentunusd：目录高速缓存中未被使用的条目数量
+
+file-nr：文件句柄（file handle）的使用数量
+
+inode-nr：索引节点句柄（inode handle）的使用数量
+
+pty-nr：使用的pty数量
+
+三：内存和交换空间监控
+sar -r 10 3
+输出项说明：
+
+kbmemfree：这个值和free命令中的free值基本一致,所以它不包括buffer和cache的空间.
+
+kbmemused：这个值和free命令中的used值基本一致,所以它包括buffer和cache的空间.
+
+%memused：这个值是kbmemused和内存总量(不包括swap)的一个百分比.
+
+kbbuffers和kbcached：这两个值就是free命令中的buffer和cache.
+
+kbcommit：保证当前系统所需要的内存,即为了确保不溢出而需要的内存(RAM+swap).
+
+%commit：这个值是kbcommit与内存总量(包括swap)的一个百分比.
+
+四： 内存分页监控

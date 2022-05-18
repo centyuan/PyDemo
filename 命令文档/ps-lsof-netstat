@@ -1,0 +1,88 @@
+netstat查看端口占用情况 
+netstat -tunlp | grep 端口号
+-t (tcp) 仅显示tcp相关选项
+-u (udp)仅显示udp相关选项
+-n 拒绝显示别名，能显示数字的全部转化为数字
+-l 仅列出在Listen(监听)的服务状态
+-p 显示建立相关链接的程序名
+
+查看被占用端口
+lsof -i:8090
+strace,netstat,perf,trace,dstat,iostat,top,sar,dig等命令
+
+#进程树
+pstree -up
+-u同时列出每个process的所属账户名称
+-p同时列出每个process的PID
+
+#查看进程
+ps -auxf|grep chat.js
+ a:显示所有程序 
+ u:以用户为主的格式来显示 
+ x:显示所有程序，不以终端机来区分
+
+ps -ajxf
+内容	解释
+F	进程的标志（process flags），当 flags 值为 1 则表示此子程序只是 fork 但没有执行 exec，为 4 表示此程序使用超级管理员 root 权限
+USER	进程的拥有用户
+PID	进程的 ID
+PPID	其父进程的 PID
+SID	session 的 ID
+TPGID	前台进程组的 ID
+%CPU	进程占用的 CPU 百分比
+%MEM	占用内存的百分比
+NI	进程的 NICE 值
+VSZ	进程使用虚拟内存大小
+RSS	驻留内存中页的大小
+TTY	终端 ID
+S or STAT	进程状态
+WCHAN	正在等待的进程资源
+START	启动进程的时间
+TIME	进程消耗CPU的时间
+COMMAND	命令的名称和参数
+TPGID栏写着-1的都是没有控制终端的进程，也就是守护进程
+
+STAT表示进程的状态，而进程的状态有很多，如下表所示
+
+状态	解释
+R	Running.运行中
+S	Interruptible Sleep.等待调用
+D	Uninterruptible Sleep.不可中断睡眠
+T	Stoped.暂停或者跟踪状态
+X	Dead.即将被撤销
+Z	Zombie.僵尸进程
+W	Paging.内存交换
+N	优先级低的进程
+<	优先级高的进程
+s	进程的领导者
+L	锁定状态
+l	多线程状态
++	前台进程
+其中的 D 是不能被中断睡眠的状态，处在这种状态的进程不接受外来的任何 signal，所以无法使用 kill 命令杀掉处于D状态的进程，无论是 kill，kill -9 还是 kill -15，一般处于这种状态可能是进程 I/O 的时候出问题了。
+
+ps -l 可以显示自己这次登陆的 bash 相关的进程信息罗列出来
+
+
+日志
+
+日志名称	记录信息
+alternatives.log	系统的一些更新替代信息记录
+apport.log	应用程序崩溃信息记录
+apt/history.log	使用 apt-get 安装卸载软件的信息记录
+apt/term.log	使用 apt-get 时的具体操作，如 package 的下载、打开等
+auth.log	登录认证的信息记录
+boot.log	系统启动时的程序服务的日志信息
+btmp	错误的信息记录
+Consolekit/history	控制台的信息记录
+dist-upgrade	dist-upgrade 这种更新方式的信息记录
+dmesg	启动时，显示屏幕上内核缓冲信息,与硬件有关的信息
+dpkg.log	dpkg 命令管理包的日志。
+faillog	用户登录失败详细信息记录
+fontconfig.log	与字体配置有关的信息记录
+kern.log	内核产生的信息记录，在自己修改内核时有很大帮助
+lastlog	用户的最近信息记录
+wtmp	登录信息的记录。wtmp可以找出谁正在进入系统，谁使用命令显示这个文件或信息等
+syslog	系统信息记录
+
+rsyslog:配置日志管理	
+logrotate:转存日志

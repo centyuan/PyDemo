@@ -1,0 +1,117 @@
+解决依赖
+sudo apt-get -f install
+
+1:rpm包
+安装 rpm -ivh soft.version.rpm;
+卸载 rpm -e software
+
+2:dpkg包
+
+安装dpkg -i soft.version.deb
+卸载dpkg -e software
+查询当前系统安装的软件包  dpkg -l
+
+3:tar.gz源代码包安装方式
+1) 找到相应的软件包，比如soft.tar.gz，下载到本机某个目录；
+2) 打开一个终端，su 成root用户;
+3) cd soft.tar.gz所在的目录;
+4) tar -xzvf soft.tar.gz;  / tar -xjvf soft.tar.bz2;
+5) cd soft;
+6) ./configure    为编译做好准备，对即将安装的软件进行配置，检查当前的环境是否满足要安装软件的依赖关系，将生成makefile文件。
+7) make         进行软件编译。
+8) make install  完成安装
+9) make clean   删除安装时产生的临时文件
+最好是看这个软件的install和readme文件，一般会说明该软件的可执行文件存放在哪里，一般是放在/usr/local/bin目录下。
+如果软件里面没有config这个文件，那么你下载的是二进制文件，可以直接使用。
+
+4:apt
+ apt-get -d install packagename 仅下载不安装
+ apt-cache search soft 注：soft是你要找的软件的名称或相关信息(针对本地数据进行相关操作的工具)
+ apt-get install soft.version安装
+2) apt-cache search soft 注：soft是你要找的软件的名称或相关信息
+3) 如果2中找到了软件soft.version，则可用apt-get install soft.version安装
+详细介绍：
+apt-get是debian，ubuntu发行版本的包管理工具，与红帽中的yum工具非常相似,它一般需要root权限执行，所以一般要跟着sudo命令。
+apt-get install packagename 安装一个新软件包
+apt-get remove packagename  卸载一个已安装的软件包（保留配置文件）
+apt-get autoremove packagename 移除之前被其他软件包依赖,但现在不再被使用的软件包
+apt-get purge packagename 不保留配置文件的移除
+apt-get --purge remove packagename  卸载一个已安装的软件包（删除配置文件）
+dpkg --force-all --purge packagename   有些软件比较难卸载，而且还阻止了别的软件的应用，就可以用这个
+apt-get autoremove  因为apt会把已装或已卸的软件都备份在硬盘上，所以如果需要空间的话，可以这个命令来删除你已经删除的软件。
+
+
+apt-get clean:
+apt-get安装的软件包会存储在/var/cache/apt/archives/和/var/cache/apt/archives/partial/两个目录下，长期使用会占用硬盘空间。clean指令就是删除掉这两个目录中的软件包，除了已经被锁定的文件。
+apt-get autoclean:
+同样是这两个目录下的软件包，不同的是autoclean只删除不能被再次下载的软件包，所以说apt-get clean删除清理更彻底。
+
+apt-get upgrade 更新所有已安装的软件包。
+apt-get dist-upgrade 将系统升级到新版本。
+apt-cache search string  在软件列表中搜索字符串
+apt-cache showpkg pkgs  显示软件包信息
+apt-cache stats  查看库里有多少软件
+apt-cache packagename  打印软件库里面所有的软件列表
+
+ 1.1、安装软件       sudo apt install 软件名
+
+ 1.2、卸载软件      sudo  apt remove  软件名
+
+ 1.3、访问源列表里的每个网址，并读取软件列表，然后保存在本地电脑      sudo apt  update
+
+ 1.4、更新已安装的包    sudo apt upgrad
+
+
+dpkg -l |grep 关键词
+dpkg -S softwarename 显示包含此软件包的所有位置，dpkg -L softwarename 显示安装路径
+dpkg -l softwarename 查看软件版本
+      ./configure --prefix=/opt/XXX
+      它用来设置软件的安装目录.
+源码包安装:tar zxvf XXXX.tar.gz (or tar jxvf XXXX.tar.bz2)
+           cd XXXX
+          ./configure
+           make
+           make install            ##安装
+           make clean              ##安装完成后用来清理临时文件
+dpkg常用参数介绍：
+参数	说明
+-i	安装指定deb包
+-R	后面加上目录名，用于安装该目录下的所有deb安装包
+-r	remove，移除某个已安装的软件包
+-I	显示deb包文件的信息
+-s	显示已安装软件的信息
+-S	搜索已安装的软件包
+-L	显示已安装软件包的目录信息
+
+
+
+rpm包：
+1、rpm包
+可以用命令：
+
+#rpm –ql 包名           如 rpm -ql gcc 来查看gcc的文件都安装到哪里去了
+
+#rpm -qa | grep 包名   来查看有没有安装这个包 ，
+
+#rpm -qa              查看全部已经安装的包名
+#rpm -e 文件名         这个命令就是你想卸载的软件，后面是包名称，最后的版本号是不用打的
+yum安装：
+
+       # yum install 包名
+yum卸载：
+
+       # yum -y remove 包名
+
+
+　　PPA 的一般形式是： ppa:user/ppa-name
+
+添加 PPA 源
+　　添加 PPA 源的命令为：sudo add-apt-repository ppa:user/ppa-name
+　　添加好记得要更新一下： sudo apt-get update
+
+删除 PPA 源
+　　删除 PPA 源的命令格式则为：sudo add-apt-repository -r ppa:user/ppa-name
+　　然后进入 /etc/apt/sources.list.d 目录，将相应 ppa 源的保存文件删除。
+　　最后同样更新一下：sudo apt-get update
+
+

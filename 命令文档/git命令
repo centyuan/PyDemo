@@ -1,0 +1,105 @@
+ Git 中 SSH key 生成步骤
+由于本地Git仓库和GitHub仓库之间的传输是通过SSH加密的，所以必须要让github仓库认证你SSH key，在此之前，必须要生成SSH key。
+第1步：创建SSH Key。在windows下查看[c盘->用户->自己的用户名->.ssh]下是否有id_rsa、id_rsa.pub文件，如果没有需要手动生成。
+打开git bash，在控制台中输入以下命令。
+1：ssh-keygen -t rsa -C "youremail@example.com"
+密钥类型可以用 -t 选项指定。如果没有指定则默认生成用于SSH-2的RSA密钥。这里使用的是rsa。
+同时在密钥中有一个注释字段，用-C来指定所指定的注释，可以方便用户标识这个密钥，指出密钥的用途或其他有用的信息。所以在这里输入自己的邮箱或者其他都行。
+输入完毕后程序同时要求输入一个密语字符串(passphrase)，空表示没有密语。接着会让输入2次口令(password)，空表示没有口令。3次回车即可完成当前步骤，此时[c盘>用户>自己的用户名>.ssh]目录下已经生成好了。
+2：登录github。打开setting->SSH keys，点击右上角 New SSH key，把生成好的公钥id_rsa.pub放进 key输入框中，再为当前的key起一个title来区分每个key。
+3：测试：
+  ssh git@github.com  连接成功！
+  ssh -T git@gitee.com
+生成gitlab的sshkey，并且重命名为id_rsa_gitlab
+4:配置多个key(.ssh目录下：创建config文件)
+添加如下内容：
+host github.com
+     HostName github.com
+     User centyuan@outlook.com
+     IdentityFile ~/.ssh/id_rsa_github
+host gitee.com
+     HostName gitee.com
+     User centyuan@outlook.com
+     IdentityFile ~/.ssh/id_rsa_gitee
+5:如果不对用户相关配置修改，会默认以 --global配置的用户信息进行提交，所以需要进入指定文件夹，进行配置，覆盖全局的相关配置信息。
+  git config user.name "centyuan"  #git config --global user.name "centyuan"
+  git config user.email "centyuan@outlook.com" #git config --global user.email "centyuan@outlook.com"
+
+
+$ ssh-keygen -t rsa -C "your_email@email.com" -f ~/.ssh/id_rsa_gitlab
+ ssh -i /home/centyuan/.ssh/id_rsa_UbuntuServer root@120.79.12.2#秘钥登录
+
+ssh登录远程服务器:
+1.命令如下
+ssh -i key.pem
+ssh -i key.pem root@IP
+如果出现报错说明这个问题是文件的权限太大了，需要给小点
+sudo chmod 600 key.pem
+然后再执行ssh -i key.pem root@IP
+2.可以使用ssh-add 添加key文件
+ssh-add -k key.pem
+3.正常登录堡垒机
+ssh root@IP
+
+
+
+
+git add .   后面加一个“.”，匹配所有的文件
+git add * #通配符可以把当前目录下所有修改的新增的文件都自动添加：
+git commit -m 'message'
+
+git pull=git fetch +git merge #拉取远端repo并合并,git pull 命令等同于执行两个操作: 先使用 git fetch 从远程分支抓取最新的分支修改信息，然后使用 git merge 把修改合并进当前的分支。
+执行git pull 后会从克隆的位置拉取代码并更新本地仓库，就是把远端的修改同步到本地
+(clone不需要指定远程仓库,就是clone的)
+git push #推送本地,并合并到远程
+git fetch 从远程分支抓取最新的分支修改信息
+
+#合并分支到当前分支
+git merge -m 'merge experimental branch' experimental
+#删除分支
+git branch -d experimental
+#撤销一个合并
+git reset --hard HEAD^
+
+版本回退:
+git reset --hard HEAD^ #可以使工作目录回到上次提交的状态,HEAD表示当前版本
+git reset --hard HEAD^^ #上上一个版本,往上100个写成 HEAD~100
+#可以用回到,回退前的新版本
+git reset --hard commit_id
+git reflog  #用来记录你的每一次命令：便于查看commit_id
+
+
+一:修复未提交文件中的错误（重置）
+git reset --hard 版本号 // 返回到某个版本，放弃所有修改
+git reset --hard HEAD^ #可以使工作目录回到上次提交的状态,HEAD表示当前版本
+git reset --hard HEAD^^ #上上一个版本
+
+#恢复一个文件
+git checkout  readme.txt# 放弃本地readme.txt文件的修改
+git checkout // 放弃所有文件的所有修改
+git reset HEAD readme.txt (git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。)
+ 两种情况:
+	一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
+
+	一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
+
+二: 修复已提交文件中的错误
+1:创建一个 新的提交（commit），在新的提交里撤消老的提交所作的修改。这种作法在你已经把代码发布的情况下十分正确.
+git revert HEAD  (HEAD为commit的名字,git log 可以查看)
+git revert HEAD^ (撤销上上次的提交 next-to-last)
+
+2:去修改你的 老提交（old commit）
+
+1:git checkout -b dev origin/dev #创建并切换本地dev分支后追踪origin的dev(取远程分支并分化一个新分支)
+#本地新建一个分支dev，并切换到新建的分支dev，并且建立dev与远程分支origin/dev的跟踪关系。
+2:git pull origin dev #拉取origin的dev分支到本地分支
+查看本地分支的跟踪分支（上游分支）
+命令：git branch -vv。
+
+
+git push --set-upstream origin 分支名
+拉取远程仓库：$ git pull [remoteName] [localBranchName]
+推送远程仓库：$ git push [remoteName] [localBranchName]
+git push origin test:master  // 提交本地test分支作为远程的master分支,
+git push origin test:test     // 提交本地test分支作为远程的test分支
+git push origin master:test   //提交本地的maste分支到远程的test分支,远程会自动创建test分支

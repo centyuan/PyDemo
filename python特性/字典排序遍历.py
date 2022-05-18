@@ -35,3 +35,4 @@ for q,a in zip(questions,answers):
 index = ["I","love","three","things","in","the","world","The","sun","the","moon"]
 for word in sorted(index, key=str.upper):
     print(word)
+

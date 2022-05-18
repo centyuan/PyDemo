@@ -25,7 +25,6 @@ headers = {
 response = requests.get('http://www.baidu.com/s?',params=kw,headers=headers)
 #response = requests.get('http://www.baidu.com/baidu?',params=kw,headers=headers)
 
-
 # 查看响应内容，response.text 返回的是Unicode格式的数据
 #print(response.text)
 print(response.url)
@@ -37,16 +36,11 @@ print(response.text)
 
 #Cookies
 
-
-
 #代理proxies
-
 # 根据协议类型，选择不同的代理
 proxies = {
     "http": "http://12.34.56.79:9527",
     "https": "http://12.34.56.79:9527",
 }
-
 response = requests.get("http://www.baidu.com", proxies=proxies)
-
 print(response.text)

@@ -1,0 +1,41 @@
+virtualenv虚拟环境命令:
+    mkvirtualenv wxhpython01：创建运行环境wxhpython01
+    mkvirtualenv --python=/usr/local/python3.5.3/bin/python venv #-p PYTHON_EXE,
+    workon wxhpython01: 工作在 zqxt 环境 或 从其它环境切换到 wxhpython01环境
+    deactivate: 退出终端环境
+    rmvirtualenv ENV：删除运行环境ENV
+    mkproject mic：创建mic项目和运行环境mic
+    mktmpenv：创建临时运行环境
+    lsvirtualenv: 列出可用的运行环境
+    lssitepackages: 列出当前环境安装了的包
+virtualenv -p /usr/bin/python2.7 venv　　　　# -p参数指定Python解释器程序路径
+  source venv/bin/activate    # 要开始使用虚拟环境，其需要被激活
+  deactivate   #停用虚拟环境
+
+pip freeze > requirements.txt  #这将会创建一个 requirements.txt 文件，其中包含了当前环境中所有包及 各自的版本的简单列表
+pip install -r requirements.txt #以后安装
+
+
+export WORKON_HOME=~/Envs  #设置环境变量
+mkdir -p $WORKON_HOME #创建虚拟环境管理目录
+find / -name virtualenvwrapper.sh #找到virtualenvwrapper.sh的路径
+source 路径 #激活virtualenvwrapper.sh
+
+
+默认virtualenvwrapper安装在下面python解释器中的site-packages，实际上需要运行virtualenvwrapper.sh文件才行；所以需要先进行配置一下：
+
+    找到virtualenvwrapper.sh的路径：find / -name virtualenvwrapper.sh
+    运行virtualenvwrapper.sh文件：source 路径
+
+ps：每次要想使用virtualenvwrapper 工具时，都必须先激活virtualenvwrapper.sh,另外，如果创建前要将即将的环境保存到Envs中，就要先设置一下环境变量：export WORKON_HOME=~/Envs，再搭建
+
+
+source命令作用
+在当前bash环境下读取并执行FileName中的命令。
+清华：https://pypi.tuna.tsinghua.edu.cn/simple
+阿里云：http://mirrors.aliyun.com/pypi/simple/
+中国科技大学 https://pypi.mirrors.ustc.edu.cn/simple/
+华中理工大学：http://pypi.hustunique.com/
+山东理工大学：http://pypi.sdutlinux.org/
+豆瓣：http://pypi.douban.com/simple/
+pip install -i http://pypi.douban.com/simple/ pyspider #这样就会从豆瓣这边的镜像去安装pyspider库

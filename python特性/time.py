@@ -19,3 +19,5 @@ print('time.strftime--%a %b %d %H:%M:%S %Y:',time.strftime("%a %b %d %H:%M:%S %Y
 print("以下输出2016年1月份的日历:")
 print(calendar.month(2018, 2))
 
+from datetime import datetime
+print(datetime.now())  # 2022-05-17 21:23:56.150028

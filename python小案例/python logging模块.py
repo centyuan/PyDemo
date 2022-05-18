@@ -9,7 +9,7 @@ logging.warning(u"小泽玛利亚") # 默认生成的root logger的level是loggi
 logging.error(u"桃谷绘里香")
 logging.critical(u"泷泽萝拉")
 
-# 日志输出到控制台
+# 1.日志输出到控制台
 import logging  # 引入logging模块
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')  # logging.basicConfig函数对日志的输出格式及方式做相关配置
@@ -22,12 +22,11 @@ logging.error('this is an loggging error message')
 logging.critical('this is a loggging critical message')
 
 
-# 日志输出到文件
+# 2.日志输出到文件
 import logging
 # 1 创建一个logger
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-
 log_path = ''
 log_file = log_path + 'logging_test.log'
 # 2 创建一个handler，用于写入日志文件
@@ -39,8 +38,10 @@ fh.setFormatter(formatter)  # 设置Formatter
 # 4 将logger添加到handler里面
 logger.addHandler(fh)  # 添加一个Handler logger.removeHanlder() 删除一个handler
 # 5 traceback模块被用于跟踪异常返回信息，可以在logging中记录下traceback，
+
 try:
     open("sklearn.txt","rb")
+    raise ValueError("错误")
 except Exception as e:
     # 下面三种方式三选一，推荐使用第一种
     logging.exception("Exception occurred")
