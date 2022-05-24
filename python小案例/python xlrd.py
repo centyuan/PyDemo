@@ -1,10 +1,7 @@
 # -*- coding:utf-8 -*-
 # Author centyuan
 # Date 2019/11/26 13:52
-
-
 import xlrd
-import MySQLdb
 # rb = xlrd.open_workbook("四季周转1000.xlsx")
 rb = xlrd.open_workbook(r"C:\Users\Administrator\Desktop\四季周转1000.xlsx")
 print(rb.sheet_names())

@@ -24,3 +24,10 @@ dial_codes = [
 ]
 country_code = {country:code for code,country in dial_codes}
 #{'China': 86, 'India': 91, 'United States': 1, 'Indonesia': 62, 'Brazil': 55, 'Pakistan': 92, 'Bangladesh': 880, 'Nigeria': 234, 'Russia': 7, 'Japan': 81}
+
+abc = {
+    "a":"a"
+}
+print(abc)
+abc["c"]="ac"
+print(abc)

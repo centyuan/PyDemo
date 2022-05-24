@@ -5,7 +5,8 @@
 # import ipdb
 from MyQR import myqr
 
-myqr.run(words='www.baidu.com',picture='ascii_dora.png')
+# myqr.run(words='www.baidu.com',picture='ascii_dora.png')
+# myqr.run(words='www.baidu.com',picture='60960684_p0.png')
 #myqr.run(words='www.xj89.app/',picture='')
 
 # ipdb.set_trace()
@@ -16,7 +17,8 @@ version, level, qr_name = myqr.run(
     words,
     version=1,
     level="H",
-    picture=r'ascii_dora.png',
+    # picture=r'.ascii_dorapng',
+    picture=r'60960684_p0.png',
     colorized=True,
     contrast=1.0,
     brightness=1.0,

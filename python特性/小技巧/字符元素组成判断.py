@@ -13,3 +13,6 @@ if Counter('abcd3') == Counter('3acdb'):
     print(type(Counter('ab')))
     print("True")
 
+if "出"in "出方向":
+    keywords = "out"
+

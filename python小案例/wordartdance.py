@@ -106,11 +106,9 @@ def video_jpg(video_path,Pic_path):
         print('第 {} 张图片存放成功！'.format(c))
 
 
-
-
 def download_danmu():
-    '''弹幕下载并存储'''
-    cid = '141367679'# video_id
+    ''' 弹幕下载并存储 '''
+    cid = '141367679'   # video_id
     url = 'http://comment.bilibili.com/{}.xml'.format(cid)
 
     f = open('danmu.txt','w+',encoding='utf-8') #打开 txt 文件

@@ -1,5 +1,5 @@
 import time
-from pynput import  mouse,keyboard
+from pynput import mouse,keyboard
 
 time.sleep(5)
 

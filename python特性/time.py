@@ -21,3 +21,6 @@ print(calendar.month(2018, 2))
 
 from datetime import datetime
 print(datetime.now())  # 2022-05-17 21:23:56.150028
+it = time.strftime("%Y-%m-%d %H:%M:%S")
+print(it)
+print("a",it.strftime("%Y-%m-%d %H:%M:%S"))

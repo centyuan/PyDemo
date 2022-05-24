@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# ps -ef | grep procedure_name | grep -v grep | awk '{print $2}' | xargs kill -9
+
 # $#为传递到脚本的参数个数 -lt为检测左边的数是否小于右边的，如果是，则返回 true
 if [ $# -lt 1 ]
 then
@@ -13,10 +15,18 @@ do
   echo "Kill the $1 process [ $i ]"
   kill -9 $i
 done
-# ps -ef | grep procedure_name | grep -v grep | awk '{print $2}' | xargs kill -9
+
 PROCESS=`ps -ef | grep uwsgi | grep -v grep | grep root | awk '{print $2}'`
 for i in $PROCESS
 do
     echo "kill the uwsgi process  ${i} "
+    sudo kill -9 ${i}
+    sudo uwsgi -i /data/CTF2.0_2.1/uwsgi.ini
+done
+
+PROCESS=`ps -auxf | grep celery | grep -v grep  | awk '{print $2}'`
+for i in $PROCESS
+do
+    echo "kill the celery process  ${i} "
     sudo kill -9 ${i}
 done

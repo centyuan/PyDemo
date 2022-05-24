@@ -46,9 +46,10 @@ funC("other_funB:Python教程：","http://c.biancheng.net/python")
 被装饰函数的.__name__
 """
 """3:多个装饰器"""
-
+from functools import wraps
 
 def deco01(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
         print("装饰器1")
         startTime = time.time()
@@ -60,6 +61,7 @@ def deco01(func):
     return wrapper
 
 def deco02(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
         func(*args, **kwargs)
         print("装饰器2")

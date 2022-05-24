@@ -4,8 +4,7 @@ import os
 import paramiko
 from functools import wraps
 from datetime import datetime
- 
- 
+
 def timethis(func):
     """
     时间装饰器，计算函数执行所消耗的时间
@@ -50,7 +49,7 @@ class SSHManager:
         try:
             # 创建ssh对象
             self._ssh = paramiko.SSHClient()
-            # 允许连接不在know_hosts文件中的主机
+            # 允许连接不在know_hosts文件中的主机,不在会出现选择yes or no,下面自动选yes
             self._ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             # 连接服务器
             self._ssh.connect(hostname=self._host,
@@ -81,7 +80,7 @@ class SSHManager:
         :param local_file: 本地shell文件
         :param remote_file: 远程shell文件
         :param exec_path: 执行目录
-        :return:
+
         """
         try:
             if not self.is_file_exist(local_file):
@@ -99,7 +98,7 @@ class SSHManager:
     @staticmethod
     def is_shell_file(file_name):
         return file_name.endswith('.sh')
- 
+
     @staticmethod
     def is_file_exist(file_name):
         try:
@@ -113,7 +112,6 @@ class SSHManager:
         检测远程的脚本文件和当前的脚本文件是否一致，如果不一致，则上传本地脚本文件
         :param local_file:
         :param remote_file:
-        :return:
         """
         try:
             result = self._exec_command('find' + remote_file)

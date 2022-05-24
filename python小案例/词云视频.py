@@ -53,7 +53,7 @@ def download_danmu():
             f.write('\n')
     f.close()
 
-def seg(video_path):
+def seg(video_path,jpg_path,save_path,crop_path):
     Pic_path = r"D:\BaiduNetdiskDownload\python-demo\tempfile\picture"
     vc = cv2.VideoCapture(video_path)
     c=0
