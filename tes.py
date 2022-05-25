@@ -2,28 +2,35 @@ import cv2
 
 
 
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "HOST": "192.168.8.243",
+        "PORT": 3306,
+        "USER":"root",
+        "PASSWORD": "Isoon@qzmp",
+        "NAME": "actual2",
+    }
+}
 
 
+i =1
+with open("unpass.txt","r+",encoding="utf-8") as  f:
 
-# with open("unpass.txt","r+",encoding="utf-8") as  f:
-#
-#     for line in f.readlines():
-#         print(len(list(line.split("\t"))),line.split('\t'))
-#         break
-#
-#
-#
-# with open("finish1.txt","r+",encoding="utf-8") as  f:
-#
-#     for line in f.readlines():
-#         print(len(list(line.split("\t"))),line.split('\t'))
-#         break
+    for line in f.readlines():
+        print(len(list(line.split("\t"))),line.split('\t'))
+        i +=1
+        if i >10:
+            break
 
-import itertools as its
-words = '1234567890'
-r = its.product(words,repeat=6)
-dic = open("pass.txt", "a")    #保存
-for i in r:
-    dic.write("".join(i))
-    dic.write("".join("\r"))
-dic.close()
+
+i=1
+with open("finish1.txt","r+",encoding="utf-8") as  f:
+
+    for line in f.readlines():
+        print(len(list(line.split("\t"))),line.split('\t'))
+        i +=1
+        if i >10:
+            break
+
+
