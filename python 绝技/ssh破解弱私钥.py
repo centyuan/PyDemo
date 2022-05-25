@@ -1,4 +1,4 @@
-import  pexpect
+import pexpect # paramiko
 import optparse
 import os
 #使用秘钥登录ssh: ssh user@host -i keyfile -o PasswordAuthentication=no
