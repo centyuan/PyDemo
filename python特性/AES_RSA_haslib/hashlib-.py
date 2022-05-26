@@ -1,6 +1,7 @@
 import hashlib
 
-da = "望太微兮穆穆"
+# da = "望太微兮穆穆"
+da = "123159"
 # 1.
 print(hashlib.md5(da.encode('utf8')).hexdigest())
 print(hashlib.sha1(da.encode('utf8')).hexdigest())
@@ -13,8 +14,10 @@ print(hashlib.md5(da.encode()))
 # 2.
 m = hashlib.md5()
 m.update(da.encode('utf-8'))
-print(m.hexdigest())
-
+print("2:",m.hexdigest())
+ms= "8bcfaaac9ccc3768596b72ba34d5dc77"
+if ms == m.hexdigest():
+    print(len(ms))
 # 3
 
 from hashlib import md5
