@@ -28,6 +28,14 @@ response = requests.post('http://www.baidu.com/') # data=data
 print(response.text)
 
 # 代理proxies
+"""
+python3.8以下版本：
+proxies{' 要请求网站的协议类型 ' , ' 代理服务器ip : 端口 '}
+
+python3.8以上版本：
+proxies{' 要请求网站的协议类型 ' , ' "代理服务器类型(http/https/socks5)://代理服务器ip : 端口 '}
+
+"""
 proxies = {
     "http": "http://12.34.56.79:9527", # 根据协议类型，选择不同的代理
     "https": "http://12.34.56.79:9527",

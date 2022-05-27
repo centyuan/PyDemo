@@ -1,0 +1,6 @@
+
+sta = """[Request]: POST url=http://192.168.8.24:8080/zstack/v1/vpcfirewalls/ruleSets/9558df873a984e738595b49164b6b065/l3networks/a6701f68b3804573bf470bcbba74c2ce, headers={'X-Job-UUID': 'be09a2a15bbe4297ab539b64673ea608', 'Authorization': 'OAuth 99a0e68d43824c23afb05362dad66bd5', 'Content-Type': 'application/json', 'Connection': 'close'}, body=b'{"params": {"vpcFirewallUuid": "c8cc24eb83cb40049d2841a104a149a5", "l3Uuid": "a6701f68b3804573bf470bcbba74c2ce", "forward": "in", "ruleSetUuid": "9558df873a984e738595b49164b6b065"}}'"""
+stb = """[Request]: POST url=http://192.168.8.24:8080/zstack/v1/vpcfirewalls/ruleSets/9558df873a984e738595b49164b6b065/l3networks/a6701f68b3804573bf470bcbba74c2ce, headers={'X-Job-UUID': 'a575b1289b70426789103b6249dd07a9', 'Authorization': 'OAuth 99a0e68d43824c23afb05362dad66bd5', 'Content-Type': 'application/json', 'Connection': 'close'}, body=b'{"params": {"vpcFirewallUuid": "c8cc24eb83cb40049d2841a104a149a5", "l3Uuid": "a6701f68b3804573bf470bcbba74c2ce", "forward": "in", "ruleSetUuid": "9558df873a984e738595b49164b6b065"}}'"""
+
+if sta ==sta:
+    print(True)

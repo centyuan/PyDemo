@@ -12,5 +12,5 @@ while(True):
     m_keyboard.type("浮世三千，吾爱有三") #打字
     m_keyboard.press(keyboard.Key.enter) #按enter
     m_keyboard.release(keyboard.Key.enter) #松开
-    time.sleep(0.2)
+    time.sleep(6)
 
