@@ -1,5 +1,6 @@
 import optparse
 from pexpect import pxssh
+import  pysnooper
 #Windows目前不支持pxssh.
 """
 from pexpect import ExceptionPexpect, TIMEOUT, EOF, spawn
@@ -12,7 +13,7 @@ class Client():
         self.user =user
         self.password = password
         self.session = self.connect()
-
+    @pysnooper.snoop()
     def connect(self):
         try:
             s = pxssh.pxssh()

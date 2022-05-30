@@ -1,0 +1,28 @@
+
+选中一个变量:Alt+j
+选中所有相同的变量：Ctrl+Shift+Alt+j
+自动对齐快捷键组合是： Ctrl + Alt + L
+
+删除一行：Ctrl+y
+向下复制一行:Ctrl+d
+复制一行:Ctrl+Insert
+新建空白行:Shift+Enter
+
+移动光标到本行开始:Home 或改成Ctrl+9  (ps:修改Move Caret to Line Start)
+移动光标到本行结尾:End  或改成Ctrl+0
+移动光标到本行开始并选中:Shift Home
+移动光标到本行结尾并选中:Shift End
+
+移动光标到代码块开始:Ctrl+[
+移动光标到代码块结尾:Ctrl+]
+移动光标到代码块开始并选中:Ctrl+Shift+[
+移动光标到代码块结尾并选中:Ctrl+Shift+]
+
+移动光标到下一个单词:Ctrl+向右箭头
+移动光标到上一个单词:Ctrl+向左箭头
+移动光标到下一个单词并选中:Ctrl+Shift+向右箭头
+移动光标到上一个单词并选中:Ctrl+Shift+向左箭头
+新建文件:Ctrl+n
+切换文件:Ctrl+Tab
+
+
