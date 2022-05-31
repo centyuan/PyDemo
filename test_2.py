@@ -18,8 +18,9 @@ cookies = {
 re = requests.get(url_2,headers=headers,cookies=cookies)
 print(re.text)
 da = json.loads(re.text)
-for it in da.get("finishFilter"):
+# for it in da.get("finishFilter"):
+#     print(it)
+# print("-----------------------")
+for it in da.get("current").get("match"):
     print(it)
-print("-----------------------")
-for it in da.get("serMatch"):
-    print(it)
+    break
