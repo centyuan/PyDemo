@@ -130,3 +130,10 @@ rpm -qpi /mnt/Packages/filesystem-3.2-20.el7.x86_64.rpm
 rz:上传文件
 sz:下载文件
 
+# 1.查看Linux内核版本命令
+     cat /proc/version
+     uname -a
+# 2. 查看Linux发现版
+     lsb_release -a
+     cat /etc/redhat-release  # 只适合Redhat系的Linux
+     cat /etc/issue
