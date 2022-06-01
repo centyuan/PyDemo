@@ -49,4 +49,7 @@ select * from run_tb where run_title like '%com%'# 保护com
 select country from websites union select country from apps order by conutry;
 #使用group by将数据表进行分组，并统计每个name的多少条记录
 select name,count(*) from em_tb group by name;
+
+
+CREATE DATABASE yourdbname DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 """
