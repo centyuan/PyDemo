@@ -2,6 +2,7 @@
 # @Author : centyuan
 # @Time : 2022/4/1 23:48
 
+#一：3种基本认证
 from rest_framework.authentication import BasicAuthentication
 #authenticate认证成功返回(request.user,request.auth)=>(django user,None)
 
@@ -11,7 +12,8 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.authentication import TokenAuthentication
 #authenticate认证成功返回(request.user,request.auth)=>(django user,rest_framework.authtoken.models.Token 实例)
 
-#自定义认证
+
+#二：自定义认证
 #https://www.cnblogs.com/eric_yi/p/8422373.html
 from rest_framework.authentication import BaseAuthentication
 """
@@ -32,11 +34,11 @@ from rest_framework.authentication import BaseAuthentication
 
 """
 
+#三:设置全局的认证方案
+
 #https://www.w3cschool.cn/lxraw/lxraw-bw2j35ou.html
-#1:设置全局的认证方案
 REST_FRAMEWORK = {
-    #设置全局的默认身份验证方案
-    #REST framework 将尝试使用列表中的每个类进行身份验证，并使用成功完成验证的第一个类的返回值设置 request.user 和request.auth
+    #设置全局的默认身份验证方案.REST framework 将尝试使用列表中的每个类进行身份验证，并使用成功完成验证的第一个类的返回值设置 request.user 和request.auth
     """
     如果没有类进行验证，request.user 将被设置成 django.contrib.auth.models.AnonymousUser的实例，request.auth 将被设置成None。
     未认证请求的request.user 和 request.auth 的值可以使用 UNAUTHENTICATED_USER和UNAUTHENTICATED_TOKEN 设置进行修改
@@ -52,13 +54,12 @@ REST_FRAMEWORK = {
 
 }
 
-#2:基于APIView类视图的方式，在每个view或每个viewset基础上设置身份验证方案。
+#四:基于APIView类视图的方式，在每个view或每个viewset基础上设置身份验证方案。
 """
+#基于类
 #authentication_classes = (SessionAuthentication, BasicAuthentication)
 #permission_classes = (IsAuthenticated,)
-"""
-#3：基于函数的视图，那就使用@api_view装饰器。
-"""
+#基于函数的视图，那就使用@api_view装饰器。
 @api_view(['GET'])
 @authentication_classes((SessionAuthentication, BasicAuthentication))
 @permission_classes((IsAuthenticated,))
@@ -72,13 +73,14 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
 
-#权限
+#五：权限
 from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import IsAdminUser
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.permissions import SAFE_METHODS #包含'GET', 'OPTIONS'和'HEAD'的元组。
-#自定义权限
+from rest_framework.permissions import SAFE_METHODS #包含'GET', 'OPTIONS'和'HEAD'的元组
+
+#六：自定义权限
 """
 要实现自定义权限，请继承BasePermission并实现其中的以下方法中的一个或两个
 .has_permission(self, request, view)

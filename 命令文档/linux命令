@@ -1,41 +1,32 @@
-记录:Ctrl+r
+
 su切换用户后:在终端输入exit或logout或使用快捷方式ctrl+d，可以退回到原来用户，其实ctrl+d也是执行的exit命令
 sudo : 暂时切换到超级用户模式以执行超级用户权限，提示输入密码时该密码为当前用户的密码，而不是超级账户的密码。不过有时间限制，Ubuntu默认为一次时长15分钟。
 su ： 切换到某某用户模式，提示输入密码时该密码为切换后账户的密码，用法为“su 账户名称”。如果后面不加账户时系统默认为root账户，密码也为超级账户的密码。没有时间限制。
 sudo -i: 为了频繁的执行某些只有超级用户才能执行的权限，而不用每次输入密码，可以使用该命令。提示输入密码时该密码为当前账户的密码。没有时间限制。执行该命令后提示符变为“#”而不是“$”。想退回普通账户时可以执行“exit”或“logout” 。
+
 &  表示任务在后台执行，如要在后台运行redis-server,则有  redis-server &
-
 && 表示前一条命令执行成功时，才执行后一条命令 ，如 echo '1‘ && echo '2'
-
 | 表示管道，上一条命令的输出，作为下一条命令参数，如 echo 'yes' | wc -l
-
 || 表示上一条命令执行失败后，才执行下一条命令，如 cat nofile || echo "fail"
 可以
-
 不挂断后台运行
 nohup python run.py &不挂断后台运行
 
-远程复制
+# 远程复制命令
 scp:
 scp -r local_folder remote_username@remote_ip:remote_folder #本地到远程
 scp remote_username@remote_ip:remote_folder local_folder #远程到本地
 
-查看发现版本信息
-lsb_release -a
-cat /etc/issue
-cat /etc/xxx-release
-cat /pro/version
-
 curl -d "subject=邮件报警测试&message=这是一个邮件测试2&to_email=cent_yuan@163.com"   http://127.0.0.1:8000/api/sendmail/
 nohup python manage.py runserver 0.0.0.0:8001 &
 
-查看文件命令(cat tac nl more less head tail)
+# 查看文件命令(cat tac nl more less head tail)
 cat -n passwd 参数显示行号
 head 只查看文件头几行,默认10行
 tail 相反显示文件的最后10行
 tail -f 这个参数可以不停的读取某个文件内容并显示,可以让我们动态查看日志.
 
-搜索文件命令(whereis which find locate)
+# 搜索文件命令(whereis which find locate)
 
 whereis    查看可执行文件的位置(搜索很快,从数据库中差,不从硬盘中查,只能搜索二进制文件-b man帮助文件-m,和源代码文件 -s)
 locate     配合数据库查看文件位置(快而全,通过/var/lib/mlocate/mlocate.db数据库查找,每天自动更新一次)
@@ -45,29 +36,11 @@ which      通常用来确定是否安装指定的软件,因为只从PATH环境�
 find          实际搜寻硬盘查询文件名称(最强大的,可以通过文件的时间戳,文件的权限)
 usage: find [path]
 
-显示目录或文件的大小
+# 显示目录或文件的大小
 du
 usage: du -h /home/centyuan
 df -h
 
-压缩打包
-zip -r -q -o centyuan.zip /home/centyuan
--r:表示递归打包包含子目录的全部内容
--q:表示为安全模式,即不向屏幕输出信息
--o:表示输出文件,需在其后紧跟打包输出文件名
-打包
-tar -cf centyuan.tar /home/centyuan/Desktop
--c:表示创建一个tar包文件
--f:用于制定文件名
--v:可视的输出打包文件
-打包压缩
-tar -czf ccentyuan.tar.gz /home/centyuan/Desktop
-解包
-tar -xf centyuan.tar -C tardir
--x:解包一个文件到指定路径(-C)
-解包解压
-tar -xzf centyuan.tar.gz
-unzip something.zip
 
 cut /etc/passwd -d ':' -f 1,6
 #$ 打印/etc/passwd文件中以:为分隔符的第1个字段和第6个字段分别表示用户名和其家目
@@ -83,7 +56,6 @@ Linux sed 命令是利用脚本来处理文本文件,sed 可依照脚本的指�
 
 主要用来自动编辑一个或多个文件、简化对文件的反复操作、编写转换程序等。
 sed -i 's/beitihuan/tihuan/ file #替换
-
 
 
 awk
@@ -113,18 +85,7 @@ ln -s 源文文件或目录 目标文件或目录
 
 
 
-rpm:
-#查询是否安装某个软件
-rpm -qa | grep vim
 
-#查询命令属于哪个软件
-rpm -qf  /usr/bin/passwd
-
-#查询文件
-rpm -qf /usr/bin
-
-#查询RPM的详细信息
-rpm -qpi /mnt/Packages/filesystem-3.2-20.el7.x86_64.rpm
 
 
 rz:上传文件

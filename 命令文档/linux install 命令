@@ -84,17 +84,21 @@ dpkg常用参数介绍：
 -L	显示已安装软件包的目录信息
 
 
-
 rpm包：
-1、rpm包
-可以用命令：
-
 #rpm –ql 包名           如 rpm -ql gcc 来查看gcc的文件都安装到哪里去了
 
-#rpm -qa | grep 包名   来查看有没有安装这个包 ，
-
 #rpm -qa              查看全部已经安装的包名
+
 #rpm -e 文件名         这个命令就是你想卸载的软件，后面是包名称，最后的版本号是不用打的
+
+rpm -qa | grep vim  #查询是否安装某个软件
+
+rpm -qf  /usr/bin/passwd  #查询命令属于哪个软件
+
+rpm -qf /usr/bin  #查询文件
+
+rpm -qpi /mnt/Packages/filesystem-3.2-20.el7.x86_64.rpm  #查询RPM的详细信息
+
 yum安装：
 
        # yum install 包名

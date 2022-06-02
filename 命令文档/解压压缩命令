@@ -1,3 +1,22 @@
+压缩打包
+zip -r -q -o centyuan.zip /home/centyuan
+-r:表示递归打包包含子目录的全部内容
+-q:表示为安全模式,即不向屏幕输出信息
+-o:表示输出文件,需在其后紧跟打包输出文件名
+打包
+tar -cf centyuan.tar /home/centyuan/Desktop
+-c:表示创建一个tar包文件
+-f:用于制定文件名
+-v:可视的输出打包文件
+打包压缩
+tar -czf ccentyuan.tar.gz /home/centyuan/Desktop
+解包
+tar -xf centyuan.tar -C tardir
+-x:解包一个文件到指定路径(-C)
+解包解压
+tar -xzf centyuan.tar.gz
+unzip something.zip
+
 Ubuntu下压缩与解压各种文件的命令
 1、xz文件
 （1）压缩
