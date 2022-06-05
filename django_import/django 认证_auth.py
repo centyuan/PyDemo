@@ -3,6 +3,7 @@
 # @Time : 2022/4/1 20:47
 
 #http://c.biancheng.net/django/
+#https://blog.csdn.net/weixin_39934296/article/details/110773418
 from django.contrib.auth.models import User,AbstractUser,Group
 from django.contrib.auth import authenticate # 用户认证
 from django.contrib.auth import login,logout #登入 登出

