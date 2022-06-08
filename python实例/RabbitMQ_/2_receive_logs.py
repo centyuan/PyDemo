@@ -8,7 +8,7 @@ import pika
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
 
 channel = connection.channel()
-channel.exchange_declare(exchange='logs',exchange_type='fanout')
+channel.exchange_declare(exchange='logs',exchange_type='fanout')  # 广播模式
 
 #不提供 queue 参数就可以创建临时队列
 result = channel.queue_declare()

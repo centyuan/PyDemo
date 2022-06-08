@@ -9,10 +9,8 @@ import sys
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='localhost'))
 channel = connection.channel()
-
 channel.exchange_declare(exchange='direct_logs',
                          type='direct')
-
 result = channel.queue_declare(exclusive=True)
 queue_name = result.method.queue
 

@@ -6,33 +6,33 @@ from selenium import webdriver
 import time
 
 #help(webdriver)支持那些浏览器
-driver=webdriver.Chrome()
+broswer=webdriver.Chrome(executable_path=r"D:\python_data\centyuan\cent30\Lib\site-packages\selenium\webdriver\chrome\chromedriver.exe")
 #driver1=webdriver.Chrome()
-driver.get('https://www.baidu.com')#打开页面
+broswer.get('https://www.baidu.com')#打开页面
 #driver1.get('https://www.google.com')
 """
-find_element_by_name
-find_element_by_id
-find_element_by_xpath
-find_element_by_link_text
-find_element_by_partial_link_text
-find_element_by_tag_name
-find_element_by_class_name
-find_element_by_css_selector
-还有一种
-from selenium.webdriver.common.by import By
-input=browser.find_element(By.ID,"q")
+定位节点方法
+find_element_by_id()	通过 id 属性值定位
+find_element_by_name()	通过 name 属性值定位
+find_element_by_class_name()	通过 class 属性值定位
+find_element_by_tag_name()	通过 tag 标签名定位
+find_element_by_link_text()	通过<a>标签内文本定位，即精准定位。
+find_element_by_partial_link_text()	通过<a>标签内部分文本定位，即模糊定位。
+find_element_by_xpath()	通过 xpath 表达式定位
+find_element_by_css_selector()	通过 css 选择器定位
+
 """
-input = driver.find_element_by_css_selector('#kw')#通过css类选择器获取响应元素 #kw id="kw"
-
+input = broswer.find_element_by_css_selector('#kw')  # 通过CSS id 选择器获取响应元素
 input.send_keys("海南师范大学")#输入
-#input.clear() 清空内容
-button = driver.find_element_by_css_selector('#su')#
+# input.clear() 清空内容
+# input.text 获取文本的值
+#print(driver.page_source)  #获取源代码
+print(broswer.current_url)#获取请求链接
+broswer.get_cookies()
+button = broswer.find_element_by_css_selector('#su')  # 通过CSS id 选择器获取响应元素 #
 button.click()
-#print(driver.page_source)#获取源代码
-print(driver.current_url)#获取请求链接
-#driver.get_cookies()
-#input.text 获取文本的值
-
+broswer.execute_script(
+      'window.scrollTo(0,document.body.scrollHeight)'#拉动进度条至底部
+)
 time.sleep(5)
-driver.close() #关闭浏览器
+broswer.close() #关闭浏览器

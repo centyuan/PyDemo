@@ -103,3 +103,11 @@ git push --set-upstream origin 分支名
 git push origin test:master  // 提交本地test分支作为远程的master分支,
 git push origin test:test     // 提交本地test分支作为远程的test分支
 git push origin master:test   //提交本地的maste分支到远程的test分支,远程会自动创建test分支
+
+# 本地分支关联远程分支,本地已创建了分支
+1.git branch -u origin/远程分支
+2.git branch -u origin/远程分支 本地分支
+3.git branch --set-upstream-to origin/远程分支
+#如果远程新建了一个分支，本地没有该分支
+4.git checkout --track origin/dev  # 这时本地会新建一个分支名叫 dev ，会自动跟踪远程的同名分支 dev
+5.git checkout -b dev origin/dev #创建并切换本地dev分支后追踪origin的dev(取远程分支并分化一个新分支)
