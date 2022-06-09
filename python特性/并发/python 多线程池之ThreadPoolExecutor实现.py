@@ -16,9 +16,7 @@ def Actioin(max,a,b,c):
     return total
 
 # 1.创建一个线程池
-
 pool = ThreadPoolExecutor(max_workers=5)
-
 future_1 = pool.submit(Actioin,10,"yuan","bingx","xi")  # 提交一个task，并传入参数:传参不要元组，接着往后写，有多少写多少
 future_2 = pool.submit(Actioin,20,"君君","臣臣","父父")
 
@@ -42,8 +40,6 @@ for future in as_completed([future_1,future_2]):
     message = future.result()
 # 关闭线程池
 pool.shutdown()
-
-
 
 
 # 2. with
