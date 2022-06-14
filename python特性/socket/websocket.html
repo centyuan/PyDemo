@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试Socket——ws://127.0.0.1:8181</title>
+    <script>
+        var socket;
+        if ("WebSocket" in window) {
+            var ws = new WebSocket("ws://127.0.0.1:8181/websocket");
+            socket = ws;
+            ws.onopen = function() {
+                console.log('连接成功');
+                alert("连接成功, 请输入账号和密码") ;
+            };
+            // 接收数据的回调函数
+            ws.onmessage = function(event) {
+                // 服务器数据有可能是文本，也有可能是二进制数据，需要判断
+                 if(typeof event.data === String) {
+                    console.log("Received data string");
+                  }
+
+                 if(event.data instanceof ArrayBuffer){
+                    var buffer = event.data;
+                    console.log("Received arraybuffer");
+                  }
+
+                var received_msg = event.data;
+                document.getElementById("showMes").value+=received_msg+"\n";
+            };
+            ws.onclose = function() {
+                alert("断开了连接");
+            };
+        } else {
+            alert("浏览器不支持WebSocket");
+        }
+        function sendMeg(){
+            var message=document.getElementById("name").value+":"+document.getElementById("mes").value;
+            document.getElementById("showMes").value+=message+"\n\n";
+            socket.send(message);
+        }
+    </script>
+</head>
+<body>
+    <textarea rows="3" cols="30" id="showMes" style="width:300px;height:500px;"></textarea>
+    <br/>
+    <label>名称</label>
+    <input type="text" id="name"/>
+    <br/>
+    <label>消息</label>
+    <input type="text" id="mes"/>
+    <button onclick="sendMeg();">发送</button>
+</body>
+</html>

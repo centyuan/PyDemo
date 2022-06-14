@@ -19,18 +19,14 @@ qqlist = list(set(result))
 
 # 匹配邮箱
 import re
-
 regex = r"([a-zA-Z0-9_.+-]+@[a-pr-zA-PRZ0-9-]+\.[a-zA-Z0-9-.]+)"
 html_content = "邮箱:centyuan@outlook.com qq邮箱：375319412@qq.com,gmail邮箱centyuan@gmail.com，可惜不 centyuan@163.com"
 emails = re.findall(regex, html_content)
 # print(emails)
-
 # 匹配电报
 # 匹配微信
 
-
 from bs4 import BeautifulSoup
-
 html_doc = """
 <!DOCTYPE html>
 <html lang="en">

@@ -46,8 +46,9 @@ print(r)
 
 
 # 匹配电话
-str = 'dsadasdgs031-1564653233adads2312-24644567dZDxz'
-pat = '\d{3}-\d{8}|\d{4}-\d{7}'
+str = 'dsadasdgs031-1564653233adads2312-24644567dZDxz  电话18382972834'
+# pat = '\d{3}-\d{8}|\d{4}-\d{7}'
+pat = r'0?(13|14|15|17|18|19)[0-9]{9}'
 print(re.compile(pat).findall(str))
 
 # 匹配qq
@@ -57,7 +58,7 @@ pat = '[1-9]([0-9]{5,11})'
 result = re.compile(pat).findall(or_d)
 # qq号去重
 qqlist = list(set(result))
-
+print(result)
 # 匹配邮箱
 regex = r"([a-zA-Z0-9_.+-]+@[a-pr-zA-PRZ0-9-]+\.[a-zA-Z0-9-.]+)"
 html_content = "邮箱:centyuan@outlook.com qq邮箱：375319412@qq.com,gmail邮箱centyuan@gmail.com，可惜不 centyuan@163.com"

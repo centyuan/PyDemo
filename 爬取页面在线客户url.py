@@ -42,5 +42,4 @@ for it in match_url:
     re = requests.get(it)
     if re.status_code == 200:
         success_url.append(it)
-
 print(success_url)

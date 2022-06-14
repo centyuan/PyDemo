@@ -99,7 +99,6 @@ async def test(i):
     # asyncio.sleep(1)模拟IO操作，这样的休眠不会阻塞事件循环
     # 在此期间，主线程并未等待，而是去执行EventLoop中其他可以执行的coroutine了，因此可以实现并发执行
 
-
 if __name__ == '__main__':
     # asyncio.get_event_loop()时会创建事件循环
     loop = asyncio.get_event_loop()
@@ -108,10 +107,11 @@ if __name__ == '__main__':
     loop.run_until_complete(asyncio.wait(tasks))
     loop.close()
     # 异步的任务丢给这个循环的run_until_complete()方法，事件循环会安排协同程序的执行。
+    # 1.通过loop.create_task(coroutine)创建task,
+    # 2.通过asyncio.ensure_future(coroutine)创建task
     # # task = asyncio.ensure_future(coroutine)
     # # 将task加入事件循环
     # # loop.run_until_complete(task)
-    # loop.create_task(coroutine)创建task,同样的可以通过 asyncio.ensure_future(coroutine)创建task
     """
     绑定回调函数结果
     def callback(future):
