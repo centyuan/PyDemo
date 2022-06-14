@@ -25,7 +25,6 @@ host gitee.com
   git config user.name "centyuan"  #git config --global user.name "centyuan"
   git config user.email "centyuan@outlook.com" #git config --global user.email "centyuan@outlook.com"
 
-
 $ ssh-keygen -t rsa -C "your_email@email.com" -f ~/.ssh/id_rsa_gitlab
  ssh -i /home/centyuan/.ssh/id_rsa_UbuntuServer root@120.79.12.2#秘钥登录
 
@@ -42,11 +41,7 @@ ssh-add -k key.pem
 ssh root@IP
 
 
-
-
-git add .   后面加一个“.”，匹配所有的文件
 git add * #通配符可以把当前目录下所有修改的新增的文件都自动添加：
-git commit -m 'message'
 
 git pull=git fetch +git merge #拉取远端repo并合并,git pull 命令等同于执行两个操作: 先使用 git fetch 从远程分支抓取最新的分支修改信息，然后使用 git merge 把修改合并进当前的分支。
 执行git pull 后会从克隆的位置拉取代码并更新本地仓库，就是把远端的修改同步到本地
@@ -111,3 +106,10 @@ git push origin master:test   //提交本地的maste分支到远程的test分支
 #如果远程新建了一个分支，本地没有该分支
 4.git checkout --track origin/dev  # 这时本地会新建一个分支名叫 dev ，会自动跟踪远程的同名分支 dev
 5.git checkout -b dev origin/dev #创建并切换本地dev分支后追踪origin的dev(取远程分支并分化一个新分支)
+
+# 初始化本地git仓库，并添加远程仓库
+git init
+git remote add origin git@192.168.8.105:GFPass/CdGFPWebManger.git
+git add .
+git commit -m "Initial commit"
+git push -u origin master

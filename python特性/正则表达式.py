@@ -18,64 +18,68 @@ import re
 a='C|C++|Java|c#|Python|Javascript'
 b='py1aaa2thona123333ja1sss2va43241ccc2++'
 c='python 11java  javascript'
-d="""centyuan
-   """
+d="""centyuan"""
 s="ip='230.192.168.78',version='1.0.0',ip='230.192.168.20',version='1.0.0'，ip='230.192.168.100',version='1.0.0'"
 result=re.findall("ip='(?P<ip>\d+.\d+.\d+.\d+)",s) ##正则表达式分组(?P<name>)分组命名
 result1=re.findall("(?P<ip>\d+.\d+.\d+.\d+)",s)
 print("result1",result1)
 print(result[1])
 print(re.search("ip='(?P<ip>\d+.\d+.\d+.\d+)",s).group('ip'))
-a1=re.findall('Python',a)
+a1 = re.findall('Python',a)
 print(a1)
+#正则表达式分组的概念
 b1=re.findall('1[a-z]*2',b)
 b2=re.findall('1([a-z]*)2',b)
-print(re.findall('c(\d+)',b))#正则表达式分组的概念
+print(re.findall('c(\d+)',b))
 print(b1)
 print(b2)
-c1=re.findall('[a-z]{3,6}',c)#默认是贪婪的 '[a-z]{3,6}?'非贪婪
+#默认是贪婪的 '[a-z]{3,6}?'非贪婪
+c1=re.findall('[a-z]{3,6}',c)
 print(c1)
-
-language='PythonC#JavaC#PHPC#'
+language = 'PythonC#JavaC#PHPC#'
 def convert(value):
     mat=value.group()
     return '!!'+mat+'!!'
 r=re.sub('C#',convert,language)
 print(r)
 
-#例1
-def f1():
-    a=10
-    def f2():
-        a=20
-        print(a)
-    print(a)
-    f2()
-    print(a)
-f1()
-#例二
-#def ff1():
-#    a=10
-#    def ff2():
-#        c=20+a #等号左边会被认为局部变量
-#    return ff2()
-#f=ff1()
-#print(f)
-#print(f.__closure__)
-#匿名函数
-add = lambda x, y : x+y
-add(1,2)  # 结果为3
-#三元表达式
-x1=2
-y1=3
-#python没有这种方式t= x1 >y1 ? x1:y1
-r=x1 if x1>y1 else y1
-list_X=[1,2,3,4,5,6,7,8]
-ruslts=map(lambda x:x*x,list_X)#map reduce filter
-print(ruslts)
-import re
-a = "123abc456"
-print(re.search("([0-9]*)([a-z]*)([0-9]*)",a).group(0))  #123abc456,返回整体
-print(re.search("([0-9]*)([a-z]*)([0-9]*)",a).group(1))  #123
-print(re.search("([0-9]*)([a-z]*)([0-9]*)",a).group(2)) #abc
-print(re.search("([0-9]*)([a-z]*)([0-9]*)",a).group(3)) #456
+
+
+# 匹配电话
+str = 'dsadasdgs031-1564653233adads2312-24644567dZDxz'
+pat = '\d{3}-\d{8}|\d{4}-\d{7}'
+print(re.compile(pat).findall(str))
+
+# 匹配qq
+or_d = """Java技术群： 227270512 （人数：3000）Go开发者群（新）： 14718890861 （人数：2000）PHP开发者群： 460153241 （人数：2000）MySQL/SQL群： 418407075 （人数：2000）大数据开发群： 655154550 （人数：2000）Python技术群： 287904175 （人数：2000）人工智能深度学习： 456236082 （人数：2000）测试工程师群： 415553199 （人数：2000）前端开发者群： 410430016 （人数：2000）C/C++技术群(新)： 629264796 （人数：2000）Node.js技术群(新)： 621549808 （人数：2000）PostgreSQL数据库群： 539504187 （人数：2000）Linux运维技术群： 479429477 （人数：2000）Oracle数据库： 175248146 （人数：2000）C#/ASP.Net开发者： 630493968 （免费，人数：2000）数据分析师群： 397883996 （人数：2000）//更多请阅读：https://www.yiibai.com/python3"""
+# data = requests.get("https://www.yiibai.com/python3").text
+pat = '[1-9]([0-9]{5,11})'
+result = re.compile(pat).findall(or_d)
+# qq号去重
+qqlist = list(set(result))
+
+# 匹配邮箱
+regex = r"([a-zA-Z0-9_.+-]+@[a-pr-zA-PRZ0-9-]+\.[a-zA-Z0-9-.]+)"
+html_content = "邮箱:centyuan@outlook.com qq邮箱：375319412@qq.com,gmail邮箱centyuan@gmail.com，可惜不 centyuan@163.com"
+emails = re.findall(regex, html_content)
+
+
+html_doc = """
+<li class="Sevli" open-window="https://www.vcag537.net/OnlineCS" op-width="550px" op-height="735px" op-resize="no" op-name="OCSCenter">
+</li>
+<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=965722111&amp;site=qq&amp;menu=yes"><div class="boxBlock"><span class="qq-cont">965722111</span></div></a>
+<a target="_blank" href="https://www.rbxxw.com/Chat/Chat?userID=&amp;userName="><span><i><span role="img" aria-label="customer-service" class="anticon anticon-customer-service"><svg viewBox="64 64 896 896" focusable="false" data-icon="customer-service" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M512 128c-212.1 0-384 171.9-384 384v360c0 13.3 10.7 24 24 24h184c35.3 0 64-28.7 64-64V624c0-35.3-28.7-64-64-64H200v-48c0-172.3 139.7-312 312-312s312 139.7 312 312v48H688c-35.3 0-64 28.7-64 64v208c0 35.3 28.7 64 64 64h184c13.3 0 24-10.7 24-24V512c0-212.1-171.9-384-384-384zM328 632v192H200V632h128zm496 192H696V632h128v192z"></path></svg></span></i>&nbsp;在线客服</span></a>
+<img src="http://j3.wdyxa.com/mh-mgm/pc/scripts/images/pz.png" alt="">
+
+"""
+
+# 匹配url
+customer_regex = r"(http|ftp|https):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?"
+pattern = re.compile(r'(http|ftp|https):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?')
+# re.finditer(pattern, string)返回MatchObject对象上的迭代器.
+match_re=[x.group() for x in re.finditer(customer_regex,html_doc)]
+print("匹配url：",match_re)
+
+# 匹配域名
+#  domain_regex = r'([a-zA-Z0-9]([a-zA-Z0-9-_]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,11}'
+# domain_regex_1 = r'([a-zA-Z0-9]([a-zA-Z0-9-_]{0,61}[a-zA-Z0-9])?\.)+(com|net|org|in|me)'
