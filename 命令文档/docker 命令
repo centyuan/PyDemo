@@ -20,13 +20,17 @@ docker ps
 
 6进入容器
 docker exec -ti 容器ID /bin/bash
-　　###通过docker创建守护运行（在使用-d参数时）的容器时，容器启动后会进入后台。用户无法看到容器中的信息。某些时候如果需要进入容器进行操作，有多种方法，包括使用docker attach命令、docker exec命令，以及nsenter工具等。
-attach命令
+    在使用 -d 参数时，容器启动后会进入后台。此时想要进入容器，可以通过以下指令进入：
+    docker attach
+    docker exec：推荐大家使用 docker exec 命令，因为此命令会退出容器终端，但不会导致容器的停止。
+　　#通过docker创建守护运行（在使用-d参数时）的容器时，容器启动后会进入后台。用户无法看到容器中的信息。某些时候如果需要进入容器进行操作，有多种方法，包括使用docker attach命令、docker exec命令，以及nsenter工具等。
+# attach命令
 docker attach 容器名称/ID
 　　在使用attach命令有时候并不方便。当多个窗口同时attach到同一个容器的时候，所有窗口都会同步显示。当某个窗口因命令阻塞时，其他窗口也无法执行操作了。
-exec命令
+# exec命令
 docker exec -ti 容器ID /bin/bash
 nsenter工具
+
 7将容器打包为镜像
 docker commit -m  ""   -a  ""   容器ID（可以简写）  镜像名称
 -m  提示信息    -a  作者         
@@ -34,7 +38,8 @@ docker commit -m  ""   -a  ""   容器ID（可以简写）  镜像名称
 获取一个新的镜像： docker pull ubuntu:13.10
 查找镜像：docker search httpd
 搜索镜像：docker search centos 
-获取镜像：docker pull registry.cn-hangzhou.aliyuncs.com/1hpc/centos 
+获取镜像：docker pull registry.cn-hangzhou.aliyuncs.com/1hpc/centos
+查看所有镜像：docker images
 查看镜像id：docker images -q 
 删除镜像：docker rmi image_id 
 删除所有镜像：docker rmi $(docker images -q) 
