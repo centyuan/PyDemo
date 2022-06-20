@@ -39,7 +39,9 @@ print("匹配结果:", match_url)
 success_url = []
 
 for it in match_url:
-    re = requests.get(it)
+    re = requests.get(it,verify=False)
     if re.status_code == 200:
         success_url.append(it)
 print(success_url)
+
+
