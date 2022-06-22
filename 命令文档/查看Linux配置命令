@@ -1,0 +1,17 @@
+1、查看CPU个数：
+lscpu
+2、查看CPU进程数、核数：
+cat /proc/cpuinfo
+3、查看内存总量：
+free -m
+4、查看磁盘挂载情况:
+lsblk
+5、查看磁盘分区情况：
+fdisk -l
+6、查看磁盘总量：
+df -h
+7、查看Linux版本：
+cat /etc/redhat-release
+8、查看系统内核版本:
+uname -a
+unmae -r

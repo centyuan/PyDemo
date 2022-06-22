@@ -13,7 +13,7 @@ user_agent_list = [
     "Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15", ]
 
 headers = {
-    "Authorization": "fdf9b44fd75f11f774aa7c834401aa16b6111a4f3dc49eb253c66e1adba2e805",
+    "Authorization": "df7353ca1b23d1a9bcef5ad4cda083ef0754ddd42cf28df6f9e2cabee510f580",
     "User-Agent":random.choice(user_agent_list)
 }
 
@@ -101,12 +101,12 @@ def delete_scan(ips,hash):
 if __name__ == '__main__':
     # result = upload_apk('douyu_v6.2.1.apk')
     import time
-    ips = "http://192.168.8.242:8888/"
-    result = upload_apk(ips,'com.baihe_11.4.4_110404.apk')
-    start_scan(ips,result)
+    ips = "http://149.28.210.253:9633"
+    # result = upload_apk(ips,'com.baihe_11.4.4_110404.apk')
+    # start_scan(ips,result)
 
     # dc81ce505a0a4a35482eea252db4a898
-    # result = {"hash":'dc81ce505a0a4a35482eea252db4a898'}
+    result = {"hash":'c2e0d58969570784ea18fb5b237d15a6'}
     for i in range(100):
         print("获取json报告")
         get_json(ips,result.get("hash")) # com.ireadercity_5.56.6_5566.apk

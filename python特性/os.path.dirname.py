@@ -11,7 +11,7 @@ print('当前目录',os.path.dirname(__file__))#得到当前文件所在目录
 print(os.path.dirname(os.path.dirname(__file__)))#再来一个就是目录的上一级
 #os.path.join(path,name) 把目录和文件名合成一个路径
 is_exists=os.path.dirname(__file__)
-
+print('join:',os.path.join(is_exists,'__init__.py'))
 # path='/home/centyuan/PycharmProjects/py_test/image/HeadImages/'
 # print(is_exists)
 # print(os.path.exists(path))

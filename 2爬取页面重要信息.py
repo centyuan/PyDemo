@@ -15,18 +15,15 @@ def get_importinfo(url):
         tg_key = ['TG', '电报', 'telegram']
         email_regex = r"([a-zA-Z0-9_.+-]+@[a-pr-zA-PRZ0-9-]+\.[a-zA-Z0-9-.]+)"
         wx_list, qq_list, tg_list, email_list = [], [], [], []
-        # 无头浏览器
         options = webdriver.ChromeOptions()
         options.add_argument('headless')  # 无头浏览器
-        options.add_experimental_option('excludeSwitches', ['enable-automation'])
-        options.add_experimental_option('useAutomationExtension', False)
-        # browser = webdriver.Chrome(executable_path=r"D:\python_data\centyuan\cent30\Lib\site-packages\selenium\webdriver\chrome\chromedriver.exe",options=options)  # 调用带参数的谷歌浏览器
-        browser = webdriver.Chrome(executable_path=r"C:\Users\rainbow\Downloads\chromedriver_win32\chromedriver.exe",options=options)  # 调用带参数的谷歌浏览器
+        browser = webdriver.Chrome(
+            executable_path=r"D:\python_data\centyuan\cent30\Lib\site-packages\selenium\webdriver\chrome\chromedriver.exe",
+            options=options)  # 调用带参数的谷歌浏览器
         # browser = webdriver.Chrome(executable_path=r"D:\python_data\centyuan\cent30\Lib\site-packages\selenium\webdriver\chrome\chromedriver.exe")  # 调用带参数的谷歌浏览器
         browser.get(url)
-        browser.implicitly_wait(10)  # 隐式等待时间为10秒
         # print('页面动态')
-        # time.sleep(3)
+        time.sleep(5)
         print(browser.page_source)  # 获取动态页面
 
         ht = browser.page_source
@@ -73,4 +70,6 @@ def get_importinfo(url):
         return None
 
 if __name__ == '__main__':
-    get_importinfo("https://www.967802.com:1066/default.html#/")
+    get_importinfo("https://v663.me/pc/home")
+    # 无头浏览器
+    url = "https://v663.me/pc/home"
