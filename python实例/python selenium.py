@@ -48,3 +48,8 @@ if __name__ == '__main__':
       driver.get("http://www.taobao.com")
       print(driver.page_source)  # 获取动态页面
 
+import tesserocr
+from PIL import Image
+image = Image.open('ocr_test.png')
+txt = tesserocr.image_to_text(image,lang='chi_sim')
+print(txt)
