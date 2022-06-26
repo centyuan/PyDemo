@@ -46,23 +46,27 @@ def get_importinfo(url):
             for regex in wx_key:
                 if re.findall(regex, label):
                     # print(regex,label)
-                    wx_list.append(label)
-                    break
+                    if len(label) < 40:
+                        wx_list.append(label)
+                        break
             for regex in qq_key:
                 if re.findall(regex, label):
                     # print("正则:",regex,re.findall(regex, label))
-                    qq_list.append(label)
-                    break
+                    if len(label) < 40:
+                        qq_list.append(label)
+                        break
             for regex in tg_key:
                 if re.findall(regex, label):
                     # print(regex,label)
-                    tg_list.append(label)
-                    break
-
+                    if len(label) < 40:
+                        tg_list.append(label)
+                        break
             if re.findall(email_regex, label):
                 # print(email_regex, label)
-                email_list.append(label)
-        print(wx_list,qq_list,tg_list,email_list)
+                if len(label) < 40:
+                    email_list.append(label)
+
+        print('匹配数据',wx_list,qq_list,tg_list,email_list)
         return wx_list, qq_list, tg_list, email_list
 
     except Exception as e:
@@ -70,6 +74,14 @@ def get_importinfo(url):
         return None
 
 if __name__ == '__main__':
-    get_importinfo("http://144.202.36.121:8081/")
-    # 无头浏览器
-    url = "https://v663.me/pc/home"
+    # get_importinfo("https://www.yedanrongqi.com.cn/")
+    # # 无头浏览器
+    # url = "https://v663.me/pc/home"
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Mobile Safari/537.36", }
+
+    res = requests.get("https://www.yedanrongqi.com.cn/",headers=headers)
+    print(res.text)
+
+

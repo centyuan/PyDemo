@@ -60,7 +60,8 @@ def get_json(ips,hash):
         'hash':hash
     }
     res = requests.post(json_url,data=json_data,headers=headers)
-    print(len(json.loads(res.text)))
+    print('请求头',res.request.headers)
+    print(len(json.loads(res.text)),'报告')
     print(json.loads(res.text))
     return res
 
@@ -106,7 +107,7 @@ if __name__ == '__main__':
     # start_scan(ips,result)
 
     # dc81ce505a0a4a35482eea252db4a898
-    result = {"hash":'5f3237600885db65a4286d6a82621cca'}
+    result = {"hash":'139abe31cb38f9e44086da66cf13a638'}
     for i in range(100):
         print("获取json报告")
         get_json(ips,result.get("hash")) # com.ireadercity_5.56.6_5566.apk
@@ -149,5 +150,4 @@ if __name__ == '__main__':
     # with open('sffffff.txt','w',encoding='utf-8') as f:
     #     f.write(str(json_report))
     # print(json_report)
-    #
     #
