@@ -74,7 +74,3 @@ if __name__=="__main__":
         pool.apply_async(main,args=(url,headers))
     pool.close()#不在创建进程
     pool.join()#让进程池的进程执行完毕再结束
-
-    # for i in range(0, 10):
-    #     url = 'https://movie.douban.com/top250?start=' + str(i * 25) + '&filter='
-    #     main(url,headers=headers)

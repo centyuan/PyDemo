@@ -31,13 +31,22 @@ http {
         server_name  127.0.0.1;   #监听地址
         location  ~*^.+$ {       #请求的url过滤，正则匹配，~为区分大小写，~*为不区分大小写。
            #root path;  #根目录
+           # root html; # html 默认为/etc/nginx/html/
            #index vv.txt;  #设置默认页
            proxy_pass  http://mysvr;  #请求转向mysvr 定义的服务器列表
            deny 127.0.0.1;  #拒绝的ip
            allow 172.18.5.54; #允许的ip
         }
         location / {
-
+                alias /data/dist_32324/;
+                index index.html;  # 指定起始页，默认值
+                try_files $uri $uri/ /index.php?$query_string;
+                # 用户请求 http://localhost/example 时，这里的 $uri 就是/example。
+                # /data/dist_32324/下尝试找这个名example的文件，$url/表示找这个目录
+        }
+        location ~.*\.(php)?${
+                fastcgi_pass 127.0.0.1:9000;
+                fastcgi_index index.php;
         }
     }
 }
