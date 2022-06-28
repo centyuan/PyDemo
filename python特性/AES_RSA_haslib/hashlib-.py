@@ -1,9 +1,9 @@
 import hashlib
 
 # da = "望太微兮穆穆"
-da = "123159"
+da = "https://www.yedanrongqi.com.cn"
 # 1.
-print(hashlib.md5(da.encode('utf8')).hexdigest())
+print(hashlib.md5(da.encode('utf8')).hexdigest(),len(hashlib.md5(da.encode('utf8')).hexdigest()))
 print(hashlib.sha1(da.encode('utf8')).hexdigest())
 print(hashlib.sha224(da.encode('utf8')).hexdigest())
 print(hashlib.sha256(da.encode('utf8')).hexdigest())
