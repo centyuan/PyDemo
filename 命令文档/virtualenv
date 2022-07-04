@@ -14,6 +14,8 @@ virtualenv -p /usr/bin/python2.7 venv　　　　# -p参数指定Python解释器
 
 pip freeze > requirements.txt  #这将会创建一个 requirements.txt 文件，其中包含了当前环境中所有包及 各自的版本的简单列表
 pip install -r requirements.txt #以后安装
+#创建虚拟环境
+python3 -m venv /data/ans_env
 
 
 export WORKON_HOME=~/Envs  #设置环境变量

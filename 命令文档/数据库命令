@@ -9,6 +9,7 @@ sudo -u postgres psql
 sudo su postgres
 
 
+https://blog.csdn.net/sinat_28371057/article/details/118073218
 postgresql:
 登录:
  psql -U dbuser -d exampledb -h 127.0.0.1 -p 5432
