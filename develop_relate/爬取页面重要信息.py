@@ -46,8 +46,9 @@ def get_customer_url(url):
             options=options)  # 调用带参数的谷歌浏览器
         # browser = webdriver.Chrome(executable_path=r"D:\python_data\centyuan\cent30\Lib\site-packages\selenium\webdriver\chrome\chromedriver.exe")  # 调用带参数的谷歌浏览器
         browser.get(url)
-        time.sleep(3)
+        time.sleep(5)
         html_doc = browser.page_source
+        print(html_doc)
         customer_regex = r"(http|ftp|https):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?"
         match_url = [x.group() for x in re.finditer(customer_regex, html_doc)]
         pool = ThreadPoolExecutor(30)
@@ -62,7 +63,7 @@ def get_customer_url(url):
 
 
 if __name__ == '__main__':
-    result = get_customer_url("https://www.yedanrongqi.com.cn/")
+    result = get_customer_url("https://www.1more.com/")
     print('返回',result)
     # for i in range(url_queue.qsize()):
     #     print(url_queue.get())

@@ -2,13 +2,11 @@
 # Author centyuan
 # Date 2019/10/28 10:40
 from datetime import datetime
-print(datetime.now())  # 2019-10-28 10:41:27.201551
-import datetime
-print(datetime.date(2019,10,28)) # 2019-10-28
-
-
 from django.db import models
-from datetime import datetime
+# from django.utils.timezone import now,datetime,timedelta
+
+print(datetime.now())  # 2019-10-28 10:41:27.201551
+print(datetime.date(2019,10,28)) # 2019-10-28
 class User(models.Model):
     name = models.CharField(max_length=30)
     age = models.CharField(max_length=30)

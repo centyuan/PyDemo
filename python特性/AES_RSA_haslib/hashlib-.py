@@ -2,6 +2,7 @@ import hashlib
 
 # da = "望太微兮穆穆"
 da = "https://www.yedanrongqi.com.cn"
+da = "http://comingzoo.com/"
 # 1.
 print(hashlib.md5(da.encode('utf8')).hexdigest(),len(hashlib.md5(da.encode('utf8')).hexdigest()))
 print(hashlib.sha1(da.encode('utf8')).hexdigest())

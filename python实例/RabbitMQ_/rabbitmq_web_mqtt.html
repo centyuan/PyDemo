@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>websocket</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript",async="async"></script>
+
+
+</head>
+<body>
+<script>
+    var wsbroker = location.hostname;
+    var wsbport = 15675;
+    var client = new Paho.MQTT.Client(wsbroker,wsbport,"/ws","myclientid_"+parseInt(Math.random()*100,10));
+    client.onConnectionLost = function (responseObject) {
+        debug("CONNECTION LOST - " + responseObject.errorMessage);
+    }
+    client.onMessageArrived = function (message) {
+        debug("RECEIVE ON"+message.destinationName+"PAYLOAD"+message.payloadString);
+        print_first(message.payloadString);
+
+    }
+
+
+</script>
+</body>
+</html>

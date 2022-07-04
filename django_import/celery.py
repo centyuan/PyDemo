@@ -12,13 +12,21 @@ hello.apply_async()
 # 检测是否处理完毕 True False
 result.ready()
 """
+# worker 
 nohup celery -A CTFServer worker -B -l info --logfile=./celery.log
 
+# flower Monitor
 https://docs.celeryq.dev/en/master/userguide/monitoring.html
 pip install flower
 celery -A proj flower 或celery -A proj flower --port=5555
 open http://localhost:5555
 
+# curses Monitor
+celery -A proj events 
+
+#beat 
+celeyr -A proj beat 
+celery -A proj beat -s /home/celery/var/run/celerybeat-schedule
 
 #任务调用
 # 方法一：delay方法

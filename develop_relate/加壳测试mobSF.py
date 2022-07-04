@@ -65,4 +65,4 @@ class shellDetector():
 if __name__ == '__main__':
     print("hhello")
     sd = shellDetector()
-    print(sd.shellDetector(r"com.ireadercity_5.56.apk")[1])
+    print(sd.shellDetector(r"360壳.apk")[1])

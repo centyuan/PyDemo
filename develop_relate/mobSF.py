@@ -29,7 +29,7 @@ def upload_apk(ips,name):
     }
     # res = requests.post(upload_url,files=files,headers=headers,proxies=proxies)
     res = requests.post(upload_url,files=files,headers=headers)
-    print('返回',res.status_code,res.json(),res.text)
+    print('返回',res.status_code,res.text)
     result = json.loads(res.text)
     print("上传返回",result)
     return result
@@ -103,11 +103,11 @@ if __name__ == '__main__':
     # result = upload_apk('douyu_v6.2.1.apk')
     import time
     ips = "http://149.28.210.253:9633"
-    # result = upload_apk(ips,'PP.ipa')
+    # result = upload_apk(ips,'96cbf8ddcaccc24e9d6b6f1201a48db8.apk')
     # start_scan(ips,result)
 
     # dc81ce505a0a4a35482eea252db4a898
-    result = {"hash":'139abe31cb38f9e44086da66cf13a638'}
+    result = {"hash":'99fb1d8d33c6f78db0da08eb21f907c1'}
     for i in range(100):
         print("获取json报告")
         get_json(ips,result.get("hash")) # com.ireadercity_5.56.6_5566.apk
