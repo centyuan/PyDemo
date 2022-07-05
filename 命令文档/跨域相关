@@ -20,7 +20,7 @@ Access-Control-Allow-Credentials:响应头表示是否可以将对请求的响�
 
 2.JSONP
 通过<script> src属性，请求接口放回一段js语句，并执行
-js语句为已经定义好的js 函数 但是这种方式只能走get请求
+js语句为已经定义好的js 函数 但是这种方式只能走get请求(里面加入约定好的回调函数(本地js定义好的)，服务器返回调用回调函数的js)
 
 3.VUE提供的代理配置
 

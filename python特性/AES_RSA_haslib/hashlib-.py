@@ -2,7 +2,7 @@ import hashlib
 
 # da = "望太微兮穆穆"
 da = "https://www.yedanrongqi.com.cn"
-da = "http://comingzoo.com/"
+da = "94:83:c4:1b:6e:9e"
 # 1.
 print(hashlib.md5(da.encode('utf8')).hexdigest(),len(hashlib.md5(da.encode('utf8')).hexdigest()))
 print(hashlib.sha1(da.encode('utf8')).hexdigest())
@@ -41,3 +41,8 @@ def md5_sign(dict_map, key):
         m.update(con.encode(encoding='UTF-8'))
         sign = m.hexdigest()
         return sign.upper(), content
+
+with open('s.txt', 'rb') as fd:
+        data = fd.read()
+        hs = hashlib.md5(data).hexdigest()
+        print(hs)

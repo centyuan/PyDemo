@@ -1,0 +1,6 @@
+# debug = False 生效
+# STATIC_ROOT=os.path.join(BASE_DIR,"static")
+# debug=True生效
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,"static")
+]
