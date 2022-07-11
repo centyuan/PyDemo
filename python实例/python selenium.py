@@ -6,6 +6,7 @@ from selenium import webdriver
 import time
 
 # help(webdriver)支持那些浏览器
+# browser = webdriver.PhantomJS()
 broswer=webdriver.Chrome(executable_path=r"D:\python_data\centyuan\cent30\Lib\site-packages\selenium\webdriver\chrome\chromedriver.exe")
 # driver1=webdriver.Chrome()
 broswer.get('https://www.baidu.com')#打开页面

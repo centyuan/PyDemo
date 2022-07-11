@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 '''
 kombu > pika
 kafka > rabbitMQ 
+https://mp.weixin.qq.com/s/RzxiXBQk3zjHt9PVI3JSQw
 '''
 
 def call_back(ch, method, properties, body):

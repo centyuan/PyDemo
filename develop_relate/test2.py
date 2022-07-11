@@ -9,13 +9,14 @@ login_headers = {
     "referer": "https://www.wbtbest.info/zh-cn/index.php"
 }
 login_data = {
-    "loginName":"qiankang",
-    "password":"qiankang",
+    "loginName":"cnnbzz",
+    "password":"b8hs0044",
     "platform":1,
     "application":0,
     "deviceId":"Chrome 99",
 }
 response = requests.post(url=login_url,data=login_data,headers=login_headers,verify=False)
+print('登录',response.text)
 # request.utils.dict_from_cookiejar从CookieJar对象返回一个dict
 # 获取banklist
 bank_cookies = requests.utils.dict_from_cookiejar(response.cookies) # response.cookies返回RequestsCookieJar对象

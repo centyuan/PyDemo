@@ -26,7 +26,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import TimeoutException
-# from retrying import retry
+from retrying import retry
 from io import BytesIO
 import numpy as np
 
@@ -45,8 +45,8 @@ def process_image(image):
     return result
 
 #  10次重登次数，返回false的时候就进行重试
-# @retry(stop_max_attempt_number=10, retry_on_result=lambda x: x is False)
 
+@retry(stop_max_attempt_number=10, retry_on_result=lambda x: x is False)
 def login(browser):
     browser.get('https://captcha7.scrape.center/')
     # browser.find_element_by_css_selector('.el-input__inner').send_keys('admin')
@@ -55,11 +55,14 @@ def login(browser):
     captcha = browser.find_element(By.CSS_SELECTOR, '#captcha')
     # 获取验证码图片
     image = Image.open(BytesIO(captcha.screenshot_as_png))
+    time.sleep(1)
     # 处理图片
     txt = process_image(image)
+    time.sleep(2)
     # 输入验证码
     browser.find_element(By.CSS_SELECTOR, '.captcha input[type="text"]').send_keys(txt)
     # 点击登录按钮
+    time.sleep(1)
     browser.find_element(By.CSS_SELECTOR, '.login').click()
     # 成功这个文本所在元素出现说明登录成功，页面保留10秒后退出浏览器
     try:
@@ -72,4 +75,7 @@ def login(browser):
 
 if __name__ == '__main__':
     broswer = webdriver.Chrome( executable_path=r"D:\python_data\centyuan\cent30\Lib\site-packages\selenium\webdriver\chrome\chromedriver.exe")
-    login(broswer)
+    while True:
+        login(broswer)
+        import time
+        time.sleep(3)
