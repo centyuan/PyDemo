@@ -1,0 +1,6 @@
+{
+    "app_name": "九游合约_v1.1",
+    "author": "jj",
+    "main_module": "src/main/python/main.py",
+    "version": "0.0.0"
+}
