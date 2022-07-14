@@ -2,11 +2,10 @@ import json
 import time
 import requests
 from PyQt5.QtCore import QTimer, Qt
-from PyQt5.QtGui import QPalette
+from PyQt5.QtGui import QPalette, QIcon
 from PyQt5.QtWidgets import QWidget, QDialog, QMainWindow, QApplication,QMessageBox
 import sys
 
-from fbs_runtime.application_context.PyQt5 import ApplicationContext
 
 auth_data = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJIWDFqOXRhb2xvdjEzMTQiLCJib2R5Ijp7ImNvdW50cnlDb2RlIjoiKzg2IiwibWVyY2hhbnQiOiJIWDEiLCJvcmlnaW4iOiIyMjIuMjA5LjIwOC4xNjYiLCJyZWdEZXZpY2UiOiJtb2JpbGUiLCJyZWdIb3N0IjoiMTI3LjAuMC4xIiwicmVnSXAiOiIxMjcuMC4wLjEiLCJzdGF0ZSI6Ik5PUk1BTCIsInVzZXJuYW1lIjoiSFgxajl0YW9sb3YxMzE0In0sImJvZHlDbGFzcyI6ImNvbS5wZy5sb2JieS5qOWJjLmF1dGguc2hpcm8uU2hpcm9Vc2VyIiwiZXhwIjoxNjU3NzEzNDI3OTk2LCJpYXQiOjE2NTc3MDk4Mjc5OTYsImp0aSI6ImU3NDRlNGU1LTM3MjctNGZmMi05NDkyLTI0N2I5MjE0MWIyYyIsIm5iZiI6MTY1NzcwOTgyNzk5Nn0.mQGtViitkQSg80gqD79dhfuvbDb9C6BLkJXBFZkBgwI'
 wallet_url = 'https://j9bcrest.com/api/customer/wallet'
@@ -172,252 +171,204 @@ class action_class(QMainWindow):
 
 
     def time_keep(self):
-        wallet_url = 'https://www.j9bcrest.com/api/customer/wallet'
-        auth_d = self.ui.textEdit_payloadtoken.toPlainText()
-        if auth_d:
-            self.new_h['authorization'] = auth_d
-            wall_res = requests.get(wallet_url, headers=self.new_h)
-            print('余额', wall_res.text)
-            res_data = wall_res.json()
+        try:
+            wallet_url = 'https://www.j9bcrest.com/api/customer/wallet'
+            auth_d = self.ui.textEdit_payloadtoken.toPlainText()
+            if auth_d:
+                self.new_h['authorization'] = auth_d
+                wall_res = requests.get(wallet_url, headers=self.new_h)
+                # print('余额', wall_res.text)
+                res_data = wall_res.json()
 
-            if not res_data.get('code'):
-                balance = res_data.get('data')
-                display_str = f'余额: USDT:{balance.get("USDT")}  J9BC:{balance.get("J9BC")}'
-                print(f'余额: USDT:{balance.get("USDT")}  J9BC:{balance.get("J9BC")}')
-                self.ui.lineEdit_balance_price.setStyleSheet("color:red")
-                self.ui.lineEdit_balance_price.setText(display_str)
+                if not res_data.get('code'):
+                    balance = res_data.get('data')
+                    display_str = f'余额: USDT:{balance.get("USDT")}  J9BC:{balance.get("J9BC")}'
+                    # print(f'余额: USDT:{balance.get("USDT")}  J9BC:{balance.get("J9BC")}')
+                    self.ui.lineEdit_balance_price.setStyleSheet("color:red")
+                    self.ui.lineEdit_balance_price.setText(display_str)
+                else:
+                    display_str = f'错误:{res_data.get("message")}'
+                    # print(f'错误:{res_data.get("message")}')
+                    self.ui.lineEdit_balance_price.setText(display_str)
+                # 卖出 1 J9BC -> 0.xxx USDT
+                to_data = {'token': 'J9BC', 'value': 1, 'tradeCode': 'J9BC_USDT',
+                           }
+                to_url = 'https://www.j9bcrest.com/api/swap/open/calc/to'
+                to_res = requests.post(to_url, headers=self.new_h, json=to_data)
+                dis_value_1 = to_res.json().get('data').get('value')
+                # 买入 0.xxx USDT -> 1J9BC
+                from_url = 'https://www.j9bcrest.com/api/swap/open/calc/from'
+                # token: J9BC, USDT
+                from_data = {'token': 'J9BC', 'value': 1, 'tradeCode': 'J9BC_USDT', }
+                from_res = requests.post(from_url, headers=self.new_h, json=from_data)
+                dis_value_2 = from_res.json().get('data').get('value')
+
+                self.ui.lineEdit_USDI_input.setText(str(dis_value_1))
+                self.ui.lineEdit_J9BC_input.setText(str(dis_value_2))
             else:
-                display_str = f'错误:{res_data.get("message")}'
-                print(f'错误:{res_data.get("message")}')
-                self.ui.lineEdit_balance_price.setText(display_str)
-            # 卖出 1 J9BC -> 0.xxx USDT
-            to_data = {'token': 'J9BC', 'value': 1, 'tradeCode': 'J9BC_USDT',
-                       }
-            to_url = 'https://www.j9bcrest.com/api/swap/open/calc/to'
-            to_res = requests.post(to_url, headers=self.new_h, json=to_data)
-            dis_value_1 = to_res.json().get('data').get('value')
-            # 买入 0.xxx USDT -> 1J9BC
-            from_url = 'https://www.j9bcrest.com/api/swap/open/calc/from'
-            # token: J9BC, USDT
-            from_data = {'token': 'J9BC', 'value': 1, 'tradeCode': 'J9BC_USDT', }
-            from_res = requests.post(from_url, headers=self.new_h, json=from_data)
-            dis_value_2 = from_res.json().get('data').get('value')
-
-            self.ui.lineEdit_USDI_input.setText(str(dis_value_1))
-            self.ui.lineEdit_J9BC_input.setText(str(dis_value_2))
-        else:
-            QMessageBox.information(self, "九游", "输入不能为空",
+                QMessageBox.information(self, "九游", "输入不能为空",
+                                        QMessageBox.Yes)
+        except Exception as e:
+            QMessageBox.information(self, "九游", "稍后再试"+str(e),
                                     QMessageBox.Yes)
+
 
     def keep_wallet(self):
-        wallet_url = 'https://www.j9bcrest.com/api/customer/wallet'
-        auth_d = self.ui.textEdit_payloadtoken.toPlainText()
-        if auth_d:
-            self.new_h['authorization'] = auth_d
-            wall_res = requests.get(wallet_url, headers=self.new_h)
-            print('余额',wall_res.text)
-            res_data = wall_res.json()
+        try:
+            wallet_url = 'https://www.j9bcrest.com/api/customer/wallet'
+            auth_d = self.ui.textEdit_payloadtoken.toPlainText()
+            if auth_d:
+                self.new_h['authorization'] = auth_d
+                wall_res = requests.get(wallet_url, headers=self.new_h)
+                print('余额',wall_res.text)
+                res_data = wall_res.json()
 
-            if not res_data.get('code'):
-                balance = res_data.get('data')
-                display_str = f'余额: USDT:{balance.get("USDT")}  J9BC:{balance.get("J9BC")}'
-                print(f'余额: USDT:{balance.get("USDT")}  J9BC:{balance.get("J9BC")}')
-                self.ui.lineEdit_balance_price.setStyleSheet("color:red")
-                self.ui.lineEdit_balance_price.setText(display_str)
+                if not res_data.get('code'):
+                    balance = res_data.get('data')
+                    display_str = f'余额: USDT:{balance.get("USDT")}  J9BC:{balance.get("J9BC")}'
+                    print(f'余额: USDT:{balance.get("USDT")}  J9BC:{balance.get("J9BC")}')
+                    self.ui.lineEdit_balance_price.setStyleSheet("color:red")
+                    self.ui.lineEdit_balance_price.setText(display_str)
+                else:
+                    display_str = f'错误:{res_data.get("message")}'
+                    print(f'错误:{res_data.get("message")}')
+                    self.ui.lineEdit_balance_price.setText(display_str)
+                # 卖出 1 J9BC -> 0.xxx USDT
+                to_data = {'token': 'J9BC','value': 1,'tradeCode': 'J9BC_USDT',
+                }
+                to_url = 'https://www.j9bcrest.com/api/swap/open/calc/to'
+                to_res = requests.post(to_url, headers=self.new_h, json=to_data)
+                dis_value_1= to_res.json().get('data').get('value')
+                # 买入 0.xxx USDT -> 1J9BC
+                from_url = 'https://www.j9bcrest.com/api/swap/open/calc/from'
+                # token: J9BC, USDT
+                from_data = {'token': 'J9BC','value': 1,'tradeCode': 'J9BC_USDT',}
+                from_res = requests.post(from_url, headers=self.new_h, json=from_data)
+                dis_value_2 = from_res.json().get('data').get('value')
+
+                self.ui.lineEdit_USDI_input.setText(str(dis_value_1))
+                self.ui.lineEdit_J9BC_input.setText(str(dis_value_2))
             else:
-                display_str = f'错误:{res_data.get("message")}'
-                print(f'错误:{res_data.get("message")}')
-                self.ui.lineEdit_balance_price.setText(display_str)
-            # 卖出 1 J9BC -> 0.xxx USDT
-            to_data = {'token': 'J9BC','value': 1,'tradeCode': 'J9BC_USDT',
-            }
-            to_url = 'https://www.j9bcrest.com/api/swap/open/calc/to'
-            to_res = requests.post(to_url, headers=self.new_h, json=to_data)
-            dis_value_1= to_res.json().get('data').get('value')
-            # 买入 0.xxx USDT -> 1J9BC
-            from_url = 'https://www.j9bcrest.com/api/swap/open/calc/from'
-            # token: J9BC, USDT
-            from_data = {'token': 'J9BC','value': 1,'tradeCode': 'J9BC_USDT',}
-            from_res = requests.post(from_url, headers=self.new_h, json=from_data)
-            dis_value_2 = from_res.json().get('data').get('value')
-
-            self.ui.lineEdit_USDI_input.setText(str(dis_value_1))
-            self.ui.lineEdit_J9BC_input.setText(str(dis_value_2))
-        else:
-            QMessageBox.information(self, "九游", "输入不能为空",
+                QMessageBox.information(self, "九游", "输入不能为空",
+                                        QMessageBox.Yes)
+            self.timer.start(10000)
+        except Exception as e:
+            QMessageBox.information(self, "九游", "稍后再试"+str(e),
                                     QMessageBox.Yes)
-        self.timer.start(10000)
 
 
     def J9BC_sellunitprice(self,value):
         # 卖出 1 J9BC -> 0.0157 USDT
-        to_url = 'https://www.j9bcrest.com/api/swap/open/calc/to'
-        # token: J9BC, USDT
-        to_data = {
-            'token': 'J9BC',
-            'value': value,
-            'tradeCode': 'J9BC_USDT',
-        }
-        print('卖出J9BC', to_data)
-        to_res = requests.post(to_url, headers=self.new_h, json=to_data)
-        print(to_res.text)
-        to_value = to_res.json().get('data').get('value')
-        print('to_res:', to_res.text, to_value)
-        return value, to_value
+        try:
+            to_url = 'https://www.j9bcrest.com/api/swap/open/calc/to'
+            # token: J9BC, USDT
+            to_data = {
+                'token': 'J9BC',
+                'value': value,
+                'tradeCode': 'J9BC_USDT',
+            }
+            # print('卖出J9BC', to_data)
+            to_res = requests.post(to_url, headers=self.new_h, json=to_data)
+            print(to_res.text)
+            to_value = to_res.json().get('data').get('value')
+            # print('to_res:', to_res.text, to_value)
+            return value, to_value
+        except Exception as e:
+            QMessageBox.information(self, "九游", "稍后再试"+str(e),
+                                    QMessageBox.Yes)
 
     def J9BC_out(self):
         # 卖出 1 J9BC -> 0.0157 USDT
-        v = self.ui.lineEdit_USDT_display.text()
-        if v:
-            value, to_value = self.J9BC_sellunitprice(v)
-            print('卖出', value, to_value)
-            tran_url = 'https://www.j9bcrest.com/api/swap/trading-pair/transaction'
-            tran_data = {"fromToken": "J9BC", "fromValue": value, "slippageTolerance": 0.02, "toValue": to_value,
-                         "tradeCode": "J9BC_USDT"}
-            tran_res = requests.post(tran_url, json=tran_data, headers=self.new_h)
-            print('tran_res:', tran_res.text)
-            time_str = time.strftime("%Y-%m-%d %H:%M:%S")
-            message = f'{time_str}卖出成功:{tran_res.json().get("data").get("message")}'
-            self.ui.textEdit_response_display.setStyleSheet("color:green")
-            self.ui.textEdit_response_display.append(message)
-            self.ui.lineEdit_USDT_display.clear()
-            print('tran_res:', tran_res.text)
-            with open('jiuyou.txt','a') as file:
-                file.writelines(message+'\n')
-        else:
-            QMessageBox.information(self, "九游", "输入不能为空",
+        try:
+            v = self.ui.lineEdit_USDT_display.text()
+            if v:
+                value, to_value = self.J9BC_sellunitprice(v)
+                # print('卖出', value, to_value)
+                tran_url = 'https://www.j9bcrest.com/api/swap/trading-pair/transaction'
+                tran_data = {"fromToken": "J9BC", "fromValue": value, "slippageTolerance": 0.02, "toValue": to_value,
+                             "tradeCode": "J9BC_USDT"}
+                tran_res = requests.post(tran_url, json=tran_data, headers=self.new_h)
+                # print('tran_res:', tran_res.text)
+                time_str = time.strftime("%Y-%m-%d %H:%M:%S")
+                message = f'{time_str}卖出成功:{tran_res.json().get("data").get("message")}'
+                self.ui.textEdit_response_display.setStyleSheet("color:green")
+                self.ui.textEdit_response_display.append(message)
+                self.ui.lineEdit_USDT_display.clear()
+                # print('tran_res:', tran_res.text)
+                with open('jiuyou.txt','a') as file:
+                    file.writelines(message+'\n')
+            else:
+                QMessageBox.information(self, "九游", "输入不能为空",
+                                        QMessageBox.Yes)
+        except Exception as e:
+            QMessageBox.information(self, "九游", "稍后再试" + str(e),
                                     QMessageBox.Yes)
 
     def J9BC_buyunitprice(self,value):
         # 0.xxUSDT 兑换1 J9BC 买入1 J9BC
-        to_url = 'https://www.j9bcrest.com/api/swap/open/calc/from'
-        # token: J9BC, USDT
-        to_data = {
-            'token': 'J9BC',
-            'value': value,
-            'tradeCode': 'J9BC_USDT',
-        }
-        print('买进J9BC', to_data)
-        to_res = requests.post(to_url, headers=self.new_h, json=to_data)
-        to_value = to_res.json().get('data').get('value')
-        print('to_res:', to_res.text, to_value)
-        return value, to_value
+        try:
+            to_url = 'https://www.j9bcrest.com/api/swap/open/calc/from'
+            # token: J9BC, USDT
+            to_data = {
+                'token': 'J9BC',
+                'value': value,
+                'tradeCode': 'J9BC_USDT',
+            }
+            # print('买进J9BC', to_data)
+            to_res = requests.post(to_url, headers=self.new_h, json=to_data)
+            to_value = to_res.json().get('data').get('value')
+            # print('to_res:', to_res.text, to_value)
+            return value, to_value
+        except Exception as e:
+            QMessageBox.information(self, "九游", "稍后再试" + str(e),
+                                    QMessageBox.Yes)
 
     def J9BC_in(self):
         # 0.xxUSDT 兑换1 J9BC 买入1 J9BC
-        v = self.ui.lineEdit_J9BC_display.text()
-        if v:
-            to_value, value = self.J9BC_buyunitprice(v)
-            print('买入', to_value, value)
-            tran_url = 'https://www.j9bcrest.com/api/swap/trading-pair/transaction'
-            tran_data = {"fromToken": "USDT", "fromValue": value, "slippageTolerance": 0.02, "toValue": to_value,
-                         "tradeCode": "J9BC_USDT"}
-            tran_res = requests.post(tran_url, json=tran_data, headers=self.new_h)
-            time_str = time.strftime("%Y-%m-%d %H:%M:%S")
-            message = f'{time_str}买入成功:{tran_res.json().get("data").get("message")}'
+        try:
+            v = self.ui.lineEdit_J9BC_display.text()
+            if v:
+                to_value, value = self.J9BC_buyunitprice(v)
+                # print('买入', to_value, value)
+                tran_url = 'https://www.j9bcrest.com/api/swap/trading-pair/transaction'
+                tran_data = {"fromToken": "USDT", "fromValue": value, "slippageTolerance": 0.02, "toValue": to_value,
+                             "tradeCode": "J9BC_USDT"}
+                tran_res = requests.post(tran_url, json=tran_data, headers=self.new_h)
+                time_str = time.strftime("%Y-%m-%d %H:%M:%S")
+                message = f'{time_str}买入成功:{tran_res.json().get("data").get("message")}'
 
-            print('usdt买入成功', message)
-            self.ui.textEdit_response_display.setStyleSheet("color:green")
-            self.ui.textEdit_response_display.append(message)
-            self.ui.lineEdit_J9BC_display.clear()
-            print('tran_res:', tran_res.text)
-            with open('jiuyou.txt','a') as file:
-                file.writelines(message+'\n')
-        else:
-            QMessageBox.information(self, "九游", "输入不能为空",
+                # print('usdt买入成功', message)
+                self.ui.textEdit_response_display.setStyleSheet("color:green")
+                self.ui.textEdit_response_display.append(message)
+                self.ui.lineEdit_J9BC_display.clear()
+                # print('tran_res:', tran_res.text)
+                with open('jiuyou.txt','a') as file:
+                    file.writelines(message+'\n')
+            else:
+                QMessageBox.information(self, "九游", "输入不能为空",
+                                        QMessageBox.Yes)
+        except Exception as e:
+            QMessageBox.information(self, "九游", "稍后再试" + str(e),
                                     QMessageBox.Yes)
 
 
-def keep_wallet():
-    wall_res = requests.get(wallet_url, headers=new_h)
-    res_data = wall_res.json()
-    # print('余额',wall_res.json())
-    if not res_data.get('code'):
-        balance = res_data.get('data')
-        print(f'余额: USDT:{balance.get("USDT")}  J9BC:{balance.get("J9BC")}')
-        return f'余额: USDT:{balance.get("USDT")}  J9BC:{balance.get("J9BC")}'
-    else:
-        print(f'错误:{res_data.get("message")}')
-        return f'错误:{res_data.get("message")}'
 
-
-def J9BC_sellunitprice(value):
-    # 卖出 1 J9BC -> 0.0157 USDT
-    to_url = 'https://www.j9bcrest.com/api/swap/open/calc/to'
-    # token: J9BC, USDT
-    to_data = {
-        'token': 'J9BC',
-        'value': value,
-        'tradeCode': 'J9BC_USDT',
-    }
-    print('卖出J9BC', to_data)
-    to_res = requests.post(to_url, headers=new_h, json=to_data)
-    print(to_res.text)
-    to_value = to_res.json().get('data').get('value')
-    print('to_res:', to_res.text, to_value)
-    return value, to_value
-
-
-def J9BC_out(value):
-    # 卖出 1 J9BC -> 0.0157 USDT
-    value, to_value = J9BC_sellunitprice(value)
-    print('卖出', value, to_value)
-    tran_url = 'https://www.j9bcrest.com/api/swap/trading-pair/transaction'
-    tran_data = {"fromToken": "J9BC", "fromValue": value, "slippageTolerance": 0.02, "toValue": to_value,
-                 "tradeCode": "J9BC_USDT"}
-    tran_res = requests.post(tran_url, json=tran_data, headers=new_h)
-    print('tran_res:', tran_res.text)
-    time_str = time.strftime("%Y-%m-%d %H:%M:%S")
-    message = f'{time_str}卖出成功:{tran_res.json().get("data").get("message")}'
-    # self.ui.textEdit_response_display.append(message)
-    print('tran_res:', tran_res.text)
-    # except Exception as e:
-    #     print('请稍后再试')
-
-
-def J9BC_buyunitprice(value):
-    # 0.xxUSDT 兑换1 J9BC 买入1 J9BC
-    to_url = 'https://www.j9bcrest.com/api/swap/open/calc/from'
-    # token: J9BC, USDT
-    to_data = {
-        'token': 'J9BC',
-        'value': value,
-        'tradeCode': 'J9BC_USDT',
-    }
-    print('买进J9BC', to_data)
-    to_res = requests.post(to_url, headers=new_h, json=to_data)
-    to_value = to_res.json().get('data').get('value')
-    print('to_res:', to_res.text, to_value)
-    return value, to_value
-
-
-def J9BC_in(value):
-    # 0.xxUSDT 兑换1 J9BC 买入1 J9BC
-    to_value, value = J9BC_buyunitprice(value)
-    print('买入', to_value, value)
-    tran_url = 'https://www.j9bcrest.com/api/swap/trading-pair/transaction'
-    tran_data = {"fromToken": "USDT", "fromValue": value, "slippageTolerance": 0.02, "toValue": to_value,
-                 "tradeCode": "J9BC_USDT"}
-    tran_res = requests.post(tran_url, json=tran_data, headers=new_h)
-    time_str = time.strftime("%Y-%m-%d %H:%M:%S")
-    message = f'{time_str}买入成功:{tran_res.json().get("data").get("message")}'
-    print('usdt买入成功', message)
-    # self.ui.textEdit_response_display.append(message)
-    print('tran_res:', tran_res.text)
 
 
 if __name__ == '__main__':
     # QMainWindow
-    appctxt = ApplicationContext()  # 1. Instantiate ApplicationContext
     app = QApplication([])
-    app.setStyle('Fusion')  # 设置风格 'Fusion', 'Windows', 'WindowsVista'
-    palette = QPalette()  # 调色板
-    palette.setColor(QPalette.ButtonText, Qt.blue)
-    app.setPalette(palette)
+    # app.setStyle('Fusion')  # 设置风格 'Fusion', 'Windows', 'WindowsVista'
+    app.setWindowIcon(QIcon('icon.ico'))
+    # palette = QPalette()  # 调色板
+    # palette.setColor(QPalette.ButtonText, Qt.blue)
+    # app.setPalette(palette)
     mainwindow = action_class()
     mainwindow.setWindowTitle("九游合约_v1.1")
+    mainwindow.setWindowIcon(QIcon('icon.ico'))
     mainwindow.show()
     mainwindow.resize(800,600)
     sys.exit(app.exec_())
     # exit_code = appctxt.app.exec_()  # 2. Invoke appctxt.app.exec_()
     # sys.exit(exit_code)
+

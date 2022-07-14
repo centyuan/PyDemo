@@ -1,25 +1,32 @@
-def is_ip(address):
-    try:
-        ip = str(address)[:-3]
-        print(ip)
-        ip_str = str(ip).split('.')
-        if len(ip_str) !=4:
-            raise Exception("格式不正确,请输入正确格式")
-            return False
-        a,b,c,d = ip_str
-        a, b, c, d = int(a), int(b), int(c), int(d)
-        if 255>= max(a,b,c,d) and 0<=min(a,b,c,d):
-            return True
-        else:
-            raise Exception("非法ip  {}".format(".".join(ip)))
-            return False
-    except Exception as e:
-        return False
+import requests
 
-if __name__ == '__main__':
-# player_ip = match.player_ip   # 比赛选手IP段
-# user_network_segment = ip.split(".")[0:3]
-# match_network_segment = player_ip.split(".")[0:3]
-# if user_network_segment != match_network_segment:
-#   return Response(data={"success":False, "info":"无权限加入比赛"})
-    ff = is_ip('192.168.9.1/24')
+cookies = {
+    'greypanel_token': 'c361b9cc94bb553d82b44dbf7fc8eb5a',
+    'greypanel_time': '1657722791',
+}
+
+headers = {
+    'authority': 'ctl.818vtrans.com',
+    'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="99", "Google Chrome";v="99"',
+    'sec-ch-ua-mobile': '?0',
+    'authorization': 'null',
+    'content-type': 'application/json; charset=UTF-8',
+    'accept': 'application/json;',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36',
+    'lang': 'zh_TW',
+    'sec-ch-ua-platform': '"Windows"',
+    'sec-fetch-site': 'same-origin',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-dest': 'empty',
+    'referer': 'https://ctl.818vtrans.com/',
+    'accept-language': 'zh-CN,zh;q=0.9',
+    # Requests sorts cookies= alphabetically
+    # 'cookie': 'greypanel_token=c361b9cc94bb553d82b44dbf7fc8eb5a; greypanel_time=1657722791',
+}
+
+json_data = {
+    'ip': '222.209.208.166',
+}
+
+response = requests.get('https://ctl.818vtrans.com', cookies=cookies, headers=headers, json=json_data)
+print(response.status_code,response.text,response.status_code)

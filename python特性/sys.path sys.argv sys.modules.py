@@ -4,9 +4,16 @@
 # @time 19-5-29 上午11:23
 import sys
 import os
-#sys.path模块是动态的修改系统路径
-#sys.path是python的搜索模块的路径集，是一个list
-#Python解释器会自动将当前工作目录添加到sys.path
+
+# sys 模块提供了许多函数和变量来处理 Python 运行时环境的不同部分。
+'''
+sys.path模块是动态的修改系统路径
+sys.path——获取指定模块搜索路径的字符串集合，是一个list 初始化时使用PYTHONPATH环境变量的值
+
+Python解释器会自动将当前工作目录添加到sys.path
+sys.modules ---已加载的模块字典
+'''
+
 
 """
 Python import搜索的路径顺序
@@ -46,4 +53,13 @@ sys.modules是一个全局字典，该字典是python启动后就加载在内存
 每当导入新的模块，sys.modules都将记录这些模块。字典sys.modules对于加载模块起到了缓冲的作用。
 当某个模块第一次导入，字典sys.modules将自动记录该模块。
 当第二次再导入该模块时，python会直接到字典中查找，从而加快了程序运行的速度
+
+一:存在模块B
+ 1.sys.modules 有B这个键,
+ 2.从B.__dict___查找
+二:不存在模块B
+ 1.sys.modules 不存在这个键，会创建这个模块
+ 2.对象此时其__dict__为空
+ 3.执行B.py 以填充__dict__
+ 4.从B.__dict__查找
 """
