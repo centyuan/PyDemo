@@ -10,7 +10,7 @@ cv2.waitKey()
 """
 Pyinstaller -F  -w  pack_exe.py  # -w 不打包工作台,有print语句则打包
 Pyinstaller -F -w -i v 2w.ico  pack_exe.py
-Pyintaller -D  
+Pyintaller -D  -p  C:\Windows\System32\downlevel 
 """
 
 """

@@ -32,7 +32,8 @@ class Rabbitmq_producer(object):
 
     def rbt_connection(self):
         # hosts = "127.0.0.1"
-        hosts = "192.168.8.29"
+        # hosts = "192.168.8.29"
+        hosts = "192.168.8.28"
         host = hosts
         print("连接参数", self.user, self.pwd, self.port, host)
         credential = pika.PlainCredentials(self.user, self.pwd)
@@ -74,7 +75,8 @@ class Rabbitmq_consumer(object):
     def rbt_connection(self):
         # 从配置文件中获取数据
         # hosts = "127.0.0.1"
-        hosts = "192.168.8.29"
+        # hosts = "192.168.8.29"
+        hosts = "192.168.8.28"
         host = hosts
         print("连接参数", self.user, self.pwd, self.port, host)
         credential = pika.PlainCredentials(self.user, self.pwd)
@@ -111,7 +113,7 @@ class Rabbitmq_consumer(object):
 
 if __name__ == '__main__':
     print("生产者")
-    rabbitmq = Rabbitmq_producer("coolfire", "coolfire")
+    rabbitmq = Rabbitmq_producer("hc", "n7pzv8k58re6")
     rabbitmq.publish(["123"])
     time.sleep(3)
     # print("消费者")

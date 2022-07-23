@@ -29,3 +29,4 @@ print("当前时间和日期",datetime.datetime.now())  # 2022-05-17 21:23:56.15
 print('定时时间',datetime.date(2017,3,22))
 print('前一天时间',datetime.datetime.now()-datetime.timedelta(days=1,hours=1,minutes=30))
 print(datetime.timedelta(hours=1,minutes=40))
+print('转为时间戳',datetime.datetime.now().timestamp())

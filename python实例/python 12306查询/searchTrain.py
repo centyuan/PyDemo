@@ -73,23 +73,32 @@ def cli():
     arguments=docopt(__doc__)
     print(arguments)
     print(arguments['<from>'])
-    from_station=stations.get(arguments['<from>'])
-    to_station=stations.get(arguments['<to>'])
+    # from_station=stations.get(arguments['<from>'])
+    # to_station=stations.get(arguments['<to>'])
+    from_station=arguments['<from>']
+    to_station=arguments['<to>']
     date=arguments['<date>']
-    url = ('https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.train_date={}&leftTicketDTO.from_station={}&leftTicketDTO.to_station={}&purpose_codes=ADULT').format(
-        date, from_station, to_station
-    )
+    url = f'https://kyfw.12306.cn/otn/leftTicket/init?linktypeid=dc&fs={from_station},SHH&ts={to_station},CQW&date={date}&flag=N,N,Y'
+    # url = ('https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.date={}&leftTicketDTO.from_station={}&leftTicketDTO.to_station={}&purpose_codes=ADULT').format(
+    #     date, from_station, to_station
+    # )
+    print('aaaaaa',url)
     html=requests.get(url,verify=False)
-    #print(html.json())#.json()将json数据转化为python字典
+    print(html.json())#.json()将json数据转化为python字典
     available_trains=html.json()['data']['result']
     available_places=html.json()['data']['map']
     print(available_trains)
-    #available_trains
-    #available_places {'GZQ': '广州', 'VUQ': '海口'}
+    # available_trains
+    # available_places {'GZQ': '广州', 'VUQ': '海口'}
     options=''.join([key for key,value in arguments.items() if value is True])
     TrainCollection(available_trains,available_places,options).pretty_print()
 
-
+def public_price():
+    from_name = '成都'
+    to_name = '重庆'
+    from_station = stations.get(from_name)
+    tp_station = stations.get(to_name)
+    url = 'https://kyfw.12306.cn/otn/leftTicketPrice/queryAllPublicPrice?leftTicketDTO.train_date=2022-07-19&leftTicketDTO.from_station=CDW&leftTicketDTO.to_station=CQW&purpose_codes=ADULT'
 
 if __name__=="__main__":
     cli()

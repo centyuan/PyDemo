@@ -1,11 +1,11 @@
 import json
 import time
 import requests
-from PyQt5.QtCore import QTimer, Qt
+from PyQt5.QtCore import QTimer, Qt,QThread,pyqtSignal
 from PyQt5.QtGui import QPalette, QIcon
 from PyQt5.QtWidgets import QWidget, QDialog, QMainWindow, QApplication,QMessageBox
 import sys
-
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 auth_data = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJIWDFqOXRhb2xvdjEzMTQiLCJib2R5Ijp7ImNvdW50cnlDb2RlIjoiKzg2IiwibWVyY2hhbnQiOiJIWDEiLCJvcmlnaW4iOiIyMjIuMjA5LjIwOC4xNjYiLCJyZWdEZXZpY2UiOiJtb2JpbGUiLCJyZWdIb3N0IjoiMTI3LjAuMC4xIiwicmVnSXAiOiIxMjcuMC4wLjEiLCJzdGF0ZSI6Ik5PUk1BTCIsInVzZXJuYW1lIjoiSFgxajl0YW9sb3YxMzE0In0sImJvZHlDbGFzcyI6ImNvbS5wZy5sb2JieS5qOWJjLmF1dGguc2hpcm8uU2hpcm9Vc2VyIiwiZXhwIjoxNjU3NzEzNDI3OTk2LCJpYXQiOjE2NTc3MDk4Mjc5OTYsImp0aSI6ImU3NDRlNGU1LTM3MjctNGZmMi05NDkyLTI0N2I5MjE0MWIyYyIsIm5iZiI6MTY1NzcwOTgyNzk5Nn0.mQGtViitkQSg80gqD79dhfuvbDb9C6BLkJXBFZkBgwI'
 wallet_url = 'https://j9bcrest.com/api/customer/wallet'
@@ -32,7 +32,23 @@ new_h = {
     'referer': 'https://j9con.com/',
 }
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+
+
+class MyThread(QThread):
+    send_signal = pyqtSignal(str)
+
+
+    def __init__(self,maindow):
+        super(MyThread, self).__init__()
+        self.maindow = maindow
+
+    def run(self):
+        while True:
+            for idx in range(100):
+                print('run',idx)
+                self.send_signal.emit(str(idx))
+                time.sleep(1)
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -108,6 +124,7 @@ class Ui_MainWindow(object):
         self.lineEdit_balance_price.setGeometry(QtCore.QRect(270, 50, 411, 21))
         self.lineEdit_balance_price.setText("")
         self.lineEdit_balance_price.setObjectName("lineEdit_balance_price")
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 23))
@@ -127,17 +144,22 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "访问网址："))
+        self.label.adjustSize()
         self.lineEdit_wbesite.setText(_translate("MainWindow", "https://j9con.com/swap"))
+        self.lineEdit_wbesite.adjustSize()
         self.pushButton_start.setText(_translate("MainWindow", "开始"))
         self.label_2.setText(_translate("MainWindow", "请求数据："))
+        self.label_2.adjustSize()
         self.label_4.setText(_translate("MainWindow", "单笔："))
         self.lineEdit_J9BC_display.setToolTip(_translate("MainWindow", "<html><head/><body><p>买入</p></body></html>"))
         self.buy_button.setText(_translate("MainWindow", "买入"))
         self.checkBox.setText(_translate("MainWindow", "买入,阈值"))
+        self.checkBox.adjustSize()
         self.groupBox_2.setToolTip(_translate("MainWindow", "<html><head/><body><p>卖出</p></body></html>"))
         self.label_7.setText(_translate("MainWindow", "单笔："))
         self.pushButton_sell.setText(_translate("MainWindow", "卖出"))
         self.checkBox_2.setText(_translate("MainWindow", "卖出,阈值"))
+        self.checkBox_2.adjustSize()
 
 class action_class(QMainWindow):
     def __init__(self, parent=None):
@@ -168,6 +190,13 @@ class action_class(QMainWindow):
         self.ui.setupUi(self)  # 初始化窗口
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.time_keep)
+        self.my_thread = MyThread(self)
+
+    def strat_for(self):
+        self.my_thread.send_signal.connect(self.update_view)  # 重点代码2
+        self.my_thread.start()
+    def while_tran(self,data):
+        pass
 
 
     def time_keep(self):
