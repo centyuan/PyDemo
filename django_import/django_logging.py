@@ -34,18 +34,22 @@ logging.basicConfig(
     level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def my_view(request, arg1, arg):
 
+def my_view(request, arg1, arg):
     if True:
         # Log an error message
         logger.error('Something went wrong!')
 
+
 # 2. 自定义类
 settings = ""
+
+
 class CommonLog(object):
     """
     日志记录
     """
+
     def __init__(self, logger, logname='web-log'):
         self.logname = os.path.join(settings.LOGS_DIR, '%s' % logname)
         self.logger = logger
@@ -94,10 +98,13 @@ class CommonLog(object):
 
     def error(self, message):
         self.__console('error', message)
+
+
 # 3.django 中间件
 # 中间件日志代码一共分三个部分，分别是：Filters 代码，middleware 代码，settings 配置
-import json,threading,socket
-MiddlewareMixin= ""
+import json, threading, socket
+
+MiddlewareMixin = ""
 
 local = threading.local()
 
@@ -155,6 +162,7 @@ class RequestLogMiddleware(MiddlewareMixin):
 
         return response
 
+
 "================================================"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -164,7 +172,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-      # 自定义中间件添加在最后
+    # 自定义中间件添加在最后
     'lib.log_middleware.RequestLogMiddleware'
 ]
 
