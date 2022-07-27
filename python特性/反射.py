@@ -7,7 +7,7 @@
 这是我们需要用一个特殊的方法或机制要访问和操作这个未知的方法或变量，这中机制就称之为反射。接下记录下反射几个重要方法
 """
 # hasattr 判断对象中是否有这个方法或变量
-# getattr 获取对象中的方法或变量的内存地址
+# getattr 获取对象中的方法的内存地址或变量的值
 # setattr 为对象添加变量或方法
 # delattr
 
@@ -21,7 +21,7 @@ class Person(object):
 
 p = Person("yuan")
 print(hasattr(p,'talk')) # True
-n = getattr(p,"name")  #获取name变量的内存地址
-print(n)
+print(getattr(p,"name"))  #获取name变量的值
+print(getattr(p,'talk'))
 setattr(p,'get_age',abc) # 添加abc函数到中为get_age
 setattr(p,'age',30) #添加age变量到类中

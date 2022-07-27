@@ -64,6 +64,7 @@ class WeiboMonitor():
     '''检查用户是否有新的微博'''
 
     def checkUpdate(self, user_id, profile_url, weibo_ids):
+        pattern = re.compile(r'[\u4e00-\u9fa5]')
         user_name, containerid = self.getContainerid(user_id, profile_url)
         response = self.session.get(self.api_url.format(user_id, user_id, containerid))
         cards = response.json()['data']['cards']
@@ -74,11 +75,16 @@ class WeiboMonitor():
                     flag = True
                     weibo_ids.append(str(card['mblog']['id']))
                     self.logging(f'用户{user_name}发布了新微博')
+                    self.logging(card['scheme'])
+                    # self.logging(card['mblog']['text'])
+                    mat_ = [x.group() for x in re.finditer(pattern, card['mblog']['text'])]
+                    self.logging(''.join(mat_))
+
                     pics = []
                     if card['mblog'].get('pics'):
                         for i in card['mblog']['pics']: pics.append(i['url'])
                     pics = '||'.join(pics)
-                    self.logging(card)
+                    # self.logging(card)
         if not flag: self.logging(f'用户{user_name}未发布新微博')
         return weibo_ids
 

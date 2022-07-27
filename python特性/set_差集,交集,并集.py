@@ -13,3 +13,14 @@ b=list(set(t)&set(s)) #交集
 c=list(set(t)-set(s)) #差集
 
 d=list(set(t)^set(s)) #对称差集
+abcd = ["B", "A", "C"]
+efgh = ["A", "B", "C"]
+yi = ["A"]
+er = ["A", "C"]
+
+cccc = list(set(yi)-set(er)) or list(set(er)-set(yi))  # 返回有值的
+
+
+ss = list(set(abcd)-set(efgh))
+if not ss:
+    print(ss)

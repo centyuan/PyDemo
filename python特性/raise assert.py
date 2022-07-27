@@ -48,23 +48,19 @@ class FooError(ValueError):
 def foo(s):
     n = int(s)
     if n==0:
-        raise FooError('invalid value: %s' % s)
-    return 10 / n
-
-foo('0')
-
-def foo(s):
-    n = int(s)
-    if n==0:
+        raise FooError('invalid value: %s' % s) # 自定义异常
         raise ValueError('invalid value: %s' % s)
     return 10 / n
+
+# foo('0')
+
 def bar():
     try:
         foo('0')
     except ValueError as e:
         print('ValueError!')
-        raise
-bar()
+        raise    # 只有一个raise
+# bar()
 
 #三:assert
 """
@@ -76,8 +72,9 @@ python assert断言检查某个条件表达式是否为真,其返回值为假，
 
 
 """
+print('assert:')
 a = 888
-assert type(a) == str,'a is type of int'
+assert type(a) == str,'a is type of int'  # 后面为异常信息
 
 # result：
 # Traceback (most recent call last):

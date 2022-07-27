@@ -1,4 +1,4 @@
-#！/usr/bin/python3
+# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-9-15 下午1:49
@@ -8,15 +8,18 @@ all() 函数用于判断给定的可迭代参数 iterable 中的所有元素是�
 元素除了是 0、空、None、False 外都算 True。
 
 '''
+
+
 class Solution:
 
-    def isSubsequence(self,s,t):
+    def isSubsequence(self, s, t):
         t = iter(t)
 
-        return  all(c in t for c in s)
+        return all(c in t for c in s)
 
-t='to be or not to be'
-s='to be or'
+
+t = 'to be or not to be'
+s = 'to be or'
 t = iter(t)
 
 # str = 'abcdefg'
@@ -29,7 +32,7 @@ t = iter(t)
 #     print('f')
 #     print(next(st)) #输出: f g
 
-gene = (c in t for c in s) #生成器
+gene = (c in t for c in s)  # 生成器
 while True:
     try:
         print(next(gene))
