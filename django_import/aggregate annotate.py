@@ -51,7 +51,7 @@ all()不是必须的。或者
     Student.objects.values('name').annotate(Count('hobbies'))
 
 # 8. 按学生名字，年龄分组
-    Student.objects.values('name','age').annotate(Count('hobbies')
+    Student.objects.values('name','age').annotate(Count('hobbies'),Max())
 
 
 

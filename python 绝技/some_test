@@ -1,0 +1,50 @@
+注入点类型判断(有无回显,
+注入点参数类型分类
+数字型注入
+字符型注入 参数需要被引号括起来
+请求分类
+get注入
+post注入
+http头注入
+cookie注入
+常见3种报错盲注函数:
+floor,updatexml,extractvalue等
+
+site:www.google.com intext:管理  无利用
+site:www.google.com inurl:login(登陆的页面)
+site:www.google.com intitle:后台 (很容易的就找到了网站的后台登陆口)
+
+
+
+Nessus、Nmap、AWVS、Burp、Appscan
+
+http代理
+fiddler
+burpsuite
+mitmproxy
+
+漏洞扫描
+AWVS
+Nmap
+
+漏洞利用
+sqlmap
+metasploit
+hydra 爆破必备
+
+抓包工具
+wireshark
+tcpdump
+
+cobaltstrike # 渗透测试专用
+mimikatz   # 明文抓取window 密碼
+
+
+
+
+www.97738ee.com
+t663.me
+https://v663.me/pc/home
+https://b660.in/
+https://www.6081.cc/index
+https://j663.me/pc/home

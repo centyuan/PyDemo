@@ -18,14 +18,17 @@ class TaobaoSnap():
     '''运行'''
     def run(self):
         # 获得购物车信息
+        print('run')
         cart_infos, user_id = self.buycartinfo()
         # 解析购物车信息
         if not cart_infos['success']:
             raise RuntimeError('获取购物车信息失败, 请尝试删除cookie缓存文件后重新扫码登录')
         if len(cart_infos['list']) == 0:
             raise RuntimeError('购物车是空的, 请在购物车中添加需要抢购的商品')
+        print('购物车',cart_infos['list'])
         good_infos = {}
         for idx, item in enumerate(cart_infos['list']):
+            print(item['bundles'][0]['orders'][0]['title'])
             good_info = {
                 'title': item['bundles'][0]['orders'][0]['title'],
                 'cart_id': item['bundles'][0]['orders'][0]['cartId'],
@@ -88,9 +91,11 @@ class TaobaoSnap():
             'cache-control': 'max-age=0'
         }
         response = self.session.get(url, headers=headers)
+        # print('返回',response.text)
         response_json = re.search('try{var firstData = (.*?);}catch', response.text).group(1)
         response_json = json.loads(response_json)
         user_id = re.search('\|\^taoMainUser:(.*?):\^', response.headers['s_tag']).group(1)
+        print('response',response_json,user_id)
         return response_json, user_id
     '''购买商品'''
     def buygood(self, info, user_id):
@@ -159,7 +164,7 @@ class TaobaoSnap():
     def login(self):
         client = login.Client()
         taobao = client.taobao(reload_history=True)
-        infos_return, session = taobao.login(self.username, '微信公众号: Charles的皮卡丘', 'scanqr')
+        infos_return, session = taobao.login(self.username, '', 'scanqr')
         return session
     '''logging'''
     def logging(self, msg, tip='INFO'):
@@ -169,3 +174,4 @@ class TaobaoSnap():
 if __name__ == '__main__':
     taobao_ = TaobaoSnap()
     session_ = taobao_.login()
+    taobao_.run()
