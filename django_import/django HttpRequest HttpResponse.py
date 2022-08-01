@@ -25,7 +25,9 @@ django request(HttpRequest)
 
 django Rest framework Request
 request.data 是Request对象的核心属性,它会返回请求体中所有的解析内容。能够处理任何数据，如文件和表单数据并且对适用于POST、PUT、PATCH方式请求。
+# request.data 用于POST、PUT、PATCH方式请求
 request.query_params  请求体中的查询参数
+# request.query_params.get() 用于get方法
 request.parsers 会返回当前解析类的list，如果用户通过parser_classes设置
 request.user
 request.authenticators
