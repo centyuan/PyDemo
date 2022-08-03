@@ -42,7 +42,8 @@ class Rabbitmq_producer(object):
             pid = pika.ConnectionParameters(host, self.port, 'vhost_hc', credential)
             connection = pika.BlockingConnection(pid)
             self.channel = connection.channel()
-            self.channel.exchange_declare(exchange='first', exchange_type='fanout',auto_delete=False)
+            # self.channel.exchange_declare(exchange='first', exchange_type='fanout',auto_delete=False)
+            self.channel.exchange_declare(exchange='first', exchange_type='topic',auto_delete=False)
             self.channel.queue_declare(queue='first_queue',auto_delete=False)
             self.channel.queue_bind(exchange='first', queue='first_queue')
             print("____________channel:", self.channel)
@@ -66,7 +67,7 @@ class Rabbitmq_producer(object):
     #
     #     print('channel', channel)
     #     # 声明'queue'
-    #     channel.exchange_declare(exchange='screen_message', exchange_type='fanout')
+        #     channel.exchange_declare(exchange='screen_message', exchange_type='fanout')
     #     channel.basic_publish(exchange='screen_message',
     #                           routing_key=str(queue),
     #                           body=json.dumps({"xx":1234567}))
