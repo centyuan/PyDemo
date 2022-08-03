@@ -33,12 +33,13 @@ class Rabbitmq_producer(object):
     def rbt_connection(self):
         # hosts = "127.0.0.1"
         # hosts = "192.168.8.29"
-        hosts = "192.168.8.28"
+        # hosts = "192.168.8.28"
+        hosts = "192.168.8.170"
         host = hosts
         print("连接参数", self.user, self.pwd, self.port, host)
         credential = pika.PlainCredentials(self.user, self.pwd)
         try:
-            pid = pika.ConnectionParameters(host, self.port, '/', credential)
+            pid = pika.ConnectionParameters(host, self.port, 'vhost_hc', credential)
             connection = pika.BlockingConnection(pid)
             self.channel = connection.channel()
             self.channel.exchange_declare(exchange='first', exchange_type='fanout',auto_delete=False)
@@ -50,10 +51,33 @@ class Rabbitmq_producer(object):
             logger.error("connect rabbitmq failed: %s" % e)
             print("连接失败")
 
+    # def rbt_connection(self):
+    #
+    #     queue = str('queue')
+    #     RABBITMQ_USERNAME = "hc"
+    #     RABBITMQ_PASSWORD = "n7pzv8k58re6"
+    #     RABBITMQ_HOST = "192.168.8.170"
+    #     RABBITMQ_PORT = "5672"
+    #     RABBITMQ_VHOST = "vhost_hc"
+    #     credentials = pika.PlainCredentials(RABBITMQ_USERNAME, RABBITMQ_PASSWORD)
+    #     connection = pika.BlockingConnection(pika.ConnectionParameters(
+    #         RABBITMQ_HOST,RABBITMQ_PORT, RABBITMQ_VHOST, credentials))
+    #     channel = connection.channel()
+    #
+    #     print('channel', channel)
+    #     # 声明'queue'
+    #     channel.exchange_declare(exchange='screen_message', exchange_type='fanout')
+    #     channel.basic_publish(exchange='screen_message',
+    #                           routing_key=str(queue),
+    #                           body=json.dumps({"xx":1234567}))
+    #     print()
+    #     connection.close()
+
+
     def publish(self, msg_list):
         msg = json.dumps(msg_list)
         print(msg)
-        self.channel.basic_publish(exchange='first', routing_key='', body=msg)
+        self.channel.basic_publish(exchange='screen_message', routing_key='', body=msg)
 
 
     def consume(self):  # 获取数据
@@ -76,12 +100,12 @@ class Rabbitmq_consumer(object):
         # 从配置文件中获取数据
         # hosts = "127.0.0.1"
         # hosts = "192.168.8.29"
-        hosts = "192.168.8.28"
+        hosts = "192.168.8.170"
         host = hosts
         print("连接参数", self.user, self.pwd, self.port, host)
         credential = pika.PlainCredentials(self.user, self.pwd)
         try:
-            pid = pika.ConnectionParameters(host, self.port, '/', credential)
+            pid = pika.ConnectionParameters(host, self.port, 'vhost_hc', credential)
             connection = pika.BlockingConnection(pid)
             self.channel = connection.channel()
             self.channel.exchange_declare(exchange='first2', exchange_type='fanout')
@@ -116,9 +140,9 @@ if __name__ == '__main__':
     rabbitmq = Rabbitmq_producer("hc", "n7pzv8k58re6")
     rabbitmq.publish(["123"])
     time.sleep(3)
-    # print("消费者")
-    # rabbitmq = Rabbitmq_consumer("coolfire", "coolfire")
-    # rabbitmq.consume()
+    print("消费者")
+    rabbitmq = Rabbitmq_consumer("hc", "n7pzv8k58re6")
+    rabbitmq.consume()
 
 """
 用户仅能对其所能访问的virtual hosts中的资源进行操作。这里的资源指的是virtual hosts中的exchanges、queues等，

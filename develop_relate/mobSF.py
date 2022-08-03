@@ -13,7 +13,7 @@ user_agent_list = [
     "Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15", ]
 
 headers = {
-    "Authorization": "df7353ca1b23d1a9bcef5ad4cda083ef0754ddd42cf28df6f9e2cabee510f580",
+    "Authorization": "b3122ecfa944777a69c9a3e899cbf1c041f67151f16ce3780323444e02ce3f15",
     "User-Agent":random.choice(user_agent_list)
 }
 
@@ -22,21 +22,24 @@ def upload_apk(ips,name):
     # upload_url = "http://106.75.252.48:32328/api/v1/upload"
     upload_url = ips+"/api/v1/upload"
     print("upload_url",upload_url)
+    apk_file = open(name, 'rb')
     # ['application/octet-stream', 'application/vnd.android.package-archive', 'application/x-zip-compressed', 'binary/octet-stream']
     files = {
         # cn.jiage315.chayao_4.0.6_406
-        "file":(name,open(name,'rb'),'application/octet-stream') # 名字
+        "file":(name,apk_file,'application/octet-stream') # 名字
     }
     # res = requests.post(upload_url,files=files,headers=headers,proxies=proxies)
     res = requests.post(upload_url,files=files,headers=headers)
     print('返回',res.status_code,res.text)
     result = json.loads(res.text)
     print("上传返回",result)
+    apk_file.close()
     return result
 def start_scan(ips,result):
     # 扫描
     # scan_url = 'http://106.75.252.48:32328/api/v1/scan'
     scan_url = ips+'/api/v1/scan'
+
     print("scan_url",scan_url)
     scan_data = {
         'scan_type':result.get("scan_type"),
@@ -102,9 +105,10 @@ def delete_scan(ips,hash):
 if __name__ == '__main__':
     # result = upload_apk('douyu_v6.2.1.apk')
     import time
-    ips = "http://149.28.210.253:9633"
-    # result = upload_apk(ips,'96cbf8ddcaccc24e9d6b6f1201a48db8.apk')
-    # start_scan(ips,result)
+    # ips = "http://149.28.210.253:9633"
+    ips = "http://45.77.168.10:8000"
+    result = upload_apk(ips,'46454e6f63cfa9f41dc61e2cc694ca6b.apk')
+    start_scan(ips,result)
 
     # dc81ce505a0a4a35482eea252db4a898
     result = {"hash":'99fb1d8d33c6f78db0da08eb21f907c1'}
