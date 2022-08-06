@@ -4,7 +4,11 @@
 2.kwargs关键字参数
 3.顺序为（位置参数，默认参数，可变参数，命名关键字参数，关键字参数）
 位置参数,默认参数(默认参数必须指向不变对象,int string,tuple),可变参数,命名关键字参数,关键字参数
-4.在tuple或list前加一个*，构造出可变参数,
+4.前加一个*，构造出可变参数,如果定义中已经有了一个可变参数，后面跟着的命名关键字参数就不再需要一个特殊分隔符*了
+(命名关键字参数:限制关键字参数的名字,传参时必须传入参数名 如下: )
+def person(name,age,*,city='beijing',job)
+    pass
+person('yuan',24,job='Engineer') # 命名关键字参数city具有默认值，调用时，可不传入city参数
 5.在dict前加两个*，构造关键字参数。
 """
 #1.*args
@@ -14,7 +18,7 @@ def fun_var_args(farg, *args):
     print('func_var_args args:',args)
     print('type(args):',type(args))#元组tuple
     for value in args:
-        print( "another arg:", value,type(value))
+        print("another arg:", value,type(value))
 # usage
 fun_var_args(1, "two", 3)
 fun_var_args(1,*L) #L为元组#或列表

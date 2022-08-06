@@ -40,9 +40,11 @@ http {
         location / {
                 alias /data/dist_32324/;
                 index index.html;  # 指定起始页，默认值
-                try_files $uri $uri/ /index.php?$query_string;
-                # 用户请求 http://localhost/example 时，这里的 $uri 就是/example。
-                # /data/dist_32324/下尝试找这个名example的文件，$url/表示找这个目录
+                try_files $uri $uri/ /index.php;
+
+                # 1.用户请求 http://localhost/example 时，这里的 $uri 就是/example。
+                # 2./data/dist_32324/下尝试找这个名example的文件($uri表示这个文件) 或 找这个example的目录($uri表示这个目录)
+                # 3. 前面两个都找不到,内部请求 /index.php
         }
         location ~.*\.(php)?${
                 fastcgi_pass 127.0.0.1:9000;

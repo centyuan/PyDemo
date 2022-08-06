@@ -1,12 +1,12 @@
 # -*- coding:utf-8 -*-
 
-val1=1
-val2=3
-intval=1
+val1 = 1
+val2 = 3
+intval = 1
 
-print("a if b>1 else c:", val1 if intval >1 else val2)
-print("a and b or c:", intval>1 and val1 or val2)
-vax=val1 if intval >1 else val2
+print("a if b>1 else c:", val1 if intval > 1 else val2)
+print("a and b or c:", intval > 1 and val1 or val2)
+vax = val1 if intval > 1 else val2
 print(vax)
 print(type(vax))
 # "a and b or c" 这是 Python 里经常用到的很方便的一个表达式，被用的很频繁。
@@ -20,7 +20,7 @@ print(type(vax))
 # 应该用：
 #
 # val1 if intval > 1 else val2
-itms=[1,2,3,4,5,6]
-#item for item in items:
-#and 有一个为假就为假，全为真为真
-#or 有一个为真为真，全为假为假
+itms = [1, 2, 3, 4, 5, 6]
+# item for item in items:
+# and 有一个为假就为假，全为真为真
+# or 有一个为真为真，全为假为假

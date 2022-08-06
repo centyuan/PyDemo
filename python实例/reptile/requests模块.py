@@ -128,6 +128,7 @@ files = {"file": open(r"E:\test.xls", "rb")}
 因为request请求在做post请求时会自动加上Content-Type: multipart/form-data;boundary=${bound}，而我们在header里设置的并没有关键标识boundary
 
 apk_file = open(str(program.program),'rb')
+#['application/octet-stream', 'application/vnd.android.package-archive', 'application/x-zip-compressed', 'binary/octet-stream']
 files = {
     "file":(program.program_name,apk_file,'application/octet-stream') # 
             文件名                 文件对象   编码方式

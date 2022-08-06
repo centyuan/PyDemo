@@ -12,3 +12,5 @@
 #     'I love three things in the world ,The sun,the moon and you , the sun for the day, the moon for the night and you forever')
 # engine.save_to_file('音频保存为文件', 'audio_file')  # 音频保存为文件
 # engine.runAndWait()
+sets = {1, 2, 3, 4, 5}
+print(sets[2])

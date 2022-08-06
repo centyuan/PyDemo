@@ -19,16 +19,14 @@ with cache.lock("somekey"):           # 使用 python 上下文管理器分配�
 https://django-redis-chs.readthedocs.io/zh_CN/latest/
 第二种: get_redis_connection 原生用法
 from django_redis import get_redis_connection
-conn = get_redis_connection('default')
-conn.set('name','yyy')
-conn.expire('name',60*60)
-conn.get('name')
-conn.ttl('name')
+redis_conn = get_redis_connection('default')
+redis_conn.setex(key,time,value)  # key 过期时间 value
+redis_conn.set('name','yyy')
+redis_conn.expire('name',60*60)
+redis_conn.get('name')
+redis_conn.ttl('name')
 # 设置过期时间
 conn.set(key,json.dumps(value),ex=60)
-
-
-
 
 
 第三种 redis
@@ -36,3 +34,4 @@ set cache value
 expire cache 100  # 设置过期时间100秒
 ttl cache        # 查看剩余过期时间
 """
+

@@ -11,9 +11,12 @@ nonlocal位置会发生错误（最上层的函数使用nonlocal修饰变量必�
 global修饰后也可以直接使用，而nonlocal关键字只能用于嵌套函数中，并且外层函数中定义了相应的局部变量，否则会发生错误
 
 """
+
+
 def func():
     x = 'hello func'
     print('func', x, id(x))
+
 
 x = 'hello main'
 print('main1', x, id(x))
@@ -23,9 +26,12 @@ print('main2', x, id(x))
  在函数内部使用了与全局变量同名的变量，如果不对该变量赋值（修改变量），
  那么该变量就是全局变量，如果对该变量进行赋值(重新创建一个该变量对象)，那么该变量就是局部变量。
 '''
+
+
 def func():
     global x
     x = 'hello func'
+
 
 """
 如果在嵌套函数和函数（这里指包含嵌套函数的那个函数）中存在和全局变量同名的变量，
@@ -34,16 +40,22 @@ def func():
 嵌套函数直接使用时使用的是该函数的局部变量。如果在嵌套函数中修改同名变量的值，
 那么嵌套函数中的该变量会被标识为该嵌套函数的局部变量，它的修改不影响函数中同名变量和全局变量。
 """
+
+
 # https://blog.csdn.net/xcyansun/article/details/79672634
 def func():
     x = "hello func"
     print("func1", x, id(x))
+
     def ifunc():
-        #nonlocal x
+        # nonlocal x     # nonlocal 修饰后,ifunc的x 和func的x为同一变量
         x = "hello ifunc"
         print("ifunc", x, id(x))
+
     ifunc()
     print("func2", x, id(x))
+
+
 x = "hello main"
 print("main1", x, id(x))
 func()
