@@ -7,12 +7,13 @@ import socket
 import sys
 
 """"
+https://zhuanlan.zhihu.com/p/481539075  
 socket.AF_INET 使用ipv4 默认
 socket.AF_INET6 使用ipv6 
 socket.AF_UNIX 只能用于单一的Unix系统进程间通信
 socket.SOCK_STERAM 流式socket,for Tcp 默认
 socket.SOCK_DGRAM  数据报式socket for udp
-socket.SOCK_RAW   原始套接字
+socket.SOCK_RAW   原始套接字，可以处理ICMP、ARP等网络报文，其它的不行
 socket.SOCK_RDM   可靠的UDP形式
 socket.SEQPACKET  可靠的连续数据包服务
 """

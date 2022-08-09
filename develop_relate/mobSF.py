@@ -1,3 +1,5 @@
+import time
+
 import requests
 import json
 import random
@@ -90,14 +92,13 @@ def recent_scan(ips):
         'page_size':'100',
     }
     res = requests.get(re_url,params=kw,headers=headers)
+    spend_time = res.elapsed.total_seconds()
+
     print('最近扫描')
+    print('响应时间',spend_time)
     print(json.loads(res.text))
 
 def delete_scan(ips,hash):
-    headers = {
-        "Authorization": "12223eac239e7061c35f4a74029643c9cf9b84b6dff2c3d5d29c2b8455efde5e",
-        "User-Agent": random.choice(user_agent_list)
-    }
     delete_url = ips+"/api/v1/delete_scan"
     data = {
         'hash':hash,
@@ -106,19 +107,20 @@ def delete_scan(ips,hash):
     print("删除scan",res,res.text)
 
 if __name__ == '__main__':
-    # result = upload_apk('douyu_v6.2.1.apk')
-    import time
     # ips = "http://149.28.210.253:9633"
     ips = "http://45.77.168.10:8000"
     # result = upload_apk(ips,'46454e6f63cfa9f41dc61e2cc694ca6b.apk')
     # start_scan(ips,result)
 
-    result = {"hash":'46454e6f63cfa9f41dc61e2cc694ca6b'}
+    result = {"hash":'ed0b00f99499b6736c3be7e21251d6fb'}
     for i in range(100):
         print("获取json报告")
         get_json(ips,result.get("hash")) # com.ireadercity_5.56.6_5566.apk
         time.sleep(60)
-
+    # recent_scan(ips)
+    # print('zhu响应时间',requests.get(ips,timeout=10).elapsed.total_seconds())
+    # hash_ = "b027deb7857a5981a9f688c1d1b03de5"
+    # delete_scan(ips,hash_)
 
     # json_report = dict(json.loads(res.text))
     # test = '{"host_os": "nix", "timestamp": "2022-06-18T09:57:59.270Z"}'

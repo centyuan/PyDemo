@@ -34,9 +34,11 @@ def ssh_command(ip, port, user, passwd, command):
 if __name__ == '__main__':
     import getpass
 
-    user = getpass.getuser()
-    # 提示用户输入密码而不回显
-    password = getpass.getpass()
+    # user = getpass.getuser()
+    # # 提示用户输入密码而不回显
+    # password = getpass.getpass()
+    user = input("user:")
+    password = input("password:")
     ip = input("Enter server ip:")
     port = input("Enter port:")
     ssh_command(ip, port, user, password, "clientConnected")
