@@ -1,6 +1,7 @@
 import time, threading
 
 """
+https://www.cnblogs.com/chengd/articles/7770898.html  # 锁详解
 如果多个线程共同对某个数据修改，则可能出现不可预料的结果，为了保证数据的正确性，需要对多个线程进行同步。
 使用Thread对象的Lock和Rlock可以实现简单的线程同步，这两个对象都有acquire方法和release方法，
 对于那些需要每次只允许一个线程操作的数据，可以将其操作放到acquire和release方法之间
