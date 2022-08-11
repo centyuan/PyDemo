@@ -2,6 +2,7 @@ import random
 import time
 import threading
 
+# 事件管理标志
 event = threading.Event()  # 通过threading.Event()生成一个event对象和对象的引用event
 
 

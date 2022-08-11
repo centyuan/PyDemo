@@ -44,7 +44,7 @@ print(id(lis1)==id(lis2)) # False
 3.深拷贝
  c = copy.deepcopy(a)  深度拷贝, a 和 b 完全拷贝了父对象及其子对象，两者是完全独立的
 """
-# 四:is == 区别
+# 四:is == 区别，
 # is 用于判断两个变量引用对象是否为同一个， == 用于判断引用变量的值是否相等。
 a = 257
 b = 257
@@ -62,3 +62,7 @@ print(t1 is t2)  # 不可变对象是同一对象
 lis1 = [1, 2, 3]
 lis2 = lis1[:]
 print(lis1 is lis2)  # 可变对象 不是同一对象
+
+# 五: type isinstance
+# type 不考虑继承，子类
+# instance 考虑子类

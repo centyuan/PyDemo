@@ -23,13 +23,14 @@ def run_thread(n):
     for i in range(100000):
         # 先获取锁
         lock.acquire()
+        # lock.acquire(timeout=10) 加锁失败会阻塞
         try:
             change_it(n)
         finally:
             # 无论是否有异常都将执行,改完之后都要释放锁
             # 否则那些苦苦等待锁的线程将永远等待下去，成为死线程。
             # 所以我们用try...finally来确保锁一定会被释放。
-            lock.release()
+            lock.release()  # release方法只有当状态是locked调用方法True，如果是unlocked状态，调用release方法会抛出RunTimeError异常
 
 
 if __name__ == "__main__":

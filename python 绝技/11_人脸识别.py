@@ -1,9 +1,9 @@
 import cv2
 import os
 
-ROOT = "/Users/picture"
-FACES = "/Users/faces"
-TRAIN = "/Users/training"
+ROOT = "D:/BaiduNetdiskDownload/python-demo/image"
+FACES = "D:/BaiduNetdiskDownload/python-demo/image"
+TRAIN = "D:/BaiduNetdiskDownload/python-demo/image"
 
 def detect(srcdir=ROOT,tgtdir=FACES,train_dir=TRAIN):
     for fname in os.listdir(srcdir):
@@ -11,9 +11,11 @@ def detect(srcdir=ROOT,tgtdir=FACES,train_dir=TRAIN):
             continue
         fullname = os.path.join(srcdir,fname)
         newname = os.path.join(tgtdir,fname)
+        # 读取图像
         img = cv2.imread(fullname)
         if img is None:
             continue
+        # 图像灰度化
         gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
         training = os.path.join(train_dir,"haarcascade_frontalface_alt.xml")
         cascade = cv2.CascadeClassifier(training)

@@ -112,7 +112,8 @@ if __name__ == '__main__':
     # result = upload_apk(ips,'46454e6f63cfa9f41dc61e2cc694ca6b.apk')
     # start_scan(ips,result)
 
-    result = {"hash":'ed0b00f99499b6736c3be7e21251d6fb'}
+    # result = {"hash":'2731cd86d8c98584ef31848f2cd6a1e5'}
+    result = {"hash":'7997cb4cc80f015ae6b5a7c6e48ca2db'}
     for i in range(100):
         print("获取json报告")
         get_json(ips,result.get("hash")) # com.ireadercity_5.56.6_5566.apk

@@ -1,7 +1,3 @@
-# ！/usr/bin/python3
-# -*- coding:utf-8 -*-
-# author centyuan
-# @time 19-7-2 下午2:48
 import socket
 import time
 import threading
