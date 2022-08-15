@@ -32,7 +32,7 @@ dial_codes = [
 country_code = {country: code for code, country in dial_codes}
 # {'China': 86, 'India': 91, 'United States': 1, 'Indonesia': 62, 'Brazil': 55, 'Pakistan': 92, 'Bangladesh': 880, 'Nigeria': 234, 'Russia': 7, 'Japan': 81}
 
-# 二:字典合并
+# 二:字典合并四种方式
 d1 = {'usr': 'root', 'pwd': '123456'}
 d2 = {'ip': '127.0.0.1', 'port': '8080'}
 
@@ -71,6 +71,8 @@ d2 = sorted(dict_data.items(), key=lambda x: x[1])
 print(d2)  # 输出结果[('8', 2), ('10', 5), ('7', 6), ('6', 9), ('3', 11)]
 d3 = sorted(dict_data.items(), key=lambda x: x[1], reverse=True)
 print(d3)  # 输出结果 [('3', 11), ('6', 9), ('7', 6), ('10', 5), ('8', 2)]
+d4 = sorted(zip(dict_data.values(),dict_data.keys()))
+
 
 dict = {'Google': 'www.google.com', 'Runoob': 'www.runoob.com', 'taobao': 'www.taobao.com'}
 
@@ -132,3 +134,18 @@ print('a' in dict_data)  # False
 
 # 3. in keys
 print('name' in dict_data.keys())  # True
+
+# 五：获取最大最小值
+prices = {
+    'ACME': 45.23,
+    'AAPL': 612.78,
+    'IBM': 205.55,
+    'HPQ': 37.20,
+    'FB': 10.75,
+}
+# max(prices.values())
+# 获取最大价格
+# 只能得到key
+print(max(prices,key=lambda k:prices[k]))  # HPQ 输出键
+# zip后，key,value都有
+print(max(zip(prices.values(),prices.keys()))) #

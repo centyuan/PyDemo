@@ -14,32 +14,7 @@
 # engine.runAndWait()
 # import re
 # import base64
-# ssr_info = "cn01.efan.men:8751:origin:rc4-md5:http_post:ZWZhbmNjeXVu/?obfsparam=NjU0NTQtMEd5NGdiMFBlMi5kb3dubG9hZC5taWNyb3NvZnQuY29t&protoparam=&remarks=6aaZ5rivMDE&group=6aW_6aWtY2PkupEgLSBH6K6h5YiS77yIMTAwMEdC77yJ&udpport=0&uot=0"
-# ssr_data = re.match("(.*)\&group", ssr_info).group(1)
-# print(ssr_data)
-# ssr_data = ssr_data.encode()
-# ssr_data = base64.b64encode(ssr_data).decode()
-# print(ssr_data)
-#
-# import base64
-#
-# str = "i love qiqi".encode()
-# # 对字符串进行编码
-# bs4str = base64.b64encode(str)
-# # 输出编码后的字符串
-# print('1:',bs4str,bs4str.decode())
-# # 输出还原编码后的字符串
-# print('2:',base64.b64decode(bs4str))
-#
-# str = "https://www.baidu.com".encode("utf-8")
-# # 对url进行编码
-# urlstr = base64.urlsafe_b64encode(str)
-# # 输出url编码后的字符串
-# print('3:',urlstr)
-# # 还原编码后的字符串
-# print('4:',base64.urlsafe_b64decode(urlstr))
-# # 运行结果
-# # b'aSBsb3ZlIHFpcWk='
-# # b'i love qiqi'
-# # b'aHR0cHM6Ly93d3cuYmFpZHUuY29t'
-# # b'https://www.baidu.com'
+
+value = dict(a=1,b=2,c=3)
+print(value.update({'c':5}))
+print(value)

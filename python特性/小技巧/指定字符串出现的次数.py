@@ -4,7 +4,7 @@
 
 a = 'python is a programming language. python is beatutiful'
 result = a.count('python')
-print(result)
+print('次数:',result)
 
 #a[50:] 无输出
 print('a',a,'abc',a[10:])
