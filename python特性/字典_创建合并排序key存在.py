@@ -32,7 +32,7 @@ dial_codes = [
 country_code = {country: code for code, country in dial_codes}
 # {'China': 86, 'India': 91, 'United States': 1, 'Indonesia': 62, 'Brazil': 55, 'Pakistan': 92, 'Bangladesh': 880, 'Nigeria': 234, 'Russia': 7, 'Japan': 81}
 
-# 二:字典合并四种方式
+# 二:字典合并四种方式 或 from collections import ChainMap
 d1 = {'usr': 'root', 'pwd': '123456'}
 d2 = {'ip': '127.0.0.1', 'port': '8080'}
 
