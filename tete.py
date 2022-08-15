@@ -15,6 +15,3 @@
 # import re
 # import base64
 
-value = dict(a=1,b=2,c=3)
-print(value.update({'c':5}))
-print(value)

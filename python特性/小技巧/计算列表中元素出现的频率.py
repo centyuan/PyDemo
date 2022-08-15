@@ -9,6 +9,7 @@ my_list = ['a', 'b', 'b', 'a', 'a', 'c', 'c', 'b', 'b']
 # 统计列表中元素出现的次数，返回一个列表元组
 
 print(Counter(my_list))                   # Counter({'b': 4, 'a': 3, 'c': 2})
+# 出现次数最高的3个 Counter(my_list).most_common(3)
 print(Counter(my_list).most_common())     # [('b', 4), ('a', 3), ('c', 2)]
 print(Counter(my_list).most_common()[0])  # 取出现次数最多的 a
 result = dict(Counter(my_list))           # result返回字典

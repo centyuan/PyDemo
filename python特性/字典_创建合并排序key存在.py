@@ -121,6 +121,11 @@ def custom_sorted(x, y):
 
 
 to_rank = sorted(rank, key=cmp_to_key(custom_sorted), reverse=True)
+# 类似的使用itemgetter排序
+from operator import itemgetter
+new_rank = sorted(rank,key=itemgetter('score')) # 根据一个字段排序
+new_rack = sorted(rank,key=itemgetter('score','item'))
+
 
 # 四:判读字典key是否存在
 

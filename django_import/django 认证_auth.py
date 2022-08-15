@@ -2,7 +2,7 @@
 # @Author : centyuan
 # @Time : 2022/4/1 20:47
 
-# http://c.biancheng.net/django/
+# http://c.biancheng.net/view/8045.html
 # https://blog.csdn.net/weixin_39934296/article/details/110773418
 from django.contrib.auth.models import User, AbstractUser, Group
 from django.contrib.auth import authenticate  # 用户认证
@@ -10,7 +10,7 @@ from django.contrib.auth import login, logout  # 登入 登出
 from django.contrib.auth.models import Permission  # 权限
 
 # authenticate如何实现的
-# 1.__get_backends获取当前系统定义的认证后端，并以此迭代（系统默认的认证后端是ModelBackend）
+# 1.__get_backends获取当前系统定义的认证后端，并以此迭代（系统默认的认证后端是ModelBackend,继承ModelBackend）
 # AUTHENTICATION_BACKENDS 可以自定义认证后端
 from django.contrib.auth.backends import ModelBackend  # django默认用户认证后端
 
@@ -37,8 +37,41 @@ page2.paginator#当前page对象相关的Paginator对象，可通它可调用原
 1.实现了了用户,用户组的增加 删除 更改功能
 2.实现了用戶权限和用户组权限的增加 删除 更改功能
 3.实现可以自定义用户权限和用户组权限
+# 1. 自定义登录验证
+# 方式1
+from django.contrib.auth.backend import ModelBackend
+class UserAuthBackend(ModelBackend):
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        user = UserModel.objects.get(username=username)
+        if user is not None and user.check_password(password):
+            return user
+# 方式2
+from django.contrib.auth.models import User
+class EmailBackend(object):
+    def authenticate(self, request, **credentials):
+        #获取邮箱的认证信息即邮箱账号实例
+        email = credentials.get('email', credentials.get('username'))
+        try:
+            user = User.objects.get(email=email)
+        except Exception as error:
+            print(error)
+        else:
+            #检查用户密码
+            if user.check_password(credentials["password"]):
+                return user
+    def get_user(self, user_id):
+        try:
+            return User.objects.get(pk=user_id)
+        except Exception as e:
+            print(e)
+            return None
+#自定义认证后端
+AUTHENTICATION_BACKENDS=[
+    'django.contrib.auth.backends.ModelBackend',
+    'user.backends.EmailBackend',
+] 
 
-# 校验用户登录
+# 2.校验用户登录
 1：User 的实例对象拥有 is_authenticated() 方法，可以在用户登录时进行认证。如果是真正的 User 对象，返回值为 True，
 usage:在后台用 request.user.is_authenticated()
 2:from django.contrib.auth.decorators import login_required
@@ -46,7 +79,7 @@ usage:
 @login_required() # 参数login_url='/login/'
 def index(request):
     pass
-#校验用户权限
+#3.校验用户权限
 1:user_username.has_perm('user.add_article')
   user_username.has_perm('user.change_article')
 2:from django.contrib.auth.decorators import permission_required
