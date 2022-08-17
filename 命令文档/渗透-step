@@ -1,0 +1,28 @@
+# 一.信息收集
+# 1.whois
+kali whois
+爱站工具网：whois.aizhan.com
+站长之家:whois.chinaz.com
+# 2.子域名
+Layer子域名挖掘机
+subDomainsBrute
+#https://github.com/lijiejie/subDomainsBrute
+Sublist3r
+# https://codeload.github.com/aboul3la/Sublist3r/zip/master
+# 3.端口扫描
+Nmap
+Masscan
+ZMap
+御剑高速TCP端口扫描工具
+
+# 4.指纹识别
+御剑Web指纹识别
+WhatWeb https:/whatweb.net/
+
+# 5.查找真实ip
+www.ip138.com
+
+# 6.网站目录扫描
+DirBuster
+御剑后台扫描珍藏版
+wwwscan

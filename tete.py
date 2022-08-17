@@ -15,3 +15,8 @@
 # import re
 # import base64
 
+# import requests
+# url_ = "http://192.168.8.34/group1/M00/00/05/wKgIImLQ3feAXhf9AEDLLFxGssA073.mp4?token=d6ce15460d2db26094c8be17a9df8317&ts=1660641493"
+# get_web = requests.get(url_)
+# with open('web_file','wb+') as f:
+#     f.write(get_web.content)

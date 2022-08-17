@@ -102,11 +102,13 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 
 # 五：权限
-from rest_framework.permissions import AllowAny
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.permissions import IsAdminUser
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny                  # 允许所有用户
+from rest_framework.permissions import IsAuthenticated           # 仅登录认证的用户
+from rest_framework.permissions import IsAdminUser               # 仅管理员用户
+from rest_framework.permissions import IsAuthenticatedOrReadOnly # 登录认证的用户可以对数据增删改查,没有登录认证只能查看数据
 from rest_framework.permissions import SAFE_METHODS  # 包含'GET', 'OPTIONS'和'HEAD'的元组
+
+permission_classed = [AllowAny,]
 
 # 六：自定义权限
 """

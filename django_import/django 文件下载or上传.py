@@ -31,7 +31,7 @@ def file_download(request):
 
 
 # FileResponse源码：迭代器中每次一固定大小读取文件，默认值：block_size = 4096
-# https://blog.csdn.net/gezi_/article/details/78176943?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-78176943-blog-113351603.pc_relevant_antiscanv3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-78176943-blog-113351603.pc_relevant_antiscanv3&utm_relevant_index=2
+# https://blog.csdn.net/gezi_/article/details/78176943
 # https://blog.csdn.net/qq_37674086/article/details/113351603
 
 # django 文件上传
@@ -45,6 +45,7 @@ if request.FILES.getlist('filename'):
         # file.name 文件名 file 文件内容
 单一文件上传
 file = request.FILES['myfile']  # 获取文件流对象file
+# file = request.FILES.get('myfile') 
 filename = os.path.join(settings.MEDIA_ROOT,file.name) # 文件储存路径，应用settings中的配置，file.name获取文件名
 with open(filename,'wb') as f:
     data = file.file.read()

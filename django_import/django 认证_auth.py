@@ -86,3 +86,19 @@ def index(request):
 usage:@permission_required
 
 """
+# JWT认证，自定义电话认证，自定义登录，修改payload
+# https://blog.csdn.net/qq_41475058/article/details/113405639
+# JWT认证流程
+# https://blog.csdn.net/qq_40887840/article/details/121628355
+"""
+1.由源码可以看到 obtain_jwt_token 相当于调用了 ObtainJSONWebToken.as_view()
+2.登录时使用的是post方式提交，所以进入到了ObtainJSONWebToken的父类JSONWebTokenAPIView的post方法中，
+3.然后 self.get_serializer 又使用了ObtainJSONWebToken中配置的 serializer_class: JSONWebTokenSerializer, 调用serializer.is_valid()方法，即JSONWebTokenSerializer的validate方法，
+4.验证用户，JSONWebTokenSerializer的validate方法又使用了 django配置中的AUTHENTICATION_BACKENDS属性（自定义的话需要继承django默认的ModelBackend），来调用其类中的authenticate方法，验证用户使用允许登录。
+5.验证成功后，调用jwt_response_payload_handler()方法，这个方法具体方法内容在JWT_RESPONSE_PAYLOAD_HANDLER配置项中(就是前面自定义的jwt响应内容配置项)
+
+"""
+# 官方文档
+# https://jpadilla.github.io/django-rest-framework-jwt/#additional-settings
+# Django-DRF框架中认证与权限
+# https://blog.51cto.com/u_15127659/4679882

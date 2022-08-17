@@ -4,7 +4,7 @@ import hashlib
 da = "https://www.yedanrongqi.com.cn"
 da = "94:83:c4:1b:6e:9e"
 # 1.
-print(hashlib.md5(da.encode('utf8')).hexdigest(),len(hashlib.md5(da.encode('utf8')).hexdigest()))
+print('hhh:',hashlib.md5(da.encode('utf8')).hexdigest(),len(hashlib.md5(da.encode('utf8')).hexdigest()))
 print(hashlib.sha1(da.encode('utf8')).hexdigest())
 print(hashlib.sha224(da.encode('utf8')).hexdigest())
 print(hashlib.sha256(da.encode('utf8')).hexdigest())
