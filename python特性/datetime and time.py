@@ -3,6 +3,11 @@ import time
 import calendar
 
 print('time.time():',time.time())  # 时间戳--1970年是距今最早的的1月1日是星期一的日期
+t = time.time()
+print(t)                       #原始时间数据
+print(int(t))                  #秒级时间戳
+print(int(round(t * 1000)))    #毫秒级时间戳
+print(int(round(t * 1000000))) #微秒级时间戳
 print('time.localtime():',time.localtime())
 time_classS=time.localtime()
 print(type(time_classS),time_classS.tm_year)

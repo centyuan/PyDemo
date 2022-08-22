@@ -25,14 +25,44 @@ def file_download(request):
 # 3.FileResponse 为文件传输优化的流类型
 def file_download(request):
     response = FileResponse(open('ssr.txt', 'rb'))
+    # as_attachment:是否提供文件下载还是在浏览器读取
+    response = FileResponse(open('ssr.txt', 'rb'),as_attachment=True,filename='文件名.txt')
     response['content_type'] = "application/octet-stream"
     response['Content-Disposition'] = 'attachment; filename=' + 'ssr.txt'
     return response
 
 
+# output = io.BytesIO(result.get('Content'))
+# output.seek(0)
+# response = HttpResponse()
+# response.write(output.getvalue())
+
 # FileResponse源码：迭代器中每次一固定大小读取文件，默认值：block_size = 4096
 # https://blog.csdn.net/gezi_/article/details/78176943
 # https://blog.csdn.net/qq_37674086/article/details/113351603
+
+"""
+实际例子：
+#1
+# file_name = app_obj.name + str(int(time.time())) + '.apk'
+# with open(file_name, 'wb') as f:
+#     f.write(result.get('Content'))
+# time.sleep(1)
+# response = FileResponse(open(file_name, 'rb'))
+# 2
+# response = StreamingHttpResponse(result.get('Content'))  # 速度慢
+# response = FileResponse(result.get('Content'))           #  速度慢
+
+# 3.
+output = io.BytesIO(result.get('Content'))
+output.seek(0)
+response = HttpResponse()
+response.write(output.getvalue())
+response['content_type'] = "application/octet-stream"
+response['Content-Disposition'] = 'attachment; filename=' + str(app_name)
+print('返回response', response, response['Content-Disposition'])
+return response
+"""
 
 # django 文件上传
 """
