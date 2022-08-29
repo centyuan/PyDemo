@@ -49,7 +49,7 @@ class SaveData(threading.Thread):
     def __init__(self, page_queue, data_queue):
         super(SaveData, self).__init__()
         self.data_queue = data_queue
-        self.page_queue =page_queue
+        self.page_queue = page_queue
 
     def run(self):
         with open('data.csv', 'w', newline='', encoding='utf-8-sig') as csvfile:

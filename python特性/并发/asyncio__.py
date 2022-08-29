@@ -172,3 +172,19 @@ if __name__ == '__main__':
         gevent.spawn(test, 'http://httpbin.org/uuid'),
         gevent.spawn(test, 'http://httpbin.org/user-agent')
     )
+
+# 5.Gevent 高性能的python并发框架
+"""
+greenlet ：轻量级的并行编程，调度麻烦，用生成器实现的协程而且不是真正意义上的协程，只是实现代码执行过程中的挂起，唤醒操作。Greenlet 没有自己的调度过程，所以一般不会直接使用。
+greenlet：http://greenlet.readthedocs.org/en/latest/
+
+eventlet：是在 greenlet 的基础上实现了自己的 GreenThread，实际上就是 greenlet 类的扩展封装，而与Greenlet的不同是，Eventlet实现了自己调度器称为Hub，Hub类似于Tornado的IOLoop，是单实例的。
+在Hub中有一个event loop，根据不同的事件来切换到对应的GreenThread。同时 Eventlet 还实现了一系列的补丁来使 Python 标准库中的 socket 等等module 来支持 GreenThread 的切换。
+Eventlet 的 Hub 可以被定制来实现自己调度过程。eventlet 目前支持 CPython 2.7 和 3.4+ 并将在未来删除，仅保留 CPython 3.5+ 支持。
+
+gevent：基于 libev 与 Greenlet 实现。不同于 Eventlet 的用 python 实现的 hub 调度，Gevent 通过 Cython 调用 libev 来实现一个高效的 event loop 调度循环。
+同时类似于 Event，Gevent 也有自己的 monkey_patch，在打了补丁后，完全可以使用 python 线程的方式来无感知的使用协程，减少了开发成本。 
+gevent 官网文档：http://www.gevent.org/contents.html
+
+
+"""

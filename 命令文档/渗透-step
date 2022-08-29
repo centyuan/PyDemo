@@ -76,3 +76,15 @@ JS检测绕过:1.浏览器插件,删除检测文件后缀的JS代码,2.抓包,�
 
 
 #11.WAF(软件型,硬件型,云WAF,网站系统内置WAF(系统中的内置过滤))
+
+#12.相关漏洞的具体信息和共享(安全焦点:http://www.securityfocus.com/，Exploit-DB:http://www.exploit-db.com)
+
+#中国蚁剑AntSword 连接webshell,Cknife 中国菜刀
+
+
+"""
+#下载热门字典
+https://wiki.skullsecurity.org/index.php/Passwords
+https://sourceforge.net/projects/py2exe/files/py2exe/0.6.9/
+
+"""

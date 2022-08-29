@@ -4,6 +4,17 @@ mysql -u root -p
 
 　　-u 表示选择登陆的用户名， -p 表示登陆的用户密码，上面命令输入之后会提示输入密码，此时输入密码就可以登录到mysql。
 
+#create user 'username'@'host' identified by 'password';
+create user 'username'@'%' identified by 'password';
+#grant all on db_name.* to 'username'@'%';
+#grant select on db_name.* to 'username'@'%';
+grant all on *.* to 'username'@'%';
+# 删除用户
+drop user 'username'@'host';
+# 修改用户密码
+SET PASSWORD FOR 'username'@'host' = PASSWORD('newpassword');
+
+
 postgresql数据库
 sudo -u postgres psql
 sudo su postgres
