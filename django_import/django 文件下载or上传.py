@@ -68,12 +68,12 @@ return response
 """
 
 http://c.biancheng.net/view/8120.html
-多个文件上传
+多个文件上传:
 if request.FILES.getlist('filename'):
     for file in request.FILES.getlist('filename'):
         program = Program.objects.create(case=case, program=file, program_name=file.name)
         # file.name 文件名 file 文件内容
-单一文件上传
+单一文件上传:
 file = request.FILES['myfile']  # 获取文件流对象file
 # file = request.FILES.get('myfile') 
 filename = os.path.join(settings.MEDIA_ROOT,file.name) # 文件储存路径，应用settings中的配置，file.name获取文件名
@@ -81,4 +81,7 @@ with open(filename,'wb') as f:
     data = file.file.read()
     f.write(data)
     
+warning:
+1.POST方法
+2.request的<form>有属性enctype="multipart/form-data"
 """
