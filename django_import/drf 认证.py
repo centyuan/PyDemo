@@ -112,7 +112,9 @@ permission_classed = [AllowAny,]
 
 # 六：自定义权限
 """
+from rest_framework.permissions import BasePermission
 要实现自定义权限，请继承BasePermission并实现其中的以下方法中的一个或两个
 .has_permission(self, request, view)
 .has_object_permission(self, request, view, obj)
 """
+# https://blog.51cto.com/u_15127659/4679882

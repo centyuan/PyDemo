@@ -43,7 +43,12 @@ from django.contrib.auth.backend import ModelBackend
 class UserAuthBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         user = UserModel.objects.get(username=username)
-        if user is not None and user.check_password(password):
+        # if re.match(r'^1[3-9]\d{9}',username):
+        #     UserModel.objects.get(username=username)  # 电话验证
+        user = UserModel.objects.get(username=username,is_superuser=1)
+        if user and user.check_password(password):
+            return user
+        elif user and user.password == password:
             return user
 # 方式2
 from django.contrib.auth.models import User
