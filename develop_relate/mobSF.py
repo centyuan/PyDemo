@@ -15,7 +15,7 @@ user_agent_list = [
     "Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15", ]
 
 headers = {
-    "Authorization": "b3122ecfa944777a69c9a3e899cbf1c041f67151f16ce3780323444e02ce3f15",
+    "Authorization": "df7353ca1b23d1a9bcef5ad4cda083ef0754ddd42cf28df6f9e2cabee510f580",
     "User-Agent":random.choice(user_agent_list)
 }
 
@@ -107,13 +107,13 @@ def delete_scan(ips,hash):
     print("删除scan",res,res.text)
 
 if __name__ == '__main__':
-    # ips = "http://149.28.210.253:9633"
-    ips = "http://45.77.168.10:8000"
+    ips = "http://149.28.210.253:9633"
+    # ips = "http://45.77.168.10:8000"
     # result = upload_apk(ips,'46454e6f63cfa9f41dc61e2cc694ca6b.apk')
     # start_scan(ips,result)
 
     # result = {"hash":'2731cd86d8c98584ef31848f2cd6a1e5'}
-    result = {"hash":'7997cb4cc80f015ae6b5a7c6e48ca2db'}
+    result = {"hash":'0359309883b5efcee41fee12829ad325'}
     for i in range(100):
         print("获取json报告")
         get_json(ips,result.get("hash")) # com.ireadercity_5.56.6_5566.apk

@@ -61,3 +61,7 @@ private_url = q.private_download_url(base_url, expires=3600)
 print(private_url)
 r = requests.get(private_url)
 assert r.status_code == 200
+
+
+# https://github.com/piglei/django-qiniu
+#

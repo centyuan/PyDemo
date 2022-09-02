@@ -1,0 +1,8 @@
+#https://juejin.cn/post/6844903850713825287
+#https://zhuanlan.zhihu.com/p/102716258
+对于CPU受限的应用应该提升集群数量或核心数量
+对于I/O受限的应用应该使用‘伪线程(协程)’:Gevent，Asyncio
+建议wokers的数量是：(2*cpu)+1
+
+gunicorn -c gunicorn.py main:app > gunicorn.log 2>&1 &
+

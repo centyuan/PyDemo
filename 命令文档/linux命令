@@ -8,9 +8,17 @@ sudo -i: 为了频繁的执行某些只有超级用户才能执行的权限，�
 && 表示前一条命令执行成功时，才执行后一条命令 ，如 echo '1‘ && echo '2'
 | 表示管道，上一条命令的输出，作为下一条命令参数，如 echo 'yes' | wc -l
 || 表示上一条命令执行失败后，才执行下一条命令，如 cat nofile || echo "fail"
-可以
-不挂断后台运行
-nohup python run.py &不挂断后台运行
+&和nohup 区别:
+&:1.结果输出到终端，2.Ctrl+c发送SIGINT信号，程序免疫,3.关闭session发送SIGHUP信号,程序关闭
+nohup:1.结果默认输出到nohup.out,2.Ctrl+c发送SIGINT信号,程序关闭,3.关闭session发送SIGHUP信号，程序免疫
+不挂断后台运行(nohup $ 同时使用)
+nohup python run.py >aceess.log 2>&1  &
+# &> 解释:
+表示stdout标准输出和stderr错误输出信息，重定向输出，覆盖写。
+# 2>&1 解释：
+将标准错误 2 重定向到标准输出 &1 ，在将标准输出 &1 再被重定向输入到 gunicorn.log
+# 2>1 解释:
+表示把标准错误的输出重定向到1，但这个1不是标准输出，而是一个名为1的文件。
 
 # 远程复制命令
 scp:
