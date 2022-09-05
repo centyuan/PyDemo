@@ -10,8 +10,11 @@ lsblk
 fdisk -l
 6、查看磁盘总量：
 df -h
-7、查看Linux版本：
+7、查看Linux发行版本：
 cat /etc/redhat-release
+lsb_release -a
+cat /etc/issue
 8、查看系统内核版本:
 uname -a
 unmae -r
+cat /proc/version
