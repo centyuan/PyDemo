@@ -61,7 +61,26 @@ class FDFSStorage(Storage):
         m = hashlib.md5()
         m.update(buff.encode())
         return self.base_url + name+"?token=" + m.hexdigest()+"&ts="+timestamp
+      def download_(self, file_id):
+        # ‘Remote file_id‘: ‘group1/M00/00/02/CtM3BVr-k6SACjAIAAJctR1ennA809.png‘
+        conf_path = get_tracker_conf(self.clent_conf)
+        client = Fdfs_client(conf_path)
+        print('app下载down', conf_path)
+        result = client.download_to_buffer(file_id.encode())
+        #     @return dict {
+        #             'Remote file_id'  : remote_file_id,
+        #             'Content'         : file_buffer,
+        #             'Download size'   : downloaded_size,
+        #             'Storage IP'      : storage_ip
+        #         }
+        return result
 
+    def delete_(self, file_id):
+        conf_path = get_tracker_conf(self.clent_conf)
+        client = Fdfs_client(conf_path)
+        result = client.delete_file(file_id.encode())
+        # ('Delete file successed.', b'group1/M00/00/06/wKgIImL9k-uAEmmcBGIWm0et6DI327.apk', b'192.168.8.34')
+        return result
 
 fast._save(name=None, content=request.FILES.get('screen_picture'))
 fast.url(match_team.team.avatar.name
