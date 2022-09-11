@@ -46,6 +46,8 @@ www.ip138.com
 DirBuster
 御剑后台扫描珍藏版
 wwwscan
+kali:skipfish
+kali:websploit
 # 7.SQLMap
 注入漏洞产生条件:1.参数用户可控,2.
 注入点类型判断:1.有无回显,2.注入点参数(数字型，字符型)
