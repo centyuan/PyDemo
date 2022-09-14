@@ -20,3 +20,11 @@
 # get_web = requests.get(url_)
 # with open('web_file','wb+') as f:
 #     f.write(get_web.content)
+dict_list = [{'price': 99, 'barcode': '2342355'}, {'price': 88, 'barcode': '2345566'}, {'price': 77, 'barcode': '2342377'}]
+dd= [{'sex': 2, 'sex__count': 9}, {'sex': 1, 'sex__count': 3}, {'sex': 0, 'sex__count': 5}]
+value_list = []
+value_list =(list(item.values()) for item in dd)
+
+print(value_list)
+new_ =sorted(value_list,key=lambda x:x[1],reverse=True)
+print('aa',new_[0][0])
