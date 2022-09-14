@@ -20,8 +20,7 @@ df -h
      cat /etc/issue
 
 # 9.查看物理CPU个数和型号
-# cut:-d:(表示以:分割)，-f2(-f配合-d去第2部分)
-# uniq -c(去重,-c显示有多少重复的)
+# cut:-d:(表示以:分割)，-f2(-f配合-d去第2部分);# uniq -c(去重,-c显示有多少重复的)
 cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c
 
 # 10.查看单个物理CPU核心数
@@ -30,6 +29,13 @@ cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c
 # 3    92    598 testfile
 # 行数 单词数 字节数
 cat /proc/cpuinfo | grep "physical id" | sort |wc-l
+
+统计项目	统计方式	业务含义
+物理CPU的数量	cat /proc/cpuinfo | grep "physical id" | uniq | wc -l	物理机器插槽中CPU的数量4
+逻辑处理器数量	cat /proc/cpuinfo | grep "processor" | sort -u | wc -l	processor 0 ~ n - 1 ，其中 n 为逻辑处理器数量
+处理器内核数量	cat /proc/cpuinfo | grep "core id" | uniq | wc -l	所有物理CPU上的core的个数总和
+处理器内核数量	cat /proc/cpuinfo | grep "cpu cores" | sort | uniq	每个物理CPU中Core的个数
+逻辑处理器数量	cat /proc/cpuinfo | grep "siblings" | sort | uniq	每个物理CPU 内包含的逻辑处理器的数量
 
 # 11.内存占用前10
 ps aux | head -1;ps auxw | sort -rnk 4 | head -10
