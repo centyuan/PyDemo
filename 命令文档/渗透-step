@@ -32,7 +32,7 @@ nmap -sV 192.168.9.27           # 服务版本检测
 nmap -sF -T4 192.168.9.99
 nmap --script=常见脚本  ip
 Masscan
-ZMap
+zenmap
 御剑高速TCP端口扫描工具
 
 # 4.指纹识别
@@ -158,3 +158,7 @@ xss+beef+msf劫持浏览器后，利用浏览器漏洞,msf生成meterpreter
 
 # xss漏洞扫描
 wvs,椰树web漏洞扫描,w3af
+
+# wireshark cain进行嗅探
+# Cobaltstrike
+端口转发、服务扫描，自动化溢出，多模式端口监听，exe、powershell木马生成

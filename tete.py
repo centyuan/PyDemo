@@ -20,11 +20,74 @@
 # get_web = requests.get(url_)
 # with open('web_file','wb+') as f:
 #     f.write(get_web.content)
-dict_list = [{'price': 99, 'barcode': '2342355'}, {'price': 88, 'barcode': '2345566'}, {'price': 77, 'barcode': '2342377'}]
-dd= [{'sex': 2, 'sex__count': 9}, {'sex': 1, 'sex__count': 3}, {'sex': 0, 'sex__count': 5}]
-value_list = []
-value_list =(list(item.values()) for item in dd)
 
-print(value_list)
-new_ =sorted(value_list,key=lambda x:x[1],reverse=True)
-print('aa',new_[0][0])
+
+import time
+import requests
+from qiniu import Auth, put_file, etag, BucketManager
+from qiniu.services.cdn.manager import create_timestamp_anti_leech_url
+
+class QiniuClient():
+    def __init__(self, access_key, secret_key, bucket_name, host):
+        self.access_key = access_key
+        self.secret_key = secret_key
+        self.bucket_name = bucket_name
+        self.host = host  # 'http://rhgfuxxaz.hn-bkt.clouddn.com'
+        self.encrypt_key = ''
+        self.query_string = ''
+        self.client = Auth(access_key, secret_key)
+        # 回调
+        policy = {
+            'callbackUrl': 'http://your.domain.com/callback.php',
+            'callbackBody': 'filename=$(fname)&filesize=$(fsize)'
+        }
+
+    # def file_upload(self, file_name, file_path, up_path=''):
+    def file_upload(self, key, file_path):
+        # try:
+            # key = "teset/"+"test_logo.png"
+            # key = up_path + file_name
+        token = self.client.upload_token(self.bucket_name, key, 3600)
+        ret, info = put_file(token, key, file_path, version='v2')
+        assert ret['key'] == key
+        return True, '上传成功'
+        # except Exception as e:
+        #     print('异常log', e.__traceback__.tb_frame.f_globals['__file__'], e, e.__traceback__.tb_lineno)
+        #     return False, '上传失败'
+
+    def file_url(self, key):
+        try:
+            # file_name 资源路径 key
+            deadline = int(time.time()) + 3600  # 当前时间后一小时
+            timestamp_url = create_timestamp_anti_leech_url(self.host, key, self.query_string, self.encrypt_key, deadline)
+            return timestamp_url
+        except Exception as e:
+            print('异常log', e.__traceback__.tb_frame.f_globals['__file__'], e, e.__traceback__.tb_lineno)
+            return None
+
+    def file_delete(self, key):
+        # 初始化BucketManager
+        try:
+            bucket = BucketManager(self.client)
+            ret,info = bucket.delete(self.bucket_name,key)
+            assert ret == {}
+            return True,'删除成功'
+        except Exception as e:
+            print('异常log', e.__traceback__.tb_frame.f_globals['__file__'], e, e.__traceback__.tb_lineno)
+            return False,'删除失败'
+
+if __name__ == '__main__':
+    access_key = "EoNKAHEYVwKqW8JoCj410S6G69akLMxr04M-eF73"
+    secret_key = "_TtnMMXwSlPTVmUKv9B2BlxG_EpbBXF-C_vi2jTO"
+    bucket_name = "elliot39"
+    host = 'http://rhgfuxxaz.hn-bkt.clouddn.com'
+    qiniu_client = QiniuClient(access_key,secret_key,bucket_name,host)
+    localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
+    staus,info = qiniu_client.file_upload('client_test.jpg',localfile)
+    print('上传返回:',staus,info)
+    result = qiniu_client.file_url('client_test.jpg')
+    print('url地址:',result)
+    # http://rhgfuxxaz.hn-bkt.clouddn.com/client_test.jpg?sign=c224e0c4e489a30493ba07861203a01e&t=6322cabf
+    # staus,info = qiniu_client.file_delete('client_test.jpg')
+    # print('删除返回:',staus,info)
+
