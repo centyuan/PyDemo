@@ -162,3 +162,17 @@ wvs,椰树web漏洞扫描,w3af
 # wireshark cain进行嗅探
 # Cobaltstrike
 端口转发、服务扫描，自动化溢出，多模式端口监听，exe、powershell木马生成
+
+
+# kali执着shellcode(使用多重编码免杀，过360杀，shellter免杀)
+
+# msf之meterpreter
+1截屏：screenshot
+2查看进程:ps
+3迁移进程(第一步):migrate 616 或 run post/windows/manage/migrate
+4键盘记录:keyscan_start,keyscan_stop,keyscan_dump
+5获取hash，用hash登录:hashdump
+6关闭进程:kill
+7监听流量:run packetrecorder -i 1
+
+

@@ -71,8 +71,7 @@ d2 = sorted(dict_data.items(), key=lambda x: x[1])
 print(d2)  # 输出结果[('8', 2), ('10', 5), ('7', 6), ('6', 9), ('3', 11)]
 d3 = sorted(dict_data.items(), key=lambda x: x[1], reverse=True)
 print(d3)  # 输出结果 [('3', 11), ('6', 9), ('7', 6), ('10', 5), ('8', 2)]
-d4 = sorted(zip(dict_data.values(),dict_data.keys()))
-
+d4 = sorted(zip(dict_data.values(), dict_data.keys()))
 
 dict = {'Google': 'www.google.com', 'Runoob': 'www.runoob.com', 'taobao': 'www.taobao.com'}
 
@@ -82,7 +81,7 @@ for key, value in dict.items():
 
 """4.enumerate 枚举"""
 for i, v in enumerate(['tic', 'tac', 'toe']):
-    print('枚举',i, v)
+    print('枚举', i, v)
 
 """5.遍历两个或更多的序列，可以使用 zip() 组合"""
 questions = ['name', 'quest', 'favorite color']
@@ -123,11 +122,11 @@ def custom_sorted(x, y):
 to_rank = sorted(rank, key=cmp_to_key(custom_sorted), reverse=True)
 # 类似的使用itemgetter排序
 from operator import itemgetter
-new_rank = sorted(rank,key=itemgetter('score')) # 根据一个字段排序
-new_rack = sorted(rank,key=itemgetter('score','item'))
 
+new_rank = sorted(rank, key=itemgetter('score'))  # 根据一个字段排序
+new_rack = sorted(rank, key=itemgetter('score', 'item'))
 
-# 四:判读字典key是否存在
+# 四:判断字典key是否存在
 
 dict_data = {'name': 'yuan', 'age': 20, 'sex': 'man'}
 # 1.python3 has_key()被__contains__(key)代替
@@ -151,6 +150,30 @@ prices = {
 # max(prices.values())
 # 获取最大价格
 # 只能得到key
-print(max(prices,key=lambda k:prices[k]))  # HPQ 输出键
+print(max(prices, key=lambda k: prices[k]))  # HPQ 输出键
 # zip后，key,value都有
-print(max(zip(prices.values(),prices.keys()))) #
+print(max(zip(prices.values(), prices.keys())))  #
+
+# 六:删除字典value为空的键值对
+
+test_dict = {
+    'id': 1,
+    'name': 'name',
+    'age': 18,
+    'sex': 'man',
+    '空': '',
+    'o': 0,
+    'bool': False,
+    'None': None,
+    'new_None': 'None'
+}
+for key in test_dict.keys():
+    if not test_dict.get(key):
+        del test_dict[key]
+# 字典生成器
+new_data = {k: v for k, v in test_dict.items() if v}
+# if v 去掉所有‘空值'
+# {'id': 1, 'name': 'name', 'age': 18, 'sex': 'man', 'new_None': 'None'}
+new_data = {k: v for k, v in test_dict.items() if v is not None}
+# if is not None 去掉None
+# {'id': 1, 'name': 'name', 'age': 18, 'sex': 'man', '空': '', 'o': 0, 'bool': False, 'new_None': 'None'}

@@ -27,6 +27,7 @@ import requests
 from qiniu import Auth, put_file, etag, BucketManager
 from qiniu.services.cdn.manager import create_timestamp_anti_leech_url
 
+
 class QiniuClient():
     def __init__(self, access_key, secret_key, bucket_name, host):
         self.access_key = access_key
@@ -45,8 +46,8 @@ class QiniuClient():
     # def file_upload(self, file_name, file_path, up_path=''):
     def file_upload(self, key, file_path):
         # try:
-            # key = "teset/"+"test_logo.png"
-            # key = up_path + file_name
+        # key = "teset/"+"test_logo.png"
+        # key = up_path + file_name
         token = self.client.upload_token(self.bucket_name, key, 3600)
         ret, info = put_file(token, key, file_path, version='v2')
         assert ret['key'] == key
@@ -59,7 +60,8 @@ class QiniuClient():
         try:
             # file_name 资源路径 key
             deadline = int(time.time()) + 3600  # 当前时间后一小时
-            timestamp_url = create_timestamp_anti_leech_url(self.host, key, self.query_string, self.encrypt_key, deadline)
+            timestamp_url = create_timestamp_anti_leech_url(self.host, key, self.query_string, self.encrypt_key,
+                                                            deadline)
             return timestamp_url
         except Exception as e:
             print('异常log', e.__traceback__.tb_frame.f_globals['__file__'], e, e.__traceback__.tb_lineno)
@@ -69,25 +71,52 @@ class QiniuClient():
         # 初始化BucketManager
         try:
             bucket = BucketManager(self.client)
-            ret,info = bucket.delete(self.bucket_name,key)
+            ret, info = bucket.delete(self.bucket_name, key)
             assert ret == {}
-            return True,'删除成功'
+            return True, '删除成功'
         except Exception as e:
             print('异常log', e.__traceback__.tb_frame.f_globals['__file__'], e, e.__traceback__.tb_lineno)
-            return False,'删除失败'
+            return False, '删除失败'
+
 
 if __name__ == '__main__':
-    access_key = "EoNKAHEYVwKqW8JoCj410S6G69akLMxr04M-eF73"
-    secret_key = "_TtnMMXwSlPTVmUKv9B2BlxG_EpbBXF-C_vi2jTO"
-    bucket_name = "elliot39"
-    host = 'http://rhgfuxxaz.hn-bkt.clouddn.com'
-    qiniu_client = QiniuClient(access_key,secret_key,bucket_name,host)
-    localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
-    staus,info = qiniu_client.file_upload('client_test.jpg',localfile)
-    print('上传返回:',staus,info)
-    result = qiniu_client.file_url('client_test.jpg')
-    print('url地址:',result)
-    # http://rhgfuxxaz.hn-bkt.clouddn.com/client_test.jpg?sign=c224e0c4e489a30493ba07861203a01e&t=6322cabf
-    # staus,info = qiniu_client.file_delete('client_test.jpg')
-    # print('删除返回:',staus,info)
+    # access_key = "EoNKAHEYVwKqW8JoCj410S6G69akLMxr04M-eF73"
+    # secret_key = "_TtnMMXwSlPTVmUKv9B2BlxG_EpbBXF-C_vi2jTO"
+    # bucket_name = "elliot39"
+    # host = 'http://rhgfuxxaz.hn-bkt.clouddn.com'
+    # qiniu_client = QiniuClient(access_key,secret_key,bucket_name,host)
+    # localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
+    # staus,info = qiniu_client.file_upload('client_test.jpg',localfile)
+    # print('上传返回:',staus,info)
+    # result = qiniu_client.file_url('client_test.jpg')
+    # print('url地址:',result)
+    # # http://rhgfuxxaz.hn-bkt.clouddn.com/client_test.jpg?sign=c224e0c4e489a30493ba07861203a01e&t=6322cabf
+    # # staus,info = qiniu_client.file_delete('client_test.jpg')
+    # # print('删除返回:',staus,info)
 
+    test_dict = {
+        'id': 1,
+        'name': 'name',
+        'age': 18,
+        'sex': 'man',
+        '空': '',
+        'o': 0,
+        'bool': False,
+        'None': None,
+        'new_None': 'None'
+    }
+    from collections import Iterable  # 可迭代的
+    from collections import Iterator  # 迭代器
+
+    # print(dir(test_dict.values()),dir(test_dict.keys()),dir(test_dict.items()))
+    value = test_dict.keys()
+    print(isinstance(value, Iterator))
+
+    print('before', test_dict)
+    # for key in list(test_dict.keys()):
+    #     if not test_dict.get(key):
+    #         del test_dict[key]
+    # print(test_dict)
+    # new_data = {k: v for k, v in test_dict.items() if v}
+    new_data = {k: v for k, v in test_dict.items() if v is not None}
+    print('new_data:', new_data)
