@@ -1,3 +1,4 @@
+import threading
 import time
 
 import requests
@@ -70,12 +71,22 @@ bucket = BucketManager(q)
 
 # https://github.com/piglei/django-qiniu
 
+
 class QiniuClient():
+    # _instance_lock = threading.Lock()
+
     def __init__(self, access_key, secret_key, bucket_name, host):
+        """
+
+        @param access_key:
+        @param secret_key:
+        @param bucket_name: 空间名称
+        @param host: 'http://rhgfuxxaz.hn-bkt.clouddn.com'
+        """
         self.access_key = access_key
         self.secret_key = secret_key
         self.bucket_name = bucket_name
-        self.host = host  # 'http://rhgfuxxaz.hn-bkt.clouddn.com'
+        self.host = host
         self.encrypt_key = ''
         self.query_string = ''
         self.client = Auth(access_key, secret_key)
@@ -84,12 +95,24 @@ class QiniuClient():
             'callbackUrl': 'http://your.domain.com/callback.php',
             'callbackBody': 'filename=$(fname)&filesize=$(fsize)'
         }
+    def __new__(cls, *args, **kwargs):
+        if not hasattr(QiniuClient, "_instance"):
+            # with QiniuClient._instance_lock:
+            if not hasattr(QiniuClient, "_instance"):
+                QiniuClient._instance = object.__new__(cls)
+        return QiniuClient._instance
 
-    # def file_upload(self, file_name, file_path, up_path=''):
-    def file_upload(self, key, file_data=None,file_path=None):
+
+    def file_upload(self, key, file_data=None, file_path=None):
+        """
+        文件上传:上传文件binary 或路径
+        @param key: 上传文件的key:上传文件的路径+文件名称
+        @param file_data:binary
+        @param file_path:本地文件路径 二选一
+        @return:(bool,'失败或成功')
+        """
         try:
-            # key = "teset/"+"test_logo.png"  key:路径+名称
-            token = self.client.upload_token(self.bucket_name, key, 3600)
+            token = self.client.upload_token(self.bucket_name, key, 3600 * 24)
             if file_data:
                 ret, info = put_data(token, key, file_data)
                 assert ret['key'] == key
@@ -103,6 +126,11 @@ class QiniuClient():
             return False, '上传失败'
 
     def file_url(self, key):
+        """
+        获取文件url
+        @param key: 上传文件的key:上传文件的路径+文件名称
+        @return: url
+        """
         try:
             deadline = int(time.time()) + 3600  # 当前时间后一小时
             timestamp_url = create_timestamp_anti_leech_url(self.host, key, self.query_string, self.encrypt_key,
@@ -113,8 +141,13 @@ class QiniuClient():
             return None
 
     def file_delete(self, key):
-        # 初始化BucketManager
+        """
+        删除文件
+        @param key:上传文件的key:上传文件的路径+文件名称
+        @return:
+        """
         try:
+            # 初始化BucketManager
             bucket = BucketManager(self.client)
             ret, info = bucket.delete(self.bucket_name, key)
             assert ret == {}
@@ -123,20 +156,40 @@ class QiniuClient():
             print('异常log', e.__traceback__.tb_frame.f_globals['__file__'], e, e.__traceback__.tb_lineno)
             return False, '删除失败'
 
+    def get_key(self,type_name,filename):
+        """
+
+        @param type_name: 课程包名称|其他表名之类的
+        @param filename: 文件名称
+        @return:
+        """
+        return type_name+'/'+filename
+
+
 
 if __name__ == '__main__':
     access_key = "EoNKAHEYVwKqW8JoCj410S6G69akLMxr04M-eF73"
     secret_key = "_TtnMMXwSlPTVmUKv9B2BlxG_EpbBXF-C_vi2jTO"
     bucket_name = "elliot39"
     host = 'http://rhgfuxxaz.hn-bkt.clouddn.com'
-    qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
-    localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
-    # staus, info = qiniu_client.file_upload('client_test.jpg', localfile)
-    file_data = open(localfile,'rb').read()
-    staus, info = qiniu_client.file_upload('client_data.jpg',file_data,'')
-    print('上传返回:', staus, info)
-    result = qiniu_client.file_url('client_data.jpg')
-    print('url地址:', result)
+    # qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
+    # localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
+    # # staus, info = qiniu_client.file_upload('client_test.jpg', localfile)
+    # file_data = open(localfile,'rb').read()
+    # staus, info = qiniu_client.file_upload('网络案件侦办/client_data.jpg',file_data,'')
+    # print('上传返回:', staus, info)
+    # result = qiniu_client.file_url('client_data.jpg')
+    # print('url地址:', result)
     # http://rhgfuxxaz.hn-bkt.clouddn.com/client_test.jpg?sign=c224e0c4e489a30493ba07861203a01e&t=6322cabf
     # staus,info = qiniu_client.file_delete('client_test.jpg')
     # print('删除返回:',staus,info)
+    # qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
+
+
+    def task(arg):
+        obj = QiniuClient(access_key, secret_key, bucket_name, host)
+        print(obj,'线程'+str(i))
+        time.sleep(2)
+    for i in range(10):
+        t = threading.Thread(target=task,args=[i,])
+        t.start()
