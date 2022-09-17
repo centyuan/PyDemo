@@ -173,7 +173,7 @@ if __name__ == '__main__':
     bucket_name = "elliot39"
     host = 'http://rhgfuxxaz.hn-bkt.clouddn.com'
     # qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
-    # localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
+    localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
     # # staus, info = qiniu_client.file_upload('client_test.jpg', localfile)
     # file_data = open(localfile,'rb').read()
     # staus, info = qiniu_client.file_upload('网络案件侦办/client_data.jpg',file_data,'')
@@ -187,8 +187,10 @@ if __name__ == '__main__':
 
 
     def task(arg):
-        obj = QiniuClient(access_key, secret_key, bucket_name, host)
-        print(obj,'线程'+str(i))
+        qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
+        file_data = open(localfile,'rb').read()
+        staus, info = qiniu_client.file_upload('网络案件侦办/client_data'+str(arg)+'.jpg',file_data,'')
+        print(qiniu_client,id(qiniu_client),'线程'+str(i))
         time.sleep(2)
     for i in range(10):
         t = threading.Thread(target=task,args=[i,])

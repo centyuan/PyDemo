@@ -28,7 +28,6 @@ try:
 except:
    print ("Error: 无法启动线程")
 """
-
 # 方式2 threading.Thread 建议采用
 """
 threading.currentThread() 返回当前线程变量
