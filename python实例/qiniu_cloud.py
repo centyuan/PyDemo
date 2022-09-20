@@ -49,7 +49,7 @@ bucket = BucketManager(q)
 # assert ret['key'] == new_key
 
 # 4.下载相关:生成时间防盗链
-# host = 'http://rhgfuxxaz.hn-bkt.clouddn.com'
+host = 'http://rhgfuxxaz.hn-bkt.clouddn.com'
 # encrypt_key = ''  # 配置时间戳时指定的key
 # # file_name = 'teset/new_logo.png'  # 资源路径
 # # http://rhgfuxxaz.hn-bkt.clouddn.com/teset/new_logo.png?sign=d65ba3744bd934947a006a1cff27320c&t=630ed4a3
@@ -115,6 +115,8 @@ class QiniuClient():
             token = self.client.upload_token(self.bucket_name, key, 3600 * 24)
             if file_data:
                 ret, info = put_data(token, key, file_data)
+                print('上传ret',ret)
+                print('上传info',info)
                 assert ret['key'] == key
                 return True, '上传成功'
             else:
@@ -166,19 +168,21 @@ class QiniuClient():
         return type_name+'/'+filename
 
 
-
+qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
+print('main外面')
 if __name__ == '__main__':
-    access_key = "EoNKAHEYVwKqW8JoCj410S6G69akLMxr04M-eF73"
-    secret_key = "_TtnMMXwSlPTVmUKv9B2BlxG_EpbBXF-C_vi2jTO"
-    bucket_name = "elliot39"
-    host = 'http://rhgfuxxaz.hn-bkt.clouddn.com'
+    # access_key = "EoNKAHEYVwKqW8JoCj410S6G69akLMxr04M-eF73"
+    # secret_key = "_TtnMMXwSlPTVmUKv9B2BlxG_EpbBXF-C_vi2jTO"
+    # bucket_name = "elliot39"
+    # host = 'http://rhgfuxxaz.hn-bkt.clouddn.com'
     # qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
-    localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
-    # # staus, info = qiniu_client.file_upload('client_test.jpg', localfile)
+    # localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
+    # localfile = "C:/Users/rainbow/Pictures/yuan.jpg"
+    # staus, info = qiniu_client.file_upload('client_test.jpg', localfile)
     # file_data = open(localfile,'rb').read()
-    # staus, info = qiniu_client.file_upload('网络案件侦办/client_data.jpg',file_data,'')
-    # print('上传返回:', staus, info)
-    # result = qiniu_client.file_url('client_data.jpg')
+    # # staus, info = qiniu_client.file_upload('网络攻防进阶/clients_data.jpg',file_data,'')
+    # # print('上传返回:', staus, info)
+    # result = qiniu_client.file_url('网络攻防进阶/clients_data.jpg')
     # print('url地址:', result)
     # http://rhgfuxxaz.hn-bkt.clouddn.com/client_test.jpg?sign=c224e0c4e489a30493ba07861203a01e&t=6322cabf
     # staus,info = qiniu_client.file_delete('client_test.jpg')
@@ -186,12 +190,13 @@ if __name__ == '__main__':
     # qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
 
 
-    def task(arg):
-        qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
-        file_data = open(localfile,'rb').read()
-        staus, info = qiniu_client.file_upload('网络案件侦办/client_data'+str(arg)+'.jpg',file_data,'')
-        print(qiniu_client,id(qiniu_client),'线程'+str(i))
-        time.sleep(2)
-    for i in range(10):
-        t = threading.Thread(target=task,args=[i,])
-        t.start()
+    # def task(arg):
+    #     qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
+    #     file_data = open(localfile,'rb').read()
+    #     staus, info = qiniu_client.file_upload('网络案件侦办/client_data'+str(arg)+'.jpg',file_data,'')
+    #     print(qiniu_client,id(qiniu_client),'线程'+str(i))
+    #     time.sleep(2)
+    # for i in range(10):
+    #     t = threading.Thread(target=task,args=[i,])
+    #     t.start()
+    print('main里面')

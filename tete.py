@@ -94,29 +94,4 @@ if __name__ == '__main__':
     # # staus,info = qiniu_client.file_delete('client_test.jpg')
     # # print('删除返回:',staus,info)
 
-    test_dict = {
-        'id': 1,
-        'name': 'name',
-        'age': 18,
-        'sex': 'man',
-        '空': '',
-        'o': 0,
-        'bool': False,
-        'None': None,
-        'new_None': 'None'
-    }
-    from collections import Iterable  # 可迭代的
-    from collections import Iterator  # 迭代器
-
-    # print(dir(test_dict.values()),dir(test_dict.keys()),dir(test_dict.items()))
-    value = test_dict.keys()
-    print(isinstance(value, Iterator))
-
-    print('before', test_dict)
-    # for key in list(test_dict.keys()):
-    #     if not test_dict.get(key):
-    #         del test_dict[key]
-    # print(test_dict)
-    # new_data = {k: v for k, v in test_dict.items() if v}
-    new_data = {k: v for k, v in test_dict.items() if v is not None}
-    print('new_data:', new_data)
+    pass
