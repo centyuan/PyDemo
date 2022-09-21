@@ -12,8 +12,9 @@ print(uuid.uuid4())
 print(uuid.uuid5(uuid.NAMESPACE_DNS,'yuanlin'))
 
 
-str = "3cfc8d7a-f169-11e9-af5b-58a023321f81"
-str_2= "".join(str.split('-'))
+str1 = "3cfc8d7a-f169-11e9-af5b-58a023321f81"
+str_2= "".join(str1.split('-'))
+str_2 = "".join(str(uuid.uuid1()).split('-'))
 print(str_2)
 print(len(''.join(str.split('-'))))
 
@@ -70,17 +71,3 @@ uuid5()：这个看起来和uuid3()貌似并没有什么不同，写法一样，
 #     if rule.get("startPort")==200 and rule.get("endPort")==300 and rule.get("type")=="Egress":
 #         ruleuuid = rule.get("uuid")
 # print(ruleuuid)
-
-action = AddSecurityGroupRuleAction()
-action.securityGroupUuid = "c97e486e16584adebedf4ff872912e5b"
-action.remoteSecurityGroupUuids = ["c97e486e16584adebedf4ff872912e5b"]
-ru = {'type': 'Ingress', 'startPort': '520', 'endPort': '1314', 'protocol': 'TCP', 'allowedCidr': '192.168.9.0/24'}
-action.rules = [ru]
-action.sessionId = sessionId()
-res = action.call()
-
-condi=['protocol=TCP', 'type=Ingress', 'startPort=520', 'endPort=1314', 'allow_network=192.168.2.0/24', 'securityGroupUuid=7efe1c0b894d42a49af25d9f9beadf7e']
-action = QuerySecurityGroupRuleAction()
-action.conditions =['type=Ingress', 'startPort=520', 'endPort=1314', 'protocol=TCP', 'allowedCidr=192.168.10.0/24', 'securityGroupUuid=e17e5bd2a6a74c8a8b89123cf576f0d7']
-action.sessionId = sessionId()
-res = action.call()
