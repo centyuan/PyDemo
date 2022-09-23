@@ -1,8 +1,20 @@
-# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
-# author centyuan
-# @time 19-7-31 下午3:36
 
+# 一:倒序
+var = 'abcde'
+print('var[2]:', var[2])
+print('var', var[:-1])  # abcd
+print('var', var[-2:])  # de
+print('var', var[::-1])  # edcba 倒序
+print('var', var[1::-1])  # ba 第0,1的倒序
+print('var', var[::-1][-2:])  # ba 先倒序，在取后两位
+print('var', var[::-1][:-2])  # edc
+print('var', var[0:2][::-1])  # 先取正两位，在倒序
+
+tmp = [1, 2, 3, 4, 5, 6]
+print(tmp[5::-2])  # [6,4,2]
+
+# 二:去重并保持顺序不变
 """
 描述
 Python 字典 fromkeys() 函数用于创建一个新字典，以序列 seq 中元素做字典的键，value 为字典所有键对应的初始值。
@@ -45,3 +57,9 @@ print(type(m))
 for i in m:
     print(i, type(i))
 a1, a2 = zip(*zip(a, b))  # 解压
+
+# 三: 实现dict的get方法
+l = ['a', 'b', 'c', 'd', 'e', 'f']
+# enumerate()返回的是一个enumerate对象,利用它可以同时获得index和value
+d = dict(enumerate(l))
+print(d.get(3))
