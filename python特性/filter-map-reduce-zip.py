@@ -38,9 +38,12 @@ zipped = zip(a, b)
 print(zipped, type(zipped))
 for i in zipped:
     print('zip(a,b):', i)
-zip(a, c)  # 元素个数与最短的列表一致
+# 元素个数与最短的列表一致
+zip(a, c)
 a1, b1 = zip(*zip(a, c))  # 与zip相反，理解为解压
-
 print('zip(*):', a1, b1)
-
 print(bool)
+# 个数与最长的一致,空为None
+from itertools import zip_longest
+for i in zip_longest(a,c):
+    print(i)
