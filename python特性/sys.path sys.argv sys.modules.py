@@ -65,3 +65,6 @@ sys.modules是一个全局字典，该字典是python启动后就加载在内存
  3.执行B.py 以填充__dict__
  4.从B.__dict__查找
 """
+
+# 系统编码
+print(sys.getfilesystemencoding())

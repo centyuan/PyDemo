@@ -29,7 +29,7 @@ postgresql:
 /usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data -l logfile start
 
 配置数据库允许远程连接访问:
-1修改监听地址
+1修改监听地址cd
 sudo gedit /etc/postgresql/10/main/postgresql.conf
  #将listen_addresses='localhost'改为listen_addresses='*'
 2修改可访问用户的IP段
@@ -74,7 +74,7 @@ sudo gedit /etc/postgresql/10/main/pg_hba.conf
 \c - [user_name]:切换用户
 
 修改管理员密码
-alter user postgres with password '123456';
+alter user postgres with password "Isoon@qzmp";
 
 添加数据库新用户
 create user centyuan with password '123456';
