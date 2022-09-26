@@ -6,37 +6,50 @@ property
 将函数变为一个属性,不带()调用函数
 
 """
+
+
 class test(object):
     def __init__(self):
         self.__num = 0
+
     def getNum(self):
         return self.__num
-    def setNum(self,value):
+
+    def setNum(self, value):
         self.__num = value
+
     def delNum(self):
         del self.__num
-    num = property(getNum,setNum,delNum)
+
+    num = property(getNum, setNum, delNum)
 
 
 class test_2(object):
     def __init__(self):
         self.__num = 0
+
     @property
     def num(self):
         return self.__num
+
     @num.setter
-    def num(self,value):
+    def num(self, value):
+        if not isinstance(value, int):
+            # 类型检查
+            raise TypeError('Expected a string')
         self.__num = value
+
     @num.deleter
     def num(self):
         del self.__num
 
-print('test.num:',test.num)
+
+print('test.num:', test.num)
 test.num = 20
-print('test.num',test.num)
-print('test_2.num:',test_2.num)
+print('test.num', test.num)
+print('test_2.num:', test_2.num)
 test_2.num = 90
-print('test_2.num:',test_2.num)
+print('test_2.num:', test_2.num)
 
 """
 hasattr():
