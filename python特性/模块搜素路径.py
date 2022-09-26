@@ -1,4 +1,4 @@
-#！/usr/bin/python3
+# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-4-22 下午12:47
@@ -14,6 +14,7 @@
 
 """
 import sys
+import os
 
 print(sys.path)
 """
@@ -22,3 +23,13 @@ step2：将该module对象 插入sys.modules中；
 step3：装载module的代码（如果需要，需先编译）；
 step4：执行新的module中对应的代码。
 """
+# 1.控制模块被全部导入的内容
+__all__ = []  # 控制导出
+
+# 2. 相对路径导入包中子模块
+# from . import args_kwargs
+# from ..B import bar
+
+# 3.添加路径以便import
+sys.path.append('path')
+sys.path.insert(0,os.path.join(os.path.abspath(os.path.dirname(__file__))),'src')

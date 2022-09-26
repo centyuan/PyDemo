@@ -93,11 +93,12 @@ if __name__ == '__main__':
     # # http://rhgfuxxaz.hn-bkt.clouddn.com/client_test.jpg?sign=c224e0c4e489a30493ba07861203a01e&t=6322cabf
     # # staus,info = qiniu_client.file_delete('client_test.jpg')
     # # print('删除返回:',staus,info)
-    er = bin(1234)  # 0b10011010010
-    oc = oct(1234)  # 0o2322
-    he = hex(1234)  # 0x4d2
-    print(er,type(er),oc,type(oc),he,type(he))
-    # 0b10011010010 <class 'str'> 0o2322 <class 'str'> 0x4d2 <class 'str'>
-    print('二进制',int(er,2),sep=':')
-    print('八进制',int(oc,8),sep=':')
-    print('十六进制',int(he,16),sep=':')
+    # er = bin(1234)  # 0b10011010010
+    # oc = oct(1234)  # 0o2322
+    # he = hex(1234)  # 0x4d2
+    # print(er,type(er),oc,type(oc),he,type(he))
+    # # 0b10011010010 <class 'str'> 0o2322 <class 'str'> 0x4d2 <class 'str'>
+    # print('二进制',int(er,2),sep=':')
+    # print('八进制',int(oc,8),sep=':')
+    # print('十六进制',int(he,16),sep=':')
+    pass
