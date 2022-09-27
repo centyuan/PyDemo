@@ -1,6 +1,6 @@
 import asyncio
 import websockets
-from websockets import  ConnectionClosed
+from websockets import ConnectionClosed
 
 
 # 发送消息
@@ -14,6 +14,8 @@ async def clientsend(websocket):
         await websocket.send(input_text)
         recv_text = await  websocket.recv()
         print(f"接受消息:{recv_text}")
+
+
 # 定时任务
 async def ping(websockt):
     while True:
@@ -22,6 +24,8 @@ async def ping(websockt):
             await asyncio.sleep(10)
         except:
             break
+
+
 # 建立websocket连接
 async def clientRun():
     while True:
@@ -39,20 +43,21 @@ async def clientRun():
                         print(f"接受消息:{recv_text}")
                     except ConnectionClosed as e:
                         # 保证 ws 连接一直处于接收状态（长连接）
-                        print("接收报出异常",e.code) # 1000 正常关闭码和 1006 服务端内部错误异常关闭码两种
-                        if e.code ==1006:
-                            print('退出循环,延时2秒后，websockets.connect重新建立连接') # 两个while实现了重连机制
+                        print("接收报出异常", e.code)  # 1000 正常关闭码和 1006 服务端内部错误异常关闭码两种
+                        if e.code == 1006:
+                            print('退出循环,延时2秒后，websockets.connect重新建立连接')  # 两个while实现了重连机制
                             await asyncio.sleep(2)
                             break
         except ConnectionRefusedError as e:
             # 服务端拒绝连接时
-            print("ConnectionRefusedError",e)
+            print("ConnectionRefusedError", e)
             global count
             # 重试十次
             if count == 10:
                 return
             count += 1
             await asyncio.sleep(2)
+
 
 if __name__ == '__main__':
     print("客户端开始")
