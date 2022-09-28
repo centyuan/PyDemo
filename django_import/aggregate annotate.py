@@ -56,3 +56,5 @@ all()不是必须的。或者
 
 
 """
+# Django F对象和Q对象查询详解
+# http://c.biancheng.net/view/7693.html

@@ -171,17 +171,17 @@ class QiniuClient():
 qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
 print('main外面')
 if __name__ == '__main__':
-    # access_key = "EoNKAHEYVwKqW8JoCj410S6G69akLMxr04M-eF73"
-    # secret_key = "_TtnMMXwSlPTVmUKv9B2BlxG_EpbBXF-C_vi2jTO"
-    # bucket_name = "elliot39"
-    # host = 'http://rhgfuxxaz.hn-bkt.clouddn.com'
-    # qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
-    # localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
-    # localfile = "C:/Users/rainbow/Pictures/yuan.jpg"
-    # staus, info = qiniu_client.file_upload('client_test.jpg', localfile)
-    # file_data = open(localfile,'rb').read()
-    # # staus, info = qiniu_client.file_upload('网络攻防进阶/clients_data.jpg',file_data,'')
-    # # print('上传返回:', staus, info)
+    access_key = "EoNKAHEYVwKqW8JoCj410S6G69akLMxr04M-eF73"
+    secret_key = "_TtnMMXwSlPTVmUKv9B2BlxG_EpbBXF-C_vi2jTO"
+    bucket_name = "elliot39"
+    host = 'http://rhgfuxxaz.hn-bkt.clouddn.com'
+    qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
+    localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
+    localfile = "C:/Users/rainbow/Pictures/yuan.jpg"
+    staus, info = qiniu_client.file_upload('client_test.jpg', localfile)
+    file_data = open(localfile,'rb').read()
+    staus, info = qiniu_client.file_upload('网络攻防进阶/clients_data.jpg',file_data,'')
+    print('上传返回:', staus, info)
     # result = qiniu_client.file_url('网络攻防进阶/clients_data.jpg')
     # print('url地址:', result)
     # http://rhgfuxxaz.hn-bkt.clouddn.com/client_test.jpg?sign=c224e0c4e489a30493ba07861203a01e&t=6322cabf
@@ -199,4 +199,4 @@ if __name__ == '__main__':
     # for i in range(10):
     #     t = threading.Thread(target=task,args=[i,])
     #     t.start()
-    print('main里面')
+    # print('main里面')

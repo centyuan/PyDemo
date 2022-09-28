@@ -14,10 +14,6 @@
 # engine.runAndWait()
 # import re
 # import base64
-import ipaddress
 
-if __name__ == '__main__':
-    net = ipaddress.ip_network('192.168.9.64/26')
-
-    for a in net:
-        print(a)
+indd = [1,2,3,45,6]
+print(indd.index(55))

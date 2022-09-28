@@ -14,7 +14,7 @@ for passport in sorted(traveler_ids):
     print('%s/%s'%passport)
 
 #多余元素赋值给占位符 _
-for country,_ in traveler_ids:
+for country, _ in traveler_ids:
     print(country)
 
 #元组拆包3. a,b=b,a # 很优雅的写法

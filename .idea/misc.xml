@@ -3,5 +3,8 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/cookbook_python/8.10使用延迟计算.py" />
+  </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.6 (cent30)" project-jdk-type="Python SDK" />
 </project>
