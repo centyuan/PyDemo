@@ -34,8 +34,8 @@ threading.currentThread() 返回当前线程变量
 threading.enumerate() 返回一个包含正在运行线程的list
 threading.activeCount() 返回正在运行的线程数量 = len(threading.enumerate())
 run()
-start()
-join()
+start()    # 创建好一个线程对象后，该对象并不会立即执行,除非调用它的start()方法
+join()     # 等待至线程中止,对于需要长时间运行的线程或需要一直运行的的后台任务,考虑使用后台线程:Thread(target=countdown, args=(10,), daemon=True)
 isAlive() 返回线程是否活动的
 getName()返回线程名
 setName()设置线程名
@@ -68,7 +68,8 @@ def all_run():
     thread_1 = MyThread(1, 'thread_1', 1)
     thread_2 = MyThread(2, 'thread_2', 2)
     thread_3 = threading.Thread(target=fuck, args=('线程函数实现', 2, 4))
-    print("开始主线程A")
+    print("开始主线程A:")
+
     thread_1.start()
     thread_2.start()
     thread_3.start()
