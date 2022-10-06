@@ -4,7 +4,10 @@ import threading
 
 # 事件管理标志
 event = threading.Event()  # 通过threading.Event()生成一个event对象和对象的引用event
-
+"""
+event对象重要特点是被设置为真时，会唤醒所有等待的它的进程
+如果只想唤醒单个线程，最好使用信号量或者Condition对象代替
+"""
 
 def light():
     if not event.isSet():

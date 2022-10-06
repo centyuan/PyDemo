@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 import time
 
 """
@@ -13,7 +12,7 @@ import time
 def funA(fn):
     # 定义一个嵌套函数
     def say(arc):
-        print("2:带参数的装饰器 say:", arc)
+        print("1:带参数的装饰器 say:", arc)
         fn(arc + "AAAAAAAAAA")
 
     return say
@@ -21,7 +20,7 @@ def funA(fn):
 
 @funA
 def funB(arc):
-    print("2:带参数的装饰器 funB:", arc)
+    print("1:带参数的装饰器 funB:", arc)
 
 
 # 等价于
@@ -35,7 +34,7 @@ funB("http://c.biancheng.net/python")
 def funA(fn):
     # 定义一个嵌套函数
     def say(*args, **kwargs):
-        print('funA 中say')
+        print('2:funA 中say')
         fn(*args, **kwargs)
 
     return say
@@ -43,12 +42,12 @@ def funA(fn):
 
 @funA
 def funB(arc):
-    print("funB:C语言中文网：", arc)
+    print("2:funB:C语言中文网：", arc)
 
 
 @funA
 def funC(name, arc):
-    print(name, arc)
+    print("2:funC",name, arc)
 
 
 funB("http://c.biancheng.net")
@@ -68,13 +67,13 @@ from functools import wraps
 def deco01(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        print("装饰器1")
+        print("3:装饰器1")
         startTime = time.time()
         func(*args, **kwargs)
         endTime = time.time()
         msecs = (endTime - startTime) * 1000
-        print("时间为%d ms" % msecs)
-        print("装饰器1结束")
+        print("3:时间为%d ms" % msecs)
+        print("3:装饰器1结束")
 
     return wrapper
 
@@ -83,8 +82,8 @@ def deco02(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         func(*args, **kwargs)
-        print("装饰器2")
-        print("装饰器2结束")
+        print("3:装饰器2")
+        print("3:装饰器2结束")
 
     return wrapper
 
@@ -92,9 +91,9 @@ def deco02(func):
 @deco01
 @deco02
 def func(a, b):
-    print("func开始")
+    print("3:func开始")
     time.sleep(1)
-    print("func结束 %d" % (a + b))
+    print("3:func结束 %d" % (a + b))
 
 
 func(3, 4)
