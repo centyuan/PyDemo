@@ -3,7 +3,7 @@
 # author centyuan
 # @time 19-4-22 下午12:47
 """
-搜索路径
+sys.paht:模块搜索路径
 当你导入一个模块，Python 解析器对模块位置的搜索顺序是：
 首先判断这个module是不是built-in即内建模块，如果是则引入内建模块，
 不是则搜索sys.path中的路径列表(
@@ -32,4 +32,7 @@ __all__ = []  # 控制导出
 
 # 3.添加路径以便import
 sys.path.append('path')
-sys.path.insert(0,os.path.join(os.path.abspath(os.path.dirname(__file__))),'src')
+# sys.path.insert(0,os.path.join(os.path.abspath(os.path.dirname(__file__))),'src')
+
+
+

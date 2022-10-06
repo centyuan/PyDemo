@@ -1,4 +1,4 @@
-#！/usr/bin/python3
+# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-9-10 下午2:46
@@ -11,19 +11,23 @@
 
 
 """
-#方法一 使用模块 Python 的模块就是天然的单例模式
+# 方法一 使用模块 Python 的模块就是天然的单例模式
 '''因为模块在第一次导入时，会生成 .pyc 文件，当第二次导入时，就会直接加载 .pyc 文件，而不会再次执行模块代码'''
+
 
 # https://www.cnblogs.com/huchong/p/8244279.html
 # https://cloud.tencent.com/developer/article/1673882
-#方式二 使用装饰器
+# 方式二 使用装饰器
 def Singleton(cls):
     _instance = {}
+
     def _singleton(*args, **kargs):
         if cls not in _instance:
             _instance[cls] = cls(*args, **kargs)
         return _instance[cls]
+
     return _singleton
+
 
 @Singleton
 class A(object):
@@ -31,9 +35,18 @@ class A(object):
 
     def __init__(self, x=0):
         self.x = x
+
+
+
 a1 = A(2)
 a2 = A(3)
-print(id(a1),id(a2))
+print(id(a1), id(a2))
 
-
-
+# 三:
+class A(object):
+    '''单例模式'''
+    obj = None
+    def __new__(cls, *args, **kwargs):
+        if cls.obj is None:
+            cls.obj = object.__new__(cls)
+        return cls.obj

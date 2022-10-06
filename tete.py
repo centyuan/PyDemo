@@ -11,9 +11,11 @@
 # engine.say(
 #     'I love three things in the world ,The sun,the moon and you , the sun for the day, the moon for the night and you forever')
 # engine.save_to_file('音频保存为文件', 'audio_file')  # 音频保存为文件
-# engine.runAndWait()
-# import re
-# import base64
+"""
+声明全局变量:global
+声明非本层的局部变量:nonloacl
+查看全局变量:globals()
+查看局部变量:locals()
+查看变量:vars([object]) # 不传参数相当于locals(),传入对象后或得到object.__dict__
 
-indd = [1,2,3,45,6]
-print(indd.index(55))
+"""
