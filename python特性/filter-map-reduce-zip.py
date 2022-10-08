@@ -16,13 +16,13 @@ print(filter(a, list2))  # 返回值类型是filter对象 生成器对象
 print(list(filter(a, list2)))
 print(list(filter(lambda a: a % 2 == 1, list2)))
 
-# 2.map 函数是一个计算函数 参数（函数，可迭代对象）
+# 2.map(对应位置计算) 函数是一个计算函数 参数（函数，可迭代对象）
 # 会将可迭代对象的值经过函数计算后返回
 my_map = map(lambda x: x + 1, range(10))
 print(my_map)  # 返回值类型是map对象 生成器对象
 print(list(my_map))
 
-# 3.reduce 函数也是一个计算函数 参数（函数，可迭代对象）
+# 3.reduce(累计计算) 函数也是一个计算函数 参数（函数，可迭代对象）
 # 会将可迭代对象的值依次在函数中累计运算 Python3中需要导入
 from functools import reduce
 

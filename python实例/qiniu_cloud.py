@@ -5,12 +5,12 @@ import requests
 from qiniu import Auth, put_file, put_data, etag, BucketManager
 from qiniu.services.cdn.manager import create_timestamp_anti_leech_url
 
-access_key = "EoNKAHEYVwKqW8JoCj410S6G69akLMxr04M-eF73"
-secret_key = "_TtnMMXwSlPTVmUKv9B2BlxG_EpbBXF-C_vi2jTO"
+access_key = "4EPFvB7wxfBI68faAxmtgfyeaNY4h7TB2D2t3VLC"
+secret_key = "jpElWO1XZhLlxdvfFqtSsUV73Nu4RixxxraSk4Vr"
 # 构建鉴权对象
 q = Auth(access_key, secret_key)
 # 空间名
-bucket_name = "elliot39"
+bucket_name = "abc-wen12"
 # 文件名即
 file_name = 'test_logo.png'
 # 路径+文件名
@@ -49,7 +49,7 @@ bucket = BucketManager(q)
 # assert ret['key'] == new_key
 
 # 4.下载相关:生成时间防盗链
-host = 'http://rhgfuxxaz.hn-bkt.clouddn.com'
+host = 'http://rihlu8ghc.bkt.clouddn.com'
 # encrypt_key = ''  # 配置时间戳时指定的key
 # # file_name = 'teset/new_logo.png'  # 资源路径
 # # http://rhgfuxxaz.hn-bkt.clouddn.com/teset/new_logo.png?sign=d65ba3744bd934947a006a1cff27320c&t=630ed4a3
@@ -171,16 +171,16 @@ class QiniuClient():
 qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
 print('main外面')
 if __name__ == '__main__':
-    access_key = "EoNKAHEYVwKqW8JoCj410S6G69akLMxr04M-eF73"
-    secret_key = "_TtnMMXwSlPTVmUKv9B2BlxG_EpbBXF-C_vi2jTO"
-    bucket_name = "elliot39"
-    host = 'http://rhgfuxxaz.hn-bkt.clouddn.com'
+    access_key = "4EPFvB7wxfBI68faAxmtgfyeaNY4h7TB2D2t3VLC"
+    secret_key = "jpElWO1XZhLlxdvfFqtSsUV73Nu4RixxxraSk4Vr"
+    bucket_name = "abc-wen12"
+    host = 'http://rihlu8ghc.bkt.clouddn.com'
     qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
-    localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
-    localfile = "C:/Users/rainbow/Pictures/yuan.jpg"
-    staus, info = qiniu_client.file_upload('client_test.jpg', localfile)
+    # localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
+    localfile = "C:/Users/rainbow/Documents/剧本视频/剧本视频/游戏.mp4"
+    staus, info = qiniu_client.file_upload('可不.mp4', localfile)
     file_data = open(localfile,'rb').read()
-    staus, info = qiniu_client.file_upload('网络攻防进阶/clients_data.jpg',file_data,'')
+    # staus, info = qiniu_client.file_upload('网络攻防进阶/clients_data.jpg',file_data,'')
     print('上传返回:', staus, info)
     # result = qiniu_client.file_url('网络攻防进阶/clients_data.jpg')
     # print('url地址:', result)

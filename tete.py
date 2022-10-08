@@ -19,3 +19,33 @@
 查看变量:vars([object]) # 不传参数相当于locals(),传入对象后或得到object.__dict__
 
 """
+e = dict({'three': 3, 'one': 1})
+print(e)
+print(len(e))
+
+day = range(6)
+print(type(day))
+course_datas = {'1': 1, '2': 12}
+
+for key,value in course_datas.items():
+    print(key,value)
+
+dd = '2022-10-01 23:59'
+from datetime import datetime
+print(datetime.strptime(dd,"%Y-%m-%d %H:%M"))
+dd = [
+    {'start_time': '2022-10-01 23:59','end_time': '2022-10-02 12:20'},
+    {'start_time': '2022-10-02 11:59','end_time': '2022-10-03'},
+    {'start_time': '2022-10-03 23:59','end_time': '2022-10-04'}
+]
+time_tuple = [(item.get('start_time'), item.get('end_time')) for item in dd]
+print(time_tuple)
+new_time_tuple = sorted(time_tuple, key=lambda x: x[0])
+print('aaaa',new_time_tuple)
+for i in range(len(new_time_tuple)):
+    if i ==len(new_time_tuple)-1:
+        break
+    if new_time_tuple[i+1][0]<new_time_tuple[i][1]:
+        print('交集')
+    else:
+        print('没有')
