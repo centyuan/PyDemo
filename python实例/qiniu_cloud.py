@@ -176,20 +176,16 @@ if __name__ == '__main__':
     bucket_name = "abc-wen12"
     host = 'http://rihlu8ghc.bkt.clouddn.com'
     qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
-    # localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
-    localfile = "C:/Users/rainbow/Documents/剧本视频/剧本视频/游戏.mp4"
-    staus, info = qiniu_client.file_upload('可不.mp4', localfile)
-    file_data = open(localfile,'rb').read()
-    # staus, info = qiniu_client.file_upload('网络攻防进阶/clients_data.jpg',file_data,'')
-    print('上传返回:', staus, info)
-    # result = qiniu_client.file_url('网络攻防进阶/clients_data.jpg')
-    # print('url地址:', result)
-    # http://rhgfuxxaz.hn-bkt.clouddn.com/client_test.jpg?sign=c224e0c4e489a30493ba07861203a01e&t=6322cabf
-    # staus,info = qiniu_client.file_delete('client_test.jpg')
-    # print('删除返回:',staus,info)
-    # qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
-
-
+    # # localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
+    # localfile = "C:/Users/rainbow/Documents/剧本视频/剧本视频/游戏.mp4"
+    # staus, info = qiniu_client.file_upload('可不.mp4', localfile)
+    # file_data = open(localfile,'rb').read()
+    # # staus, info = qiniu_client.file_upload('网络攻防进阶/clients_data.jpg',file_data,'')
+    # print('上传返回:', staus, info)
+    # result = qiniu_client.file_url('courseware/注销校园贷5df7cbc22478411ed9bb1000c29d2d2c0.mp4')
+    key_ = "courseware/裸聊587296aa2478411ed9ae7000c29d2d2c0.mp4"
+    result = qiniu_client.file_url(key_)
+    print(result)
     # def task(arg):
     #     qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
     #     file_data = open(localfile,'rb').read()

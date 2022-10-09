@@ -19,33 +19,28 @@
 查看变量:vars([object]) # 不传参数相当于locals(),传入对象后或得到object.__dict__
 
 """
-e = dict({'three': 3, 'one': 1})
-print(e)
-print(len(e))
+import requests
+import cv2
+def get_duration_from_cv2(filename):
+  cap = cv2.VideoCapture(filename)
+  if cap.isOpened():
+    rate = cap.get(5)
+    frame_num =cap.get(7)
+    duration = frame_num/rate
+    return int(duration)
+  return 0
 
-day = range(6)
-print(type(day))
-course_datas = {'1': 1, '2': 12}
-
-for key,value in course_datas.items():
-    print(key,value)
-
-dd = '2022-10-01 23:59'
-from datetime import datetime
-print(datetime.strptime(dd,"%Y-%m-%d %H:%M"))
-dd = [
-    {'start_time': '2022-10-01 23:59','end_time': '2022-10-02 12:20'},
-    {'start_time': '2022-10-02 11:59','end_time': '2022-10-03'},
-    {'start_time': '2022-10-03 23:59','end_time': '2022-10-04'}
-]
-time_tuple = [(item.get('start_time'), item.get('end_time')) for item in dd]
-print(time_tuple)
-new_time_tuple = sorted(time_tuple, key=lambda x: x[0])
-print('aaaa',new_time_tuple)
-for i in range(len(new_time_tuple)):
-    if i ==len(new_time_tuple)-1:
-        break
-    if new_time_tuple[i+1][0]<new_time_tuple[i][1]:
-        print('交集')
-    else:
-        print('没有')
+url = "http://rihlu8ghc.bkt.clouddn.com/courseware/%E8%A3%B8%E8%81%8A587296aa2478411ed9ae7000c29d2d2c0.mp4?sign=c617909575108da81e45461ff991038e&t=63425ffe"
+result = get_duration_from_cv2(url)
+print(result)
+url_ = "http://192.168.8.242:9000/api/teacher/login"
+to_data = {
+  "username":"teacher12",
+  "password":"123456"
+}
+new_h = {
+'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36',
+}
+res = requests.post(url,headers=new_h,json=to_data)
+print('返回')
+print(res.json(),res.headers)

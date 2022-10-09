@@ -32,6 +32,7 @@ all()不是必须的。或者
     Hobby.object.aggregate(Max('student__age'))
 
 ###############################################################
+
 # 4. 按学生分组，统计每个学生的爱好数量
     Student.objects.annotate(Count('hobbies'))
     Student.objects.annotate(hobbies=Count('hobbies')) # 指定返回名字 hobbies
