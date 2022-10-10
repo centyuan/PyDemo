@@ -13,7 +13,7 @@ list_demo = ['a', 'b', 'is', 'python', 'jason', 'hello', 'phone', 'test', 'apple
 filter = []
 for i in range(1000000):
     for find in ['is', 'hat', 'new', 'list', 'old', '.']:
-        if find not in list:
+        if find not in list_demo:
             filter.append(find)
 print('花费时间:', time() - t)
 
@@ -45,9 +45,9 @@ for i in range(100):
 # 使用局部变量,避免global，局部变量比全局变量快
 # if done is not None 比 if done !=None快,if done is True比if done ==True快
 # (交换变量值:a,b=b,a)
-# while 1比while True快(后者可读性强)
+# while 1比while True快(后者可读性强，True是一个全局变量而非关键字)
 # 内建函数通常较快,add(a,b)优于a+b
-# 优化循环
+# 优化循环:循环外能做的事放在循环外面
 # 优化包含多个判断(对于and，应该把满足条件少的放在前面，对于or，把满足条件多的放在前面)
 # 使用最佳的反序列化方式(eval,cPickle,json) json比cPickel快3倍,比eval快20倍
 """

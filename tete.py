@@ -19,6 +19,8 @@
 查看变量:vars([object]) # 不传参数相当于locals(),传入对象后或得到object.__dict__
 
 """
+import time
+
 import requests
 import cv2
 def get_duration_from_cv2(filename):
@@ -30,17 +32,16 @@ def get_duration_from_cv2(filename):
     return int(duration)
   return 0
 
-url = "http://rihlu8ghc.bkt.clouddn.com/courseware/%E8%A3%B8%E8%81%8A587296aa2478411ed9ae7000c29d2d2c0.mp4?sign=c617909575108da81e45461ff991038e&t=63425ffe"
-result = get_duration_from_cv2(url)
-print(result)
-url_ = "http://192.168.8.242:9000/api/teacher/login"
-to_data = {
-  "username":"teacher12",
-  "password":"123456"
-}
-new_h = {
-'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36',
-}
-res = requests.post(url,headers=new_h,json=to_data)
-print('返回')
-print(res.json(),res.headers)
+t1 = time.time()
+g = ({x:x}for x in range(50000000))
+for item in g:
+  pass
+t2 = time.time()
+print('g',g,t2-t1)
+
+t3 = time.time()
+g1 = [{x:x}for x in range(50000000)]
+for item in g1:
+  pass
+t4 = time.time()
+print('l',t4-t3)
