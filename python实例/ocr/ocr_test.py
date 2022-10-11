@@ -74,7 +74,7 @@ def login(browser):
         return False
 
 if __name__ == '__main__':
-    broswer = webdriver.Chrome( executable_path=r"D:\python_data\centyuan\cent30\Lib\site-packages\selenium\webdriver\chrome\chromedriver.exe")
+    broswer = webdriver.Chrome(executable_path=r"D:\python_data\centyuan\cent30\Lib\site-packages\selenium\webdriver\chrome\chromedriver.exe")
     while True:
         login(broswer)
         import time

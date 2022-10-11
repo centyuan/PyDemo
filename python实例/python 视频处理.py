@@ -2,6 +2,10 @@
 1.opencv-python:
 2.ffmpeg-python:
 3.moviepy:门槛低，处理常见需求,如截取,拼接,简单转场,特效,文件编码和读写也依赖ffmpeg
+moviepy基本工作原理可以概括为：
+基于ffmpeg读写视频文件。
+基于numpy、scipy、opencv、PIL处理内部图像数据。
+两大核心类：AudioClip、VideoClip分别处理音频和视频。
 
 速度:opencv-python >ffmpeg-python > moviepy
 """

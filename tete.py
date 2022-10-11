@@ -32,16 +32,23 @@ def get_duration_from_cv2(filename):
     return int(duration)
   return 0
 
-t1 = time.time()
-g = ({x:x}for x in range(50000000))
-for item in g:
-  pass
-t2 = time.time()
-print('g',g,t2-t1)
+# t1 = time.time()
+# g = ({x:x}for x in range(50000000))
+# for item in g:
+#   pass
+# t2 = time.time()
+# print('g',g,t2-t1)
+#
+# t3 = time.time()
+# g1 = [{x:x}for x in range(50000000)]
+# for item in g1:
+#   pass
+# t4 = time.time()
+# print('l',t4-t3)
 
-t3 = time.time()
-g1 = [{x:x}for x in range(50000000)]
-for item in g1:
-  pass
-t4 = time.time()
-print('l',t4-t3)
+print(type(2),type(2.0))
+print(isinstance(2,int),isinstance(2.0,float))
+print(isinstance(2,float),isinstance(2.0,int))
+value = -5
+if type(value) != type(int(value)) or value < 0:
+  print('no')

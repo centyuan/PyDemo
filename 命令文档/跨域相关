@@ -33,9 +33,10 @@ js语句为已经定义好的js 函数 但是这种方式只能走get请求(里�
 # 跨域头设置
 
 # ---基本配置
-CORS_ALLOW_CREDENTIALS = True  # 是否
+CORS_ALLOW_CREDENTIALS = True  # 跨域请求时，是否运行携带cookie
 CORS_ORIGIN_ALLOW_ALL = True   # 允许来源跨域
-CORS_ALLOW_HEADERS = ('*')     # 允许所有请求头
+CORS_ALLOW_HEADERS = '*'     # 允许所有请求头
+CORS_ALLOW_METHODS = '*'     # 允许所有请求方法
 # ---
 
 

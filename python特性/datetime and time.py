@@ -52,4 +52,7 @@ print('时间差', (date_2 - date_1).seconds)
 weeks = rrule.rrule(rrule.WEEKLY, dtstart=date_1, until=date_2).count()  # 周数差
 months = rrule.rrule(rrule.MONTHLY, dtstart=date_1, until=date_2).count()  # 月数差
 years = rrule.rrule(rrule.YEARLY, dtstart=date_1, until=date_2).count()  # 年数差
-days = rrule.rrule(rrule.DAILY, dtstart=date1, until=date2).count()  # 天数差
+# days = rrule.rrule(rrule.DAILY, dtstart=date1, until=date2).count()  # 天数差
+
+dd = "2022-10-11T02:31:23.000Z"
+print('dddddddd',datetime.datetime.strptime(dd, "%Y-%m-%dT%H:%M:%S.000Z"))
