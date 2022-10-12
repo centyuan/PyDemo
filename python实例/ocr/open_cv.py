@@ -2,8 +2,36 @@ import cv2 as cv
 import pytesseract
 from PIL import Image
 
-
+# 提升识别的准确率
+# 1.利用jTessBoxEditor进行字库训练
+# 2.对图片进行预处理(官方说明:https://tesseract-ocr.github.io/tessdoc/ImproveQuality
+"""
+图片预处理常用方法
+1.放大图片
+2.图像灰度化
+3.二值化
+4.去除边框
+5.降噪
+...
+"""
 # https://blog.csdn.net/weixin_43881394/article/details/108293799
+# https://blog.csdn.net/qq_42103091/article/details/107667926
+def recognize_text0(file):
+    # PIL预处理简单处理
+    gray = Image.open(file).convert('L')  # 灰度化
+    # gray.show()
+    w, h = gray.size
+    data = gray.load()  # 数值化,分配内存加载二位点阵数据
+    for i in range(w):
+        for j in range(h):  # 点阵里面的值，以128为界,置为0或255,即黑非百
+            if data[i, j] < 128:
+                data[i, j] = 0
+            else:
+                data[i, j] = 255
+
+    text = pytesseract.image_to_string(gray)
+    print(f'识别结果：{text}')
+
 
 def recognize_text1(image):
     # 边缘保留滤波  去噪
@@ -70,7 +98,7 @@ def recognize_text3(image):
     print(f'识别结果：{text}')
 
 
-src = cv.imread(r'captcha.png')
+src = cv.imread(r'../../captcha.png')
 cv.imshow('input image', src)
 recognize_text3(src)
 cv.waitKey(0)
