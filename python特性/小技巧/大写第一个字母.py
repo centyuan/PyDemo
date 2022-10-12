@@ -4,3 +4,4 @@
 
 s = 'programming is awesome'
 print(s.title())
+print(s.upper())

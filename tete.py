@@ -19,18 +19,18 @@
 查看变量:vars([object]) # 不传参数相当于locals(),传入对象后或得到object.__dict__
 
 """
-import time
-
-import requests
-import cv2
-def get_duration_from_cv2(filename):
-  cap = cv2.VideoCapture(filename)
-  if cap.isOpened():
-    rate = cap.get(5)
-    frame_num =cap.get(7)
-    duration = frame_num/rate
-    return int(duration)
-  return 0
+# import time
+#
+# import requests
+# import cv2
+# def get_duration_from_cv2(filename):
+#   cap = cv2.VideoCapture(filename)
+#   if cap.isOpened():
+#     rate = cap.get(5)
+#     frame_num =cap.get(7)
+#     duration = frame_num/rate
+#     return int(duration)
+#   return 0
 
 # t1 = time.time()
 # g = ({x:x}for x in range(50000000))
@@ -45,10 +45,30 @@ def get_duration_from_cv2(filename):
 #   pass
 # t4 = time.time()
 # print('l',t4-t3)
+import time
 
-print(type(2),type(2.0))
-print(isinstance(2,int),isinstance(2.0,float))
-print(isinstance(2,float),isinstance(2.0,int))
-value = -5
-if type(value) != type(int(value)) or value < 0:
-  print('no')
+from selenium import webdriver
+from PIL import Image
+
+broswer = webdriver.Chrome(executable_path=r"D:\python_data\centyuan\cent30\Lib\site-packages\selenium\webdriver\chrome\chromedriver.exe")
+broswer.get('https://www.baidu.com')
+broswer.get_screenshot_as_file(r'screen_big.png')
+# 定位需要打印的元素
+pic_ele = broswer.find_element_by_xpath('//*[@id="s_lg_img"]')
+# 元素位置、宽高参数获取
+left = pic_ele.location.get('x')
+top = pic_ele.location.get('y')
+width = pic_ele.size.get('width')
+height = pic_ele.size.get('height')
+right = width + left
+bottom = height+ top
+# 读取图片
+img = Image.open(r'screen_big.png')
+# 根据元素的 Location和size 图片裁剪
+pic_ele = img.crop((left, top, right, bottom))
+# 保存裁剪好的文件图片
+pic_ele.save(r'screen_small.png')
+# 退出浏览器
+print('长宽',width,height)
+time.sleep(10)
+broswer.quit()

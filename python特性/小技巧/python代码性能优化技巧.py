@@ -43,7 +43,7 @@ for i in range(100):
 # 6.其他
 # xrange代替range(python3：range代替xrange)
 # 使用局部变量,避免global，局部变量比全局变量快
-# if done is not None 比 if done !=None快,if done is True比if done ==True快
+# if done is not None 比 if done !=None快,if done is True比if done ==True快一倍
 # (交换变量值:a,b=b,a)
 # while 1比while True快(后者可读性强，True是一个全局变量而非关键字)
 # 内建函数通常较快,add(a,b)优于a+b

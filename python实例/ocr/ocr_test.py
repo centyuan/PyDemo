@@ -1,4 +1,4 @@
-'''\
+'''
 https://blog.csdn.net/qq_41937821/article/details/124037025
 tesserocr 基于tesseract做的一层python api封装
 下载 testdata
