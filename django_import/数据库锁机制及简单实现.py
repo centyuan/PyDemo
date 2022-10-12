@@ -20,7 +20,7 @@ innodb中表锁和行锁一起用，所以为了提高效率才会有意向锁�
 实现逻辑简单,开销小,加锁 释放锁快，能避免死锁问题
 粒度大所以并发小
 
-行锁：myIsam不支持
+行锁：myIsam不支持,Innodb,NDBCluster支持
 逻辑复杂，开销大，加锁慢，容易出现死锁
 
 行锁:通过给索引上的索引项加锁来实现的,只有通过索引条件检索数据，InnoDB才使用行级锁，否则，InnoDB将使用表锁
@@ -38,20 +38,19 @@ innodb中表锁和行锁一起用，所以为了提高效率才会有意向锁�
 
 """
 
-# 乐观锁实现
+# 乐观锁实现(适合读取操作频繁的)
 # 1:原生语句
 # update tb_goodsinfo set stock=5 where id=1 and stock=10;
-
 # 2：django
 # GoodsInfo.objects.filter(id=1, stock=10).update(stock=5)
 
 
-
-# 悲观锁实现
+# 悲观锁实现(适合写入修改操作频繁的)
 # 行级锁
-# select_for_update(nowait=False, skip_locked=False)
+# 使用select_for_update(nowait=False, skip_locked=False)
 # Entry.objects.select_for_update().filter(author=request.user)
-# 加互斥锁,由于mysql在查询时自动加的是共享锁,所以我们可以手动加上互斥锁.
+# select_for_update与select_related时，相关对象也被锁定,select_for_update具有“of”选项，用于显式地声明要锁定查询中的哪些表
+# 加互斥锁，由于mysql在查询时自动加的是共享锁，所以我们可以手动加上互斥锁。create、update、delete操作时，mysql自动加行级互斥锁
 # (ps:注意必须用在事务里面,所有的匹配行将被锁定,直到事务结束.这意味着可以通过锁防止数据被其他事务修改)
 
 """
@@ -66,6 +65,10 @@ innodb中表锁和行锁一起用，所以为了提高效率才会有意向锁�
 # 表级锁
 # https://zhuanlan.zhihu.com/p/151767128
 # manager = LockingManager()
+# 加表锁：
+# User.objects.lock()
+# 解表锁：
+# User.objects.unlock()
 
 
 # http://t.zoukankan.com/sundawei7-p-11656505.html
@@ -91,23 +94,21 @@ innodb中表锁和行锁一起用，所以为了提高效率才会有意向锁�
 # }
 
 # 2：局部使用事务
- # @transaction.atomic 函数装饰器
- # with transaction.atomic(): 上下文管理器
- # 一旦把atomic代码块放到try/except中，完整性错误就会被自然的处理掉了
- # 需要捕获异常添加一个嵌套的atomic来做
- # 嵌套 函数的事务嵌套上下文管理器的事务，上下文管理器的事务嵌套上下文管理器的事务
+# @transaction.atomic 函数装饰器
+# with transaction.atomic(): 上下文管理器
+# 一旦把atomic代码块放到try/except中，完整性错误就会被自然的处理掉了
+# 需要捕获异常添加一个嵌套的atomic来做
+# 嵌套 函数的事务嵌套上下文管理器的事务，上下文管理器的事务嵌套上下文管理器的事务
 from django.db import transaction
+
 
 @transaction.atomic
 def viewfunc(request):
-
-    sid = transaction.savepoint() # 创建保存点
+    sid = transaction.savepoint()  # 创建保存点
     if True:
-        transaction.savepoint_commit(sid) # 提交保存点
+        transaction.savepoint_commit(sid)  # 提交保存点
     else:
-        transaction.savepoint_rollback(sid) #回滚保存点
+        transaction.savepoint_rollback(sid)  # 回滚保存点
 
-    transaction.commit() # 手动提交事务，默认是自动提交的，也就是说如果你没有设置取消自动提交，
+    transaction.commit()  # 手动提交事务，默认是自动提交的，也就是说如果你没有设置取消自动提交，
     # 那么这句话不用写，如果你配置了那个AUTOCOMMIT=False，那么就需要自己手动进行提交。
-
-
