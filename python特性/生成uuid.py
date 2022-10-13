@@ -15,7 +15,7 @@ print(uuid.uuid5(uuid.NAMESPACE_DNS,'yuanlin'))
 str1 = "3cfc8d7a-f169-11e9-af5b-58a023321f81"
 str_2= "".join(str1.split('-'))
 str_2 = "".join(str(uuid.uuid1()).split('-'))
-print(str_2)
+print(str_2[:6])
 print(len(''.join(str.split('-'))))
 
 """
@@ -29,45 +29,3 @@ uuid5()：这个看起来和uuid3()貌似并没有什么不同，写法一样，
 """
 
 
-# action = AddSecurityGroupRuleAction()
-# action.securityGroupUuid = "19dc0648385c4b1285309fd8a0f24fe0"
-# action.rules = [{
-#     "type": "Ingress",
-#     "startPort": -1,
-#     "endPort":-1,
-#     "protocol": "ICMP",
-#     "allowedCidr": "192.168.1.0/24",
-# }]
-
-# from zstack.config import sessionId
-# from zstack.zstack_sdk import *
-# action.sessionId = sessionId()
-# res = action.call()
-# action = AddSecurityGroupRuleAction()
-# action.securityGroupUuid = "026c2ada94e048af8df044db97a6a6cd"
-# action.rules = [{
-#     "type": "Ingress",
-#     "protocol": "ALL",
-#     "allowedCidr": "192.168.10.0/24",
-# }]
-# action.sessionId = sessionId()
-# res = action.call()
-# # #{'uuid': '8ecd59868e0d4b6880beaf484d3b8f55', 'securityGroupUuid': 'fd2ceb3fca2848b3bc330735e8ebdab2', 'type': 'Egress', 'ipVersion': 4, 'startPort': 200, 'endPort': 300, 'protocol': 'TCP', 'state': 'Enabled', 'allowedCidr': '192.
-
-# action = DeleteSecurityGroupRuleAction()
-# action.ruleUuids = "d59290a1506d41bfabb6628672c4b02b"
-# action.sessionId = sessionId()
-# res = action.call()
-
-# import requests
-# import json
-# url = "http://192.168.8.24:8080/zstack/v1/api-jobs/269738af3f5144ea98dc4ca0bbf7ff51"
-# response = requests.get(url=url)
-# result = json.loads(response.text)
-# rules = result.get("inventory").get("rules")
-# ruleuuid = ""
-# print(rules)
-# for rule in rules:
-#     if rule.get("startPort")==200 and rule.get("endPort")==300 and rule.get("type")=="Egress":
-#         ruleuuid = rule.get("uuid")
-# print(ruleuuid)

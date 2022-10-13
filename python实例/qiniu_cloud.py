@@ -1,73 +1,7 @@
-import threading
+import os
 import time
-
-import requests
 from qiniu import Auth, put_file, put_data, etag, BucketManager
 from qiniu.services.cdn.manager import create_timestamp_anti_leech_url
-
-access_key = "4EPFvB7wxfBI68faAxmtgfyeaNY4h7TB2D2t3VLC"
-secret_key = "jpElWO1XZhLlxdvfFqtSsUV73Nu4RixxxraSk4Vr"
-# 构建鉴权对象
-q = Auth(access_key, secret_key)
-# 空间名
-bucket_name = "abc-wen12"
-# 文件名即
-file_name = 'test_logo.png'
-# 路径+文件名
-key = "teset_2/" + "test_logo.png"
-# 采用post,切ret未能回调返回
-policy = {
-    'callbackUrl': 'http://47.103.53.141:8888/api/callback',
-    'callbackBody': 'filename=$(fname)&filesize=$(fsize)'
-}
-
-# 生成token 指定过期时间
-token = q.upload_token(bucket_name, key, 3600, policy)
-localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
-# 初始化Bucketmanager
-bucket = BucketManager(q)
-
-# 1.上传
-# ret, info = put_file(token, key, localfile, version='v2')
-# print('上传ret', ret)
-# print('上传info', info)
-# assert ret['key'] == key
-# assert ret['hash'] == etag(localfile)
-
-# 2.获取文件信息
-# ret,info = bucket.stat(bucket_name,key)
-# print('获取文件信息',info)
-# assert 'hash' in ret
-
-
-# 3.抓取网络资源到空间
-# url = "http://rhgfuxxaz.hn-bkt.clouddn.com/"+key
-# print(url)
-# new_key = "new_logo.png"
-# ret,info = bucket.fetch(url,bucket_name,new_key)
-# print(info)
-# assert ret['key'] == new_key
-
-# 4.下载相关:生成时间防盗链
-host = 'http://rihlu8ghc.bkt.clouddn.com'
-# encrypt_key = ''  # 配置时间戳时指定的key
-# # file_name = 'teset/new_logo.png'  # 资源路径
-# # http://rhgfuxxaz.hn-bkt.clouddn.com/teset/new_logo.png?sign=d65ba3744bd934947a006a1cff27320c&t=630ed4a3
-# # file_name = 'test_logo.png'
-# # http://rhgfuxxaz.hn-bkt.clouddn.com/test_logo.png?sign=35a482a596c988945e956be731773e13&t=630ed4bb
-# file_name = 'teset/test_logo.png'
-# query_string = ''  # 查询字符串,不需要加?
-# deadline = int(time.time()) + 3600  # 截止日期的时间戳,秒为单位，3600为当前时间一小时之后过期
-# timestamp_url = create_timestamp_anti_leech_url(host, file_name, query_string, encrypt_key, deadline)
-# print('timestamp_url:', timestamp_url)
-
-# # 5.下载相关:私有空间下载文件
-# base_url = "http://rhgfuxxaz.hn-bkt.clouddn.com/" + key
-# private_url = q.private_download_url(base_url, expires=3600)
-# print('private_url:', private_url)
-# r = requests.get(private_url)
-# assert r.status_code == 200
-
 
 # https://github.com/piglei/django-qiniu
 
@@ -88,7 +22,7 @@ class QiniuClient():
         self.bucket_name = bucket_name
         self.host = host
         self.encrypt_key = ''
-        self.query_string = ''
+        self.query_string = 'yuan'
         self.client = Auth(access_key, secret_key)
         # 回调
         policy = {
@@ -137,6 +71,8 @@ class QiniuClient():
             deadline = int(time.time()) + 3600  # 当前时间后一小时
             timestamp_url = create_timestamp_anti_leech_url(self.host, key, self.query_string, self.encrypt_key,
                                                             deadline)
+            private_url = self.client.private_download_url(self.host+'/'+key,expires=300)
+            print('private_url:',private_url)
             return timestamp_url
         except Exception as e:
             print('异常log', e.__traceback__.tb_frame.f_globals['__file__'], e, e.__traceback__.tb_lineno)
@@ -165,8 +101,15 @@ class QiniuClient():
         @param filename: 文件名称
         @return:
         """
-        return type_name+'/'+filename
+        import uuid
+        name, name_suffix = str(filename).split('.')
+        uuid = ''.join(str(uuid.uuid1()).split('-'))[:6]
+        return type_name+'/'+name+uuid+'.'+name_suffix
 
+access_key = "4EPFvB7wxfBI68faAxmtgfyeaNY4h7TB2D2t3VLC"
+secret_key = "jpElWO1XZhLlxdvfFqtSsUV73Nu4RixxxraSk4Vr"
+bucket_name = "abc-wen12"
+host = 'http://rihlu8ghc.bkt.clouddn.com'
 
 qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
 print('main外面')
@@ -176,23 +119,42 @@ if __name__ == '__main__':
     bucket_name = "abc-wen12"
     host = 'http://rihlu8ghc.bkt.clouddn.com'
     qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
-    # # localfile = "C:/Users/rainbow/Pictures/v2w.jpg"
     # localfile = "C:/Users/rainbow/Documents/剧本视频/剧本视频/游戏.mp4"
     # staus, info = qiniu_client.file_upload('可不.mp4', localfile)
     # file_data = open(localfile,'rb').read()
     # # staus, info = qiniu_client.file_upload('网络攻防进阶/clients_data.jpg',file_data,'')
-    # print('上传返回:', staus, info)
     # result = qiniu_client.file_url('courseware/注销校园贷5df7cbc22478411ed9bb1000c29d2d2c0.mp4')
-    key_ = "courseware/裸聊587296aa2478411ed9ae7000c29d2d2c0.mp4"
-    result = qiniu_client.file_url(key_)
-    print(result)
-    # def task(arg):
-    #     qiniu_client = QiniuClient(access_key, secret_key, bucket_name, host)
-    #     file_data = open(localfile,'rb').read()
-    #     staus, info = qiniu_client.file_upload('网络案件侦办/client_data'+str(arg)+'.jpg',file_data,'')
-    #     print(qiniu_client,id(qiniu_client),'线程'+str(i))
-    #     time.sleep(2)
-    # for i in range(10):
-    #     t = threading.Thread(target=task,args=[i,])
-    #     t.start()
-    # print('main里面')
+    # spath = r'C:Users\rainbow\Pictures\头像\avatar4.jpg'
+    localfile_ = os.listdir("C:/Users/rainbow/Pictures/head/")
+    keys = []
+    # for name in localfile_:
+    #     print(name)
+    #     type_name = 'profile_photo'
+    #     key = qiniu_client.get_key(type_name,name)
+    #     keys.append(key)
+    #     staus, info = qiniu_client.file_upload(key, file_path=os.path.join("C:/Users/rainbow/Pictures/头像/",name))
+    #     print('上传返回:', staus, info)
+
+
+    profile_photo_keys =[
+        'profile_photo/avatar2e3b55e.jpg',
+        'profile_photo/avatar3e3d233.jpg',
+        'profile_photo/avatar4e58100.jpg',
+        'profile_photo/avatar5e5bc0d.jpg',
+        'profile_photo/avatar6e5dc29.jpg',
+        'profile_photo/avatar7e606ea.jpg',
+        'profile_photo/wallhaven-39gom9e624b9.jpg',
+        'profile_photo/wallhaven-4g7yk3ec4456.jpg',
+        'profile_photo/wallhaven-4v3d6lec6ab1.jpg',
+        'profile_photo/wallhaven-4vdm7mec90fe.jpg',
+        'profile_photo/wallhaven-4x6ypzed13c2.jpg',
+        'profile_photo/wallhaven-d6x7gled5734.jpg',
+        'profile_photo/wallhaven-ne39j8edb8c6.jpg',
+        'profile_photo/wallhaven-v9v3r5eed1fd.jpg',
+    ]
+    for key in profile_photo_keys:
+        result = qiniu_client.file_url(key)
+        print(result)
+    for key in profile_photo_keys:
+        print(key)
+    # print(qiniu_client.file_url('report_file/hh27bbc3f76e4a9a11edb827000c29d2d2c0.jpg'))

@@ -85,17 +85,17 @@ if __name__ == '__main__':
     driver = webdriver.Chrome(
         executable_path=r"D:\python_data\centyuan\cent30\Lib\site-packages\selenium\webdriver\chrome\chromedriver.exe")
     driver.get(url)
+    get_captcha(driver, 49)
+
     for i in range(50):
-        driver.get(url)
-        driver.refresh()
-        time.sleep(1)
-        get_captcha(driver,i+1)
+        captcha_img = cv.imread(rf'resource/captcha{i+1}.png')
+        recognize_text3(captcha_img)
+
     # driver.implicitly_wait(3)
     # captcha_img = cv.imread(r'captcha.png')
     # captcha = recognize_captcha('captcha.png')
     # print(captcha)
     # recognize_text2(captcha_img)
-    # recognize_text3(captcha_img)
     time.sleep(10)
 
 

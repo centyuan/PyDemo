@@ -72,3 +72,7 @@ pic_ele.save(r'screen_small.png')
 print('长宽',width,height)
 time.sleep(10)
 broswer.quit()
+
+
+# https://segmentfault.com/a/1190000020769188?utm_source=tag-newest
+# https://blog.fundebug.com/2019/03/07/understand-http2-and-http3/

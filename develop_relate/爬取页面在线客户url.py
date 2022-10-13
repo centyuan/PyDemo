@@ -7,13 +7,13 @@ import random
 import time
 
 
-def ver_url(url,url_queue):
+def ver_url(url, url_queue):
     try:
         user_agent_list = [
             "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36",
             "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36",
             "Mozilla/5.0 (Windows NT 10.0; WOW64) Gecko/20100101 Firefox/61.0",
-            ]
+        ]
         headers = {
             "User-Agent": random.choice(user_agent_list)
         }
@@ -22,7 +22,6 @@ def ver_url(url,url_queue):
             url_queue.put(response.url)
     except Exception as e:
         print('超时', e)
-
 
 
 def get_customer_url(url):
@@ -53,7 +52,7 @@ def get_customer_url(url):
         pool = ThreadPoolExecutor(30)
         url_queue = queue.Queue()
         for it in match_url:
-            pool.submit(ver_url(it,url_queue))
+            pool.submit(ver_url(it, url_queue))
         return list(url_queue.queue)
 
     except Exception as e:
@@ -63,6 +62,6 @@ def get_customer_url(url):
 
 if __name__ == '__main__':
     result = get_customer_url("https://www.yedanrongqi.com.cn/")
-    print('返回',result)
+    print('返回', result)
     # for i in range(url_queue.qsize()):
     #     print(url_queue.get())
