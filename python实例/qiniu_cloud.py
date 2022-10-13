@@ -152,9 +152,10 @@ if __name__ == '__main__':
         'profile_photo/wallhaven-ne39j8edb8c6.jpg',
         'profile_photo/wallhaven-v9v3r5eed1fd.jpg',
     ]
-    for key in profile_photo_keys:
-        result = qiniu_client.file_url(key)
-        print(result)
-    for key in profile_photo_keys:
-        print(key)
-    # print(qiniu_client.file_url('report_file/hh27bbc3f76e4a9a11edb827000c29d2d2c0.jpg'))
+    # for key in profile_photo_keys:
+    #     result = qiniu_client.file_url(key)
+    #     print(result)
+    # for key in profile_photo_keys:
+    #     print(key)
+    key = 'profile_photo/1665650865228Noneb48b00a84ad311ed8a94000c29d2d2c0.png'
+    print(qiniu_client.file_url(key))

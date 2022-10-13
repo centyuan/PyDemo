@@ -1,8 +1,6 @@
-'''
-https://blog.csdn.net/qq_41937821/article/details/124037025
+"""
+# https://blog.csdn.net/qq_41937821/article/details/124037025
 tesserocr 基于tesseract做的一层python api封装
-下载 testdata
-下载tesserocr-2.5.2-cp36-cp36m-win_amd64.whl
 pip install **.whl
 
 tesseract --list-langs
@@ -14,8 +12,8 @@ from PIL import Image
 image = Image.open('ocr_test.png')
 txt = tesserocr.image_to_text(image,lang='chi_sim')
 print(txt)
-'''
 
+"""
 
 import time
 import tesserocr
@@ -30,19 +28,21 @@ from retrying import retry
 from io import BytesIO
 import numpy as np
 
+
 # retrying库是用来设置浏览器重登次数的，io库是用来获取图片的
 
 def process_image(image):
     demo = image.convert('L')  # 图像转换成灰度图像
     arr = np.array(demo)  # 图像转换成多维数组
-    threshold = 100   # 设置灰度阈值100
+    threshold = 100  # 设置灰度阈值100
     arr = np.where(arr > threshold, 255, 0)  # 筛选 超过阈值的像素改为白色，不超过的像素改为黑色
     final_image = Image.fromarray(arr.astype('uint8'))  # 转为图像
-    txt = tesserocr.image_to_text(image, lang='chi_sim') #  tesserocr 识别图像
-    print('txt:',txt)
-    result = re.sub(r'\W', "", txt) # \W 匹配非字母,数字,下划线 等价于[^A-Za-z0-9_]  后替换
-    print('re.sub:',result)
+    txt = tesserocr.image_to_text(image, lang='chi_sim')  # tesserocr 识别图像
+    print('txt:', txt)
+    result = re.sub(r'\W', "", txt)  # \W 匹配非字母,数字,下划线 等价于[^A-Za-z0-9_]  后替换
+    print('re.sub:', result)
     return result
+
 
 #  10次重登次数，返回false的时候就进行重试
 
@@ -73,9 +73,12 @@ def login(browser):
     except TimeoutException:
         return False
 
+
 if __name__ == '__main__':
-    broswer = webdriver.Chrome(executable_path=r"D:\python_data\centyuan\cent30\Lib\site-packages\selenium\webdriver\chrome\chromedriver.exe")
+    broswer = webdriver.Chrome(
+        executable_path=r"D:\python_data\centyuan\cent30\Lib\site-packages\selenium\webdriver\chrome\chromedriver.exe")
     while True:
         login(broswer)
         import time
+
         time.sleep(3)

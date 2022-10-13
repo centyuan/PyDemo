@@ -36,7 +36,7 @@ def recognize_text0(file):
 def recognize_text1(image):
     # 边缘保留滤波  去噪
     dst = cv.pyrMeanShiftFiltering(image, sp=10, sr=150)
-    # 灰度图像
+    # 灰度图像 COLOR_BGR2GRAY:灰度图
     gray = cv.cvtColor(dst, cv.COLOR_BGR2GRAY)
     # 二值化
     ret, binary = cv.threshold(gray, 0, 255, cv.THRESH_BINARY_INV | cv.THRESH_OTSU)
@@ -101,5 +101,7 @@ def recognize_text3(image):
 src = cv.imread(r'../../captcha.png')
 cv.imshow('input image', src)
 recognize_text3(src)
-cv.waitKey(0)
-cv.destroyAllWindows()
+# 参数<=0:
+if cv.waitKey(0)==ord('A'):
+    # 键盘敲击A时 销毁 imshow 展示的所有窗口
+    cv.destroyAllWindows()
