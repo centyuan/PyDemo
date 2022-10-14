@@ -92,8 +92,8 @@ if __name__ == '__main__':
         recognize_text3(captcha_img)
 
     # driver.implicitly_wait(3)
-    # captcha_img = cv.imread(r'captcha.png')
-    # captcha = recognize_captcha('captcha.png')
+    # captcha_img = cv.imread(r'5R86.png')
+    # captcha = recognize_captcha('5R86.png')
     # print(captcha)
     # recognize_text2(captcha_img)
     time.sleep(10)
