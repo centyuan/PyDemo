@@ -1,9 +1,12 @@
 """
+# https://juejin.cn/post/6895660634466156558
 ########### 每个指令必须有分号结束。#################
 #user administrator administrators;  #配置用户或者组，默认为nobody nobody。
 #worker_processes 2;  #允许生成的进程数，默认为1
 #pid /nginx/pid/nginx.pid;   #指定nginx进程运行文件存放地址
 error_log log/error.log debug;  #制定日志路径，级别。这个设置可以放入全局块，http块，server块，级别以此为：debug|info|notice|warn|error|crit|alert|emerg
+worker_rlimit_nofile 20000; #一个nginx 进程打开的最多文件描述符数目，理论值应该是最多打开文件数（ulimit -n）与nginx 进程数相除，但是nginx 分配请求并不是那么均匀，所以最好与ulimit -n 的值保持一致
+
 events {
     accept_mutex on;   #设置网路连接序列化，防止惊群现象发生，默认为on
     multi_accept on;  #设置一个进程是否同时接受多个网络连接，默认为off
@@ -38,9 +41,9 @@ http {
            allow 172.18.5.54; #允许的ip
         }
         location / {
-                alias /data/dist_32324/;
+                root /data/dist_32324/;
                 index index.html;  # 指定起始页，默认值
-                try_files $uri $uri/ /index.php;
+                try_files $uri $uri/ /index.html;
 
                 # 1.用户请求 http://localhost/example 时，这里的 $uri 就是/example。
                 # 2./data/dist_32324/下尝试找这个名example的文件($uri表示这个文件) 或 找这个example的目录($uri表示这个目录)

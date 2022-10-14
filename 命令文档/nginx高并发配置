@@ -1,4 +1,3 @@
-
 #1.系统层面
 #调整同时打开文件数量
 ulimit -n 20480
@@ -10,7 +9,7 @@ echo 1 > /proc/sys/net/ipv4/tcp_tw_recycle
 # 不做TCP洪水抵御
 echo 0 > /proc/sys/net/ipv4/tcp_syncookies
 也可以直接使用优化后的配置，在/etc/sysctl.conf中加入：
-net.core.somaxconn = 20480
+net.core.somaxconn = 2048           #  TCP最大连接数，每一个端口最大的监听队列的长度,默认128，负载要求很高（并发要求很大）的服务程序的要求是远远不能满足的
 net.core.rmem_default = 262144
 net.core.wmem_default = 262144
 net.core.rmem_max = 16777216
@@ -26,6 +25,8 @@ net.ipv4.tcp_tw_reuse = 1
 net.ipv4.tcp_tw_recycle = 1
 net.ipv4.tcp_max_orphans = 131072
 net.ipv4.tcp_syncookies = 0
+vm.swappiness = 10 #物理内存剩下10%时使用虚拟内存
+
 使用：sysctl -p 生效
 sysctl -p
 
@@ -35,10 +36,10 @@ sysctl -p
 worker_processes  1; #nginx 进程数，建议按照cpu 数目来指定，一般为它的倍数
 worker_rlimit_nofile 20000; #一个nginx 进程打开的最多文件描述符数目，理论值应该是最多打开文件数（ulimit -n）与nginx 进程数相除，但是nginx 分配请求并不是那么均匀，所以最好与ulimit -n 的值保持一致
 events {
-use epoll;#使用epoll的I/O模型
-worker_connections 20000;#每个进程允许的最多连接数， 理论上每台nginx 服务器的最大连接数为worker_processes*worker_connections
-multi_accept on;
+    use epoll;#使用epoll的I/O模型
+    worker_connections 20000;#每个进程允许的最多连接数， 理论上每台nginx 服务器的最大连接数为worker_processes*worker_connections
+    multi_accept on;
 }
 http {
-keepalive_timeout 0;
+    keepalive_timeout 0;
 }
