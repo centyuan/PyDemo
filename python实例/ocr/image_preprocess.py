@@ -1,5 +1,5 @@
+import re
 import time
-
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -90,34 +90,47 @@ def FilePaths(file_path=''):
     # file_path = os.path.join(os.path.dirname(__file__),'resource')
     for filename in os.listdir('resource'):
         # yield filename[:-4],file_path + filename
-        yield filename[:-4],'resource/' + filename
+        yield filename[:4],'resource/' + filename
 
 def Recognition():
     total,true_num = 0,0
     for tab,file_path in FilePaths():
-
         total += 1
+        mark = False
         img = cv2.imread(file_path)
         img = ResizeImage(img,2)
         img = GrayImage(img)
         img = Binarisation(img)
         img = ClearBorder(img)
         img = interference_line(img)
-        text = pytesseract.image_to_string(img,lang='eng')
-        if(text == tab):
+        text = pytesseract.image_to_string(img)
+        new_text = re.findall(r'(\w+)', text)[0] if re.findall(r'(\w+)', text) else None
+        if str(new_text) == str(tab):
+            mark = True
             true_num += 1
-        print(text,tab,text == tab)
+        # for i in range(4):
+        #     if new_text[0] != tab[0]:
+        #         mark = False
+
+        print('识别:',new_text,tab,mark)
+        time.sleep(1)
     print("识别准确率为{}".format(true_num/total))
 
-def Recognitino1(i):
-    img = cv2.imread(f'resource/captcha{i}.png')
+def Recognitino1(path,lable,total,true_num):
+
+    img = cv2.imread(path)
     img = ResizeImage(img, 2)
     img = GrayImage(img)
     img = Binarisation(img)
     img = ClearBorder(img)
     img = interference_line(img)
     text = pytesseract.image_to_string(img, lang='eng')
-    print(f'识别结果{i}:{text}')
+    if str(text) == str(lable):
+        print('true_num+1')
+        true_num+=1
+    total +=1
+    print(f'识别结果{lable}:{text}',true_num,total)
+
 
 
 
@@ -139,17 +152,17 @@ def recognize_text0(file):
 
 
 def recognize_text1(image):
-    # 边缘保留滤波  去噪
+    # 1.边缘保留滤波  去噪
     dst = cv2.pyrMeanShiftFiltering(image, sp=10, sr=150)
-    # 灰度图像 COLOR_BGR2GRAY:灰度图
+    # 2.灰度图像 COLOR_BGR2GRAY:灰度图
     gray = cv2.cv2tColor(dst, cv2.COLOR_BGR2GRAY)
-    # 二值化
+    # 3.二值化
     ret, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)
-    # 形态学操作   腐蚀  膨胀
+    # 4.形态学操作   腐蚀  膨胀
     erode = cv2.erode(binary, None, iterations=2)
     dilate = cv2.dilate(erode, None, iterations=1)
     cv2.imshow('dilate', dilate)
-    # 逻辑运算  让背景为白色  字体为黑  便于识别
+    # 5.逻辑运算  让背景为白色  字体为黑  便于识别
     cv2.bitwise_not(dilate, dilate)
     cv2.imshow('binary-image', dilate)
     # 识别
@@ -159,23 +172,23 @@ def recognize_text1(image):
 
 
 def recognize_text2(image):
-    # 边缘保留滤波  去噪
+    # 1.边缘保留滤波  去噪
     blur = cv2.pyrMeanShiftFiltering(image, sp=8, sr=60)
     cv2.imshow('dst', blur)
-    # 灰度图像
+    # 2.灰度图像
     gray = cv2.cv2tColor(blur, cv2.COLOR_BGR2GRAY)
-    # 二值化
+    # 3.二值化
     ret, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)
     print(f'二值化自适应阈值：{ret}')
     cv2.imshow('binary', binary)
-    # 形态学操作  获取结构元素  开操作
+    # 4.形态学操作  获取结构元素  开操作
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 2))
     bin1 = cv2.morphologyEx(binary, cv2.MORPH_OPEN, kernel)
     cv2.imshow('bin1', bin1)
     kernel = cv2.getStructuringElement(cv2.MORPH_OPEN, (2, 3))
     bin2 = cv2.morphologyEx(bin1, cv2.MORPH_OPEN, kernel)
     cv2.imshow('bin2', bin2)
-    # 逻辑运算  让背景为白色  字体为黑  便于识别
+    # 5.逻辑运算  让背景为白色  字体为黑  便于识别
     cv2.bitwise_not(bin2, bin2)
     cv2.imshow('binary-image', bin2)
     # 识别
@@ -185,40 +198,34 @@ def recognize_text2(image):
 
 
 def recognize_text3(image):
-    # 边缘保留滤波  去噪
+    # 1.边缘保留滤波  去噪
     blur = cv2.pyrMeanShiftFiltering(image, sp=8, sr=60)
-    cv2.imshow('dst', blur)
-    # 灰度图像
+    # cv2.imshow('dst', blur)
+    # 2.灰度图像
     gray = cv2.cvtColor(blur, cv2.COLOR_BGR2GRAY)
-    # 二值化  设置阈值  自适应阈值的话 黄色的4会提取不出来
+    # 3.二值化  设置阈值  自适应阈值的话 黄色的4会提取不出来
     ret, binary = cv2.threshold(gray, 185, 255, cv2.THRESH_BINARY_INV)
-    print(f'二值化设置的阈值：{ret}')
-    cv2.imshow('binary', binary)
-    # 逻辑运算  让背景为白色  字体为黑  便于识别
+    # print(f'二值化设置的阈值：{ret}')
+    # cv2.imshow('binary', binary)
+    # 4.逻辑运算  让背景为白色  字体为黑  便于识别
     cv2.bitwise_not(binary, binary)
-    cv2.imshow('bg_image', binary)
+    # cv2.imshow('bg_image', binary)
     # 识别
     test_message = Image.fromarray(binary)
-    text = pytesseract.image_to_string(test_message)
-    print(f'识别结果：{text}')
+    text = pytesseract.image_to_string(test_message,None)
+    new_text = re.findall(r'(\w+)',text)[0] if re.findall(r'(\w+)',text) else None
+    print(f'识别结果：{new_text}')
 
-#
-# src = cv2.imread(r'../../5R86.png')
-# cv2.imshow('input image', src)
-# recognize_text3(src)
-# # 参数<=0:
-# if cv2.waitKey(0)==ord('A'):
-#     # 键盘敲击A时 销毁 imshow 展示的所有窗口
-#     cv2.destroyAllWindows()
+
 
 if __name__ == "__main__":
     # Recognition()
     # for i in range(48):
     #     Recognitino1(i+1)
-    for label,path in FilePaths():
-        img = cv2.imread(path)
-        print('label:',label)
-        recognize_text3(img)
-        time.sleep(1)
-    # img = cv2.imread('resource/9DTN.png')
-    # recognize_text3(img)
+    # for label,path in FilePaths():
+    #     total, true_num = 0, 0
+    #     print('label:',label)
+    #     recognize_text3(cv2.imread(path))
+    #     # Recognitino1(path,label,total,true_num)
+    #     time.sleep(1)
+    Recognition()

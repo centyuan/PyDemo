@@ -10,8 +10,10 @@ import re
 如：a.*?b匹配最短的，以a开始，以b结束的字符串。如果把它应用于aabab的话，它会匹配aab和ab。
 #  \s  匹配任意空白字符，等价于 [ \t\n\r\f]
 #  \S  匹配任意非空字符
-#  \   匹配任意数字，等价于 [0-9]
+#  \d  匹配任意数字，等价于 [0-9]
 #  \D  匹配任意非数字
+#  \w  匹配字母或数字或下划线
+#  \W  匹配任意不是字母，数字，下划线，汉字的字符
 """
 # 一：正则表达式基本操作
 # re.match: 尝试从字符串的起始位置l匹配一个模式，如果不是起始位置匹配成功的话，match():返回none,成功:返回(0,4)位置
@@ -95,7 +97,7 @@ print(result)
 regex = r"([a-zA-Z0-9_.+-]+@[a-pr-zA-PRZ0-9-]+\.[a-zA-Z0-9-.]+)"
 html_content = "邮箱:centyuan@outlook.com qq邮箱：375319412@qq.com,gmail邮箱centyuan@gmail.com，可惜不 centyuan@163.com"
 emails = re.findall(regex, html_content)
-
+print('邮箱:emails',emails)
 html_doc = """
 <li class="Sevli" open-window="https://www.vcag537.net/OnlineCS" op-width="550px" op-height="735px" op-resize="no" op-name="OCSCenter">
 </li>
