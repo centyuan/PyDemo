@@ -1,5 +1,4 @@
 import json
-
 import requests
 import base64
 from aip import AipOcr
@@ -50,37 +49,63 @@ def baidu_api(api_key, secret_key, file_path=None, file_url=None):
             return response.json()
     else:
         #  {'error_description': 'unknown client id', 'error': 'invalid_client'}
-        return  result
+        return result
+
 
 class BaiduSdk:
-    def __init__(self,app_id,api_key,secret_key):
-        self.client = AipOcr(app_id,api_key,secret_key)
+    def __init__(self, app_id, api_key, secret_key, level=1):
+        """
 
-    def get_text(self,file_path=None,file_url=None):
+        :param app_id:
+        :param api_key:
+        :param secret_key:
+        :param level:识别级别
+        (1:调用通用文字识别（标准版）
+         2:调用通用文字识别（高精度版）
+         3:网络图片文字识别
+        )
+        """
+        self.client = AipOcr(app_id, api_key, secret_key)
+        self.level = level
+
+    def get_text(self, file_path=None, file_url=None):
         """
         识别验证码
         :param file_path:
         :param file_url:
         :return: {'words_result': [{'words': '6RS5'}], 'words_result_num': 1, 'log_id': 1581898086821811984}
         """
-        if file_path:
-            with open(file_path, 'rb') as f:
-                image = f.read()
-                # options 可选参数：CHN_ENG中英混合
-                res_image = self.client.basicGeneral(image, options={'language_type': 'CHN_ENG'})
-                result = json.loads(res_image)
-                return True,result['words_result'][0]['words']
-        elif file_url:
-            res_url = self.client.basicGeneralUrl(file_url, options={'language_type': 'CHN_ENG'})
-            return res_url
+        try:
+            if file_path:
+                with open(file_path, 'rb') as f:
+                    image = f.read()
+                    if self.level == 2:
+                        res_image = self.client.basicAccurate(image)
+                    elif self.level == 3:
+                        res_image = self.client.webImage(image)
+                    else:
+                        # options 可选参数：CHN_ENG中英混合
+                        res_image = self.client.basicGeneral(image, options={'language_type': 'CHN_ENG'})
+                    result = json.loads(res_image)
+                    return True, result['words_result'][0]['words']
+            elif file_url:
+                if self.level == 2:
+                    res_url = self.client.basicAccurateUrl(file_url)
+                elif self.level == 3:
+                    res_url = self.client.webImageUrl(file_url)
+                else:
+                    res_url = self.client.basicGeneralUrl(file_url, options={'language_type': 'CHN_ENG'})
+                result = json.loads(res_url)
+                return True, result['words_result'][0]['words']
+        except Exception as e:
+            return False, str(e)
 
 
 if __name__ == '__main__':
     app_id = '27962995'
     api_key = 'lfQvGPWiWaYcPGt90n58PVhx'  # AK
     secret_key = 'ind5NK0lUMFtAj87uMkcmQASF6IswIZh '  # Sk
-    # result = baidu_api(api_key, secret_key,file_path='resource/6RS5.png')
-    baidu_client = BaiduSdk(app_id=app_id,api_key=api_key,secret_key=secret_key)
-    result = baidu_client.get_text(file_path='resource/DYEA.png')
-    print('ss',result)
-    #result = baidu_sdk(app_id, api_key, secret_key, file_path='resource/6RS5.png')
+    baidu_client = BaiduSdk(app_id=app_id, api_key=api_key, secret_key=secret_key)
+    mark, text = baidu_client.get_text(file_path='resource/DYEA.png')
+    print('text:', text)
+    # result = baidu_sdk(app_id, api_key, secret_key, file_path='resource/6RS5.png')
