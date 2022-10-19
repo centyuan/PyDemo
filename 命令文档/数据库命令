@@ -1,4 +1,5 @@
 """
+# http://c.biancheng.net/view/7201.html  mysql相关操作
 ### 1.mlsql数据库
 mysql -u root -p
 #create user 'username'@'host' identified by 'password';
