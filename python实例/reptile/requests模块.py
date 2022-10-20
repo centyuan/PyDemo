@@ -10,6 +10,7 @@ import requests
 
 # 1最基本的get请求
 response = requests.get('http://www.baidu.com')
+
 # 2添加headers和参数
 kw = {'wd':'centyuan'}
 headers = {

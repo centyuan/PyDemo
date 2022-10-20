@@ -7,7 +7,7 @@ d = defaultdict(set)   # 里面是集合
 d['key3'].add(3)
 d['key4'].add(4)
 
-# 遇见一下情况可以使用上面的
+# 遇见以下情况可以使用上面的
 d = {}
 paires = {}
 for key,value in paires:

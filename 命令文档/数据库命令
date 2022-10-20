@@ -1,6 +1,9 @@
 """
-# http://c.biancheng.net/view/7201.html  mysql相关操作
-### 1.mlsql数据库
+由于MySQL是单进程多线程模型，一个SQL语句无法利用多个cpu core去执行，这也就决定了MySQL比较适合OLTP（特点：大量用户访问、逻辑读，索引扫描，返回少量数据，SQL简单）业务系统
+#  mysql相关操作
+http://c.biancheng.net/view/7201.html
+https://www.runoob.com/mysql/mysql-update-query.html
+### 1.mysql数据库
 mysql -u root -p
 #create user 'username'@'host' identified by 'password';
 create user 'username'@'%' identified by 'password';
@@ -11,6 +14,8 @@ grant all on *.* to 'username'@'%';
 drop user 'username'@'host';
 # 修改用户密码
 SET PASSWORD FOR 'username'@'host' = PASSWORD('newpassword');
+# 复制n条记录并创建
+INSERT into reyo (num,overtime) SELECT num,overtime from reyo where id IN(1,3,5,6,7,9);
 
 
 ### 2.postgresql数据库
