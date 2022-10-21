@@ -48,9 +48,10 @@ class YoudaoApi():
             self.data['img'] = q
             res = requests.post(self.youdao_url, self.data)
             result = res.json()
+            print(result)
             if result['errorCode'] == '0':
-                return True,result['Result']['regions'][0]['lines'][0]['text']
-            return False,result['msg']
+                return True, result['Result']['regions'][0]['lines'][0]['text']
+            return False, result['msg']
         else:
             return False, '图片不存在'
 
@@ -59,6 +60,6 @@ if __name__ == '__main__':
     api_key = '77f89e08f43a86f9'
     secret_key = 'HlmF4vlvwmemBL2tG4wIYiUob3BUjZQ1'
     client = YoudaoApi(api_key, secret_key)
-    mark,text = client.get_text(file_path='resource/DYEA.png')
+    mark, text = client.get_text(file_path='fxbB4MuTXoAYDtN.jpg')
     print(text)
-# {'msg': 'invalid appKey', 'requestId': '307e1704-ff6a-442e-9803-d26b69218753', 'errorCode': '108'}
+    # {'msg': 'invalid appKey', 'requestId': '307e1704-ff6a-442e-9803-d26b69218753', 'errorCode': '108'}
