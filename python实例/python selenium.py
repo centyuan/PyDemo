@@ -1,9 +1,9 @@
-# ！/usr/bin/python3
-# -*- coding:utf-8 -*-
-# author centyuan
-# @time 19-5-17 下午4:10
 from selenium import webdriver
 import time
+"""
+# chromedrive 下载
+http://npm.taobao.org/mirrors/chromedriver/
+"""
 
 # help(webdriver)支持那些浏览器
 # browser = webdriver.PhantomJS()
