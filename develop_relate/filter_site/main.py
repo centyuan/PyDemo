@@ -1,11 +1,11 @@
 import re
 import sys
 import os
-from PyQt5.Qt import QThread, pyqtSignal
+
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QIcon, QFont
 from selenium import webdriver
-from bs4 import BeautifulSoup
 from PyQt5 import QtCore
 from aip import AipOcr
 import json
@@ -90,41 +90,56 @@ class KeyInfoThread(QThread):
         options = webdriver.ChromeOptions()
         options.add_argument('headless')  # 无头
         options.add_argument('--window-size=1920,1080')
+        options.add_argument('--ignore-certificate-errors')  # ssl报错
+        options.add_argument('--ignore-ssl-errors')
         self.browser = webdriver.Chrome(executable_path=r"chromedriver.exe", options=options)
         self.url_list = url_list
         self.keywords = keywords
-
+        self.mark = True
     def run(self):
         try:
-            for url in self.url_list:
-                self.browser.get(url=url)
-                print('匹配run',url)
-                self.sleep(5)
-                # self.browser.implicitly_wait(10)
-                ht_page = self.browser.page_source
-                # 关键字匹配
-                result = re.findall(self.keywords, ht_page)
-                if result:
-                    print('正则匹配',result)
-                    self.update_ui_signal.emit((str(url)))
-                else:
-                    self.browser.save_screenshot('screen_shot.png')
-                    self.sleep(1)
-                    app_id = '27962995'
-                    api_key = 'lfQvGPWiWaYcPGt90n58PVhx'  # AK
-                    secret_key = 'ind5NK0lUMFtAj87uMkcmQASF6IswIZh '  # Sk
-                    baidu_client = BaiduSdk(app_id=app_id, api_key=api_key, secret_key=secret_key, level=2)
-                    mark, text = baidu_client.get_text(file_path=r'screen_shot.png')
-                    print('图片匹配',self.keywords,text)
-                    if self.keywords in text:
-                        self.update_ui_signal.emit((str(url)))
-                        print('text:', text)
-                    else:
-                        self.update_ui_signal.emit((str('')))
-            self.browser.close()
+            i = 1
+            number = len(self.url_list)
+            while self.mark:
+                for url in self.url_list:
+                    try:
+                        i +=1
+                        self.browser.get(url=url)
+                        print('匹配run',url)
+                        self.sleep(5)
+                        # self.browser.implicitly_wait(10)
+                        ht_page = self.browser.page_source
+                        # 关键字匹配
+                        result = re.findall(self.keywords, ht_page)
+                        if result:
+                            print('正则匹配',result)
+                            self.update_ui_signal.emit((str(url)))
+                        else:
+                            self.browser.save_screenshot('screen_shot'+i+'.png')
+                            self.sleep(1)
+                            app_id = '27962995'
+                            api_key = 'lfQvGPWiWaYcPGt90n58PVhx'  # AK
+                            secret_key = 'ind5NK0lUMFtAj87uMkcmQASF6IswIZh '  # Sk
+                            baidu_client = BaiduSdk(app_id=app_id, api_key=api_key, secret_key=secret_key, level=2)
+                            mark, text = baidu_client.get_text(file_path=r'screen_shot.png')
+                            print('图片匹配',self.keywords,text)
+                            if self.keywords in text:
+                                self.update_ui_signal.emit((str(url)))
+                                print('text:', text)
+                            else:
+                                self.update_ui_signal.emit((str('')))
+                    except Exception as e:
+                        print('错误信息', e.__traceback__.tb_lineno, e, e.__traceback__.tb_frame.f_globals['__file__'])
+                        self.update_ui_signal.emit((str(e)))
+                        continue
+                    finally:
+                        if i == number:
+                            self.mark=False
+                self.browser.close()
         except Exception as e:
                 self.browser.close()
-                print(e.__traceback__.tb_lineno, e, e.__traceback__.tb_frame.f_globals['__file__'])
+                self.update_ui_signal.emit((str(e)))
+                print('错误信息',e.__traceback__.tb_lineno, e, e.__traceback__.tb_frame.f_globals['__file__'])
 
 
 class WebSiteFilter(QWidget):
@@ -147,6 +162,10 @@ class WebSiteFilter(QWidget):
         self.setWindowIcon(QIcon(os.path.join(r'logo.ico')))
         self.setFixedSize(1400, 1000)
         self.activateWindow()
+        # self.maximumSize(Qtsize())
+        # self.setWindowFlags(QtCore.Qt.WindowMaximizeButtonHint | QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint);
+        self.setWindowFlags(Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint | Qt.WindowCloseButtonHint)
+
         # 定义控件
         self.website_label = QLabel('输入网址:')
         self.website_label.setFont(QFont("微软雅黑",10,QFont.Bold))
@@ -157,7 +176,7 @@ class WebSiteFilter(QWidget):
         self.website_text_edit.setAcceptRichText(False)
         self.filter_label = QLabel('筛选关键字:')
         self.filter_label.setFont(QFont("微软雅黑",10,QFont.Bold))
-        self.filter_line_edit = QLineEdit('升级')
+        self.filter_line_edit = QLineEdit('公告')
         self.choose_file_btn = QPushButton()
         # self.btn_chooseFile.setObjectName("choose_file_btn")
         self.choose_file_btn.setText('选择文件')
@@ -228,12 +247,13 @@ class WebSiteFilter(QWidget):
         self.total_line_edit.setText(f'总计:【{self.total}】 剩余:【{self.number}】 ')
         self.total_line_edit.setStyleSheet('color:red')
         if url:
-            self.result_info_edit.append('网址:' + url)
+            self.result_info_edit.append(url)
             self.result_info_edit.setStyleSheet('color:blue')
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)  # 创建应用程序,接受命令行参数
     widget = WebSiteFilter(title='网址筛选')  # 创建窗口
+    # widget.showMaximized()
     widget.show()
     sys.exit(app.exec())  # 应用程序主循环结束后，调用sys.exit()方法清理现场
