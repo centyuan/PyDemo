@@ -89,7 +89,8 @@ class BaiduSdk:
                     print('防护',res_image)
                     # result = json.loads(res_image)
                     result = res_image
-                    return True, result['words_result'][0]['words']
+                    # return True, result['words_result'][0]['words']
+                    return True, [item.get('words') for item in result['words_result']]
             elif file_url:
                 if self.level == 2:
                     res_url = self.client.basicAccurateUrl(file_url)
