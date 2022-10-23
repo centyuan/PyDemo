@@ -1,7 +1,6 @@
 import re
 import sys
 import os
-import time
 from PyQt5.Qt import QThread, pyqtSignal
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon, QFont
@@ -10,6 +9,7 @@ from bs4 import BeautifulSoup
 from PyQt5 import QtCore
 from aip import AipOcr
 import json
+
 
 class BaiduSdk:
     def __init__(self, app_id, api_key, secret_key, level=1):
@@ -45,11 +45,10 @@ class BaiduSdk:
                     else:
                         # options 可选参数：CHN_ENG中英混合
                         res_image = self.client.basicGeneral(image, options={'language_type': 'CHN_ENG'})
-                    print('防护',res_image)
                     # result = json.loads(res_image)
                     result = res_image
                     # return True, result['words_result'][0]['words']
-                    return True, [item.get('words') for item in result['words_result']]
+                    return True, ''.join([item.get('words') for item in result['words_result']])
             elif file_url:
                 if self.level == 2:
                     res_url = self.client.basicAccurateUrl(file_url)
@@ -72,6 +71,7 @@ def filter_url(origin_str):
     except Exception as e:
         return None
 
+
 def read_text(file_path):
     try:
         if os.path.exists(file_path):
@@ -81,47 +81,50 @@ def read_text(file_path):
     except Exception as e:
         return None
 
+
 class KeyInfoThread(QThread):
     update_ui_signal = pyqtSignal(str)
 
-    def __init__(self, url, keywords,browser=None):
+    def __init__(self, url_list, keywords, browser=None):
         super(KeyInfoThread, self).__init__()
         options = webdriver.ChromeOptions()
         options.add_argument('headless')  # 无头
         options.add_argument('--window-size=1920,1080')
-        self.browser = webdriver.Chrome(executable_path=r"chromedriver.exe",options=options)
-        self.url = url
+        self.browser = webdriver.Chrome(executable_path=r"chromedriver.exe", options=options)
+        self.url_list = url_list
         self.keywords = keywords
 
     def run(self):
         try:
-            self.browser.get(url=self.url)
-            print('关键字匹配run',self.url)
-            self.browser.maximize_window()
-            # QApplication.processEvents()
-            # self.sleep(5)
-            time.sleep(3)
-            ht_page = self.browser.page_source
-            # 关键字匹配
-            result = re.findall(self.keywords, ht_page)
-            if result:
-                self.update_ui_signal.emit((str(self.url)))
-            else:
-                self.update_ui_signal.emit((str('')))
-                self.browser.save_screenshot('screen_shot.png')
-                time.sleep(1)
-                app_id = '27962995'
-                api_key = 'lfQvGPWiWaYcPGt90n58PVhx'  # AK
-                secret_key = 'ind5NK0lUMFtAj87uMkcmQASF6IswIZh '  # Sk
-                baidu_client = BaiduSdk(app_id=app_id, api_key=api_key, secret_key=secret_key, level=2)
-                mark, text = baidu_client.get_text(file_path=r'screen_shot.png')
-                if self.keywords in text:
+            for url in self.url_list:
+                self.browser.get(url=url)
+                print('匹配run',url)
+                self.sleep(5)
+                # self.browser.implicitly_wait(10)
+                ht_page = self.browser.page_source
+                # 关键字匹配
+                result = re.findall(self.keywords, ht_page)
+                if result:
+                    print('正则匹配',result)
                     self.update_ui_signal.emit((str(self.url)))
-                    print('text',text)
+                else:
+                    self.browser.save_screenshot('screen_shot.png')
+                    self.sleep(1)
+                    app_id = '27962995'
+                    api_key = 'lfQvGPWiWaYcPGt90n58PVhx'  # AK
+                    secret_key = 'ind5NK0lUMFtAj87uMkcmQASF6IswIZh '  # Sk
+                    baidu_client = BaiduSdk(app_id=app_id, api_key=api_key, secret_key=secret_key, level=2)
+                    mark, text = baidu_client.get_text(file_path=r'screen_shot.png')
+                    print('图片匹配',self.keywords,text)
+                    if self.keywords in text:
+                        self.update_ui_signal.emit((str(self.url)))
+                        print('text:', text)
+                    else:
+                        self.update_ui_signal.emit((str('')))
             self.browser.close()
         except Exception as e:
-            self.browser.close()
-            print(e.__traceback__.tb_lineno, e, e.__traceback__.tb_frame.f_globals['__file__'])
+                self.browser.close()
+                print(e.__traceback__.tb_lineno, e, e.__traceback__.tb_frame.f_globals['__file__'])
 
 
 class WebSiteFilter(QWidget):
@@ -129,26 +132,20 @@ class WebSiteFilter(QWidget):
 
     def __init__(self, title='website'):
         super(WebSiteFilter, self).__init__()
-        # 初始化界面
-        # options = webdriver.ChromeOptions()
-        # options.add_argument('headless')  # 无头
-        # self.browser = webdriver.Chrome(
-        #     executable_path=r"resource/chromedriver.exe",
-        #     options=options
-        # )
         self.initUI(title)
         self.show()
         self.path = os.getcwd()
 
-    def show_message(self,messages):
-        QMessageBox.warning(self,messages,QMessageBox.Cancel)
+    def show_message(self, messages):
+        QMessageBox.warning(self, messages, QMessageBox.Cancel)
+
     def initUI(self, title):
         root_path = os.path.dirname(__file__)
         # 设置标题图标
         self.setWindowTitle(title)
         # self.setWindowIcon(QIcon(os.path.join(root_path, 'resources/yuan.ico')))
         self.setWindowIcon(QIcon(os.path.join(r'logo.ico')))
-        self.setFixedSize(1400, 800)
+        self.setFixedSize(1400, 1000)
         self.activateWindow()
         # 定义控件
         self.website_label = QLabel('输入网址:')
@@ -157,15 +154,13 @@ class WebSiteFilter(QWidget):
         self.website_text_edit.setGeometry(QtCore.QRect(70, 100, 231, 181))
         self.website_text_edit.setAcceptRichText(False)
         self.filter_label = QLabel('筛选关键字:')
-        self.filter_line_edit = QLineEdit('图片')
+        self.filter_line_edit = QLineEdit('升级')
         self.choose_file_btn = QPushButton()
         # self.btn_chooseFile.setObjectName("choose_file_btn")
         self.choose_file_btn.setText('选择文件')
         self.query_button = QPushButton('查询筛序')
         self.result_info_label = QLabel('筛选结果:')
         self.result_info_edit = QTextEdit()
-
-        # self.web_driver = Q
         # 创建网格布局管理器
         self.grid = QGridLayout()
         # 添加控件 addWidget(QWidget, row, col, r, c, alignment) - 在row行col列添加控件，占r行c列，并设置对齐方式
@@ -201,12 +196,10 @@ class WebSiteFilter(QWidget):
         self.number = len(url_list)
         self.total = self.number
         self.total_line_edit.setText(f'总计:{self.total} 剩余:{self.number} ')
-        for url in url_list:
-            QApplication.processEvents()
-            self.getThread_object = KeyInfoThread(url, keywords)
-            self.getThread_object.start()
-            self.getThread_object.update_ui_signal.connect(self.update_text)
-
+        QApplication.processEvents()
+        self.getThread_object = KeyInfoThread(url_list, keywords)
+        self.getThread_object.start()
+        self.getThread_object.update_ui_signal.connect(self.update_text)
 
     def input_site(self):
         urls = self.website_text_edit.toPlainText()
@@ -217,12 +210,10 @@ class WebSiteFilter(QWidget):
         self.number = len(url_list)
         self.total = self.number
         self.total_line_edit.setText(f'总计:{self.total} 剩余:{self.number} ')
-
-        for url in url_list:
-            QApplication.processEvents()
-            self.getThread_object = KeyInfoThread(url, keywords)
-            self.getThread_object.start()
-            self.getThread_object.update_ui_signal.connect(self.update_text)
+        QApplication.processEvents()
+        self.getThread_object = KeyInfoThread(url_list, keywords)
+        self.getThread_object.start()
+        self.getThread_object.update_ui_signal.connect(self.update_text)
 
     def update_text(self, url):
         # self.result_info_edit.setText('url信息:' + result)
