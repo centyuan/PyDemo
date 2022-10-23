@@ -3,7 +3,6 @@ import requests
 import base64
 from aip import AipOcr
 
-
 def baidu_token(ak, sk, grant_type='client_credentials'):
     """
     获取授权token,expires_in有效期为30天
@@ -45,6 +44,7 @@ def baidu_api(api_key, secret_key, file_path=None, file_url=None):
         baidu_url_ = baidu_url + '?access_token=' + result['access_token']
         headers = {'content-type': 'application/x-www-form-urlencoded'}
         response = requests.post(baidu_url_, data=params, headers=headers)
+        print('放回',response)
         if response:
             return response.json()
     else:
@@ -86,7 +86,9 @@ class BaiduSdk:
                     else:
                         # options 可选参数：CHN_ENG中英混合
                         res_image = self.client.basicGeneral(image, options={'language_type': 'CHN_ENG'})
-                    result = json.loads(res_image)
+                    print('防护',res_image)
+                    # result = json.loads(res_image)
+                    result = res_image
                     return True, result['words_result'][0]['words']
             elif file_url:
                 if self.level == 2:
@@ -105,7 +107,9 @@ if __name__ == '__main__':
     app_id = '27962995'
     api_key = 'lfQvGPWiWaYcPGt90n58PVhx'  # AK
     secret_key = 'ind5NK0lUMFtAj87uMkcmQASF6IswIZh '  # Sk
-    baidu_client = BaiduSdk(app_id=app_id, api_key=api_key, secret_key=secret_key)
-    mark, text = baidu_client.get_text(file_path='resource/DYEA.png')
+    baidu_client = BaiduSdk(app_id=app_id, api_key=api_key, secret_key=secret_key,level=2)
+    path = r"D:\BaiduNetdiskDownload\python-demo\develop_relate\filter_site\resource\screen_shot.png"
+    # mark, text = baidu_client.get_text(file_path='resource/DYEA.png')
+    mark, text = baidu_client.get_text(file_path=path)
     print('text:', text)
     # result = baidu_sdk(app_id, api_key, secret_key, file_path='resource/6RS5.png')
