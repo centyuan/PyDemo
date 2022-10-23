@@ -106,7 +106,7 @@ class KeyInfoThread(QThread):
                 result = re.findall(self.keywords, ht_page)
                 if result:
                     print('正则匹配',result)
-                    self.update_ui_signal.emit((str(self.url)))
+                    self.update_ui_signal.emit((str(url)))
                 else:
                     self.browser.save_screenshot('screen_shot.png')
                     self.sleep(1)
@@ -117,7 +117,7 @@ class KeyInfoThread(QThread):
                     mark, text = baidu_client.get_text(file_path=r'screen_shot.png')
                     print('图片匹配',self.keywords,text)
                     if self.keywords in text:
-                        self.update_ui_signal.emit((str(self.url)))
+                        self.update_ui_signal.emit((str(url)))
                         print('text:', text)
                     else:
                         self.update_ui_signal.emit((str('')))
@@ -137,7 +137,7 @@ class WebSiteFilter(QWidget):
         self.path = os.getcwd()
 
     def show_message(self, messages):
-        QMessageBox.warning(self, messages, QMessageBox.Cancel)
+        QMessageBox.warning(self, '警告', messages, QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
 
     def initUI(self, title):
         root_path = os.path.dirname(__file__)
@@ -149,17 +149,23 @@ class WebSiteFilter(QWidget):
         self.activateWindow()
         # 定义控件
         self.website_label = QLabel('输入网址:')
+        self.website_label.setFont(QFont("微软雅黑",10,QFont.Bold))
         self.total_line_edit = QLineEdit('总计: 剩余: ')
+        self.total_line_edit.setStyleSheet('color:red')
         self.website_text_edit = QTextEdit('https://www.3703yh.com/')
         self.website_text_edit.setGeometry(QtCore.QRect(70, 100, 231, 181))
         self.website_text_edit.setAcceptRichText(False)
         self.filter_label = QLabel('筛选关键字:')
+        self.filter_label.setFont(QFont("微软雅黑",10,QFont.Bold))
         self.filter_line_edit = QLineEdit('升级')
         self.choose_file_btn = QPushButton()
         # self.btn_chooseFile.setObjectName("choose_file_btn")
         self.choose_file_btn.setText('选择文件')
-        self.query_button = QPushButton('查询筛序')
+        self.choose_file_btn.setFont(QFont("微软雅黑",10,QFont.Bold))
+        self.query_button = QPushButton('查询')
+        self.query_button.setFont(QFont("微软雅黑",10,QFont.Bold))
         self.result_info_label = QLabel('筛选结果:')
+        self.result_info_label.setFont(QFont("微软雅黑",10,QFont.Bold))
         self.result_info_edit = QTextEdit()
         # 创建网格布局管理器
         self.grid = QGridLayout()
@@ -219,10 +225,11 @@ class WebSiteFilter(QWidget):
         # self.result_info_edit.setText('url信息:' + result)
         self.number = self.number - 1
         print('更新url', url)
-        self.total_line_edit.setText(f'总计:{self.total} 剩余:{self.number} ')
+        self.total_line_edit.setText(f'总计:【{self.total}】 剩余:【{self.number}】 ')
+        self.total_line_edit.setStyleSheet('color:red')
         if url:
             self.result_info_edit.append('网址:' + url)
-            self.result_info_edit.setStyleSheet('color:green')
+            self.result_info_edit.setStyleSheet('color:blue')
 
 
 if __name__ == '__main__':
