@@ -45,34 +45,7 @@
 #   pass
 # t4 = time.time()
 # print('l',t4-t3)
-import time
-
-from selenium import webdriver
-from PIL import Image
-
-broswer = webdriver.Chrome(executable_path=r"D:\python_data\centyuan\cent30\Lib\site-packages\selenium\webdriver\chrome\chromedriver.exe")
-broswer.get('https://www.baidu.com')
-broswer.get_screenshot_as_file(r'screen_big.png')
-# 定位需要打印的元素
-pic_ele = broswer.find_element_by_xpath('//*[@id="s_lg_img"]')
-# 元素位置、宽高参数获取
-left = pic_ele.location.get('x')
-top = pic_ele.location.get('y')
-width = pic_ele.size.get('width')
-height = pic_ele.size.get('height')
-right = width + left
-bottom = height+ top
-# 读取图片
-img = Image.open(r'screen_big.png')
-# 根据元素的 Location和size 图片裁剪
-pic_ele = img.crop((left, top, right, bottom))
-# 保存裁剪好的文件图片
-pic_ele.save(r'screen_small.png')
-# 退出浏览器
-print('长宽',width,height)
-time.sleep(10)
-broswer.quit()
-
 
 # https://segmentfault.com/a/1190000020769188?utm_source=tag-newest
 # https://blog.fundebug.com/2019/03/07/understand-http2-and-http3/
+
