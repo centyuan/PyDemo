@@ -115,7 +115,7 @@ class KeyInfoThread(QThread):
                             print('正则匹配',result)
                             self.update_ui_signal.emit((str(url)))
                         else:
-                            self.browser.save_screenshot('screen_shot'+i+'.png')
+                            self.browser.save_screenshot('screen_shot'+str(i)+'.png')
                             self.sleep(1)
                             app_id = '27962995'
                             api_key = 'lfQvGPWiWaYcPGt90n58PVhx'  # AK
@@ -130,7 +130,7 @@ class KeyInfoThread(QThread):
                                 self.update_ui_signal.emit((str('')))
                     except Exception as e:
                         print('错误信息', e.__traceback__.tb_lineno, e, e.__traceback__.tb_frame.f_globals['__file__'])
-                        self.update_ui_signal.emit((str(e)))
+                        self.update_ui_signal.emit((str('超时:'+url)))
                         continue
                     finally:
                         if i == number:
@@ -138,7 +138,7 @@ class KeyInfoThread(QThread):
                 self.browser.close()
         except Exception as e:
                 self.browser.close()
-                self.update_ui_signal.emit((str(e)))
+                self.update_ui_signal.emit((str('错误:'+url)))
                 print('错误信息',e.__traceback__.tb_lineno, e, e.__traceback__.tb_frame.f_globals['__file__'])
 
 
