@@ -78,7 +78,7 @@ assert type(a) == str,'a is type of int'  # 后面为异常信息
 
 # result：
 # Traceback (most recent call last):
-#   File "F:/gitHub/OrmCommand/app/test.py", line 20, in <module>
+#   File "F:/gitHub/OrmCommand/app/new_main.py", line 20, in <module>
 #     assert type(a) == str,'a is type of int'
 # AssertionError: a is type of int
 
