@@ -92,15 +92,13 @@ class KeyInfoThread(QThread):
         options.add_argument('--window-size=1920,1080')
         options.add_argument('--ignore-certificate-errors')  # ssl报错
         options.add_argument('--ignore-ssl-errors')
-        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        # options.add_experimental_option('excludeSwitches', ['enable-logging'])
         self.browser = webdriver.Chrome(executable_path=r"chromedriver.exe", options=options)
         self.url_list = url_list
         self.keywords = keywords
         self.mark = True
     def run(self):
         try:
-            i = 1
-            number = len(self.url_list)
             while self.mark:
                 for url in self.url_list:
                     try:
@@ -123,7 +121,6 @@ class KeyInfoThread(QThread):
                             baidu_client = BaiduSdk(app_id=app_id, api_key=api_key, secret_key=secret_key, level=2)
                             mark, text = baidu_client.get_text(file_path=r'screen_shot.png')
                             print('图片匹配',self.keywords,text)
-                            os.remove(r'screen_shot.png')
                             if self.keywords in text:
                                 self.update_ui_signal.emit((str(url)))
                                 print('text:', text)
@@ -131,7 +128,7 @@ class KeyInfoThread(QThread):
                                 self.update_ui_signal.emit((str('')))
                     except Exception as e:
                         print('错误信息', e.__traceback__.tb_lineno, e, e.__traceback__.tb_frame.f_globals['__file__'])
-                        self.update_ui_signal.emit((str('超时:'+url)))
+                        self.update_ui_signal.emit((str('超时:'+url+str(e))))
                         continue
 
                 self.mark = False

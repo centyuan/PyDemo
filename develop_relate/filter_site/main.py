@@ -98,12 +98,9 @@ class KeyInfoThread(QThread):
         self.mark = True
     def run(self):
         try:
-            i = 1
-            number = len(self.url_list)
             while self.mark:
                 for url in self.url_list:
                     try:
-                        i +=1
                         self.browser.get(url=url)
                         print('匹配run',url)
                         self.sleep(5)
@@ -123,7 +120,6 @@ class KeyInfoThread(QThread):
                             baidu_client = BaiduSdk(app_id=app_id, api_key=api_key, secret_key=secret_key, level=2)
                             mark, text = baidu_client.get_text(file_path=r'screen_shot.png')
                             print('图片匹配',self.keywords,text)
-                            os.remove(r'screen_shot.png')
                             if self.keywords in text:
                                 self.update_ui_signal.emit((str(url)))
                                 print('text:', text)
@@ -133,9 +129,7 @@ class KeyInfoThread(QThread):
                         print('错误信息', e.__traceback__.tb_lineno, e, e.__traceback__.tb_frame.f_globals['__file__'])
                         self.update_ui_signal.emit((str('超时:'+url)))
                         continue
-                    finally:
-                        if i == number:
-                            self.mark=False
+                self.mark=False
                 self.browser.close()
         except Exception as e:
                 self.browser.close()
