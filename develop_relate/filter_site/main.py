@@ -115,7 +115,7 @@ class KeyInfoThread(QThread):
                             print('正则匹配',result)
                             self.update_ui_signal.emit((str(url)))
                         else:
-                            self.browser.save_screenshot('screen_shot'+str(i)+'.png')
+                            self.browser.save_screenshot('screen_shot.png')
                             self.sleep(1)
                             app_id = '27962995'
                             api_key = 'lfQvGPWiWaYcPGt90n58PVhx'  # AK
@@ -123,6 +123,7 @@ class KeyInfoThread(QThread):
                             baidu_client = BaiduSdk(app_id=app_id, api_key=api_key, secret_key=secret_key, level=2)
                             mark, text = baidu_client.get_text(file_path=r'screen_shot.png')
                             print('图片匹配',self.keywords,text)
+                            os.remove(r'screen_shot.png')
                             if self.keywords in text:
                                 self.update_ui_signal.emit((str(url)))
                                 print('text:', text)
