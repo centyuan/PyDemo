@@ -1,11 +1,13 @@
 #！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
-# @time 19-4-7 下午12:07
+
+
 import requests
 """
 使用response.text 时，Requests 会基于 HTTP 响应的文本编码自动解码响应内容，大多数 Unicode 字符集都能被无缝地解码。
 使用response.content 时，返回的是服务器响应数据的原始二进制字节流，可以用来保存图片等二进制文件。
+http://httpbin.org/
 """
 
 # 1最基本的get请求
