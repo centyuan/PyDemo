@@ -3,6 +3,7 @@ import requests
 import base64
 from aip import AipOcr
 
+
 def baidu_token(ak, sk, grant_type='client_credentials'):
     """
     获取授权token,expires_in有效期为30天
@@ -21,35 +22,40 @@ def baidu_token(ak, sk, grant_type='client_credentials'):
     return False, None
 
 
-def baidu_api(api_key, secret_key, file_path=None, file_url=None):
-    """
-    百度ocr api(general_basic:通用文字识别标准版,accurate_basic:通用文字识别高精度版)
-    :param api_key: API Key
-    :param secret_key:	Secret Key
-    """
+class BaiduApi:
+    def __init__(self, api_key, secret_key, level=1):
+        """
+        百度ocr api(general_basic:通用文字识别标准版,accurate_basic:通用文字识别高精度版)
+        :param api_key: API Key
+        :param secret_key:	Secret Key
+        """
+        # baidu_url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic"
+        self.baidu_url = "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate_basic"
+        self.api_key = api_key
+        self.secret_key = secret_key
+        self.level = level
 
-    # baidu_url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic"
-    baidu_url = "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate_basic"
-    params = {}
-    if file_path:
-        # 二进制打开
-        with open(file_path, 'rb') as f:
-            img = base64.b64encode(f.read())
-            params = {'image': img}
-    elif file_url:
-        # 图片url
-        params = {'url': file_url}
-    mark, result = baidu_token(api_key, secret_key)
-    if mark:
-        baidu_url_ = baidu_url + '?access_token=' + result['access_token']
-        headers = {'content-type': 'application/x-www-form-urlencoded'}
-        response = requests.post(baidu_url_, data=params, headers=headers)
-        print('放回',response)
-        if response:
-            return response.json()
-    else:
-        #  {'error_description': 'unknown client id', 'error': 'invalid_client'}
-        return result
+    def get_text(self, file_path=None, file_url=None):
+        params = {}
+        if file_path:
+            # 二进制打开
+            with open(file_path, 'rb') as f:
+                img = base64.b64encode(f.read())
+                params = {'image': img}
+        elif file_url:
+            # 图片url
+            params = {'url': file_url}
+        mark, result = baidu_token(self.api_key, self.secret_key)
+        if mark:
+            baidu_url_ = self.baidu_url + '?access_token=' + result['access_token']
+            headers = {'content-type': 'application/x-www-form-urlencoded'}
+            response = requests.post(baidu_url_, data=params, headers=headers)
+            print('放回', response)
+            if response:
+                return response.json()
+        else:
+            #  {'error_description': 'unknown client id', 'error': 'invalid_client'}
+            return result
 
 
 class BaiduSdk:
@@ -86,7 +92,7 @@ class BaiduSdk:
                     else:
                         # options 可选参数：CHN_ENG中英混合
                         res_image = self.client.basicGeneral(image, options={'language_type': 'CHN_ENG'})
-                    print('防护',res_image)
+                    print('防护', res_image)
                     # result = json.loads(res_image)
                     result = res_image
                     # return True, result['words_result'][0]['words']
@@ -108,8 +114,8 @@ if __name__ == '__main__':
     app_id = '27962995'
     api_key = 'lfQvGPWiWaYcPGt90n58PVhx'  # AK
     secret_key = 'ind5NK0lUMFtAj87uMkcmQASF6IswIZh '  # Sk
-    baidu_client = BaiduSdk(app_id=app_id, api_key=api_key, secret_key=secret_key,level=2)
-    path = r"D:\BaiduNetdiskDownload\python-demo\develop_relate\filter_site\resource\screen_shot.png"
+    baidu_client = BaiduSdk(app_id=app_id, api_key=api_key, secret_key=secret_key, level=2)
+    path = r"/develop_relate/filter_site/resource/screen_shot.png"
     # mark, text = baidu_client.get_text(file_path='resource/DYEA.png')
     mark, text = baidu_client.get_text(file_path=path)
     print('text:', text)

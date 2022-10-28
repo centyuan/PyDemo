@@ -20,7 +20,7 @@ class TecentSdk:
         self.cred = credential.Credential(api_key, secret_key)
         # 实例化一个http选项对象,可选的,
         self.httpProfile = HttpProfile()
-        self.httpProfile.endpoint = 'ocr.tencentcloudapi.com'
+        self.httpProfile.endpoint = 'OcrGather.tencentcloudapi.com'
         # 实例化一个client选项对象,可选的
         self.clientProfile = ClientProfile()
         self.clientProfile.httpProfile = self.httpProfile
@@ -68,6 +68,8 @@ class TecentSdk:
             print(e.message, e.code)
             return False, e.message
 
+class TecentApi:
+    pass
 
 if __name__ == '__main__':
     api_key = 'AKID02scCmLtJnDdyHbpvpW4stuoVxGMI1ob'

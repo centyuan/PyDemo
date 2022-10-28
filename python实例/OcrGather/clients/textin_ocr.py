@@ -29,5 +29,5 @@ if __name__ == '__main__':
     api_key = '20dca87e2e299c49307c10fdc3624199'
     secret_key = '2399c33699ede20b8034717c8f65e74b'
     client = TextinApi(api_key=api_key,secret_key=secret_key)
-    mark, text = client.get_text(file_path='resource/DYEA.png')
+    mark, text = client.get_text(file_path='../resource/DYEA.png')
     print(text)

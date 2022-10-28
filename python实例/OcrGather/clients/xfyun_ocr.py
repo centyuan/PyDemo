@@ -73,7 +73,7 @@ def assemble_ws_auth_url(requset_url, method="POST", api_key="", api_secret=""):
     return requset_url + "?" + urlencode(values)
 
 
-def xfyun_api(app_id, api_key, secret_key, file_path=None, file_data=None):
+def XFyunApi(app_id, api_key, secret_key, file_path=None, file_data=None):
     """
     :param app_id:
     :param api_key:
@@ -132,5 +132,5 @@ if __name__ == '__main__':
     app_id = "eb78ba1a"  # 控制台获取
     secret_key = "ZmM3Mjc4NjcyNjcyYmJiNGZmNmU5NmNh"  # 控制台获取
     api_key = "618642319dd26346780f676e9f9dfad9"  # 控制台获取
-    text = xfyun_api(app_id,api_key,secret_key,file_path='resource/ocr_test.png')
+    text = xfyun_api(app_id, api_key, secret_key, file_path='../resource/ocr_test.png')
     print(text)

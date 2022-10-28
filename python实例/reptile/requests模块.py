@@ -1,9 +1,10 @@
-#！/usr/bin/python3
+# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
 
 
 import requests
+
 """
 使用response.text 时，Requests 会基于 HTTP 响应的文本编码自动解码响应内容，大多数 Unicode 字符集都能被无缝地解码。
 使用response.content 时，返回的是服务器响应数据的原始二进制字节流，可以用来保存图片等二进制文件。
@@ -14,20 +15,20 @@ http://httpbin.org/
 response = requests.get('http://www.baidu.com')
 
 # 2添加headers和参数
-kw = {'wd':'centyuan'}
+kw = {'wd': 'centyuan'}
 headers = {
-    'User-Agent':'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/2010',
+    'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/2010',
 
 }
 # params 接收一个字典或者字符串的查询参数，字典类型自动转换为url编码，不需要urlencode()
-response = requests.get('http://www.baidu.com/s?',params=kw,headers=headers)
-#response = requests.get('http://www.baidu.com/baidu?',params=kw,headers=headers)
+response = requests.get('http://www.baidu.com/s?', params=kw, headers=headers)
+# response = requests.get('http://www.baidu.com/baidu?',params=kw,headers=headers)
 print(response.text)
 print(response.url)
 print(response.headers)
 
 # 3. 最基本post请求可以直接用post方法
-response = requests.post('http://www.baidu.com/') # data=data
+response = requests.post('http://www.baidu.com/')  # data=data
 print(response.text)
 
 # 代理proxies
@@ -40,57 +41,54 @@ proxies{' 要请求网站的协议类型 ' , ' "代理服务器类型(http/https
 
 """
 proxies = {
-    "http": "http://12.34.56.79:9527", # 根据协议类型，选择不同的代理
+    "http": "http://12.34.56.79:9527",  # 根据协议类型，选择不同的代理
     "https": "http://12.34.56.79:9527",
 }
 response = requests.get("http://www.baidu.com", proxies=proxies)
 print(response.text)
-print(response.headers) # 响应头
+print(response.headers)  # 响应头
 print(response.json())
 print(response.request)
-print(response.cookies) # 返回cookie
+print(response.cookies)  # 返回cookie
 print(response.encoding)
 print(response.request.headers)
-print(response.request.url) # 请求地址
-print(response.request.method) # 请求头
+print(response.request.url)  # 请求地址
+print(response.request.method)  # 请求头
 print(response.request.body)
-print(response.raise_for_status())  #  失败请求(非200响应)抛出异常
+print(response.raise_for_status())  # 失败请求(非200响应)抛出异常
 print(response.history)
 
 # 4. requests.session()
-'''1.使用该session之前的cookie等参数,2.TCP长连接或者是复用TCP 优化了Http(tcp) Https(TLS)等握手行为'''
-url1 =  "https://XX.XX.XX.XX/api/v2/cmdb/firewall/address"
-url2 = "https://XX.XX.XX.XX/api/v2/cmdb/firewall/policy/1"
-token = 'xxxxxxxxxxxxx'
-header = {
-    "Content-type": "application/json",
-    "Accept": "application/json",
-    "Authorization": token
-}
-res1 = requests.get(url=url1, headers=header, verify=False)
-res2 = requests.get(url=url1, headers=header, verify=False)
-
+'''1.让cookie保持在后续的请求中,2.TCP长连接或者是复用TCP 优化了Http(tcp) Https(TLS)等握手行为'''
+session_ = requests.Session()
+session_.headers.update({'h_text': 'true'})
+# h_text和h_text2都带上
+res_1 = session_.get('http://httpbin.org/headers', headers={'h_text2': 'true'})
+print(res_1.text)
+# 只带h_text
+res_2 = session_.get('http://hpptbin.org/headers')
+print(res_2.text)
 
 # 5. data json 参数区别
 # 使用data传递数据报错，改为json解决
 new_h = {
-            'authority': 'j9bcrest.com',
-            'x-request-domain': 'j9con.com',
-            'accept-language': 'cn',
-            'sec-ch-ua-mobile': '?0',
-            'display-language': 'cn',
-            'authorization': 'aaaaaaaaaaaaaa',
-            'product-id': 'HX1',
-            'accept': 'application/json, text/plain, */*',
-            'x-website-code': 'HX1_PC',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36',
-            'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="99", "Google Chrome";v="99"',
-            'sec-ch-ua-platform': '"Windows"',
-            'sec-fetch-site': 'cross-site',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-dest': 'empty',
-            'referer': 'https://j9con.com/',
-        }
+    'authority': 'j9bcrest.com',
+    'x-request-domain': 'j9con.com',
+    'accept-language': 'cn',
+    'sec-ch-ua-mobile': '?0',
+    'display-language': 'cn',
+    'authorization': 'aaaaaaaaaaaaaa',
+    'product-id': 'HX1',
+    'accept': 'application/json, text/plain, */*',
+    'x-website-code': 'HX1_PC',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36',
+    'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="99", "Google Chrome";v="99"',
+    'sec-ch-ua-platform': '"Windows"',
+    'sec-fetch-site': 'cross-site',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-dest': 'empty',
+    'referer': 'https://j9con.com/',
+}
 
 to_data = {'token': 'J9BC', 'value': 1, 'tradeCode': 'J9BC_USDT',
            }
@@ -140,5 +138,3 @@ files = {
 res = requests.post(upload_url,files=files,headers=headers)
 
 '''
-
-

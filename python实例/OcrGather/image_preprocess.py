@@ -2,7 +2,6 @@ import re
 import time
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 import os
 import pytesseract
 from PIL import Image
@@ -219,13 +218,5 @@ def recognize_text3(image):
 
 
 if __name__ == "__main__":
-    # Recognition()
-    # for i in range(48):
-    #     Recognitino1(i+1)
-    # for label,path in FilePaths():
-    #     total, true_num = 0, 0
-    #     print('label:',label)
-    #     recognize_text3(cv2.imread(path))
-    #     # Recognitino1(path,label,total,true_num)
-    #     time.sleep(1)
+
     Recognition()
