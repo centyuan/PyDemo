@@ -9,7 +9,7 @@ list实际是个数组,O(n)
 """
 t = time()
 list_demo = ['a', 'b', 'is', 'python', 'jason', 'hello', 'phone', 'test', 'apple', 'ind', 'var', 'bana']
-# list_demo_1 = dict.fromkeys(list,True)
+# list_demo = dict.fromkeys(list,True)
 filter = []
 for i in range(1000000):
     for find in ['is', 'hat', 'new', 'list', 'old', '.']:
@@ -35,7 +35,7 @@ for i in range(100):
 # (使用join而不是+)
 # (字符串可以使用正则表达式或者内置函数来处理时候,选择内置函数，如str.startswith)
 
-# 4.使用列表解析,推导式或生成器表达式
+# 4.使用列表解析(要比在循环中重新构建一个新的 list 更为高效),推导式或生成器表达式
 
 
 # 5.合理使用copy,deepcopy(deepcopy使用递归复制,慢一个数量级)
@@ -48,7 +48,7 @@ for i in range(100):
 # while 1比while True快(后者可读性强，True是一个全局变量而非关键字)
 # 内建函数通常较快,add(a,b)优于a+b
 # 优化循环:循环外能做的事放在循环外面
-# 优化包含多个判断(对于and，应该把满足条件少的放在前面，对于or，把满足条件多的放在前面)
+# 优化包含多个判断(对于and，应该把满足条件少的放在前面，对于or，把满足条件多的放在前面)ps:充分利用Lazy-evaluation
 # 使用最佳的反序列化方式(eval,cPickle,json) json比cPickel快3倍,比eval快20倍
 """
 终级大杀器：PyPy PyPy是用RPython(CPython的子集)实现的Python，根据官网的基准测试数据，它比CPython实现 的Python要快6倍以上。

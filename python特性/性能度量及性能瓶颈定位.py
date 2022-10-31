@@ -10,7 +10,7 @@ print('方式1:',t_1, t_2)
 相对于 timeit 的细粒度，cProfile,profile 和 pstats 模块提供了针对更大代码块的时间度量工具
 """
 
-# 2.使用cProfile
+# 2.使用cProfile(profile,hotshot等)
 import cProfile
 
 
