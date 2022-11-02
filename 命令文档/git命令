@@ -105,8 +105,8 @@ Git 全局设置:
 
 git config --global user.name "centyuan"
 git config --global user.email "centyuan@outlook.com"
-创建 git 仓库:
 
+创建 git 仓库:
 mkdir small_tools
 cd small_tools
 git init
@@ -115,8 +115,8 @@ git add README.md
 git commit -m "first commit"
 git remote add origin git@gitee.com:centyuan/small_tools.git
 git push -u origin "master"
-已有仓库?
 
+已有仓库?
 cd existing_git_repo
 git remote add origin git@gitee.com:centyuan/small_tools.git
 git push -u origin "master"

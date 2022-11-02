@@ -1,3 +1,12 @@
+# 总限制文件句柄数
+cat /proc/sys/fs/file-max
+# 当前使用的文件句柄数
+cat /proc/sys/fs/file-nr
+# 修改
+vim /etc/security/limits.conf
+（*表示所有用户、soft表示可以超出，但只是警告；hard表示绝对不能超出，unlimited用于表示不限制）
+
+
 #1.系统层面
 #调整同时打开文件数量
 ulimit -n 20480
@@ -36,9 +45,9 @@ sysctl -p
 worker_processes  1; #nginx 进程数，建议按照cpu 数目来指定，一般为它的倍数
 worker_rlimit_nofile 20000; #一个nginx 进程打开的最多文件描述符数目，理论值应该是最多打开文件数（ulimit -n）与nginx 进程数相除，但是nginx 分配请求并不是那么均匀，所以最好与ulimit -n 的值保持一致
 events {
-    use epoll;#使用epoll的I/O模型
-    worker_connections 20000;#每个进程允许的最多连接数， 理论上每台nginx 服务器的最大连接数为worker_processes*worker_connections
-    multi_accept on;
+    use epoll;                 #使用epoll的I/O模型
+    worker_connections 20000;  #每个进程允许的最多连接数， 理论上每台nginx 服务器的最大连接数为worker_processes*worker_connections
+    multi_accept on;           #设置网路连接序列化，防止惊群现象发生，默认为on
 }
 http {
     keepalive_timeout 0;
