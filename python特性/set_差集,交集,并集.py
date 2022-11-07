@@ -19,7 +19,10 @@ yi = ["A"]
 er = ["A", "C"]
 
 cccc = list(set(yi) - set(er)) or list(set(er) - set(yi))  # 返回有值的
+print('ccc',list(set(yi)-set(er)),list(set(er)-set(yi)))
 
 ss = list(set(abcd) - set(efgh))
 if not ss:
     print(ss)
+
+

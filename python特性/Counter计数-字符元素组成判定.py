@@ -18,5 +18,9 @@ if Counter('abcd3') == Counter('3acdb'):
     print(type(Counter('ab')))
     print("True")
 
-ss = '[test33333]攻击静态DOMAIN-域名,并拿到了第一滴血'
-print(ss.split('攻击了'))
+c_ = ["B","低配","A"]
+d_ = ["A","低配","B"]
+if c_ == d_:
+    print('aaaaaaaaaaaaaaa')
+else:
+    print('bbbbbbbbbbbbbbb')

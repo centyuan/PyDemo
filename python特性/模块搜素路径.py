@@ -12,6 +12,8 @@ sys.paht:模块搜索路径
 如果都找不到，Python会察看默认路径。UNIX下，默认路径一般为/usr/local/lib/python/。
 模块搜索路径存储在 system 模块的 sys.path 变量中。变量里包含当前目录，PYTHONPATH和由安装过程决定的默认目录。
 
+通常__init__.py 文件为空：但是我们还可以为它增加其他的功能。我们在导入一个包时，实际上是导入了它的__init__.py文件。
+
 """
 import sys
 import os

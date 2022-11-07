@@ -1,8 +1,3 @@
-#！/usr/bin/python3
-# -*- coding:utf-8 -*-
-# author centyuan
-# @time 19-5-12 下午3:38
-
 """
 t	文本模式 (默认)。
 x	写模式，新建一个文件，如果该文件已存在则会报错。

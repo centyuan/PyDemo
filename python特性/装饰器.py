@@ -67,12 +67,12 @@ from functools import wraps
 def deco01(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        print("3:装饰器1")
+        print("3:装饰器1开始")
         startTime = time.time()
         func(*args, **kwargs)
         endTime = time.time()
         msecs = (endTime - startTime) * 1000
-        print("3:时间为%d ms" % msecs)
+        print("3:装饰器1时间为%d ms" % msecs)
         print("3:装饰器1结束")
 
     return wrapper
@@ -81,8 +81,9 @@ def deco01(func):
 def deco02(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
+        print("3:装饰器2开始")
         func(*args, **kwargs)
-        print("3:装饰器2")
+        print(f"3:装饰器1参数为{args}" )
         print("3:装饰器2结束")
 
     return wrapper
@@ -94,6 +95,5 @@ def func(a, b):
     print("3:func开始")
     time.sleep(1)
     print("3:func结束 %d" % (a + b))
-
 
 func(3, 4)
