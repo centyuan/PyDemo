@@ -101,7 +101,7 @@ test()会首先打印出test_1，然后yield from语法可以让我们方便地�
 """
 
 
-#   3. asyncio +async/await
+#   3.python3.5 asyncio +async/await
 async def test(i):
     print('test_start_', i)
     # 加上await后会把控制权交给主事件循环，在休眠（IO操作）结束后恢复这个协程
@@ -126,23 +126,27 @@ loop = events.new_event_loop()
 return loop.run_until_complete(main)
 '''
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()  # asyncio.get_event_loop()时会创建事件循环
+    # asyncio.get_event_loop()创建事件循环
+    loop = asyncio.get_event_loop()
+    # test(i)返回协程对象,并将协程对象注册到事件循环,由事件循环调用
     tasks = [test(i) for i in range(3)]
-    loop.run_until_complete(asyncio.wait(tasks))  # loop.run_until_complete 阻塞调用
+    # loop.run_until_complete 阻塞调用(参数是一个futrue对象,task是future子类，传入一个协程,内部会自动封装成task)
+    # asyncio.gather(*tasks)
+    loop.run_until_complete(asyncio.wait(tasks))
     # 异步的任务丢给这个循环的run_until_complete()方法，事件循环会安排协同程序的执行。
     loop.close()
 
     """
-    # asyncio.wait
-    1.通过task = loop.create_task(coroutine)创建task 或者 task = asyncio.ensure_future(coroutine) 创建task
-
-    2.绑定回调函数结果
+    1.创建coroutine对象:coroutine = test(1)
+    2.创建任务:task = loop.create_task(coroutine) 或者 task = asyncio.ensure_future(coroutine)
+    # task finished后，task.result()
+    3.绑定回调函数结果:
     def callback(future):
-        print("callback:"future.result())
+        print("callback:",future.result())
     task = loop.create_task(coroutine)
     task.add_done_callback(callback) #绑定回调
     
-    3.将task加入事件循环
+    4.将task加入事件循环
     loop.run_until_complete(task)
     print(task.result()) 
     """

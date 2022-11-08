@@ -16,7 +16,7 @@ async def get_http_data(url):
             async with session.get(url) as res:
                 global count
                 count += 1
-                print(count, res.status,type(res.text()))
+                print(count, res.status,res.text())
     return res.headers
 
 async def main(url):
