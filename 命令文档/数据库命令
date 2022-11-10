@@ -1,19 +1,86 @@
 """
 由于MySQL是单进程多线程模型，一个SQL语句无法利用多个cpu core去执行，这也就决定了MySQL比较适合OLTP（特点：大量用户访问、逻辑读，索引扫描，返回少量数据，SQL简单）业务系统
-#  mysql相关操作
 http://c.biancheng.net/view/7201.html
 https://www.runoob.com/mysql/mysql-update-query.html
 ### 1.mysql数据库
-mysql -u root -p
-#create user 'username'@'host' identified by 'password';
+mysql -h 主机名 -u root -p  # 连接mysql
+
+#显示数据表的属性
+show columns from user_table;
+#显示数据表的详细索引信息
+show index from user_table;
+#显示数据库runoob所有表的信息
+show table status from runoob;
+#表名以run开头的表信息
+show table status from runoob like 'run%';
+#添加mysql用户
+insert into user (host,user,password,select_priv,insert_priv,update_priv) values ('localhost','guest',password('guest123'),'Y','Y','Y');
+#创建用户
+create user 'username'@'host' identified by 'password';
 create user 'username'@'%' identified by 'password';
-#grant all on db_name.* to 'username'@'%';
-#grant select on db_name.* to 'username'@'%';
+
+grant all on db_name.* to 'username'@'%';
+grant select on db_name.* to 'username'@'%';
 grant all on *.* to 'username'@'%';
-# 删除用户
+#删除用户
 drop user 'username'@'host';
-# 修改用户密码
+#修改用户密码
 SET PASSWORD FOR 'username'@'host' = PASSWORD('newpassword');
+
+#创建数据库
+create database data_name;
+#删除数据库
+drop database data_name;
+#mysql 数据类型：大致三种->数值 日期/时间 字符串(字符)
+#创建数据表
+create table 'run_tb'(
+    'run_id',int unsigend auto_increment,
+    'run_title',varchar(100) not null,
+    'run_author',varchar(40) not null,
+    'sub_data',date,
+    primary key('run_id')
+)engine=innodb default charset=utf-8;
+#删除数据库
+drop table run_tb;
+#插入数据
+insert into table_name(filed1,field2,field3) values(value1,value2,value3)
+#查询数据
+# order_by sub_date ASC 升序，DESC降序
+select * from run_tbl where run_author='菜鸟'''
+update run_tb set run_title='学习', where run_id=3;
+delete from run_tb where run_id=3;
+select * from run_tb where run_title like '%com' #以com结尾
+select * from run_tb where run_title like '%com%'# 保护com
+#union 连接两个以上的select的语句的结果组合到一个结果集合中 distinct 删除结果集中重复的数据 all返回索引结果集
+select country from websites union select country from apps order by conutry;
+#使用group by将数据表进行分组，并统计每个name的多少条记录
+select name,count(*) from em_tb group by name;
+
+# 创建新表
+CREATE TABLE user_tbl(name VARCHAR(20), signup_date DATE);
+# 插入数据
+INSERT INTO user_tbl(name, signup_date) VALUES('张三', '2013-12-22');
+# 选择记录
+SELECT * FROM user_tbl;
+# 更新数据
+UPDATE user_tbl set name = '李四' WHERE name = '张三';
+# 删除记录
+DELETE FROM user_tbl WHERE name = '李四' ;
+# 添加栏位
+ALTER TABLE user_tbl ADD email VARCHAR(40);
+# 更新结构
+ALTER TABLE user_tbl ALTER COLUMN signup_date SET NOT NULL;
+# 更名栏位
+ALTER TABLE user_tbl RENAME COLUMN signup_date TO signup;
+# 删除栏位
+ALTER TABLE user_tbl DROP COLUMN email;
+# 表格更名
+ALTER TABLE user_tbl RENAME TO backup_tbl;
+# 删除表格
+DROP TABLE IF EXISTS backup_tbl;
+
+CREATE DATABASE yourdbname DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+
 # 复制n条记录并创建
 INSERT into reyo (num,overtime) SELECT num,overtime from reyo where id IN(1,3,5,6,7,9);
 
@@ -89,28 +156,6 @@ create database exampledb owner centyuan;
 
 grant all privileges on database exampledb to centyuan;
 
-# 创建新表
-CREATE TABLE user_tbl(name VARCHAR(20), signup_date DATE);
-# 插入数据
-INSERT INTO user_tbl(name, signup_date) VALUES('张三', '2013-12-22');
-# 选择记录
-SELECT * FROM user_tbl;
-# 更新数据
-UPDATE user_tbl set name = '李四' WHERE name = '张三';
-# 删除记录
-DELETE FROM user_tbl WHERE name = '李四' ;
-# 添加栏位
-ALTER TABLE user_tbl ADD email VARCHAR(40);
-# 更新结构
-ALTER TABLE user_tbl ALTER COLUMN signup_date SET NOT NULL;
-# 更名栏位
-ALTER TABLE user_tbl RENAME COLUMN signup_date TO signup;
-# 删除栏位
-ALTER TABLE user_tbl DROP COLUMN email;
-# 表格更名
-ALTER TABLE user_tbl RENAME TO backup_tbl;
-# 删除表格
-DROP TABLE IF EXISTS backup_tbl;
 
 
 """
