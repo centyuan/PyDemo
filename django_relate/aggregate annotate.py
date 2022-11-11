@@ -17,7 +17,7 @@ class Hobby(models.Model):
 
 
 # 1.求学生的平均年龄
-from django.db.models import Avg,Max,Min,Count
+from django.db.models imp`ort Avg,Max,Min,Count,Sum
 
     Student.objects.all().aggregate(Avg('age'))
 all()不是必须的。或者
