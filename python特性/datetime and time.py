@@ -33,13 +33,14 @@ print(calendar.month(2018, 2))
 # timedelta  做时间加减
 # tzinfo    时区类
 print("当前时间:", datetime.datetime.now())  # 2022-05-17 21:23:56.150028 类型为datetime对象类型
-print("当前日期:", datetime.date.today())
+print("当前日期:", datetime.date.today(),datetime.date.today().year,datetime.date.today().month)
 print('指定时间:', datetime.date(2017, 3, 22))
 print('指定日期时间:', datetime.datetime(2017, 3, 22))  # 比datetime.datetime.strptime() 快7倍多
 print('前一天时间:', datetime.datetime.now() - datetime.timedelta(days=1, hours=1, minutes=30))
 print('时间段:', datetime.timedelta(hours=1, minutes=40) + datetime.timedelta(hours=2, minutes=20))
 print('转为时间戳:', datetime.datetime.now().timestamp())
 print('timetuple:', datetime.datetime.now().timetuple())
+print('某月天数:',calendar.monthrange(2022,11),(datetime.date(2022,10,1)-datetime.date(2022,9,1)).days)
 
 # 6.计算时间差
 from dateutil import rrule

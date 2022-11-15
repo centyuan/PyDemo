@@ -55,7 +55,21 @@ all()不是必须的。或者
     Student.objects.values('name','age').annotate(Count('hobbies'),Max())
 
 
+# 9.按月份统计数据
+from django.db.models.functions import TruncMonth
 
+按照月份分组算出各个月份的合同金额总和
+query=queryset.annotate(month=TruncMonth('created_at')).values('month').annotate(
+contract_amount=Sum('contract_amount')
+)
+加上时间范围如下: 算出时间在created_range在这之间月份的每月合同金额总和
+created_range=['2019-11-11','2019-12-12']
+queryset.annotate(month=TruncMonth('created_at')).filter(month__range=created_range).annotate(
+contract_amount=Sum('contract_amount'))
+
+算某月的总和,利用aggregate,并且制定时间,这里要注意month制定的是某个月的1号
+queryset.annotate(month=TruncMonth('created_at')).filter(month='2019-11-01').aggregate(
+contract_amount=Sum('contract_amount'))
 """
 # Django F对象和Q对象查询详解
 # http://c.biancheng.net/view/7693.html
