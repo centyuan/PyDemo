@@ -64,7 +64,17 @@ innodb中表锁和行锁一起用，所以为了提高效率才会有意向锁�
 """
 # 表级锁
 # https://zhuanlan.zhihu.com/p/151767128
-# manager = LockingManager()
+# class LockingManager(models.Manager):
+#     def lock(self):
+#         cursor = connection.cursor()
+#         table = self.model._meta.db_table
+#         cursor.execute(f"LOCK TABLES {table} WRITE")
+#
+#     def unlock(self):
+#         cursor = connection.cursor()
+#         table = self.model._meta.db_table
+#         cursor.execute("UNLOCK TABLES")
+# objects = LockingManager()
 # 加表锁：
 # User.objects.lock()
 # 解表锁：

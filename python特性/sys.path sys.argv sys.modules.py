@@ -1,4 +1,4 @@
-#！/usr/bin/python3
+# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-5-29 上午11:23
@@ -13,7 +13,6 @@ sys.path——获取指定模块搜索路径的字符串集合，是一个list �
 Python解释器会自动将当前工作目录添加到sys.path
 sys.modules ---已加载的模块字典
 '''
-
 
 """
 Python import搜索的路径顺序
@@ -30,13 +29,12 @@ sys.path在python脚本执行时动态生成，包括以下3个部分：
 3、安装python时的依赖位置
 python搜索模块的顺序为:内建模块>当前路径，即执行Python脚本文件所在的路径>环境变量中的PYTHONPATH>python安装路径
 """
-print(sys.path) # sys.path.append("")备注:这个添加只是临时添加，如果退出当前会话，或者当前的shell，就会消失。
-print("PATH",os.environ['PATH']) #os.environ["PATH"] += "新系统环境值"，
-print("PYTHONPATH",os.environ['PYTHONPATH'])
+print(sys.path)  # sys.path.append("")备注:这个添加只是临时添加，如果退出当前会话，或者当前的shell，就会消失。
+print("PATH", os.environ['PATH'])  # os.environ["PATH"] += "新系统环境值"，
+print("PYTHONPATH", os.environ['PYTHONPATH'])
 sys.path.append('引用模块的地址')
-sys.path.insert(0, '引用模块的地址') #优先与其他被important检查
+sys.path.insert(0, '引用模块的地址')  # 优先与其他被important检查
 print(sys.path)
-
 
 """
 sys.argv[]说白了就是一个从程序外部获取参数的桥梁，这个“外部”很关键，
@@ -45,8 +43,9 @@ sys.argv[]说白了就是一个从程序外部获取参数的桥梁，这个“�
 其第一个元素是程序本身，随后才依次是外部给予的参数。
 """
 import sys
-a=sys.argv[0]   # sys.argv[0]为程序运行的全路径名
-print('sys.argv[0]',a)
+
+a = sys.argv[0]  # sys.argv[0]为程序运行的全路径名
+print('sys.argv[0]', a)
 # print(sys.argv[2],sys.argv[1])
 
 
