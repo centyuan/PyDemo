@@ -96,20 +96,21 @@ class KeyInfoThread(QThread):
         self.url_list = url_list
         self.keywords = keywords
         self.mark = True
+
     def run(self):
         try:
             while self.mark:
                 for url in self.url_list:
                     try:
                         self.browser.get(url=url)
-                        print('匹配run',url)
+                        print('匹配run', url)
                         self.sleep(5)
                         # self.browser.implicitly_wait(10)
                         ht_page = self.browser.page_source
                         # 关键字匹配
                         result = re.findall(self.keywords, ht_page)
                         if result:
-                            print('正则匹配',result)
+                            print('正则匹配', result)
                             self.update_ui_signal.emit((str(url)))
                         else:
                             self.browser.save_screenshot('screen_shot.png')
@@ -119,7 +120,7 @@ class KeyInfoThread(QThread):
                             secret_key = 'ind5NK0lUMFtAj87uMkcmQASF6IswIZh '  # Sk
                             baidu_client = BaiduSdk(app_id=app_id, api_key=api_key, secret_key=secret_key, level=2)
                             mark, text = baidu_client.get_text(file_path=r'screen_shot.png')
-                            print('图片匹配',self.keywords,text)
+                            print('图片匹配', self.keywords, text)
                             if self.keywords in text:
                                 self.update_ui_signal.emit((str(url)))
                                 print('text:', text)
@@ -127,14 +128,14 @@ class KeyInfoThread(QThread):
                                 self.update_ui_signal.emit((str('')))
                     except Exception as e:
                         print('错误信息', e.__traceback__.tb_lineno, e, e.__traceback__.tb_frame.f_globals['__file__'])
-                        self.update_ui_signal.emit((str('超时:'+url)))
+                        self.update_ui_signal.emit((str('超时:' + url)))
                         continue
-                self.mark=False
+                self.mark = False
                 self.browser.close()
         except Exception as e:
-                self.browser.close()
-                self.update_ui_signal.emit((str('错误:'+url)))
-                print('错误信息',e.__traceback__.tb_lineno, e, e.__traceback__.tb_frame.f_globals['__file__'])
+            self.browser.close()
+            self.update_ui_signal.emit((str('错误:' + url)))
+            print('错误信息', e.__traceback__.tb_lineno, e, e.__traceback__.tb_frame.f_globals['__file__'])
 
 
 class WebSiteFilter(QWidget):
@@ -163,23 +164,23 @@ class WebSiteFilter(QWidget):
 
         # 定义控件
         self.website_label = QLabel('输入网址:')
-        self.website_label.setFont(QFont("微软雅黑",10,QFont.Bold))
+        self.website_label.setFont(QFont("微软雅黑", 10, QFont.Bold))
         self.total_line_edit = QLineEdit('总计: 剩余: ')
         self.total_line_edit.setStyleSheet('color:red')
         self.website_text_edit = QTextEdit('https://www.3703yh.com/')
         self.website_text_edit.setGeometry(QtCore.QRect(70, 100, 231, 181))
         self.website_text_edit.setAcceptRichText(False)
         self.filter_label = QLabel('筛选关键字:')
-        self.filter_label.setFont(QFont("微软雅黑",10,QFont.Bold))
+        self.filter_label.setFont(QFont("微软雅黑", 10, QFont.Bold))
         self.filter_line_edit = QLineEdit('公告')
         self.choose_file_btn = QPushButton()
         # self.btn_chooseFile.setObjectName("choose_file_btn")
         self.choose_file_btn.setText('选择文件')
-        self.choose_file_btn.setFont(QFont("微软雅黑",10,QFont.Bold))
+        self.choose_file_btn.setFont(QFont("微软雅黑", 10, QFont.Bold))
         self.query_button = QPushButton('查询')
-        self.query_button.setFont(QFont("微软雅黑",10,QFont.Bold))
+        self.query_button.setFont(QFont("微软雅黑", 10, QFont.Bold))
         self.result_info_label = QLabel('筛选结果:')
-        self.result_info_label.setFont(QFont("微软雅黑",10,QFont.Bold))
+        self.result_info_label.setFont(QFont("微软雅黑", 10, QFont.Bold))
         self.result_info_edit = QTextEdit()
         # 创建网格布局管理器
         self.grid = QGridLayout()
