@@ -28,7 +28,7 @@ template_rendered 模板执行渲染操作时
 connection_created 创建数据库连接时
 """
 
-from django.db.models.signals import post_save,
+from django.db.models.signals import post_save
 from django.core.signals import request_started, request_finished
 from django.dispatch.dispatcher import receiver
 #对于每个唯一的dispatch_uid,接收器都只被信号调用一次

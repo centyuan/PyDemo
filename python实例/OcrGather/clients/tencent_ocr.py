@@ -68,8 +68,23 @@ class TecentSdk:
             print(e.message, e.code)
             return False, e.message
 
+
 class TecentApi:
-    pass
+    def __init__(self, api_key, secret_key, level=1):
+        authorization_ = ''
+        token_ = ''
+        timestamp_ = ''
+        self.headers = {
+            'Authorization': authorization_,
+            'Host': 'ocr.tencentcloudapi.com',
+            'X-TC-Action': 'GeneralBasicOCR',
+            'X-TC-Timestamp': timestamp_,
+            'X-TC-Version': '2018-11-19',
+            'X-TC-Region': 'ap-beijing',
+            'X-TC-Language': 'zh-CN',
+            'X-TC-Token': token_,
+        }
+
 
 if __name__ == '__main__':
     api_key = 'AKID02scCmLtJnDdyHbpvpW4stuoVxGMI1ob'

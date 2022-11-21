@@ -61,3 +61,8 @@ years = rrule.rrule(rrule.YEARLY, dtstart=date_1, until=date_2).count()  # 年�
 # 7.000Z and RFC1123日期格式
 print('000Z:', datetime.datetime.strptime("2022-10-11T02:31:23.000Z", "%Y-%m-%dT%H:%M:%S.000Z"))
 print('RFC1123日期格式:', format_date_time(time.mktime(datetime.datetime.now().timetuple())))
+
+
+aaa = "[szm]攻击了16.33_DOMAIN_TEST,并拿到了第一滴血"
+
+print(aaa.split('szm 解答错误'))
