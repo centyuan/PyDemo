@@ -124,8 +124,8 @@ to_rank = sorted(rank, key=cmp_to_key(custom_sorted), reverse=True)
 from operator import itemgetter
 
 new_rank = sorted(rank, key=itemgetter('score'))  # 根据一个字段排序
-new_rack = sorted(rank, key=itemgetter('score', 'item'))
-
+new_rack = sorted(rank, key=itemgetter('score', 'time'))
+new_rank = sorted(rank, key=lambda item:item['score'])
 # 四:判断字典key是否存在
 
 dict_data = {'name': 'yuan', 'age': 20, 'sex': 'man'}
@@ -167,9 +167,9 @@ test_dict = {
     'None': None,
     'new_None': 'None'
 }
-for key in test_dict.keys():
-    if not test_dict.get(key):
-        del test_dict[key]
+# for key in test_dict.keys():
+#     if not test_dict.get(key):
+#         del test_dict[key]
 # 字典生成器
 new_data = {k: v for k, v in test_dict.items() if v}
 # if v 去掉所有‘空值'
@@ -177,3 +177,4 @@ new_data = {k: v for k, v in test_dict.items() if v}
 new_data = {k: v for k, v in test_dict.items() if v is not None}
 # if is not None 去掉None
 # {'id': 1, 'name': 'name', 'age': 18, 'sex': 'man', '空': '', 'o': 0, 'bool': False, 'new_None': 'None'}
+

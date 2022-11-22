@@ -36,7 +36,7 @@ def add_mu(x, y):
 # 单线程
 # with SimpleXMLRPCServer(('127.0.0.1', 8000), requestHandler=RequestHandler) as server:
 # 多线程
-with ThreaXMLRPCServer(('127.0.0.1', 8000), requestHandler=RequestHandler) as server:
+with ThreaXMLRPCServer(('127.0.0.1', 8000), requestHandler=RequestHandler,allow_none=False) as server:
     server.register_introspection_functions()
     # 注册函数
     server.register_function(pow)
