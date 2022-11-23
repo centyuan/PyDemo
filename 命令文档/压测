@@ -1,0 +1,12 @@
+#1.apache bench ab
+yum -y install httpd_tools
+# 1000个请求100个用户
+ab -n 1000 -c 100 https://url
+
+#2.Apache JMeter
+下载:https://jmeter.apache.org/download_jmeter.cgi
+
+#3.Locust
+pip install locust
+
+#4.Siege
