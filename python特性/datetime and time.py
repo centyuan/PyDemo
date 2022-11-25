@@ -63,6 +63,15 @@ print('000Z:', datetime.datetime.strptime("2022-10-11T02:31:23.000Z", "%Y-%m-%dT
 print('RFC1123日期格式:', format_date_time(time.mktime(datetime.datetime.now().timetuple())))
 
 
-aaa = "[szm]攻击了16.33_DOMAIN_TEST,并拿到了第一滴血"
+print([(datetime.date.today()-datetime.timedelta(days=i)).strftime("%Y-%m-%d") for i in range(7)])
+a = [
+    {'date':'2022-11','number':'11'},
+    {'date':'2022-10','number':'12'},
+]
+b = ['2022-11','2022-10','2022-09','2022-08','2022-07']
+extra = []
+for item in a:
+    if item['date'] in b:
+        b.remove(item['date'])
 
-print(aaa.split('szm 解答错误'))
+res = a.extend([{'date':item,'number':0} for item in b])

@@ -8,28 +8,37 @@ gunicorn -c gunicorn.py main:app > gunicorn.log 2>&1 &
 
 # pip install uvicorn
 # pip install gunicorn
-# 使用uvicorn
-gunicorn AntiFraud.asgi:application -w 4 -k uvicorn.workers.UvicornWorker -b 127.0.0.1:9001
+# 使用uvicorn 报错
+# gunicorn AntiFraud.asgi:application -w 4 -k uvicorn.workers.UvicornWorker -b 127.0.0.1:9001
 
-upstream uvicorn_back{
-        server 127.0.0.1:9001;
+daphne AntiFraud.asgi:application -b 127.0.0.1 -p 9002
 
+upstream daphne_back{
+        server 127.0.0.1:9002;
 }
 server  {
     listen 8001;
     server_name 192.168.8.243;
-    location / {
-        index index.html;
-        root /data/AntiFraud/dist;
-        try_files $uri $uri/ /index.html;
+
+
+     location /ws {
+        proxy_pass http://daphne_back;
+        daphne支持
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_redirect off;
+        proxy_set_header X-Forwarded-Host $server_name;
+
+        proxy_set_header Host $host;
+	    proxy_set_header X-Real-IP $remote_addr;
+	    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
 
     }
-    location /api {
-        proxy_pass http://uvicorn_back;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+    location / {
+        include uwsgi_params;
+        uwsgi_pass 127.0.0.1:9003
     }
 
 
