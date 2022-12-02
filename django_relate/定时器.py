@@ -10,6 +10,7 @@ import datetime
 import django
 import threading
 
+
 base_path = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 # 将项目路径加入到系统中,导入模型不报错
 sys.path.append(base_path)

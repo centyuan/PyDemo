@@ -11,40 +11,41 @@ def hello():
 
 # 调用方式
 result = hello.delay()
-hello.apply_async()
+result = hello.apply_async()
 # 检测是否处理完毕 True False
 result.ready()
 result.result()  # 获取结果
 """
-# worker 
+#1. worker 
 nohup celery -A CTFServer worker -B -l info --logfile=./celery.log
 
-# flower Monitor
-https://docs.celeryq.dev/en/master/userguide/monitoring.html
-pip install flower
-celery -A proj flower 或celery -A proj flower --port=5555
-open http://localhost:5555
-
-# curses Monitor
-celery -A proj events 
-
-#beat 
+#2. beat 
 celeyr -A proj beat 
 celery -A proj beat -s /home/celery/var/run/celerybeat-schedule
-celery -A FZ_Platform worker -B -l info -c 10
--B代表celery -A proj beat 
-#任务调用
+celery -A FZ_Platform worker -B -l info -c 10 -D --logfile=celery.log
+-B:代表celery -A proj beat 
+-c:协程数量
+-D:后台运行
+
+#3.任务调用
 # 方法一：delay方法
 task_name.delay(args1, args2, kwargs=value_1, kwargs2=value_2)
 ​
 # 方法二： apply_async方法，与delay类似，但支持更多参数
 task.apply_async(args=[arg1, arg2], kwargs={key:value, key:value})
 
+#4.flower Monitor
+https://docs.celeryq.dev/en/master/userguide/monitoring.html
+pip install flower
+celery -A proj flower 或celery -A proj flower --port=5555
+open http://localhost:5555
 
-https://blog.csdn.net/captain5339/article/details/125400254
-https://www.jianshu.com/p/1840035cb510
+#5.curses Monitor
+celery -A proj events 
+
+
+
 """
-
 # 二:
 from celery import Task
 
@@ -57,6 +58,7 @@ class BaseTask(Task):
     def on_failure(self, exc, task_id, args, kwargs, einfo):
         print('异步任务失败时，回调发出警告')
         return super(BaseTask, self).on_failure(exc, task_id, args, kwargs, einfo)
+
     """
 `   def after_return
     # 异步任务尝试重试时，会执行这个回调方法
@@ -67,6 +69,8 @@ class BaseTask(Task):
     def send_error_email
     # 异步任务执行失败时，并且配置了send_error_emails=True时，会执行这个回调方法。
     """
+
+
 """
 @celery_app.task(base=BaseTask):
 def send_email(x):
@@ -114,3 +118,53 @@ def add(self,x,y):
         # default_retry_delay重试前会等待给定的时间,coutdown可以覆盖
         raise self.retry(exc=exc, countdown=60)
 """
+
+# 八:定时任务
+# https://blog.csdn.net/captain5339/article/details/125400254
+from celery.schedules import crontab
+
+# 绑定时区，防止定时任务时间有误
+app.conf.enable_utc = False
+app.conf.timezone = "Asia/Shanghai"
+# 下面的设置就是关于调度器beat的设置,
+# CELERYBEAT_SCHEDULE = {}
+app.conf.beat_schedule = {
+    'periodic_deletion': {
+        'task': 'match.end_match.timing_del_match_resources',
+        'schedule': crontab(hour=0, minute=30),
+        'args': (4, 5)
+    },
+    'match_end_remove_tempapply': {
+        'task': 'policy.task.match_end_remove_tempapply',
+        'schedule': crontab('*/10'),  # 每十分钟执行一次
+        # timedelta 可以精确到秒
+        # 'schedule':timedleta(seconds=30)  # 每三十秒执行一次
+    },
+
+}
+
+# 九:定义任务队列
+# https://www.cnblogs.com/chaolumeng/p/12318989.html
+from kombu import Queue, Exchange
+
+CELERY_QUEUES = (
+    Queue('default', exchange=Exchange('default'), routing_key='default'),
+    Queue('app_task', exchange=Exchange('app_task'), routing_key='app_task')
+)
+CELERY_ROUTES = {
+    'match_end_remove_tempapply': {'queue': 'app_task', 'routing_key': 'app_task'},
+    'periodic_deletion': {'queue': 'default', 'routing_key': 'default'},
+}
+
+# 十:
+# https://zhuanlan.zhihu.com/p/351328752
+# 任务过期时间,celery任务执行结果的超时时间
+CELERY_TASK_RESULT_EXPIRES = 60 * 20
+# 规定任务完成的时间
+CELERY_TASK_TIME_LIMIT = 5  # 在5s内完成任务，否则执行该任务的worker将被杀死，任务移交给父进程
+# celery worker的并发数，默认是服务器的内核数目,也是命令行-c参数指定的数目
+CELERYD_CONCURRENCY = 4
+# 每个worker执行了多少任务就会死掉，默认是无限的:防止内存泄露和worker僵死
+CELERYD_MAX_TASKS_PER_CHILD = 40
+# 表示Worker在任务执行完后才向Broker发送acks:处理异常,一个任务可能会多次执行
+CELERY_ACKS_LATE=True
