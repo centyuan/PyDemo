@@ -15,6 +15,8 @@ and they lived at the bottom of a well.</p>
 """
 # http://c.biancheng.net/python_spider/bs4.html
 soup = BeautifulSoup(html_doc)
+# 转换成HTML
+html = soup.prettify()
 # 写在前面 遍历操作
 for link in soup.find_all('a'):
     print(link.get('href'))

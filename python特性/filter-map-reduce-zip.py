@@ -8,7 +8,7 @@
 list2 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 
-def a(x):
+def a(x:int)->int:
     return x % 2 == 1
 
 
