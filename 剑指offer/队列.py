@@ -1,46 +1,47 @@
-#！/usr/bin/python3
+# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-9-7 下午7:16
 
 class Node(object):
-    def __init__(self,elem,next=None):
+    def __init__(self, elem, next=None):
         self.elem = elem
         self.next = next
 
 
 class Queue(object):
     def __init__(self):
-        self.head = None #头部节点
-        self.rear = None #尾部节点
+        self.head = None  # 头部节点
+        self.rear = None  # 尾部节点
 
     def is_empty(self):
         return self.head is None
 
-    #从队列尾部添加元素
-    def enqueue(self,elem):
-        p = Node(elem) #初始化一个新的节点
+    # 从队列尾部添加元素
+    def enqueue(self, elem):
+        p = Node(elem)  # 初始化一个新的节点
         if self.is_empty():
             self.head = p
             self.rear = p
         else:
             self.rear.next = p
             self.rear = p
-    #删除头部元素
+
+    # 删除头部元素
     def dequeue(self):
         if self.is_empty():
             print('Queue is empty')
         else:
             result = self.head.elem
             self.head = self.head.next
-            return  result
+            return result
 
-    #查看队列头部的元素
+    # 查看队列头部的元素
     def peek(self):
         if self.is_empty():
             print('not found')
         else:
-            return  self.head.elem
+            return self.head.elem
 
     def print_queue(self):
         print("queue:")
@@ -51,7 +52,8 @@ class Queue(object):
             temp = temp.next
         print(myqueue)
 
-#队列之数组实现
+
+# 队列之数组实现
 class Queue():
     def __init__(self):
         self.entries = []  # 表示队列内的参数
@@ -72,4 +74,11 @@ class Queue():
     def peek(self):
         return self.entries[0]  # 直接返回队列的队首元素
 
-#例子1
+
+# 基于Queue的三种队列(先进先出,先进后出,优先级队列)
+from queue import Queue, LifoQueue, PriorityQueue
+
+Fifo_queue = Queue()
+Lifo_queue = LifoQueue()
+Priority_queue = PriorityQueue()
+Priority_queue.put((1, '数据'))  # （优先级,数据）

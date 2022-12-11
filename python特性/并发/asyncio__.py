@@ -163,8 +163,7 @@ def test(n):
         print(gevent.getcurrent(), i)
         gevent.sleep(1)  # 交出控制权，交替运行
         '''
-        当然在实际的代
-        码里，我们不会用gevent.sleep()去切换协程，而是在执行到IO操作时gevent会自动完成，
+        当然在实际的代码里，我们不会用gevent.sleep()去切换协程，而是在执行到IO操作时gevent会自动完成，
         所以gevent需要将Python自带的一些标准库的运行方式由阻塞式调用变为协作式运行
         这一过程在启动时通过monkey patch完成：
         '''
