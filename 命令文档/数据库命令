@@ -27,8 +27,9 @@ drop user 'username'@'host';
 #修改用户密码
 SET PASSWORD FOR 'username'@'host' = PASSWORD('newpassword');
 
-#创建数据库
+#创建数据库并设置字符集和排序规则
 create database data_name;
+CREATE DATABASE maoyandb CHARACTER SET utf8 COLLATE utf8_general_ci;（或者：create database maoyandb charset utf8;）
 #删除数据库
 drop database data_name;
 #mysql 数据类型：大致三种->数值 日期/时间 字符串(字符)
