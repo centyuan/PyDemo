@@ -162,3 +162,29 @@ def down_file_iterator(file_path,start_pos,chunk_size):
 # 2.断点下载
 def breakpoint_download(request,filename):
     pass
+
+
+# 6 django原生文件上传存储及nginx配置
+"""
+# 1.model
+file = models.FileField(upload_to="case_file", null=True)
+# 2.回显
+http://1.1.1.1:9000/+model_obj.file.url
+# 3.上传
+filename = file.name
+models.objects.create(filename=filename,file=file)
+# 4.settings
+MEDIA_ROOT = os.path.join(BASR_DIR,'media')
+MEDIA_URL = '/media/'
+# 5.url配置
+from django.contrib.staticfiles.urls  import staticfiles_urlpatterns,static
+from . import settings
+urlpatterns +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+# 或者urlpatterns += staticfiles_urlpatterns()
+
+# 6.nginx配置
+location /media {
+    root /项目路径
+}
+
+"""

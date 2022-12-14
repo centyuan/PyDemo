@@ -1,47 +1,54 @@
 import time
 import calendar
+# datetime是对time模块的封装
 import datetime
 from wsgiref.handlers import format_date_time
 
 # 1.时间time
 t = time.time()
-print('time.time():', time.time())
-print('时间戳:', t)  # 原始时间数据--1970年是距今最早的的1月1日是星期一的日期
+print('时间戳time.time():', time.time())# 原始时间数据--1970年是距今最早的的1月1日是星期一的日期
 print('秒级时间戳:', int(t))  # 秒级时间戳
 print('毫秒级时间戳:', int(round(t * 1000)))  # 毫秒级时间戳
 print('微秒级时间戳:', int(round(t * 1000000)))  # 微秒级时间戳
-print('time.localtime():', time.localtime())
-time_classS = time.localtime()
-print(type(time_classS), time_classS.tm_year)
-print('time.asctime()：', time.asctime())
 
-# 2.时间元组
-print('时间元组:', time.localtime(time.time()))
+# 2.时间元组即structime对象
+print('转为时间元组:', time.localtime(time.time()),time.localtime(1670848011))
+time_classS = time.localtime()
+print('转为时间元组:',time_classS,type(time_classS), time_classS.tm_year)
+print('time.localtime():', time.localtime())
+print('strutime转为时间戳',time.mktime(time.localtime()))
+
 
 # 3.可读的格式化时间
-print('可读的格式化时间：', time.asctime(time.localtime(time.time())))
-print('time.strftime--%Y-%m-%d %H:%M:%S:', time.strftime("%Y-%m-%d %H:%M:%S"))
-print('time.strftime--%a %b %d %H:%M:%S %Y:', time.strftime("%a %b %d %H:%M:%S %Y"))
+print('可读的格式化时间time.asctime()：', time.asctime())
+print('可读的格式化时间time.asctime()：', time.asctime(time.localtime(time.time())))
+print('输出当前时间,time.strftime--%Y-%m-%d %H:%M:%S:', time.strftime("%Y-%m-%d %H:%M:%S"))
+print('输出当前时间,time.strftime--%a %b %d %H:%M:%S %Y:', time.strftime("%a %b %d %H:%M:%S %Y"))
+print('显示指定格式时间', time.strftime("%Y-%m-%d %H:%M:%S",time.localtime()))
 
 # 4.字符串转为日期
-print('字符串转为日期：', datetime.datetime.strptime('2022-09-20', "%Y-%m-%d"))  # 性能很差
+# print('字符串转为日期：', datetime.datetime.strptime('2022-09-20', "%Y-%m-%d"))  # 性能很差
+print('字符串转为日期：', time.strptime('2022-09-20', "%Y-%m-%d"))  # 性能很差
 print("以下输出2016年1月份的日历:")
 print(calendar.month(2018, 2))
 
-# 5.日期datetime
+# 5.datetime模块
 # date  处理年月日
 # time  处理时分秒
 # datetime  date和time综合利用
 # timedelta  做时间加减
 # tzinfo    时区类
-print("当前时间:", datetime.datetime.now())  # 2022-05-17 21:23:56.150028 类型为datetime对象类型
+date_object = datetime.date.today()
 print("当前日期:", datetime.date.today(), datetime.date.today().year, datetime.date.today().month)
-print('指定时间:', datetime.date(2017, 3, 22))
+print('指定时间:', datetime.date(2017, 3, 22),datetime.date.fromtimestamp(1670848796))
+print('修改时间,日期改为1号:',datetime.date.today().replace(day=1))
+print('返回weekday',date_object.weekday(),date_object.isoweekday(),date_object.isoformat())
+print("当前时间:", datetime.datetime.now())  # 2022-05-17 21:23:56.150028 类型为datetime对象类型
 print('指定日期时间:', datetime.datetime(2017, 3, 22))  # 比datetime.datetime.strptime() 快7倍多
 print('前一天时间:', datetime.datetime.now() - datetime.timedelta(days=1, hours=1, minutes=30))
 print('时间段:', datetime.timedelta(hours=1, minutes=40) + datetime.timedelta(hours=2, minutes=20))
 print('转为时间戳:', datetime.datetime.now().timestamp())
-print('timetuple:', datetime.datetime.now().timetuple())
+print('转为时间元组timetuple:', datetime.datetime.now().timetuple())
 print('某月天数:', calendar.monthrange(2022, 11), (datetime.date(2022, 10, 1) - datetime.date(2022, 9, 1)).days)
 
 # 6.计算时间差

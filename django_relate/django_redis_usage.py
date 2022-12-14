@@ -33,5 +33,11 @@ conn.set(key,json.dumps(value),ex=60)
 set cache value
 expire cache 100  # 设置过期时间100秒
 ttl cache        # 查看剩余过期时间
-"""
 
+
+# redis相关命令
+redis.conf:daemonize yes # 后台启动
+redis-server /etc/redis/redis.conf
+
+
+"""

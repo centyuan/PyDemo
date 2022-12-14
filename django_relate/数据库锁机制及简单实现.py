@@ -49,7 +49,7 @@ innodb中表锁和行锁一起用，所以为了提高效率才会有意向锁�
 # 行级锁
 # 使用select_for_update(nowait=False, skip_locked=False)
 # Entry.objects.select_for_update().filter(author=request.user)
-# select_for_update与select_related时，相关对象也被锁定,select_for_update具有“of”选项，用于显式地声明要锁定查询中的哪些表
+# select_for_update相关对象也被锁定,select_for_update具有“of”选项，用于显式地声明要锁定查询中的哪些表
 # 加互斥锁，由于mysql在查询时自动加的是共享锁，所以我们可以手动加上互斥锁。create、update、delete操作时，mysql自动加行级互斥锁
 # (ps:注意必须用在事务里面,所有的匹配行将被锁定,直到事务结束.这意味着可以通过锁防止数据被其他事务修改)
 
