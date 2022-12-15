@@ -1,5 +1,10 @@
 ###redis相关命令###
 ## redis是单线程+多路IO复用技术
+
+管道（pipeline）
+redis默认在执行每次请求都会创建（连接池申请连接）和断开（归还连接池）一次连接操作，
+如果想要在一次请求中指定多个命令，则可以使用pipline实现一次请求指定多个命令，并且默认情况下一次pipline 是原子性操作。
+管道（pipeline）是redis在提供单个请求中缓冲多条服务器命令的基类的子类。它通过减少服务器-客户端之间反复的TCP数据库包，从而大大提高了执行批量命令的功能。
 #多实例关闭,指定端口关闭:redis-cli -p 6379 shutdown
 修改redis.conf:daemonize yes # 后台启动
 redis-server /etc/redis/redis.conf

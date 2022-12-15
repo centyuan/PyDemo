@@ -1,7 +1,9 @@
 import asyncio
 import aiohttp
 
-"""https://zhuanlan.zhihu.com/p/59621713"""
+"""
+https://zhuanlan.zhihu.com/p/59621713
+"""
 
 urls = [
     'http://www.163.com/',
@@ -12,6 +14,7 @@ urls = [
 
 async def get_http_data(url):
     async with semaphore:
+        # 创建一个
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as res:
                 global count

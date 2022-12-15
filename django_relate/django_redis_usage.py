@@ -23,21 +23,21 @@ redis_conn = get_redis_connection('default')
 redis_conn.setex(key,time,value)  # key 过期时间 value
 redis_conn.set('name','yyy')
 redis_conn.expire('name',60*60)
+redis_conn.delete('name')
 redis_conn.get('name')
 redis_conn.ttl('name')
 # 设置过期时间
 conn.set(key,json.dumps(value),ex=60)
 
 
-第三种 redis
-set cache value
-expire cache 100  # 设置过期时间100秒
-ttl cache        # 查看剩余过期时间
-
-
-# redis相关命令
-redis.conf:daemonize yes # 后台启动
-redis-server /etc/redis/redis.conf
-
+第三种 import redis
+import redis
+r = redis.StrictRedis(host='localhost',port=6379,db=0)
+# decode_responses 将redis取出来的字节改成字符串
+r = redis.Redis(host='localhost',port=6379,decode_responses=True)
+pool = redis.ConnectionPool(host='localhost',db=3)
+r = redis.Redis(connection_pool=pool)
+r.keys('foo*') # 模糊匹配
 
 """
+
