@@ -1,6 +1,7 @@
 """
 aiohttp:Async HTTP client/server for asyncio and Python
 用于异步和Python的异步HTTP客户端/服务器
+grequests:request+gevent
 """
 import asyncio
 import aiohttp
@@ -35,15 +36,34 @@ loop.run_until_complete(task)
 async def get_streaming_data(url):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as res:
-            print('res.content:',res.content)
-            print('await res.conten.read():',res.content.read())
-            with open('test.txt','wb') as f:
+            print('res.content:', res.content)
+            print('await res.conten.read():', res.content.read())
+            with open('test.txt', 'wb') as f:
                 while 1:
                     chunk = await res.content.read()
                     if not chunk:
                         break
                     f.write(chunk)
 
+
 loop = asyncio.get_event_loop()
 task = loop.create_task(get_streaming_data('https://api.github.com/events'))
 loop.run_until_complete(task)
+
+# 3.grequests
+print('grequests:----------------------------')
+import grequests
+
+
+def err_handler(request, exception):
+    print('请求出错', exception)
+
+req_list = [
+    grequests.get('http://httpbin.org/get'),
+    grequests.post('http://httpbin.org/post'),
+    grequests.get('http://httpbin.org/get'),
+]
+# gtimeout:整体超时时间,exception_handler:异常处理
+res_list = grequests.map(req_list,exception_handler=err_handler,gtimeout=5)
+for item in res_list:
+    print(item.text)

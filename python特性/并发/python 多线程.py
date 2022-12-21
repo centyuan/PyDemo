@@ -4,9 +4,8 @@
 # @time 19-4-10 上午9:18
 """
 1.常用的多线程模块
-_thread(python2 thread,ps:thread在python2中3中改为_thread)
+_thread:python3(python2为thread)
 threading 推荐使用
-Queue
 thread提供了低级别的、原始的线程以及一个简单的锁。_thread有的，threading都有，
 
 2.可以使用 ThreadPoolExecutor 来实现线程池
@@ -31,8 +30,11 @@ except:
 # 方式2 threading.Thread 建议采用
 """
 threading.currentThread() 返回当前线程变量
-threading.enumerate() 返回一个包含正在运行线程的list
-threading.activeCount() 返回正在运行的线程数量 = len(threading.enumerate())
+threading.enumerate() 返回当前存在的所有线程对象的列表
+threading.active_count() 返回正在运行的线程数量 = len(threading.enumerate())
+threading.current_thread() 返回当前线程对象
+threading.get_ident() 返回线程pid
+threading.main_thread() 返回主线程对象
 run()
 start()    # 创建好一个线程对象后，该对象并不会立即执行,除非调用它的start()方法
 join()     # 等待至线程中止,对于需要长时间运行的线程或需要一直运行的的后台任务,考虑使用后台线程:Thread(target=countdown, args=(10,), daemon=True)
@@ -40,8 +42,6 @@ isAlive() 返回线程是否活动的
 getName()返回线程名
 setName()设置线程名
 """
-
-
 
 class MyThread(threading.Thread):
     def __init__(self, thread_id, name, counter):
