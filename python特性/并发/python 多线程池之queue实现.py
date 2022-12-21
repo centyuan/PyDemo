@@ -1,15 +1,18 @@
-#！/usr/bin/python3
-# -*- coding:utf-8 -*-
-# author centyuan
-# @time 19-4-11 下午6:27
-##用一个叫做 Queue 的队列来创建线程池
-
 import threading
 import time
 from queue import Queue
+"""
+四种线程池实现方式
+1.from multiprocessing.dummy import Pool as ThreadPool  # 线程池
+2.from multiprocessing.pool import ThreadPool  # 线程池，用法无区别，唯一区别这个是线程池
+3.from concurrent.futures import ThreadPoolExecutor  # python原生线程池，这个更主流
+4.import threadpool  # 线程池，需要 pip install threadpool，很早之前的
+"""
+""" 用一个叫做 Queue 的队列来创建线程池 """
+
 
 class CustomThread(threading.Thread):
-    def __init__(self,queue):
+    def __init__(self, queue):
         threading.Thread.__init__(self)
         self.queue = queue
 
@@ -19,9 +22,11 @@ class CustomThread(threading.Thread):
             q_method()
             self.queue.task_done()
 
+
 def moyu():
     print(" 开始摸鱼 %s" % (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
     time.sleep(3)
+
 
 def queue_pool():
     queue = Queue(5)
@@ -58,4 +63,3 @@ example:
 usage:开启守护线程，同时给join设置超时
 result:超时未处理完毕的子线程将被直接终止
     """
-

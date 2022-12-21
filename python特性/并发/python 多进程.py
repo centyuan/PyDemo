@@ -1,9 +1,6 @@
-# ！/usr/bin/python3
-# -*- coding:utf-8 -*-
-# author centyuan
-# @time 19-7-3 下午2:07
-from concurrent.futures.process import ProcessPoolExecutor
-from multiprocessing import Process, Pool,synchronize
+from concurrent.futures import ProcessPoolExecutor
+# from concurrent.futures.process import ProcessPoolExecutor
+from multiprocessing import Process, Pool, synchronize
 # synchronize包含一些同步原语:Lock、Condition、Semaphore、Event
 import time, random, os
 
@@ -68,16 +65,18 @@ def main3():
     ps.join()  # 调用join()方法会等待所有子进程执行完毕在向下执行,调用join()之前必须先调用close()  # 等待子进程结束, 阻塞父进程
     print("主进程终止")
 
+
 # 4. ProcessPoolExecutor  进程池
-def task_(sleep_sec=10,tag='test'):
+def task_(sleep_sec=10, tag='test'):
     print('[%s] start sleep' % tag)
     time.sleep(sleep_sec)
     print('[%s] finish sleep' % tag)
     return 100
 
+
 def main4():
     process_pool = ProcessPoolExecutor(max_workers=3)
-    future = process_pool.submit(task_,3,tag='TEST')
+    future = process_pool.submit(task_, 3, tag='TEST')
     ret = future.result()
     print('result is %s' % str(ret))
     process_pool.shutdown()
