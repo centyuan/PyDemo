@@ -40,8 +40,7 @@ isAlive() 返回线程是否活动的
 getName()返回线程名
 setName()设置线程名
 """
-# 同步锁 
-lock = threading.Lock()
+
 
 
 class MyThread(threading.Thread):

@@ -3,7 +3,8 @@
 # author centyuan
 # @time 19-7-3 下午2:07
 from concurrent.futures.process import ProcessPoolExecutor
-from multiprocessing import Process, Pool
+from multiprocessing import Process, Pool,synchronize
+# synchronize包含一些同步原语:Lock、Condition、Semaphore、Event
 import time, random, os
 
 
