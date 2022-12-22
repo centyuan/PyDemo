@@ -1,0 +1,10 @@
+"""
+一般有三种方式:
+1.multiprocessing.Queue()
+2.multiprocessing.Pipe()
+3.multiprocessing.Manager()
+python中一共有三个Queue:
+1.queue.Queue(),用于线程间通信
+2.multiprocessing.Queue(),用于进程间通信
+3.multiprocessing.Manager().Queue(),用于使用进程池创建的进程通信
+"""
