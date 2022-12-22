@@ -30,6 +30,7 @@ SET PASSWORD FOR 'username'@'host' = PASSWORD('newpassword');
 #创建数据库并设置字符集和排序规则
 create database data_name;
 CREATE DATABASE maoyandb CHARACTER SET utf8 COLLATE utf8_general_ci;（或者：create database maoyandb charset utf8;）
+CREATE DATABASE caseadmin_new CHARACTER SET utf8 COLLATE utf8_general_ci
 #删除数据库
 drop database data_name;
 #mysql 数据类型：大致三种->数值 日期/时间 字符串(字符)
@@ -96,10 +97,14 @@ mysqldump -u root -p dbname users>dbname_users.sql
 SELECT * FROM runoob_tbl  INTO OUTFILE '/var/lib/mysql-files/Dbug_manangement.txt';
 
 # 3.导入备份的整个数据库
-mysql -u root -p < Detector.sql
-mysql>source /home/abc/abc.sql
+mysql -u root -p < Detector.sql     # 需要再sql文件创建或指定数据库
+mysql>source /home/abc/abc.sql      # 进入数据库下use Detector
 # 4.插入数据到某个表
-load data local infile "/data/Dfishsite.sql" into table fishsite;
+load data local infile "/var/lib/mysql-files/CaseUrl.sql" into table CaseUrl;
+load data local infile "/var/lib/mysql-files/CaseUrl.sql" into table CaseUrl
+(id,name, url, status_code, result, processresult, proposal,@create_time,test_time,case_id) FIELDS TERMINATED BY ', '
+set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
+
 
 
 
