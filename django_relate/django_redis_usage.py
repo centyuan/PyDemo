@@ -63,8 +63,9 @@ pipe.incr('num')
 import redis
 from redis import WatchError
 from concurrent.futures import ProcessPoolExecutor
+pool = redis.ConnectionPool(host='localhost',db=3)
 
-r = redis.Redis(host='127.0.0.1', port=6379)
+r = redis.Redis(host='127.0.0.1', port=6379,connection_pool=pool)
 
 
 def decr_stock():
@@ -75,23 +76,31 @@ def decr_stock():
     with r.pipeline() as pipe:
         while 1:
             try:
-                # watch库存键, multi后如果该key被其他客户端改变, 事务操作会抛出WatchError异常
+                # 1.watch库存键, 监视一个(或多个) key ，如果在事务执行之前这个(或这些) key 被其他命令所改动，那么事务将被打断。
                 pipe.watch('stock_count')
                 count = int(pipe.get('stock_count'))
                 if count > 0:
                     # 有库存
-                    pipe.multi()  # 事务开始位置
+                    # 2.开始事务
+                    pipe.multi()
+                    # 3.命令入队(命令入队时失败,其他命令都不执行)
                     pipe.decr('stock_count')
+                    # 4.执行事务 discard取消事务
                     # execute返回命令执行结果列表, 这里只有一个decr返回当前值
                     print(pipe.execute()[0])
                     return True
                 else:
                     # 无库存
+                    pipe.unwatch()
+                    pipe.execute()
                     return False
-                pass
+                    # exec命令或discard命令先被执行了的话，就不需要再执行unwatch了
+
             except WatchError as e:
                 print(e)
+                # 5.取消 WATCH 命令对所有 key 的监视
                 pipe.unwatch()
+                pipe.execute()
 
 
 def worker():

@@ -188,7 +188,7 @@ teacher = np.dtype([('name',np.str,2),('age','i1'),('salary','f4')])
 b = np.array([('张老师',29,8789.50),
               ('邓老师',30,7856.90),
               ],dtype=teacher)
-print('结构化数据类型:',b)
 print('只取name,age:',b['name'],b['age'])
+print('结构化数据类型:',b)
 
 # 读取普通文件

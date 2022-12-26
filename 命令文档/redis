@@ -1,13 +1,27 @@
-###redis相关命令###
+###########################redis相关命令########################
 ## redis是单线程+多路IO复用技术
 
-管道（pipeline）
-redis默认在执行每次请求都会创建（连接池申请连接）和断开（归还连接池）一次连接操作，
-如果想要在一次请求中指定多个命令，则可以使用pipline实现一次请求指定多个命令，并且默认情况下一次pipline 是原子性操作。
+###redis事务###
+单独的隔离操作:事务在执行过程中,不会被其他客户端发送来的命令请求所打断,分为三个阶段:开始事务,命令入队,执行事务
+单个redis命令是原子性的,但redis没有在事务上增加任何维持原子性的机制,所以 Redis 事务的执行并不是原子性的，
+事务可以理解为一个打包的批量执行脚本(),但批量指令并非原子性的操作,中间某条指令的失败不会导致前面已做指令的回滚,也不会造成后续的指令不做。
+# 1.multi开启事务
+multi
+# 2.多个命令(入队时:命令失败,其他命令都不会执行)
+SET book_name "c++ plus"
+SADD tag "C++" "Programming" "Mastering Series"
+# 3. EXEC执行事务(执行时:命令失败,不影响其他命令)
+EXEC
+# discard 取消事务
+
+###管道（pipeline）###
+redis是一种基于客户端-服务端模型以及请求/响应协议的TCP服务,默认在执行每次请求都会创建（连接池申请连接）和断开（归还连接池）一次连接操作
+通常一个请求会遵循以下步骤:
+1.客户端向服务端发送一个请求,并监听Socket返回,通常是阻塞模式,等待服务响应
+2.服务端处理命令,并将结果返回客户端
 管道（pipeline）是redis在提供单个请求中缓冲多条服务器命令的基类的子类。它通过减少服务器-客户端之间反复的TCP数据库包，从而大大提高了执行批量命令的功能。
-#多实例关闭,指定端口关闭:redis-cli -p 6379 shutdown
-修改redis.conf:daemonize yes # 后台启动
-redis-server /etc/redis/redis.conf
+如果想要在一次请求中指定多个命令，则可以使用pipline实现一次请求指定多个命令，并且默认情况下一次pipline 是原子性操作。
+
 
 dbsize:查看当前数据库的key的数量
 flushdb:清空当前数据库
@@ -25,6 +39,7 @@ ttl  key :-1表示永不过期,-2表示已过期
 # 1.String 类型
 String类型是二进制安全的。意思是 redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象。string 类型是 Redis 最基本的数据类型，string 类型的值最大能存储 512MB
 String:底层的数据结构为简单的动态字符串,类型Java的ArrayList,pyton list在第一次append也会超额分配,来减少频繁的内存分配
+
 set cent bingxi
 # 设置范围内的值
 set range cent abc
@@ -61,6 +76,7 @@ decrby cent 10
 # List 是一个双向链表结构，单键多值,可以在头部或尾部插入数据性能高,操作中间值性能差
 List底层的数据结构为:quicklist 在列表元素较少的情况下会使用一块连续的内存存储(ziplist，压缩列表),将多个ziplist链起来组成链表
 :普通链表需要指针，比较浪费空间(只存int类型数据,结构上还要额外的prev,next)，redis List将多个ziplist使用双向指针串起来,即满足快速插入删除,又不会出现太大的空间冗余
+
 # 从左边插入一个或多个 ###从左边结果为n a u y
 lpush cent y u a n
 # 从右边插入一个或多个 ###从右边结果为y u a n
@@ -80,3 +96,124 @@ linsert cent after/before <value> <new_value>
 lset cent 2 newvalue
 #
 lrem <key> <n> <value>
+
+
+# 3.Hash是一个键值(field=>value)对映射表 特别适合用户存储对象,每个 hash 可以存储 232 - 1 键值对（40多亿）
+# 对应数据结构有两种,ziplist(压缩列表),hashtable(哈希表),当field-value长度较短个数较少,使用ziplist,否则使用hashtable
+当hash对象可以同时满足一下两个条件时，哈希对象使用ziplist编码：
+1.哈希对象保存的所有键值对的键和值的字符串长度都小于64字节
+2.哈希对象保存的键值对数量小于512个
+使用ziplist的优点:
+相比hashtable,ziplist结构减少了指针,节约了内存
+相比linklist,ziplist存储时内存分配是连续的,查询更快
+ziplist如何实现hash存储的:
+将同一个键值对的两个节点紧挨着保存,保存键的节点在前,保存值的节点在后,新加入的键值对,放在压缩列表表尾
+
+# 添加数据
+hset <key> <field> <value>
+# 取出数据
+hget <key> <field>
+# 批量设置多个值
+hmset <key> <field1> <value2> <field2> <value2>
+# 查看hash中field是否存在
+hexists <key> <field>
+# 查看hash中所有field
+hkeys <key>
+# 查看hash中所有value
+hvals <key>
+# hash对应field加上n
+hincrby <key> <field> n
+# 添加hash中对应field:当field不存在时
+hsetnx <key> <field> <value>
+
+
+# 4. Set集合
+# 和List类型,特殊是自动去重的,是string类型的无序集合,底层其实是一共value为null(所有value指向同一个内部值)的hash表即HashMap实现,
+#所有添加,查找,删除的复杂度都为O(1)
+
+# 添加，第二次插入相同元素将被忽略
+sadd <key> <value1> <value2>
+# 取集合所有值
+smembers <key>
+# 判断值是否在集合中,有返回,无返回0
+sismember <key> <value>
+# 返回集合元素个数
+scard <key>
+# 删除集合中某些值
+srem <key> <value1> <value2>
+# 随机吐出一个值
+spop <key>
+# 随机从集合取出n个值
+srandmember <key> n
+# 把集合中某个值移动到另一个集合
+smove <source> <destination> value
+# 返回两个集合的交集
+sinter <key1> <key2>
+# 返回两个集合并集
+sunion <key1> <key2>
+# 返回两个集合的差集,key1中的,不包含key2的
+sdiff <key1> <key2>
+
+
+# 5.Zset 有序集合和Set相似,不重复
+# Zset集合元素关联一个评分(score),score被用来从最低到最高排序,元素唯一,score可以重复
+#底层使用了两个结构:1.hash,关联value和权重score,保障元素value的唯一性,通过value可以找到score
+                2.跳跃表,在于给元素value排序,根据score范围获取元素列表
+# 添加元素
+zadd <key> <score1> <value1> <score2> <value2>
+# 取出所有值
+zrange <key> 0 -1
+# 取出值和评分
+zrange <key> 0 -1 withscores
+# 取出评分在min,max之间的值
+zrangebyscore <key> min max          # zrevrangebyscore 从大到小
+# 增加value对应的score n
+zincrby <key> n <value>
+# 删除
+zrem <key> <value>
+# 统计score在min,max之间元素个数
+zcount <key> min max
+# 返回value对应的排名 从0开始
+zrank <key> <value>
+
+# 6.redis6的新数据类型
+Bitmaps实现了对位的操作字符串
+# 设置值 key 偏移量
+setbit <key> offset 1
+# 取值
+getbit <key> offset
+
+HyperLogLog用来做基数统计
+Geospatial用来经纬度
+
+
+
+#####################redis发布和订阅#############################
+# 订阅频道
+subscribe channel_yuan
+# 推送消息到频道
+publish channel_yuan helloworld
+
+
+
+######################配置文件说明################################
+redis-server /etc/redis/redis.conf
+# 1.开启远程访问
+注释bind 127.0.0.1
+关闭保护模式:protected-mode no
+# 2.高并发提升客户端连接,改成更大的值
+# tcp-backlog未完成三次握手队列+已完成三次握手队列
+tcp-backlog 511
+# 3.连接超时配置 0为永不超时,秒为单位
+timeout 0
+# 4.tcp-keepalive
+# 300秒执行一次心跳检测,来决定是否释放连接
+tcp-keepalive 300
+# 5.设置密码
+requirepass 123456
+conig set requirepass 123456   # 命令设置
+# 6.设置客户端最大连接数
+maxclients 10000
+# 7.后台启动
+修改redis.conf:daemonize yes
+#多实例关闭,指定端口关闭:redis-cli -p 6379 shutdown
