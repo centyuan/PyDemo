@@ -60,6 +60,12 @@ pipe.incr('num')
 
 """
 # 四.库存秒杀案例
+"""
+三个问题
+1.连接超时？使用连接池
+2.并发问题? 乐观锁,使用事务watch multi
+3.库存遗留? 乐观锁造成库存遗留,lua封装多个命令或使用pipeline
+"""
 import redis
 from redis import WatchError
 from concurrent.futures import ProcessPoolExecutor

@@ -187,6 +187,10 @@ HyperLogLog用来做基数统计
 Geospatial用来经纬度
 
 
+#####################redis持久化方案RDB-AOF#############################
+AOF备份文件异常恢复:
+appendonly no 改为yes
+redis-check-aof--fix appendonly.aof 进行恢复
 
 #####################redis发布和订阅#############################
 # 订阅频道
@@ -217,3 +221,20 @@ maxclients 10000
 # 7.后台启动
 修改redis.conf:daemonize yes
 #多实例关闭,指定端口关闭:redis-cli -p 6379 shutdown
+
+####################Redis集群#######################
+1.主从复制
+2.哨兵
+3.Cluster
+
+1.主从
+#1.创建/myredis文件夹
+#2.创建redis6379.conf,redis6380.conf,redis6381.conf
+#3.修改各自配置文件
+include /myredis/redis.conf
+pidfile /var/run/redis_6379.pid
+port 6379
+dbfilename dump6379.rdb
+#4.启动几个redis redis-server /myredis/redis6379.conf
+#5.查看主从情况:info replication
+#6.设置主从:slaveof 127.0.0.1 6379
