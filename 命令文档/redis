@@ -20,8 +20,11 @@ redis是一种基于客户端-服务端模型以及请求/响应协议的TCP服�
 1.客户端向服务端发送一个请求,并监听Socket返回,通常是阻塞模式,等待服务响应
 2.服务端处理命令,并将结果返回客户端
 管道（pipeline）是redis在提供单个请求中缓冲多条服务器命令的基类的子类。它通过减少服务器-客户端之间反复的TCP数据库包，从而大大提高了执行批量命令的功能。
-如果想要在一次请求中指定多个命令，则可以使用pipline实现一次请求指定多个命令，并且默认情况下一次pipline 是原子性操作。
+如果想要在一次请求中指定多个命令，则可以使用pipline实现一次请求指定多个命令,不具有原子性
 
+############Redis事务与pipeline区别##############
+pipeline选择客户端缓冲,multi选择服务端缓冲
+multi需要每个命令都发送一次服务端,pipeline最后一次发送服务端
 
 dbsize:查看当前数据库的key的数量
 flushdb:清空当前数据库
@@ -40,6 +43,8 @@ ttl  key :-1表示永不过期,-2表示已过期
 String类型是二进制安全的。意思是 redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象。string 类型是 Redis 最基本的数据类型，string 类型的值最大能存储 512MB
 String:底层的数据结构为简单的动态字符串,类型Java的ArrayList,pyton list在第一次append也会超额分配,来减少频繁的内存分配
 
+# nx上锁,ex设置过期时间
+set cent bingxi nx ex 20
 set cent bingxi
 # 设置范围内的值
 set range cent abc
@@ -221,13 +226,19 @@ maxclients 10000
 # 7.后台启动
 修改redis.conf:daemonize yes
 #多实例关闭,指定端口关闭:redis-cli -p 6379 shutdown
+# 8.哨兵模式配置优先级 值越小优先级越高
+slave-priority 100
 
-####################Redis集群#######################
+
+
+####################Redis集群#####################
 1.主从复制
 2.哨兵
 3.Cluster
 
-1.主从
+#1.主从(一主二从,薪火相传,反客为主)
+从服务挂了,重启之后变成master需要手动slaveof加入,然后会同步主服务器数据,主服务挂了,重启不影响主从之间关系
+从服务下还可以设置从服务,手动:slaveof no one主服务挂了,从服务变为主服务.
 #1.创建/myredis文件夹
 #2.创建redis6379.conf,redis6380.conf,redis6381.conf
 #3.修改各自配置文件
@@ -238,3 +249,61 @@ dbfilename dump6379.rdb
 #4.启动几个redis redis-server /myredis/redis6379.conf
 #5.查看主从情况:info replication
 #6.设置主从:slaveof 127.0.0.1 6379
+# 主从同步:
+1.第一次从服务连上主服务器后,向主服务器发送数据同步请求
+2.主服务器数据持久化到RDB文件,将RDB文件发送到从服务器进行同步
+3.每次主服务器写操作后,主动将数据同步到从服务器
+
+#2.哨兵模式
+1.选择优先级靠前的2.选择偏移量最大的(偏移量指获得原主机数据最全的)3.选择runid最小的从服务(Redis实例启动后随机生成一个40位的runid)
+# 创建sentinel.conf
+sentinel monitor mymaster 127.0.0.1 6379 1
+mymaster:为监控对象起的名称,1为至少有多少哨兵同意
+# 启动哨兵
+redis-sentinel /myredis/sentinel.conf
+
+
+#3.Cluster集群配置(16384个插槽,写入数据,计算key的插槽分配到对应主服务所在的插槽)
+# 集群实现扩容,集群不支持多键操作
+1. 每个redis.conf加上集群配置
+cluster-enabled yes                   # 打开集群
+cluster-config-file nodes-6379.conf   # 设置节点配置文件名
+cluster-node-timeout 15000            # 设置节点失联时间单位为毫秒,超过该时间,集群自动进行主从切换
+
+2.启动每个Redis实例 redis-server /myredis/redis.conf,确保nodes-xxxx.conf等文件都生成
+3.在redis src下执行依赖ruby环境,实现redis实例合成集群
+# 1.表示一主一从
+redis-cli --cluster create --cluster-replicas  1 ip:port ip2:port2
+# 集群连接-c
+redis-cli -c -p 6379
+# 查看集群状态
+cluster nodes
+# yes为某一段插槽的主从挂了,整个集群都挂掉.no为某一段插槽主从挂了,该插槽数据不能使用
+cluster-require-full-coverage yes
+
+
+################Redis缓存问题########################
+1.缓存穿透(访问大量缓存不存在的数据,缓存命中率降低了)
+一:对空值进行缓存,设置较短的过期时间
+二:通过bitmaps设置可访问的白名单
+三:使用布隆过滤器
+2.缓存击穿(某些热门key过期了)
+一:预先设置热门数据,设置较大的过期时间
+二:实时调整
+3.缓存雪崩(在极少时间段内,查询大量的key的集中过期情况)
+一:构建多级缓存架构
+二:将缓存失效时间分散开
+
+
+###############Redis分布式锁##########################
+互斥性,不会发送死锁,谁的锁谁解锁,加锁解锁保证原子性
+#nx设置锁,ex设置过期自动释放锁,delete手动释放锁
+set lock bingxi nx ex 20
+# 问题:某个操作超时,手动会误删其他操作的锁? uuid可以防止锁误删
+通过value的uuid来标识不同操作的锁,判断自己删自己的锁
+set lock uuid
+# 问题:(没有原子性)已经判断了uuid,正要手动delete正要删除时,锁过期时间到了自动删除了,其他操作获取到锁了,原来操作在删除会删除原来的锁
+使用lua脚本判断uuid在删除,保证原子性
+
+
+###############Redis ACL#############################

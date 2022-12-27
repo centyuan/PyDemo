@@ -64,7 +64,7 @@ pipe.incr('num')
 三个问题
 1.连接超时？使用连接池
 2.并发问题? 乐观锁,使用事务watch multi
-3.库存遗留? 乐观锁造成库存遗留,lua封装多个命令或使用pipeline
+3.库存遗留? 乐观锁造成库存遗留,(并发多个人乐观锁,发现版本号不一样,都不执行了)lua封装多个命令实现秒杀逻辑
 """
 import redis
 from redis import WatchError
@@ -72,13 +72,14 @@ from concurrent.futures import ProcessPoolExecutor
 pool = redis.ConnectionPool(host='localhost',db=3)
 
 r = redis.Redis(host='127.0.0.1', port=6379,connection_pool=pool)
-
+# from django_redis import get_redis_connection
+# r = get_redis_connection("default")
 
 def decr_stock():
     # 1.循环直到减库存操作完成
     # 2.库存充足,操作成功,返回True
     # 3.库存不足,操作失败,返回False
-    # 4.所有操作用管道,原子性
+    # 4.所有操作用管道
     with r.pipeline() as pipe:
         while 1:
             try:
