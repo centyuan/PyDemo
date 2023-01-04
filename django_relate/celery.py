@@ -168,3 +168,10 @@ CELERYD_CONCURRENCY = 4
 CELERYD_MAX_TASKS_PER_CHILD = 40
 # 表示Worker在任务执行完后才向Broker发送acks:处理异常,一个任务可能会多次执行
 CELERY_ACKS_LATE=True
+
+
+
+#########redis celery kombu版本问题
+# celery==4.4.2
+# redis==3.4.3
+# kombu==4.6.8

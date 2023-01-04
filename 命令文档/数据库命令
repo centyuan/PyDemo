@@ -18,9 +18,10 @@ insert into user (host,user,password,select_priv,insert_priv,update_priv) values
 #创建用户
 create user 'username'@'host' identified by 'password';
 create user 'username'@'%' identified by 'password';
-
 grant all on db_name.* to 'username'@'%';
+# 对db_name下所有表都有查询（SELECT）权限。
 grant select on db_name.* to 'username'@'%';
+# 对所有表有所有权限
 grant all on *.* to 'username'@'%';
 #删除用户
 drop user 'username'@'host';
@@ -68,11 +69,12 @@ SELECT * FROM user_tbl;
 UPDATE user_tbl set name = '李四' WHERE name = '张三';
 # 删除记录
 DELETE FROM user_tbl WHERE name = '李四' ;
-# 添加栏位
-ALTER TABLE user_tbl ADD email VARCHAR(40);
+
 # 更新结构
 alter table system_info modify column ip varchar(100)
 ALTER TABLE user_tbl ALTER COLUMN signup_date SET NOT NULL;
+# 添加栏位
+ALTER TABLE user_tbl ADD email VARCHAR(40);
 # 更名栏位
 ALTER TABLE user_tbl RENAME COLUMN signup_date TO signup;
 # 删除栏位
@@ -95,7 +97,7 @@ mysqldump -u root -p dbname>dbname.sql
 # 2.导出表 show variables like '%secure%'查看安全目录
 mysqldump -u root -p dbname users>dbname_users.sql
 SELECT * FROM runoob_tbl  INTO OUTFILE '/var/lib/mysql-files/Dbug_manangement.txt';
-
+SELECT * FROM users  INTO OUTFILE '/var/lib/mysql-files/users.sql';
 # 3.导入备份的整个数据库
 mysql -u root -p < Detector.sql     # 需要再sql文件创建或指定数据库
 mysql>source /home/abc/abc.sql      # 进入数据库下use Detector
