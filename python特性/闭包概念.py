@@ -1,4 +1,4 @@
-#！/usr/bin/python3
+# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-4-11 上午10:30
@@ -12,20 +12,32 @@
 如果外函数在结束的时候发现有自己的临时变量将来会在内部函数中用到，就把这个临时变量绑定给了内部函数，然后自己再结束。
 """
 
-def outer(a):
-    b=10
-    def inner():
-        print(a+b)
+
+def outer():
+    b = 10
+
+    def inner(a):
+        # nonlocal b的值会一直保持
+        nonlocal b
+        print("b的值=:",b)
+        b +=a
+        print("b+=a的值:",b)
+        print("a+b的值:",a + b)
+
     return inner
 
 
-
-if __name__=='__main__':
-    demo=outer(6)
-    demo()
-#demo存了外函数的返回值，也就是inner函数的引用，这里相当于执行inner函数
-#函数结束的时候发现内部函数将会用到自己的临时变量，这两个临时变量就不会释放，会绑定给这个内部函数
-#一个函数，如果函数名后紧跟一对括号，相当于现在我就要调用这个函数，
+if __name__ == '__main__':
+    demo = outer()
+    demo(10)
+    demo(10)
+    demo(10)
+    print("================")
+    demo = outer()
+    demo(100)
+    demo(100)
+# demo存了外函数的返回值，也就是inner函数的引用，这里相当于执行inner函数
+# 函数结束的时候发现内部函数将会用到自己的临时变量，这两个临时变量就不会释放，会绑定给这个内部函数
+# 一个函数，如果函数名后紧跟一对括号，相当于现在我就要调用这个函数，
 # 如果不跟括号，相当于只是一个函数的名字，里面存了函数所在位置的引用。
-import random
-print(random.randint(2,3))
+
