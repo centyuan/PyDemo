@@ -7,7 +7,7 @@
 导入一个模块时,Python解析器对模块位置的搜索顺序是：
 首先判断这个module是不是built-in即内建模块，如果是则引入内建模块，不是则搜索sys.path中的路径列表
 1.当前目录
-2.PYTHONPAATH中的每个目录。
+2.PYTHONPATH中的每个目录。
 3.Python默认的安装目录
 模块搜索路径存储在system模块的sys.path变量中。变量里包含当前目录，PYTHONPATH和由安装过程决定的默认目录。
 
