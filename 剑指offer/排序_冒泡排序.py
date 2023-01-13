@@ -6,9 +6,16 @@
 时间复杂度:O(n平方), 稳定
 """
 
+
 def bubble_sort(arr):
-    for i in range(len(arr)-1):
-        for j in range(len(arr)-1-i):
-            if arr[j] > arr[j+1]:
-                arr[j],arr[j+1] = arr[j+1],arr[j]
+    for i in range(len(arr) - 1):
+        flag = True
+        for j in range(len(arr) - 1 - i):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                flag = False
+        # 没有比后一个大的提前结束循环
+        if flag:
+            break
+
     return arr
