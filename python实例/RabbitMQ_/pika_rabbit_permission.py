@@ -31,20 +31,23 @@ class Rabbitmq_producer(object):
         self.rbt_connection()
 
     def rbt_connection(self):
-        # hosts = "127.0.0.1"
-        # hosts = "192.168.8.29"
-        hosts = "192.168.8.28"
-        # hosts = "192.168.8.170"
+        hosts = "43.136.217.222"
         host = hosts
         print("连接参数", self.user, self.pwd, self.port, host)
         credential = pika.PlainCredentials(self.user, self.pwd)
         try:
-            pid = pika.ConnectionParameters(host, self.port, 'vhost_hc', credential)
+            # 1.配置连接参数及认证
+            pid = pika.ConnectionParameters(host, self.port, '/', credential)
+            # 2.创建连接
             connection = pika.BlockingConnection(pid)
+            # 3.创建channel通道
             self.channel = connection.channel()
             # self.channel.exchange_declare(exchange='first', exchange_type='fanout',auto_delete=False)
+            # 4.创建交换机exchange,参数说明:durable是否持久化,auto_delete是否自动删除
             self.channel.exchange_declare(exchange='first', exchange_type='topic',auto_delete=False)
+            # 5.创建队列queue
             self.channel.queue_declare(queue='first_queue',auto_delete=False)
+            # 6.绑定exchange和queue
             self.channel.queue_bind(exchange='first', queue='first_queue')
             print("____________channel:", self.channel)
             return self.channel
@@ -99,14 +102,12 @@ class Rabbitmq_consumer(object):
 
     def rbt_connection(self):
         # 从配置文件中获取数据
-        # hosts = "127.0.0.1"
-        hosts = "192.168.8.28"
-        # hosts = "192.168.8.170"
+        hosts = "43.136.217.222"
         host = hosts
         print("连接参数", self.user, self.pwd, self.port, host)
         credential = pika.PlainCredentials(self.user, self.pwd)
         try:
-            pid = pika.ConnectionParameters(host, self.port, 'vhost_hc', credential)
+            pid = pika.ConnectionParameters(host, self.port, '/', credential)
             connection = pika.BlockingConnection(pid)
             self.channel = connection.channel()
             self.channel.exchange_declare(exchange='first2', exchange_type='fanout')
@@ -138,12 +139,13 @@ class Rabbitmq_consumer(object):
 
 if __name__ == '__main__':
     print("生产者")
-    rabbitmq = Rabbitmq_producer("hc", "n7pzv8k58re6")
+    # rabbitmq = Rabbitmq_producer("hc", "n7pzv8k58re6")
+    rabbitmq = Rabbitmq_producer("admin", "abc123yuan")
     rabbitmq.publish(["123"])
     time.sleep(3)
-    print("消费者")
-    rabbitmq = Rabbitmq_consumer("hc", "n7pzv8k58re6")
-    rabbitmq.consume()
+    # print("消费者")
+    # rabbitmq = Rabbitmq_consumer("hc", "n7pzv8k58re6")
+    # rabbitmq.consume()
 
 """
 用户仅能对其所能访问的virtual hosts中的资源进行操作。这里的资源指的是virtual hosts中的exchanges、queues等，

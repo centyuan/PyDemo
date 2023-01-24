@@ -1,7 +1,3 @@
-#！/usr/bin/python3
-# -*- coding:utf-8 -*-
-# author centyuan
-# @time 19-9-15 下午10:59
 import pika
 import sys
 
