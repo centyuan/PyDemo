@@ -1,17 +1,18 @@
-"""
-rabbitmq的工作模式:
+###rabbitmq的工作模式:
 1.simple模式一对一:producer -> queue -> consumer
-2.worker工作模式一对多:producer ->quee ->consumer1,consumer2,consumer3
+2.worker工作模式一对多:producer ->queue ->consumer1,consumer2,consumer3
 高并发情况下,默认会产生某一个消息被多个消费者共同使用,可以设置一个开关(syncronize) 保证一条消息只能被一个消费者使用
 3.发布订阅模式(publish/subscribe)
 4.routing路由模式:
-5.topic主题模式:
-exchange有多个种类：
+5.topic主题模式:#(代表0,1,多个),*(至少有一个)
+###exchange有多个种类：
 常用的有direct,fanout,topic,headers
+(fanout)1:N,Exchange不需要处理Route key,把消息路由到与该Exchange绑定Binding的所有Queue
+(topic)N:1,多个exchange路由到同一个queue,根据routing key的模糊匹配
+(headers):不依赖routing key和binding key的匹配规则来路由消息,根据发送的消息内容中的headers属性(及参数)进行匹配
 (direct)1:1,把消息路由到那些binding key与routing key完全匹配的Queue中
 direct Exchange是RabbitMQ Broker的默认Exchange它有一个特别的属性对一些简单的应用来说是非常有用的，
 在使用这个类型的Exchange时,可以不必指定routing key的名字,在此类型下创建的Queue有一个默认的routing key,这个routing key一般同Queue同名。
-(fanout)1:N,Exchange不需要处理Route key,把消息路由到与该Exchange绑定Binding的所有Queue
-(topic)N:1,多个exchange路由到同一个queue,根据routing key的模糊匹配
-(headers):不依赖routing key和binding key的匹配规则来路由消息,根据发送的消息内容中的headers属性进行匹配
-"""
+###woker模式:消息的轮询分发和公平分发(使用默认的direct的exchange)
+轮询分发(默认):autoAck必须采用自动应答,
+公平分发(能者多劳):必须采用手动应答和定义指标qos(一次取多少条消息)=1

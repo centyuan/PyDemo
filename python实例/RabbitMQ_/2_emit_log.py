@@ -7,7 +7,7 @@ params = pika.ConnectionParameters("43.136.217.222","5672","/",credential)
 connection = pika.BlockingConnection(params)
 # 2.创建通道
 channel = connection.channel()
-# 3.创建交换机 fanout广播模式,所以绑定的queue都能收到消息
+# 3.创建交换机 fanout广播模式,所有绑定的queue都能收到消息
 channel.exchange_declare(exchange='logs',exchange_type='fanout')
 message = ' '.join(sys.argv[1:]) or "info: Hello World!"
 channel.basic_publish(exchange='logs', routing_key='',body=message)

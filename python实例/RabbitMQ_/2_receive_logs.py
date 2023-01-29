@@ -7,8 +7,8 @@ params = pika.ConnectionParameters("43.136.217.222","5672","/",credential)
 connection = pika.BlockingConnection(params)
 # 2.创建通道channel
 channel = connection.channel()
-# 3.创建交换机exchange
-channel.exchange_declare(exchange='logs',exchange_type='fanout')  # 广播模式
+# 3.创建交换机exchange,durable是否持久化(指交换机会不会随着服务重启造成丢失)
+channel.exchange_declare(exchange='logs',exchange_type='fanout',durable=True)  # 广播模式
 # 4.创建queue
 result = channel.queue_declare(queue='logs_queue')
 queue_name = result.method.queue
