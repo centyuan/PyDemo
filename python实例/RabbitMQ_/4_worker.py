@@ -1,18 +1,16 @@
-#！/usr/bin/python3
-# -*- coding:utf-8 -*-
-# author centyuan
-# @time 19-9-15 下午8:02
-
 import pika
 import time
-
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
-
+# 1.创建连接
+# connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+credential = pika.PlainCredentials("admin","abc123yuan")
+params = pika.ConnectionParameters("43.136.217.222",5672,"/",credential)
+connection = pika.BlockingConnection(params)
+# 2.创建通道
 channel = connection.channel()
-
+# 3.创建queue
 channel.queue_declare(queue='task_queue')
 print('[*] wait for messages. To exit press CTRL+C')
-
+# 4.回调函数
 def callback(ch,method,properties,body):
     print('[x] Received %r'%(body))
     print(type(body))
