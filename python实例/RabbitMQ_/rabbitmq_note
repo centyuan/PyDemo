@@ -16,3 +16,38 @@ direct Exchange是RabbitMQ Broker的默认Exchange它有一个特别的属性对
 ###woker模式:消息的轮询分发和公平分发(使用默认的direct的exchange)
 轮询分发(默认):autoAck必须采用自动应答,
 公平分发(能者多劳):必须采用手动应答和定义指标qos(一次取多少条消息)=1
+
+
+###死信队列:
+1.消息过期
+2.消息被拒绝
+3.队列达到最大长度
+rabbitmq内存磁盘监控
+# 内存使用超过配置的阈值,或磁盘剩余空间低于配置的阈值会警告,rabbitmq连接会被挂起
+rabbitmqctl set_vm_memory_high_watermark.relative=0.4-0.6
+rabbitmqctl set_vm_memory_high_watermark.absolute=2GB
+rabbitmqctl set_disk_free_limit 100GB
+# 内存换页,内存使用率达到一定值,将内存中数据转入磁盘中
+vm_memory_high_watermark_paging_ratio=0.7
+
+###rabbitmq集群搭建
+1.停止rabbitmq服务
+2.启动第一个节点
+sudo RABBITMQ_NODE_PORT=5672 RABBITMQ_NODENAME=rabbit-1 rabbit-server start &
+3.启动第二个节点
+sudo RABBITMQ_NODE_PORT=5673 RABBITMQ_SERVER_START_ARGS="-rabbitmq_management listener [{port,15673}]" RABBITMQ_NODENAME=rabbit-2 rabbitmq-server start &
+4.修改rabbit-1为主节点
+ sudo rabbitmqctl -n rabbit-1 stop_app  # 1.停止应用
+ sudo rabbitmqctl -n rabbit-1 reset     # 2.重置,清除节点上的历史数据(否则无法加入节点)
+ sudo rabbitmqctl -n rabbit-1 start_app # 3.启动应用
+5.修改rabbit-2为从节点
+ sudo rabbitmqctl -n rabbit-2 stop_app
+ sudo rabbitmqctl -n rabbit-2 reset
+ sudo rabbitmqctl -n rabbit-2 join_cluster rabbit-1@主机名
+ sudo rabbitmqctl -n rabbit-2 start_app
+6.验证集群状态
+sudo rabbitmqctl cluster_status -n rabbit-1
+
+### rabbitmq消息确认机制
+1.生产者发送消息确认分为:Confirm消息确认和Return消息机制
+2.消费者采用ack模式
