@@ -1,9 +1,15 @@
 from collections import deque
 
 """
-collections.deque 类（双向队列）是一个线程安全、可以快速从两端添加或者删除元素的数据类型
-列表.append 或 .pop(0)模拟栈的先进先出,会非常耗时,牵扯到移动列表里的所有元素 
+python标准库包含四种队列:
+queue.Queue
+asyncio.Queue
+multiprocessing.Queue
+collections.deque
 """
+# collections.deque 类（双向队列）是一个线程安全、可以快速从两端添加或者删除元素的数据类型
+# 相比list有更低的时间和空间复杂度,list.append 或 .pop(0)模拟栈的先进先出,会非常耗时,牵扯到移动列表里的所有元素
+# deque既可以表示队列也可以表示栈
 
 dq = deque(range(10), maxlen=10)  # maxlen 可容纳元素的数量
 print(dq)   #    deque([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], maxlen=10)
