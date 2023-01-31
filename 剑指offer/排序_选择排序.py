@@ -8,13 +8,15 @@
 数据规模越小越好。唯一的好处可能就是不占用额外的内存空间了吧。
 """
 
+
 def selection_sort(arr):
-    for i in range(len(arr)-1):
+    for i in range(len(arr) - 1):
         minindex = i
-        for j in range(i+1,len(arr)):
-            if arr[j]<arr[minindex]:
+        for j in range(i + 1, len(arr)):
+            # 找每个后面最小值
+            if arr[j] < arr[minindex]:
                 minindex = j
-        # 如果i不是最小的,就交换
-        if minindex !=i:
-            arr[i],arr[minindex] = arr[i],arr[minindex]
+            # 如果i不是最小的,交换
+            if minindex != i:
+                arr[i], arr[minindex] = arr[minindex], arr[i]
     return arr

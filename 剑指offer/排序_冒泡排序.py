@@ -14,8 +14,7 @@ def bubble_sort(arr):
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
                 flag = False
-        # 没有比后一个大的提前结束循环
+        # 没有提前结束
         if flag:
             break
-
     return arr
