@@ -1,16 +1,16 @@
-#！/usr/bin/python3
-# -*- coding:utf-8 -*-
-# author centyuan
-# @time 19-9-15 下午10:59
-
 import pika
 import sys
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host='localhost'))
+# 1.创建连接
+# connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+credential = pika.PlainCredentials("admin","abc123yuan")
+params = pika.ConnectionParameters("43.136.217.222",5672,"/",credential)
+connection = pika.BlockingConnection(params)
 channel = connection.channel()
+# 2.创建一个direct类型的exchange
 channel.exchange_declare(exchange='direct_logs',
                          type='direct')
+# 3.创建一个queue
 result = channel.queue_declare(exclusive=True)
 queue_name = result.method.queue
 

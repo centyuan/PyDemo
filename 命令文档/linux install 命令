@@ -52,7 +52,7 @@ apt-cache search string  在软件列表中搜索字符串
 apt-cache showpkg pkgs  显示软件包信息
 apt-cache stats  查看库里有多少软件
 apt-cache packagename  打印软件库里面所有的软件列表
-
+apt-cache madison rabbitmq-server 查看rabbitmq-server可安装的版本
  1.1、安装软件       sudo apt install 软件名
 
  1.2、卸载软件      sudo  apt remove  软件名
