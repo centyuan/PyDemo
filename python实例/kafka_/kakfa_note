@@ -1,0 +1,11 @@
+#1.配置内网ip vim config/server.properties
+listeners=PLAINTEXT://10.0.0.11::9092
+#2.配置外网连接
+advertised.listeners=PLAINTEXT:ip:9092
+#3.后台运行
+nohup kafka-server-start.sh config/server.properties 2>&1 &
+#4.添加环境变量
+vim ~/.bashrc
+export KAFKA_HOME=/home/lighthouse/kafka_2.12-3.3.2
+export PATH=$KAFKA_HOME/bin:$PATH
+#5.

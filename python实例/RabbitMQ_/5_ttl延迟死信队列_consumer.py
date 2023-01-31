@@ -22,6 +22,6 @@ channel.queue_bind(queue="dead_queue", exchange="dead_exchange", routing_key="de
 # 1.自动ack
 # channel.basic_consume(on_message_callback=call_back,queue="dead_queue",auto_ack=True)
 # 2.手动ack
-channel.basic_consume(on_message_callback=call_back,queue="dead_queue",auto_ack=False)
+channel.basic_consume(on_message_callback=call_back,queue="dead_queue",auto_ack=False,)
 channel.start_consuming()
 
