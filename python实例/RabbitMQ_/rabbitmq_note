@@ -14,7 +14,7 @@
 direct Exchange是RabbitMQ Broker的默认Exchange它有一个特别的属性对一些简单的应用来说是非常有用的，
 在使用这个类型的Exchange时,可以不必指定routing key的名字,在此类型下创建的Queue有一个默认的routing key,这个routing key一般同Queue同名。
 ###woker模式:消息的轮询分发和公平分发(使用默认的direct的exchange)
-轮询分发(默认):autoAck必须采用自动应答,
+轮询分发(默认):!!!autoAck必须采用自动应答,
 公平分发(能者多劳):必须采用手动应答(手动ack)和定义指标qos(一次取多少条消息)=1
 
 
@@ -22,6 +22,7 @@ direct Exchange是RabbitMQ Broker的默认Exchange它有一个特别的属性对
 1.消息过期
 2.消息被拒绝
 3.队列达到最大长度
+
 rabbitmq内存磁盘监控
 # 内存使用超过配置的阈值,或磁盘剩余空间低于配置的阈值会警告,rabbitmq连接会被挂起
 rabbitmqctl set_vm_memory_high_watermark.relative=0.4-0.6
@@ -49,7 +50,7 @@ sudo RABBITMQ_NODE_PORT=5673 RABBITMQ_SERVER_START_ARGS="-rabbitmq_management li
 sudo rabbitmqctl cluster_status -n rabbit-1
 
 ### rabbitmq消息确认机制
-1.生产者发送消息确认分为:Confirm消息确认和Return消息机制
+1.生产者发送消息确认分为:Confirm消息确认(将信道设置成Confirm模式)和Return消息机制
 2.消费者采用ack模式
 
 ### exclusive
@@ -64,3 +65,8 @@ exchange和queue:通过durable参数设置
 消息:通过properties = pika.BasicProperties(delivery_mode=2)设置
 设置了队列和消息持久化后，当服务重启之后，消息仍然存在。只设置队列持久化，不设置消息持久化，重启之后消息会丢失；只设置消息持久化，
 不设置队列持久化，在服务重启后，队列会消失，从而依附于队列的消息也会丢失。只设置消息持久化而不设置队列的持久化，毫无意义。
+
+### mandatory
+当消息无法找到对应的queue时
+mandatory ：true 返回消息给生产者
+mandatory: false 直接丢弃
