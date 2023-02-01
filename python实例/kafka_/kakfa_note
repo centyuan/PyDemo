@@ -8,4 +8,11 @@ nohup kafka-server-start.sh config/server.properties 2>&1 &
 vim ~/.bashrc
 export KAFKA_HOME=/home/lighthouse/kafka_2.12-3.3.2
 export PATH=$KAFKA_HOME/bin:$PATH
-#5.
+#5.查看所有topics
+kafka-topics.sh --list --bootstrap-server 43.136.217.222:9092
+#6.创建topics
+kafka-topics.sh --bootstrap-server 43.136.217.222:9092 --create --topic web --replication-factor 1 --partitions 3
+#6.查看消费组
+kafka-consumer-groups.sh --list --bootstrap-server 43.136.217.222:9092
+#7.查看生产与消费情况
+kafka-consumer-groups.sh --describe --bootstrap-server 43.136.217.222:9092

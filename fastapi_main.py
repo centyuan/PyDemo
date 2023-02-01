@@ -1,9 +1,11 @@
 from typing import Union, Optional
-from fastapi import FastAPI, Cookie
+from fastapi import FastAPI, Cookie, Header
 from pydantic import BaseModel
 from enum import Enum
 
-# https://cloud.tencent.com/developer/article/2035986
+# FastAPI详解,https://cloud.tencent.com/developer/article/2035986
+# typing详解,https://www.jianshu.com/p/9b6b9a06cd3e
+# pydantic详解,https://blog.csdn.net/codename_cys/article/details/107675748
 app = FastAPI()
 
 
@@ -73,6 +75,23 @@ async def read_item2(skip: int = 0, limit: int = 10):
 @app.get("/cookies/")
 async def read_cookie(ads_id: Union[str, None] = Cookie(default=None)):
     return {"ads_id": ads_id}
+
+
+# 7.Header
+@app.get("/headers/")
+async def read_header(user_agent: Union[str, None] = Header(default=None)):
+    return {"User-agent": user_agent}
+
+
+# 8.response_model定义返回模型,对函数返回值进行过滤
+class Re_model(BaseModel):
+    name: str
+    description: Union[str, None] = None
+
+
+@app.post("/response_model/")
+async def return_response(re_model: Re_model):
+    return re_model
 
 
 """
