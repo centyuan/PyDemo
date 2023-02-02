@@ -12,7 +12,23 @@ export PATH=$KAFKA_HOME/bin:$PATH
 kafka-topics.sh --list --bootstrap-server 43.136.217.222:9092
 #6.创建topics
 kafka-topics.sh --bootstrap-server 43.136.217.222:9092 --create --topic web --replication-factor 1 --partitions 3
-#6.查看消费组
+#7.查看某个topic状态
+kafka-topics.sh --describe --topic web --bootstrap-server 43.136.217.222:9092
+#8.查看消费组
 kafka-consumer-groups.sh --list --bootstrap-server 43.136.217.222:9092
-#7.查看生产与消费情况
+#9.查看生产与消费情况
 kafka-consumer-groups.sh --describe --bootstrap-server 43.136.217.222:9092
+#10.发送消息
+kafka-console-producer.sh --broker-list 43.136.217.222:9092 --topic web
+#11.消费,from-beginning消费之前的消息
+kafka-console-consumer.sh --topic web --bootstrap-server 43.136.217.222:9092 --from-beginning
+#12.消费多个topic
+kafka-console-consumer.sh --whitelist "web|quick_demo" --bootstrap-server 43.136.217.222:9092
+#13.单播消费,一条消息只能被某一个消费者消费
+分别在两个客户端执行
+kafka-console-consumer.sh --bootstrap-server 43.136.217.222:9092 --consumer-property group.id=testGroup --topic web
+#14.多播消费,一条消费能被多个消费者消费,类似publish-subscribe模式
+保证消费者属于不同的消费组
+kafka-console-consumer.sh --bootstrap-server 43.136.217.222:9092 --consumer-property group.id=testGroup2 --topic web
+
+
