@@ -31,4 +31,24 @@ kafka-console-consumer.sh --bootstrap-server 43.136.217.222:9092 --consumer-prop
 保证消费者属于不同的消费组
 kafka-console-consumer.sh --bootstrap-server 43.136.217.222:9092 --consumer-property group.id=testGroup2 --topic web
 
+### isr:In-Sync Replicas isr 是一个副本的列表，里面存储的都是能跟leader 数据一致的副本
+###3中发送消息的方法
+ack(0:立即发送,不等待ack,1:leader收到,-1:producer等ISR中所有的fllower都确认收到数据)
+1.立即发送(不care消息是否成功发送,大部分情况下会成功,producer会自动重试)
+2.同步发送(通过send方法发送消息,并返回Future对象,get()方法会等待Future对象，看send()方法是否成功)
+3.异步发送(通过有回调函数的send发送消息,当producer收到Kafka broker的response会触发回调函数)
+
+###3中kafka消费模式(客户端处理消息和提交反馈两个动作不是原子性)
+1.最多一次(客户端收到消息前自动提交反馈了)
+2.最少一次(客户端处理消息提交反馈,提交反馈时服务可能挂掉,kafka认为消息未被消费,产生消息重复推送)
+3.正好一次(保证消息处理和提交反馈在同一个事务中,既有原子性)
+
+### partition分区,leader-follower
+生产者在向某个主题发送消息时，会根据分配策略将消息发送到对应的分区
+kafka保证同一个分区内的数据是有序的，我们也可以认为一个分区就是一个有序的消息队列
+每个主题的某一个分区只能被同一个消费组下的其中一个消费者消费，因此我们可以说分区是消费并行度的基本单位。从消费者的角度讲，我们订阅消费了一个主题，也就订阅了该主题的所有分区
+
+### 消息可靠生产和可靠消费
+可靠生产:ack确认+重试,通过send方法发送消息,并返回Future对象,get()方法会等待Future对象，处理异常看send()方法是否成功
+可靠消费:手动提交offset+重试+死信队列,
 
