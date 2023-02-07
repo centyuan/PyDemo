@@ -46,6 +46,7 @@ def get_importinfo(url):
         ht_page = browser.page_source
         print(ht_page)
         soup = BeautifulSoup(ht_str, 'lxml')
+        soup.prettify()
         headers = {
             "User-Agent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Mobile Safari/537.36",}
 
@@ -101,14 +102,30 @@ def get_importinfo(url):
         return None
 
 if __name__ == '__main__':
-    get_importinfo("http://comingzoo.com/")
-    # 无头浏览器
-    url = "https://v663.me/pc/home"
+    # get_importinfo("http://comingzoo.com/")
+    # # 无头浏览器
+    # url = "https://v663.me/pc/home"
 
-    # headers = {
-    #     "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Mobile Safari/537.36", }
-    #
-    # res = requests.get("https://www.yedanrongqi.com.cn/",headers=headers)
-    # print(res.text)
+    ht_str = """
+          <body>
+          <div>
+             </p>
+    <p> <strong>E-mail: ComingZOO@gmail.com</strong><br>
+                  <a href="http://wpa.qq.com/msgrd?V=1&amp;Uin=1277981160&amp;Site=ComingZOO.com全球服飾批發網&amp;Menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:1277981160:4" height="16" border="0" alt="QQ"> 
+      1277981160</a> 
+                  <a href="http://wpa.qq.com/msgrd?V=1&amp;Uin=763997839&amp;Site=ComingZOO.com全球服飾批發網&amp;Menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:763997839:4" height="16" border="0" alt="QQ"> 
+      763997839</a> 
+                      <img src="http://www.okonlineshop.com/logo/line.jpg" width="18" height="18" border="0" alt="LINE">LINE:comingzoo 
+                      <img src="http://www.okonlineshop.com/logo/whatsapp.png" width="18" height="18" border="0" alt=" WhatsApp"> 
+      WhatsApp:+852 91478002 
+                      <img src="http://www.okonlineshop.com/logo/wechat.png" width="18" height="18" border="0" alt="WECHAT"> 
+      微信WeChat:comingzoo                        <br>
+           </p>
+          </div>
+          </body>
+          """
+    ht_ = "怒发冲冠，凭栏处、潇潇雨歇。抬望眼、仰天长啸，壮怀激烈。三十功名尘与土，八千里路云和月。莫等闲、白了少年头，空悲切。靖康耻，犹未雪。臣子恨，何时灭。驾长车，踏破贺兰山缺。壮志饥餐胡虏肉，笑谈渴饮匈奴血。待从头、收拾旧山河，朝天阙"
+    soup = BeautifulSoup(ht_, 'lxml')
+    print(soup.prettify())
 
 

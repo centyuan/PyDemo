@@ -40,9 +40,11 @@ def bin_search(data_list, value):
         elif value < data_list[mid]:
             high = mid - 1
 
-# python bisect(二分查找轮子)
+
+# python bisect(二分查找轮子):用于有序序列的插入和查找
 import bisect
-L = [1,3,3,4,6,8,12,15]
+
+L = [1, 3, 3, 4, 6, 8, 12, 15]
 x_sect_point = bisect.bisect_left(L, 3)  # 在L中查找x，x存在时返回x左侧的位置，x不存在返回应该插入的位置
 print(x_sect_point)  # 1
 x_sect_point = bisect.bisect_left(L, 5)  # 在L中查找x，x存在时返回x左侧的位置，x不存在返回应该插入的位置
