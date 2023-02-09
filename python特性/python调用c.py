@@ -16,5 +16,6 @@ int foo(){
 }
 """
 from ctypes import cdll
-dll = cdll.LoadLibrary('./demo.so')
+
+dll = cdll.LoadLibrary("./demo.so")
 dll.foo()

@@ -34,5 +34,5 @@ class Weekday2(Enum):
 
 
 print(Weekday2.wednesday)
-print(Weekday2.wednesday.name)   # 获取变量名称
+print(Weekday2.wednesday.name)  # 获取变量名称
 print(Weekday2.wednesday.value)  # 获取变量值

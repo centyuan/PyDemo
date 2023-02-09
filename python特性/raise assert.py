@@ -1,21 +1,14 @@
-#！/usr/bin/python3
+# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
-# @time 19-8-21 下午2:57
+
 
 """
-
-raise 手动抛出异常
-系统是否要引发异常，可能需要根据应用的业务需求来决定
-(如果程序中的数据、执行与既定的业务需求不符，这就是一种异常。
-由于与业务需求不符而产生的异常，必须由程序员来决定引发，系统无法引发这种异常)
-该语句的基本语法格式为：
-
+手动抛出异常
 raise [exceptionName [(reason)]]
 """
 
-
-#一:异常处理
+# 一:异常处理
 """
 调用栈
 如果错误没有被捕获，它就会一直往上抛，最后被Python解释器捕获，打印一个错误信息，然后程序退出。
@@ -28,29 +21,37 @@ try:
     print('result:', r)
 except ValueError as e:
     print('ValueError:', e)
-except ZeroDivisionError as e: #可以有多个except来捕获不同类型的异常
+except ZeroDivisionError as e:  # 可以有多个except来捕获不同类型的异常
     print('ZeroDivisionError:', e)
-else:   # 没有错误发生
+else:  # 没有错误发生
     print('no error!')
-finally:  #都会执行
+finally:  # 都会执行
     print('finally...')
 print('END')
 
-#二:自定义抛出错误 raise
+# 二:自定义抛出错误 raise
 """
 因为错误是class，捕获一个错误就是捕获到该class的一个实例。因此，错误并不是凭空产生的，
 而是有意创建并抛出的。Python的内置函数会抛出很多类型的错误，我们自己编写的函数也可以抛出错误。
 一旦执行了raise语句,raise之后的语句不在执行
 如果加入了try,except,那么except里的语句会被执行
+
+raise和raise..from区别:
+在显示错误信息时，raise只显示错误类型，raise...from...还会显示导致错误的原因（原因是from 后面的部分）
 """
+
+
 class FooError(ValueError):
     pass
+
+
 def foo(s):
     n = int(s)
-    if n==0:
-        raise FooError('invalid value: %s' % s) # 自定义异常
+    if n == 0:
+        raise FooError('invalid value: %s' % s)  # 自定义异常
         raise ValueError('invalid value: %s' % s)
     return 10 / n
+
 
 # foo('0')
 
@@ -59,30 +60,22 @@ def bar():
         foo('0')
     except ValueError as e:
         print('ValueError!')
-        raise    # 只有一个raise
+        raise ValueError("错误") from e  # 只有一个raise
+
+
 # bar()
 
-#三:assert
+# 三:assert
 """
 python assert断言检查某个条件表达式是否为真,其返回值为假，就会触发异常。
 可以理解assert断言语句为raise-if-not，
-
-在表达式expression1为假的时候，结束程序，抛出断言类错误（AssertionError: expresssion2）,
-表达式expression2可有可无。*当然，如果expression为真的时候，什么都不做，继续往下执行。
-
-
 """
 print('assert:')
 a = 888
-assert type(a) == str,'a is type of int'  # 后面为异常信息
+assert type(a) == str, 'a is type of int'  # 后面为异常信息
 
 # result：
 # Traceback (most recent call last):
 #   File "F:/gitHub/OrmCommand/app/new_main.py", line 20, in <module>
 #     assert type(a) == str,'a is type of int'
 # AssertionError: a is type of int
-
-"""
-raise 与raise..from的区别主要在于：
-在显示错误信息时，raise只显示错误类型，raise...from...还会显示导致错误的原因（原因是from 后面的部分）
-"""

@@ -1,19 +1,17 @@
-
-#！/usr/bin/python3
+# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
-# @time 19-10-18 下午1:33
+
 
 import uuid
 
 print(uuid.uuid1())
-print(uuid.uuid3(uuid.NAMESPACE_DNS,'yuanlin'))
+print(uuid.uuid3(uuid.NAMESPACE_DNS, 'yuanlin'))
 print(uuid.uuid4())
-print(uuid.uuid5(uuid.NAMESPACE_DNS,'yuanlin'))
-
+print(uuid.uuid5(uuid.NAMESPACE_DNS, 'yuanlin'))
 
 str1 = "3cfc8d7a-f169-11e9-af5b-58a023321f81"
-str_2= "".join(str1.split('-'))
+str_2 = "".join(str1.split('-'))
 str_2 = "".join(str(uuid.uuid1()).split('-'))
 print(str_2[:6])
 print(len(''.join(str.split('-'))))
@@ -27,5 +25,3 @@ uuid4()：这是基于随机数的uuid，既然是随机就有可能真的遇到
 
 uuid5()：这个看起来和uuid3()貌似并没有什么不同，写法一样，也是由用户来指定namespace和字符串，不过这里用的散列并不是MD5，而是SHA1.
 """
-
-

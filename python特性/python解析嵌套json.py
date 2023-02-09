@@ -1,4 +1,4 @@
-#！/usr/bin/python3
+# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-8-3 下午5:49
@@ -29,16 +29,17 @@ def _get_value(key, val, tmp_list):
         if isinstance(val_, dict):
             get_target_value(key, val_, tmp_list)  # 传入数据的value值是字典，则调用get_target_value
         elif isinstance(val_, (list, tuple)):
-            _get_value(key, val_, tmp_list)   # 传入数据的value值是列表或者元组，则调用自身
+            _get_value(key, val_, tmp_list)  # 传入数据的value值是列表或者元组，则调用自身
+
 
 if __name__ == "__main__":
-    test_1='{"employees": [{ "firstName":"Bill" , "lastName":"Gates" },{ "firstName":"George" , "lastName":"Bush" },{ "firstName":"Thomas" , "lastName":"Carter" }]}'
-    test_2={
-        'a':'1',
-        'b':'2',
-        'c':{'d':[{'e':'3'}]}
+    test_1 = '{"employees": [{ "firstName":"Bill" , "lastName":"Gates" },{ "firstName":"George" , "lastName":"Bush" },{ "firstName":"Thomas" , "lastName":"Carter" }]}'
+    test_2 = {
+        'a': '1',
+        'b': '2',
+        'c': {'d': [{'e': '3'}]}
     }
-    test_3={"mchid":10010, "data":{ "paytype": 100, "out_trade_no": "20190610001"}}
-    print(get_target_value('firstName',test_1,[]))
-    print(get_target_value('d',test_2,[]))
-    print(get_target_value('paytype',test_3,[]))
+    test_3 = {"mchid": 10010, "data": {"paytype": 100, "out_trade_no": "20190610001"}}
+    print(get_target_value('firstName', test_1, []))
+    print(get_target_value('d', test_2, []))
+    print(get_target_value('paytype', test_3, []))

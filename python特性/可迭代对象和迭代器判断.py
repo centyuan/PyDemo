@@ -8,10 +8,10 @@ print(dir(it))
 
 # method-2
 # 使用isinstance() 函数来判断一个对象是否是一个已知的类型
-from collections import Iterator,Iterable
+from collections import Iterator, Iterable
+
 print(isinstance(lst, Iterable))  #
 print(isinstance(it, Iterator))  #
-
 
 # 案例 删除字典value为空的键值对
 data_info = {

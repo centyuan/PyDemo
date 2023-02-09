@@ -49,5 +49,6 @@ a1, a2 = zip(*zip(a, b))  # 解压
 # 三: 实现dict的get方法
 l = ['a', 'b', 'c', 'd', 'e', 'f']
 # enumerate()返回的是一个enumerate对象,利用它可以同时获得index和value
+# enumerate():(0,'a')
 d = dict(enumerate(l))
 print(d.get(3))

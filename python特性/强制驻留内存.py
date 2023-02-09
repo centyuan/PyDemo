@@ -9,20 +9,24 @@ string
 小于20会自动驻留
 """
 
-#强行驻留
+# 强行驻留
 import sys
+
 letter_d = 'd'
 
 a = sys.intern('hello world')
-b = sys.intern('hello worl'+'d')
-c = sys.intern(' '.join(['hello','world']))
-print('a:',a,id(a)) #hello world 2814432058480
-print('b:',b,id(b)) #hello world 2814432058480
-print('c:',c,id(c)) #hello world 2814432058480
+# b = sys.intern('hello worl' + 'd')
+# c = sys.intern(' '.join(['hello', 'world']))
+a1 = 'hello world'
+# 只要是hello world都一样
+print('a:', a, id(a))  # hello world 1906900377008
+# print('b:', b, id(b))  # hello world 1906900377008
+# print('c:', c, id(c))  # hello world 1906900377008
+print('a1:', a1, id(a1))  # hello world 1906900377008
 
 d = 'hell yuan'
-e = 'hell yua'+'n'
-f = ' '.join(['hell','yuan'])
-print('d:',d,id(d)) #hell yuan 2814434801264
-print('e:',e,id(e)) #hell yuan 2814434801264
-print('f:',f,id(f)) #hell yuan 2814434802096
+e = 'hell yua' + 'n'
+f = ' '.join(['hell', 'yuan'])
+print('d:', d, id(d))  # hell yuan 2814434801264
+print('e:', e, id(e))  # hell yuan 2814434801264
+print('f:', f, id(f))  # hell yuan 2814434802096
