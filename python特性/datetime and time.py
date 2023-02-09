@@ -6,25 +6,23 @@ from wsgiref.handlers import format_date_time
 
 # 1.时间time
 t = time.time()
-print('时间戳time.time():', time.time())# 原始时间数据--1970年是距今最早的的1月1日是星期一的日期
-print('秒级时间戳:', int(t))  # 秒级时间戳
-print('毫秒级时间戳:', int(round(t * 1000)))  # 毫秒级时间戳
-print('微秒级时间戳:', int(round(t * 1000000)))  # 微秒级时间戳
+print('时间戳time.time():', t)  # 原始时间数据--1970年是距今最早的的1月1日是星期一的日期
+print('秒级时间戳:', int(t))
+print('毫秒级时间戳:', int(round(t * 1000)))
+print('微秒级时间戳:', int(round(t * 1000000)))
 
-# 2.时间元组即structime对象
-print('转为时间元组:', time.localtime(time.time()),time.localtime(1670848011))
-time_classS = time.localtime()
-print('转为时间元组:',time_classS,type(time_classS), time_classS.tm_year)
-print('time.localtime():', time.localtime())
-print('strutime转为时间戳',time.mktime(time.localtime()))
-
+# 2.时间元组即struct_time对象
+struct_time = time.localtime()
+print('时间元组:', struct_time, struct_time.tm_year, struct_time.tm_mday)
+print('转为时间元组:', time.localtime(time.time()), time.localtime(1670848011))
+print('时间元组转为时间戳:', time.mktime(time.localtime()))
 
 # 3.可读的格式化时间
-print('可读的格式化时间time.asctime()：', time.asctime())
-print('可读的格式化时间time.asctime()：', time.asctime(time.localtime(time.time())))
+print('可读的格式化时间time.asctime():', time.asctime())
+print('时间元组转可读的格式化时间:', time.asctime(time.localtime(time.time())))
 print('输出当前时间,time.strftime--%Y-%m-%d %H:%M:%S:', time.strftime("%Y-%m-%d %H:%M:%S"))
 print('输出当前时间,time.strftime--%a %b %d %H:%M:%S %Y:', time.strftime("%a %b %d %H:%M:%S %Y"))
-print('显示指定格式时间', time.strftime("%Y-%m-%d %H:%M:%S",time.localtime()))
+print('显示指定格式时间', time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
 # 4.字符串转为日期
 # print('字符串转为日期：', datetime.datetime.strptime('2022-09-20', "%Y-%m-%d"))  # 性能很差
@@ -39,10 +37,10 @@ print(calendar.month(2018, 2))
 # timedelta  做时间加减
 # tzinfo    时区类
 date_object = datetime.date.today()
-print("当前日期:", datetime.date.today(), datetime.date.today().year, datetime.date.today().month)
-print('指定时间:', datetime.date(2017, 3, 22),datetime.date.fromtimestamp(1670848796))
-print('修改时间,日期改为1号:',datetime.date.today().replace(day=1))
-print('返回weekday',date_object.weekday(),date_object.isoweekday(),date_object.isoformat())
+print("当前日期:", datetime.date.today(), datetime.date.today().year, datetime.date.today().month,)
+print('指定时间:', datetime.date(2017, 3, 22), datetime.date.fromtimestamp(1670848796))
+print('修改时间,日期改为1号:', datetime.date.today().replace(day=1))
+print('返回weekday', date_object.weekday(), date_object.isoweekday(), date_object.isoformat())
 print("当前时间:", datetime.datetime.now())  # 2022-05-17 21:23:56.150028 类型为datetime对象类型
 print('指定日期时间:', datetime.datetime(2017, 3, 22))  # 比datetime.datetime.strptime() 快7倍多
 print('前一天时间:', datetime.datetime.now() - datetime.timedelta(days=1, hours=1, minutes=30))
@@ -68,17 +66,3 @@ years = rrule.rrule(rrule.YEARLY, dtstart=date_1, until=date_2).count()  # 年�
 # 7.000Z and RFC1123日期格式
 print('000Z:', datetime.datetime.strptime("2022-10-11T02:31:23.000Z", "%Y-%m-%dT%H:%M:%S.000Z"))
 print('RFC1123日期格式:', format_date_time(time.mktime(datetime.datetime.now().timetuple())))
-
-
-print([(datetime.date.today()-datetime.timedelta(days=i)).strftime("%Y-%m-%d") for i in range(7)])
-a = [
-    {'date':'2022-11','number':'11'},
-    {'date':'2022-10','number':'12'},
-]
-b = ['2022-11','2022-10','2022-09','2022-08','2022-07']
-extra = []
-for item in a:
-    if item['date'] in b:
-        b.remove(item['date'])
-
-res = a.extend([{'date':item,'number':0} for item in b])

@@ -1,10 +1,5 @@
-# _*_ coding:utf-8 _*_
-# @Author : centyuan
-# @Time : 2022/2/28 19:05
 """
-property
-将函数变为一个属性,不带()调用函数
-
+property:将函数变为一个属性,不带()调用函数
 """
 
 
@@ -45,12 +40,13 @@ class test_2(object):
 
 
 print('test.num:', test.num)
-test.num = 20
-print('test.num', test.num)
+test.num = 2
+print('test.num:', test.num)
 print('test_2.num:', test_2.num)
 test_2.num = 90
 print('test_2.num:', test_2.num)
-
+tt = test_2()
+print("判断是否有对应属性:",hasattr(test_2,"num"))
 """
 hasattr():
 hasattr()函数用于判断是否包含对应的属性

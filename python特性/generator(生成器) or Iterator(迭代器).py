@@ -6,7 +6,7 @@
 # 一：迭代器
 it = iter([1, 2, 3, 4, 5])  # 创建迭代器对象
 
-# 1.迭代器直接遍历 不用next()
+# 1.迭代器直接遍历,使用next
 while True:
     try:
         # 获得下一个值:
@@ -14,7 +14,7 @@ while True:
     except StopIteration:
         # 遇到StopIteration就退出循环
         break
-# 2.迭代器直接遍历 不用next()
+# 2.for遍历不用next()
 for x in it:
     print(x, end=' ')
 
@@ -26,7 +26,8 @@ for x in it:
 """
 
 
-# 1. yield创建生成器
+# 1.yield创建生成器
+
 # 斐波拉契数列
 def fib(max):
     n, a, b = 0, 0, 1
@@ -41,7 +42,6 @@ for n in fib(6):  # f=fib(6)是一个迭代器，有生成器返回
     print('函数形式生成器:', n)
 
 # 2.推导式创建生成器:
-# L = [x * x for x in range(10)]  # 列表生成式或列表推导式
 g = (x * x for x in range(10))  # 简单的创建生成器
 for item in g:
     print('列表：', item)

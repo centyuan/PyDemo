@@ -3,23 +3,25 @@
 # author centyuan
 
 
-# 1。filter函数是一个筛选函数
+# 1.filter函数是一个筛选函数
 # filter将传入的函数依次作用到序列的每个元素，True则返回 False则不返回。
 list2 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 
-def a(x:int)->int:
+def a(x: int) -> int:
     return x % 2 == 1
 
 
-print(filter(a, list2))  # 返回值类型是filter对象 生成器对象
+# 返回值类型是filter对象 生成器对象
+print(filter(a, list2))
 print(list(filter(a, list2)))
 print(list(filter(lambda a: a % 2 == 1, list2)))
 
 # 2.map(对应位置计算) 函数是一个计算函数 参数（函数，可迭代对象）
 # 会将可迭代对象的值经过函数计算后返回
 my_map = map(lambda x: x + 1, range(10))
-print(my_map)  # 返回值类型是map对象 生成器对象
+# 返回值类型是map对象 生成器对象
+print(my_map)
 print(list(my_map))
 
 # 3.reduce(累计计算) 函数也是一个计算函数 参数（函数，可迭代对象）
@@ -45,5 +47,6 @@ print('zip(*):', a1, b1)
 print(bool)
 # 个数与最长的一致,空为None
 from itertools import zip_longest
-for i in zip_longest(a,c):
+
+for i in zip_longest(a, c):
     print(i)
