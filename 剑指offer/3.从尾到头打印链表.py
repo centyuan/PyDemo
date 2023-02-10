@@ -1,7 +1,6 @@
 #！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
-# @time 19-9-18 下午4:09
 
 
 """
