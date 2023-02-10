@@ -1,7 +1,7 @@
-D# ！/usr/bin/python3
+# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
-# @time 19-3-25 下午8:23
+
 
 class Node:
     def __init__(self, data):
@@ -39,7 +39,7 @@ class Tree:
 
     # 广度遍历->层次遍历
 
-    def traverse1(self,root):  # 层次遍历
+    def traverse1(self, root):  # 层次遍历
         if root is None:
             return None
         q = [root]
@@ -54,8 +54,9 @@ class Tree:
                 q.append(pop_node.right)
                 res.append(pop_node.right.data)
         return res
-    #迭代
-    def traverse2(self,root):
+
+    # 迭代
+    def traverse2(self, root):
         stack = [root]
         res = []
         while stack:
@@ -66,7 +67,6 @@ class Tree:
                 stack.append(node.right)
             res.append(node.data)
         return res
-
 
     # 深度遍历->
     # 前序遍历(根节点，左节点，右节点),
@@ -82,15 +82,16 @@ class Tree:
         right_data = self.preorder1(root.right)
         return result + left_data + right_data
 
-    def preorder2(self,root,res=[]):
-        if not root:#是否为空
+    def preorder2(self, root, res=[]):
+        if not root:  # 是否为空
             return
         res.append(root.data)
-        self.preorder2(root.left,res)
-        self.preorder2(root.right,res)
+        self.preorder2(root.left, res)
+        self.preorder2(root.right, res)
         return res
-    #迭代
-    def preorder3(self,root):
+
+    # 迭代
+    def preorder3(self, root):
         res = []
         if not root:
             return []
@@ -113,30 +114,32 @@ class Tree:
         right_data = self.inorder1(root.right)
         return left_data + result + right_data
 
-    def inorder2(self,root,res):
+    def inorder2(self, root, res):
         if not root:
             return
-        self.inorder2(root.left,res)
+        self.inorder2(root.left, res)
         res.append(root.data)
-        self.inorder2(root.right,res)
+        self.inorder2(root.right, res)
         return res
-    #迭代
-    def inorder3(self,root):
+
+    # 迭代
+    def inorder3(self, root):
         stack = []
-        node=root
-        res=[]
+        node = root
+        res = []
         while stack or node:
             while node:
                 stack.append(node)
-                node=node.left
-            node=stack.pop()
+                node = node.left
+            node = stack.pop()
             res.append(node.data)
-            node=node.right
+            node = node.right
 
         return res
 
         pass
-    #递归
+
+    # 递归
     def postorder1(self, root):
         if not root:
             return []
@@ -145,15 +148,15 @@ class Tree:
         right_data = self.postorder1(root.right)
         return left_data + right_data + result
 
-    def postorder2(self,root,res):
+    def postorder2(self, root, res):
         if not root:
             return
-        self.postorder2(root.left,res)
-        self.postorder2(root.right,res)
+        self.postorder2(root.left, res)
+        self.postorder2(root.right, res)
         res.append(root.data)
         return res
 
-    def postorder3(self,root):
+    def postorder3(self, root):
         stack = [root]
         res = []
         while stack:
@@ -166,20 +169,18 @@ class Tree:
         return res[::-1]
 
 
-
-
 if __name__ == "__main__":
-    t=Tree()
-    for  i in range(10):
+    t = Tree()
+    for i in range(10):
         t.add(i)
-    print(t.preorder1(t.root),end='')
+    print(t.preorder1(t.root), end='')
     print(t.preorder3(t.root))
 
-    print(t.inorder1(t.root),end='')
+    print(t.inorder1(t.root), end='')
     print(t.inorder3(t.root))
 
-    print(t.postorder1(t.root),end='')
+    print(t.postorder1(t.root), end='')
     print(t.postorder3(t.root))
 
-    print(t.traverse1(t.root),end='')
+    print(t.traverse1(t.root), end='')
     print(t.traverse2(t.root))

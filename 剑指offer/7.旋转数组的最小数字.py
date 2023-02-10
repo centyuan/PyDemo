@@ -1,4 +1,4 @@
-#！/usr/bin/python3
+# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-10-19 下午5:04
@@ -12,8 +12,17 @@ NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
 
 """
 
+
 class Solution:
     def minNumberInRotateArray(self, rotateArray):
-
-
-        pass
+        left = 0
+        right = len(rotateArray) - 1
+        while left < right:
+            mid = int((left + right) / 2)
+            if rotateArray[mid] > rotateArray[right]:
+                left = mid + 1
+            elif rotateArray[mid] == rotateArray[mid]:
+                right -= 1
+            else:
+                right = mid
+        return rotateArray[right]
