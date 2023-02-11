@@ -1,105 +1,137 @@
-#！/usr/bin/python3
+# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-9-9 下午5:23
 
-#1.类继承
+# 1.类继承
 class A:
     def show(self):
         print('base show ')
 
+
 class B(A):
     def show(self):
         print('derived show')
+
+
 obj = B()
 obj.show()
-#如何调用类A的show方法，
-obj.__class__ = A #__class__ 方法指向了类对象，用完记得修改回来
+# 如何调用类A的show方法，
+obj.__class__ = A  # __class__ 方法指向了类对象，用完记得修改回来
 obj.show()
 
-#2.方法对象
+
+# 2.方法对象
 class A(object):
-    def __init__(self,a,b):
+    def __init__(self, a, b):
         self.__a = a
         self.__b = b
 
     def myprint(self):
-        print('a=',self.__a,'b=',self.__b)
-    def __call__(self, num,*args, **kwargs):
-        print('call:',num + self.__a)
-a1 = A(10,20)
-a1.myprint()
-a1(90) #为了对象实例能被直接调用，需要实现__call__方法
+        print('a=', self.__a, 'b=', self.__b)
 
-#3.new和init
+    def __call__(self, num, *args, **kwargs):
+        print('call:', num + self.__a)
+
+
+a1 = A(10, 20)
+a1.myprint()
+a1(90)  # 为了对象实例能被直接调用，需要实现__call__方法
+
+
+# 3.new和init
 class B:
     def fn(self):
         print('B fn')
+
     def __init__(self):
         print('B INIT')
+
+
 class A(object):
     def fn(self):
         print('A fn')
-    #使用__new__方法，可以决定返回那个对象，这个可以用于设计模式的单例，工厂模式。
-    def __new__(cls, a,*args, **kwargs):
-        print('NEW',a)
+
+    # 使用__new__方法，可以决定返回那个对象，这个可以用于设计模式的单例，工厂模式。
+    def __new__(cls, a, *args, **kwargs):
+        print('NEW', a)
         if a > 10:
-            return super(A,cls).__new__(cls)
+            return super(A, cls).__new__(cls)
         return B()
-    def __init__(self,a):
-        print('INIT',a)
+
+    def __init__(self, a):
+        print('INIT', a)
+
+
 a1 = A(5)
 a1.fn()
 a2 = A(20)
 a2.fn()
 
-#4.python list和dict生成
-ls = [1,2,3,4]
-list1 =[i for i in ls if i>2]
-list2 =[i*2 for i in ls if i >2]
+# 4.python list和dict生成
+ls = [1, 2, 3, 4]
+list1 = [i for i in ls if i > 2]
+list2 = [i * 2 for i in ls if i > 2]
 
-dic1 = {x:x**2 for x in (2,4,6)}
-dic2 = {x:'item'+str(x**2) for x in (2,4,6)}
+dic1 = {x: x ** 2 for x in (2, 4, 6)}
+dic2 = {x: 'item' + str(x ** 2) for x in (2, 4, 6)}
 set1 = {x for x in 'hello world' if x not in 'low level'}
 
-#5全局和局部变量
+# 5全局和局部变量
 num = 9
+
+
 def f1():
-    global num #num是全局变量，函数内要修改的话使用global
+    global num  # num是全局变量，函数内要修改的话使用global
     num = 20
+
+
 def f2():
     print(num)
+
+
 f2()
 f1()
 f2()
 
-#6.交换变量
-a = 8;b=9
-a,b=b,a
-#7.默认方法
+# 6.交换变量
+a = 8;
+b = 9
+a, b = b, a
+
+
+# 7.默认方法
 class A(object):
-    def __init__(self,a,b):
-        self.a1 =a
-        self.b1 =b
+    def __init__(self, a, b):
+        self.a1 = a
+        self.b1 = b
         print('init')
+
     def mydefault(self):
         print('default')
-    def __getattr__(self, item): #只有当没有定义的方法调用时，才会调用它
-        return self.mydefault()
-a1=A(10,20)
-a1.fn1() #fn1方法没有定义时，会调用默认方法
 
-#8包管理
+    def __getattr__(self, item):  # 只有当没有定义的方法调用时，才会调用它
+        return self.mydefault()
+
+
+a1 = A(10, 20)
+a1.fn1()  # fn1方法没有定义时，会调用默认方法
+
+# 8包管理
 """
 一个包里有mod1.py,mod2.py,mod3.py,
 使用from demopack import *导入模块时
 在 __init__.py中增加 __all__ = ['mod1','mod2']#就只会导入mod1,mod2
 """
-#9闭包
+
+
+# 9闭包
 def mulby(num):
     def gn(val):
         return num * val
-    return  gn
+
+    return gn
+
 
 fu = mulby(7)
 print(fu(9))
