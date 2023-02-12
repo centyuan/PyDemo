@@ -65,3 +65,35 @@ sys.modules是一个全局字典，该字典是python启动后就加载在内存
 
 # 4.系统编码
 print(sys.getfilesystemencoding())
+
+# 5.os.environ:用来获取当前操作系统的一些基本信息
+"""
+window:
+    os.environ['HOMEPATH']:当前用户主目录。
+    os.environ['TEMP']:临时目录路径。
+    os.environ["PATHEXT"]:可执行文件。
+    os.environ['SYSTEMROOT']:系统主目录。
+    os.environ['LOGONSERVER']:机器名。
+    os.environ['PROMPT']:设置提示符。
+linux:
+    os.environ['USER']:当前使用用户。
+    os.environ['LC_COLLATE']:路径扩展的结果排序时的字母顺序。
+    os.environ['SHELL']:使用shell的类型。
+    os.environ['LAN']:使用的语言。
+    os.environ['SSH_AUTH_SOCK']:ssh的执行路径。
+"""
+print(os.environ)
+# 给当前系统信息添加一个键值对
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxx.settings")
+os.environ["DJANGO_SETTINGS_MODULE"] = "xxx.settings"
+os.putenv("DJANGO_SETTINGS_MODULE","xxx.settings")
+# 获取
+print(os.environ["DJANGO_SETTINGS_MODULE"])
+print(os.environ.get("DJANGO_SETTINGS_MODULE"))
+print(os.getenv("DJANGO_SETTINGS_MODULE"))
+# 删除
+del os.environ['DJANGO_SETTINGS_MODULE']
+# 是否存在
+if "DJANGO_SETTINGS_MODULE" in os.environ:
+    pass
+
