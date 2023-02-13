@@ -7,20 +7,18 @@ collections High-performance container datatypes
 高性能容量数据类型。
 """
 from collections import Counter
-#counter 高性能计数器 对其中元素计数
+
+# 1.counter 高性能计数器 对其中元素计数
 colors = ['red', 'blue', 'red', 'green', 'blue', 'blue']
 c = Counter(colors)
 print(c)
+# Counter({'blue': 3, 'red': 2, 'green': 1})
 print(dict(c))
+# {'red': 2, 'blue': 3, 'green': 1}
 
-# 字符元素组成判定
+# 2.字符元素组成判定
 if Counter('abcd3') == Counter('3acdb'):
     print(type(Counter('ab')))
     print("True")
 
-c_ = ["B","低配","A"]
-d_ = ["A","低配","B"]
-if c_ == d_:
-    print('aaaaaaaaaaaaaaa')
-else:
-    print('bbbbbbbbbbbbbbb')
+

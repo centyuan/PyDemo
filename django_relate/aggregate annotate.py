@@ -1,11 +1,10 @@
 """
 https://zhuanlan.zhihu.com/p/50974992
 aggregate: 聚合函数
-
 annotate: 注释的意思 更好的理解是分组
 如果你想要对数据集先进行分组然后再进行某些聚合操作或排序时，需要使用annotate方法来实现
 
-
+# 一:aggregate
 class Student(models.Model):
 
     name = models.CharField(max_length=20)
@@ -31,8 +30,8 @@ all()不是必须的。或者
 # 3. 根据Hobby表反查学生最大年龄，student和age间有双下划线
     Hobby.object.aggregate(Max('student__age'))
 
-###############################################################
 
+# 二:annotate
 # 4. 按学生分组，统计每个学生的爱好数量
     Student.objects.annotate(Count('hobbies'))
     Student.objects.annotate(hobbies=Count('hobbies')) # 指定返回名字 hobbies
