@@ -27,15 +27,27 @@ b_ip = "192.168.1.3"
 c_ip = "192.168.3.1"
 net_mask = "255.255.255.0"
 new_mask = ip_bin(net_mask)
-length = new_mask.count('1')+1
+length = new_mask.count('1') + 1
 new_a = ip_bin(a_ip)
 new_b = ip_bin(b_ip)
-print(new_a,new_b,new_mask)
+print(new_a, new_b, new_mask)
 print(new_a[:length] == new_b[:length])
 
 # 方式 2
 
 ip = '192.168.1.1'
-print('.'.join([bin(int(x)+256)[3:] for x in ip.split('.')]))
-# 11000000.10101000.00000001.00000001
-print(bin(int(192)+256))
+ip1 = '192.168.1.3'
+ip2 = '192.168.2.1'
+
+# 转为二进制
+
+print("ip:", '.'.join([bin(int(x) + 256)[3:] for x in ip.split('.')]))
+print("ip1:", '.'.join([bin(int(x) + 256)[3:] for x in ip1.split('.')]))
+print("ip2:", [bin(int(x) + 256)[3:] for x in ip2.split(".")])
+a = [bin(int(x) + 256)[3:] for x in ip.split('.')]
+b = [bin(int(x) + 256)[3:] for x in ip1.split('.')]
+c = [bin(int(x) + 256)[3:] for x in ip2.split('.')]
+if a[:-1] == b[:-1]:
+    print("同一网段")
+if a[:-1] != c[:-1]:
+    print("不同网段")
