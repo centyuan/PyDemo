@@ -62,7 +62,7 @@ dict_data = {6: 9, 10: 5, 3: 11, 8: 2, 7: 6}
 """1、对字典按键（key）进行排序 （默认由小到大）"""
 
 d0 = sorted(dict_data.keys())
-print("d0:",d0)  # 输出结果[3, 6, 7, 8, 10]
+print("d0:", d0)  # 输出结果[3, 6, 7, 8, 10]
 d1 = sorted(dict_data.items(), key=lambda x: x[0])
 print(d1)  # 输出结果[(3, 11), (6, 9), (7, 6), (8, 2), (10, 5)]
 
@@ -120,14 +120,14 @@ def custom_sorted(x, y):
 
 
 to_rank = sorted(rank, key=cmp_to_key(custom_sorted))
-print("cmp_to_key排序:",to_rank)
+print("cmp_to_key排序:", to_rank)
 """8.类似的使用itemgetter排序"""
 from operator import itemgetter
 
 new_rank = sorted(rank, key=itemgetter('score'))  # 根据一个字段排序
-print("itemgetter排序:",new_rank)
-new_rack = sorted(rank, key=itemgetter('score', 'time'),reverse=True)
-print("itemgetter排序:",new_rank)
+print("itemgetter排序:", new_rank)
+new_rack = sorted(rank, key=itemgetter('score', 'time'), reverse=True)
+print("itemgetter排序:", new_rank)
 new_rank = sorted(rank, key=lambda item: item['score'])
 
 # 四:判断字典key是否存在

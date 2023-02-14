@@ -23,6 +23,6 @@ b = {
 a.keys() & b.keys()
 a.keys() - b.keys()
 a.items() & b.items()
-# 过滤 不想要的键
+# 过滤不想要的键
 c = {key:a[key] for key in a.keys()-{'z','w'}}
 

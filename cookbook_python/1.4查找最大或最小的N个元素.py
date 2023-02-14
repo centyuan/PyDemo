@@ -6,11 +6,12 @@ heapq模块有两个函数：nlargest()和nsmallest()可以完美解决这个问
 """
 import heapq
 
+# 1.基本
 nums = [1, 8, 2, 23, 7, -4, 18, 23, 42, 37, 2]
 print('最大n个', heapq.nlargest(3, nums))
 print('最小n个', heapq.nsmallest(3, nums))
 
-# 更复杂
+# 2.复杂
 portfolio = [
     {'name': 'IBM', 'shares': 100, 'price': 91.1},
     {'name': 'AAPL', 'shares': 50, 'price': 543.22},
