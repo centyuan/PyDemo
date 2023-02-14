@@ -12,4 +12,10 @@ with open('./Cap') as today:
     print(count)
 
 
-
+with open("./Cap") as file:
+    count = 0
+    for i in file.read():
+        print('------',i)
+        if i.isupper():
+            count +=1
+        print("数量:",count)

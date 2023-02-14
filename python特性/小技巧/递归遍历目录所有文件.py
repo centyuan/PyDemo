@@ -6,9 +6,9 @@ import os
 
 
 def print_directory_contents(sPath):
-    for sChild in os.listdir(sPath):
-        sChildPath = os.path.join(sPath, sChild)
-        if os.path.isdir(sChildPath):
-            print_directory_contents(sPath)
+    for child in os.listdir(sPath):
+        child_path = os.path.join(sPath, child)
+        if os.path.isdir(child_path):
+            print_directory_contents(child_path)
         else:
-            print(sChildPath)
+            print(child_path)
