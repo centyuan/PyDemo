@@ -6,7 +6,8 @@ q = deque(maxlen=3)
 from collections import deque
 
 # 在队列两端插入或删除元素时间复杂度都是O(1)，而在列表的开头插入或删除元素的时间复杂度为O(N)
-q = deque(maxlen=10)
+# q = deque(maxlen=10)
+q = deque([1])
 # 右边
 q.append(1)             # 右边添加一个元素
 q.pop()                 # 右边弹出一个元素

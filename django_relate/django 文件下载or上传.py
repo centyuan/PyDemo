@@ -81,6 +81,7 @@ if request.FILES.getlist('filename'):
 # UploadedFile.chunks()：如果上传的文件足够大需要分块就返回真。默认的这个值是2.5M，当然这个值是可以调节的。
 file = request.FILES['myfile']  
 # file = request.FILES.get('myfile') 
+# program = Program.objects.create(case=case, program=file, program_name=file.name)
 filename = os.path.join(settings.MEDIA_ROOT,file.name) # 文件储存路径，应用settings中的配置，file.name获取文件名
 # 方式1
 with open(filename,'wb') as f:

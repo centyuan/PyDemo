@@ -133,8 +133,8 @@ hsetnx <key> <field> <value>
 
 
 # 4. Set集合
-# 和List类型,特殊是自动去重的,是string类型的无序集合,底层其实是一共value为null(所有value指向同一个内部值)的hash表即HashMap实现,
-#所有添加,查找,删除的复杂度都为O(1)
+# 和List类似,特殊是自动去重的,是string类型的无序集合,底层其实是一共value为null(所有value指向同一个内部值)的hash表即HashMap实现,
+# 所有添加,查找,删除的复杂度都为O(1)
 
 # 添加，第二次插入相同元素将被忽略
 sadd <key> <value1> <value2>
@@ -297,7 +297,8 @@ cluster-require-full-coverage yes
 
 ###############Redis分布式锁##########################
 互斥性,不会发送死锁,谁的锁谁解锁,加锁解锁保证原子性
-#nx设置锁,ex设置过期自动释放锁,delete手动释放锁
+实现分布式锁:SET key value [EX seconds|PX milliseconds] [NX|XX] [KEEPTTL]
+# nx:设置锁,ex设置过期时间:确保自动释放锁,防止死锁,delete手动释放锁
 set lock bingxi nx ex 20
 # 问题:某个操作超时,手动会误删其他操作的锁? uuid可以防止锁误删
 通过value的uuid来标识不同操作的锁,判断自己删自己的锁

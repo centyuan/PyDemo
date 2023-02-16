@@ -13,7 +13,7 @@ print('微秒级时间戳:', int(round(t * 1000000)))
 
 # 2.时间元组即struct_time对象
 struct_time = time.localtime()
-print('时间元组:', struct_time, struct_time.tm_year, struct_time.tm_mday)
+print('时间元组:', struct_time, struct_time.tm_year, struct_time.tm_mday,struct_time.tm_hour)
 print('转为时间元组:', time.localtime(time.time()), time.localtime(1670848011))
 print('时间元组转为时间戳:', time.mktime(time.localtime()))
 

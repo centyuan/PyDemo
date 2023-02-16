@@ -48,7 +48,7 @@ percall：（第二个 percall）即函数运行一次的平均时间，等于 c
 filename:lineno(function)：每个函数调用的具体信息；
 """
 
-# 3. line_profiler:逐行分析(CPU密集型性能问题最强大工具,先使用cProfile找到函数,line_profile对函数逐行分析)
+# 4. line_profiler:逐行分析(CPU密集型性能问题最强大工具,先使用cProfile找到函数,line_profile对函数逐行分析)
 # pip install line_profiler
 # usage:kernprof -l -v timefn.py  # -l代表逐行分析,-v用于显示输出
 
