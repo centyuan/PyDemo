@@ -5,11 +5,29 @@ from Crypto.Cipher import AES
 import base64
 
 """
-1. 在Python中进行AES加密解密时，所传入的密文、明文、秘钥、iv偏移量、都需要是bytes（字节型）数据。python 在构建aes对象时也只能接受bytes类型数据。
-2.当秘钥，iv偏移量，待加密的明文，字节长度不够16字节或者16字节倍数的时候需要进行补全。
-3. CBC模式需要重新生成AES对象，为了防止这类错误，写代码无论是什么模式都重新生成AES对象。
-ECB性能更快，CBC更安全
+对称加密:AES,DES(采用同一个秘钥加解密,计算量小,加密速度快)
+非对称加密:RSA(采用公钥和私钥,加密时间长,速度慢,适用少量数据)
 """
+
+"""
+AES的区块长度固定为128位，密钥长度则可以是128 bit，192 bit 或256位 bit 。换算成字节长度，就是密码必须是 16个字节，24个字节，32个字节:
+1. 在Python中进行AES加密解密时，所传入的密文、明文、秘钥、iv偏移量、都需要是bytes（字节型）数据。python 在构建aes对象时也只能接受bytes类型数据。
+2. 当秘钥，iv偏移量，待加密的明文，字节长度不够16字节或者16字节倍数的时候需要进行补全。
+ECB性能更快，CBC更安全
+3. CBC模式需要重新生成AES对象，为了防止这类错误，写代码无论是什么模式都重新生成AES对象。
+
+AES加密:明文+密钥+偏移量(IV)+密码模式(算法/模式/填充)
+AES解密:密文+密钥+偏移量(IV)+密码模式
+AES加密模式:
+    电码本模式(ECB)
+    密码分组链接模式(CBC)
+    计算器模式(CTR)
+    密码反馈模式(CFB)
+    输出反馈模式(OFB)
+
+"""
+
+
 class Encrypt:
     def __init__(self, key, iv):
         self.key = key.encode('utf-8')
@@ -21,10 +39,10 @@ class Encrypt:
         length = len(text)
         bytes_length = len(text.encode('utf-8'))
         padding_size = length if (bytes_length == length) else bytes_length
-        #需要填充几位
+        # 需要填充几位
         padding = bs - padding_size % bs
-        #chr 整数返回对应字符
-        #ord 字符串（Unicode 字符）作为参数，返回对应的 ASCII 数值，或者 Unicode 数值。
+        # chr 整数返回对应字符
+        # ord 字符串（Unicode 字符）作为参数，返回对应的 ASCII 数值，或者 Unicode 数值。
         padding_text = chr(padding) * padding
         self.coding = chr(padding)
         return text + padding_text
@@ -32,8 +50,8 @@ class Encrypt:
     def aes_encrypt(self, content):
         """ AES加密 """
 
-        #cipher = AES.new(self.key, AES.MODE_CBC, self.iv)  #CBC模式
-        cipher = AES.new(self.key,AES.MODE_ECB)  #ECB模式
+        # cipher = AES.new(self.key, AES.MODE_CBC, self.iv)  #CBC模式
+        cipher = AES.new(self.key, AES.MODE_ECB)  # ECB模式
         # 处理明文
         content_padding = self.pkcs7padding(content)
         # 加密
@@ -44,15 +62,16 @@ class Encrypt:
 
     def aes_decrypt(self, content):
         """AES解密 """
-        #cipher = AES.new(self.key, AES.MODE_CBC, self.iv)
-        cipher = AES.new(self.key,AES.MODE_ECB)
+        # cipher = AES.new(self.key, AES.MODE_CBC, self.iv)
+        cipher = AES.new(self.key, AES.MODE_ECB)
         #   
         content = base64.b64decode(content)
-        #解密
+        # 解密
         text = cipher.decrypt(content).decode('utf-8')
         print(text)
-        #rstrip 删除text末尾指定的字符
+        # rstrip 删除text末尾指定的字符
         return text.rstrip(self.coding)
+
 
 if __name__ == '__main__':
     key = 'ONxYDyNaCoyTzsp83JoQ3YYuMPHxk3j7'
