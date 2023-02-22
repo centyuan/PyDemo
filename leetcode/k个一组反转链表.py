@@ -16,11 +16,38 @@ from typing import Optional
 
 class Solution:
     # 迭代
+    def reverse(self, head: ListNode, tail: ListNode):
+        prev = tail.next
+        p = head
+        while prev != head:
+            # 1. 改变方向
+            nxt = p
+            p.next = prev
+            # 2.移动一位
+            prev = p
+            p = nxt
+        return tail, head
+
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
-        #
+        # 1.
         hair = ListNode(0)
         hair.next = head
         pre = hair
+        # 2.head存在
         while head:
-            pass
-
+            # 3.从头开始:查看剩余部分长度是否大于k
+            tail = pre
+            for i in range(k):
+                tail = tail.next
+                if not tail:
+                    return hair.next
+            # 4.反转子链表
+            nxt = tail.next
+            head, tail = self.reverse(head, tail)
+            # 5.子链表接回原链表
+            pre.next = head
+            tail.next = nxt
+            # 6.移动
+            pre = tail
+            head = tail.next
+        return hair.next
