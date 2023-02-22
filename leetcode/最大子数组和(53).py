@@ -21,14 +21,12 @@ class Solution:
         return result
 
     # 3.动态规划
-
-
-def maxSubArray1(self, nums: List[int]) -> int:
-    dp = [0] * len(nums)
-    dp[0] = nums[0]
-    result = nums[0]
-    for i in range(1, len(nums)):
-        # 前面一个最大子序列和
-        dp[i] = max(dp[i - 1] + nums[i], nums[i])
-        result = max(result, dp[i])
-    return result
+    def maxSubArray1(self, nums: List[int]) -> int:
+        dp = [0] * len(nums)
+        dp[0] = nums[0]
+        result = nums[0]
+        for i in range(1, len(nums)):
+            # 前面一个最大子序列和
+            dp[i] = max(dp[i - 1] + nums[i], nums[i])
+            result = max(result, dp[i])
+        return result
