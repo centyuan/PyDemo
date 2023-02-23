@@ -1,13 +1,4 @@
-"""
-GIL全局解释锁:因为引用计数管理内存,所以某个对象的引用计数不能被两个线程同时增加和减少,或内存泄露:永远不释放,GIL对线程间共享的所有数据结构加锁可以保证引用计数变量的安全性
-Python 线程会去主动释放 GIL:这种机制叫间隔式检查（check_interval）,每隔一段时间，Python 解释器就会强制当前线程去释放 GIL，这样别的线程才能有执行的机会
-### GIL锁的释放
-### 1.协同式多任务处理：IO操作，在较长的或者不确定的时间，没有运行Python代码的需要，线程便会让出GIL；
-### 2.抢占式多任务处理：对于CPU密集型的的程序，解释器运行一段时间就会放弃GIL,而不需要经过正在执行代码的线程允许，这样其他线程便能运行。（在python3中，这个时间间隔是15毫秒）
 
-# 控制多线程同步的原语,Locks、RLocks、Semaphores、Events、Conditions和Barriers(python3.2之后引入)，还有Queue,可以继承这些类，实现自己的同步控制原语。
-线程同步
-"""
 # 參考https://www.cnblogs.com/chengd/articles/7770898.html
 # 1.threading.Lock()
 import threading

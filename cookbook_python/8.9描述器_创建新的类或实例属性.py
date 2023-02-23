@@ -8,6 +8,7 @@ class Integer:
         self.name = name
 
     def __get__(self, instance, cls):
+        print("__get__执行")
         if instance is None:
             return self
             # 如果一个描述器被当做一个类变量来访问，那么instance参数被设置成None
@@ -16,11 +17,13 @@ class Integer:
             return instance.__dict__[self.name]
 
     def __set__(self, instance, value):
+        print("__set__执行")
         if not isinstance(value, int):
             raise TypeError('Expected an int')
         instance.__dict__[self.name] = value
 
     def __delete__(self, instance):
+        print("__delete__执行")
         del instance.__dict__[self.name]
 
 
