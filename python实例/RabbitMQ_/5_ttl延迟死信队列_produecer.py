@@ -38,6 +38,7 @@ print("等待10秒end")
 channel.basic_publish(exchange="ttl_exchange", routing_key="ttl_test", body="hello world.", properties=properties)
 print("第一个成功")
 channel.basic_publish(exchange="ttl_exchange", routing_key="ttl_st", body="hello world.", properties=properties,mandatory=True)
+channel.basic_ack()
 print("第二个成功")
 
 # 三:queue的过期时间和消息的过期时间都设置了,取小的

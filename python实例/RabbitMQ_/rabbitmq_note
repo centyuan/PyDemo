@@ -50,7 +50,7 @@ sudo RABBITMQ_NODE_PORT=5673 RABBITMQ_SERVER_START_ARGS="-rabbitmq_management li
 sudo rabbitmqctl cluster_status -n rabbit-1
 
 ### rabbitmq消息确认机制
-1.生产者发送消息确认分为:Confirm消息确认(将信道设置成Confirm模式)和Return消息机制
+1.生产者发送消息确认分为:Confirm消息确认(将信道设置成Confirm模式,成功失败都有返回)和Return(投递失败时才有返回)消息机制
 2.消费者采用ack模式
 
 ### exclusive

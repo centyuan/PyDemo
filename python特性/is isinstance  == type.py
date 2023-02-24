@@ -12,6 +12,7 @@ class ShowHello(object):
 
 
 """
+is运算符比==速度快
 ==:比较的是两个对象的值
 is:比较的是两个对象是否是同对象(不会考虑子类)
 isinstance:判断两个类型是否相同(isinstance),类似 type
