@@ -1,36 +1,4 @@
-###########################redis相关命令########################
-## redis是单线程+多路IO复用技术
-
-###redis事务transaction###
-单独的隔离操作:事务在执行过程中,不会被其他客户端发送来的命令请求所打断,分为三个阶段:开始事务,命令入队,执行事务
-单个redis命令是原子性的,但redis没有在事务上增加任何维持原子性的机制,所以 Redis 事务的执行并不是原子性的，
-事务可以理解为一个打包的批量执行脚本(),但批量指令并非原子性的操作,中间某条指令的失败不会导致前面已做指令的回滚,也不会造成后续的指令不做。
-1.命令执行异常情况:命令执行时候出现异常,不影响其他命令的执行。
-2.指令或参数错误:命令入队失败,整个事务被取消。
-
-# 1.multi开启事务
-multi
-# 2.多个命令(入队时:命令失败,其他命令都不会执行)
-SET book_name "c++ plus"
-SADD tag "C++" "Programming" "Mastering Series"
-# 3. EXEC执行事务(执行时:命令失败,不影响其他命令)
-EXEC
-# 4.discard 取消事务
-# 5.WATCH、UNWATCH在事务中用于乐观锁
-
-
-###管道（pipeline）###
-redis是一种基于客户端-服务端模型以及请求/响应协议的TCP服务,默认在执行每次请求都会创建（连接池申请连接）和断开（归还连接池）一次连接操作
-通常一个请求会遵循以下步骤:
-1.客户端向服务端发送一个请求,并监听Socket返回,通常是阻塞模式,等待服务响应
-2.服务端处理命令,并将结果返回客户端
-管道（pipeline）是redis在提供单个请求中缓冲多条服务器命令的基类的子类。它通过减少服务器-客户端之间反复的TCP数据库包，从而大大提高了执行批量命令的功能。
-如果想要在一次请求中指定多个命令，则可以使用pipline实现一次请求指定多个命令,不具有原子性
-
-############Redis事务与pipeline区别##############
-pipeline选择客户端缓冲,multi选择服务端缓冲
-multi需要每个命令都发送一次服务端,pipeline最后一次发送服务端
-
+# 一:基础命令
 dbsize:查看当前数据库的key的数量
 flushdb:清空当前数据库
 flushall:清空所有库
@@ -43,7 +11,9 @@ expire key 10:设置10秒过期时间
 ttl  key :-1表示永不过期,-2表示已过期
 
 
-## 五大数据类型:String字符串,List列表,Set集合,Hash哈希,Zset有序集合
+
+# 二：五大数据类型:String字符串,List列表,Set集合,Hash哈希,Zset有序集合
+
 # 1.String 类型
 String类型是二进制安全的。意思是 redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象。string 类型是 Redis 最基本的数据类型，string 类型的值最大能存储 512MB
 String:底层的数据结构为简单的动态字符串,类型Java的ArrayList,pyton list在第一次append也会超额分配,来减少频繁的内存分配
@@ -80,7 +50,9 @@ incrby cent 10
 decr cent
 # 数字类型减步长
 decrby cent 10
-
+# 发布订阅
+subscribe channel_yuan  # 订阅频道
+publish channel_yuan helloworld # 推送消息到频道
 
 # 2.List 类型
 # List 是一个双向链表结构，单键多值,可以在头部或尾部插入数据性能高,操作中间值性能差
@@ -168,7 +140,7 @@ sdiff <key1> <key2>
 # 5.Zset:有序集合,不重复
 # Zset集合元素关联一个评分(score),score被用来从最低到最高排序,元素唯一,score可以重复
 #底层使用了两个结构:1.hash,关联value和权重score,保障元素value的唯一性,通过value可以找到score
-                2.跳跃表,在于给元素value排序,根据score范围获取元素列表
+                  2.跳跃表,在于给元素value排序,根据score范围获取元素列表
 # 添加元素
 zadd <key> <score1> <value1> <score2> <value2>
 # 取出所有值
@@ -197,20 +169,37 @@ HyperLogLog用来做基数统计
 Geospatial用来经纬度
 
 
-#####################redis持久化方案RDB-AOF#############################
-AOF备份文件异常恢复:
-appendonly no 改为yes
-redis-check-aof--fix appendonly.aof 进行恢复
+# 三:Redis的事务multi和管道pipeline
+First:redis事务transaction:
+单独的隔离操作:事务在执行过程中,不会被其他客户端发送来的命令请求所打断,分为三个阶段:开始事务,命令入队,执行事务
+单个redis命令是原子性的,但redis没有在事务上增加任何维持原子性的机制,所以 Redis 事务的执行并不是原子性的，
+事务可以理解为一个打包的批量执行脚本(),但批量指令并非原子性的操作,中间某条指令的失败不会导致前面已做指令的回滚,也不会造成后续的指令不做。
+1.命令执行异常情况:命令执行时候出现异常,不影响其他命令的执行。
+2.指令或参数错误:命令入队失败,整个事务被取消。
 
-#####################redis发布和订阅#############################
-# 订阅频道
-subscribe channel_yuan
-# 推送消息到频道
-publish channel_yuan helloworld
+# 1.multi开启事务
+multi
+# 2.多个命令(入队时:命令失败,其他命令都不会执行)
+SET book_name "c++ plus"
+SADD tag "C++" "Programming" "Mastering Series"
+# 3. EXEC执行事务(执行时:命令失败,不影响其他命令)
+EXEC
+# 4.discard 取消事务
+# 5.WATCH、UNWATCH在事务中用于乐观锁
 
+Second:管道（pipeline）
+redis是一种基于客户端-服务端模型以及请求/响应协议的TCP服务,默认在执行每次请求都会创建（连接池申请连接）和断开（归还连接池）一次连接操作
+通常一个请求会遵循以下步骤:
+1.客户端向服务端发送一个请求,并监听Socket返回,通常是阻塞模式,等待服务响应
+2.服务端处理命令,并将结果返回客户端
+管道（pipeline）是redis在提供单个请求中缓冲多条服务器命令的基类的子类。它通过减少服务器-客户端之间反复的TCP数据库包，从而大大提高了执行批量命令的功能。
+如果想要在一次请求中指定多个命令，则可以使用pipline实现一次请求指定多个命令,不具有原子性
 
+Third:Redis事务与pipeline区别
+pipeline选择客户端缓冲,multi选择服务端缓冲
+multi需要每个命令都发送一次服务端,pipeline最后一次发送服务端
 
-######################配置文件说明################################
+# 四:配置文件说明
 redis-server /etc/redis/redis.conf
 # 1.开启远程访问
 注释bind 127.0.0.1
@@ -234,9 +223,12 @@ maxclients 10000
 # 8.哨兵模式配置优先级 值越小优先级越高
 slave-priority 100
 
+# 五:Redis持久化方案RDB-AOF
+AOF备份文件异常恢复:
+appendonly no 改为yes
+redis-check-aof--fix appendonly.aof 进行恢复
 
-
-####################Redis集群#####################
+# 六:Redis集群
 1.主从复制
 2.哨兵
 3.Cluster
@@ -287,7 +279,19 @@ cluster nodes
 cluster-require-full-coverage yes
 
 
-################Redis缓存问题########################
+# 七:Redis分布式锁
+互斥性,不会发送死锁,谁的锁谁解锁,加锁解锁保证原子性
+实现分布式锁:SET key value [EX seconds|PX milliseconds] [NX|XX] [KEEPTTL]
+# nx:设置锁,ex设置过期时间:确保自动释放锁,防止死锁,delete手动释放锁
+set lock bingxi nx ex 20
+# 问题:某个操作超时,手动会误删其他操作的锁? uuid可以防止锁误删
+通过value的uuid来标识不同操作的锁,判断自己删自己的锁
+set lock uuid
+# 问题:(没有原子性)已经判断了uuid,正要手动delete正要删除时,锁过期时间到了自动删除了,其他操作获取到锁了,原来操作在删除会删除原来的锁
+使用lua脚本判断uuid在删除,保证原子性
+
+# 八:Redis常见问题
+Redis缓存问题?
 1.缓存穿透(访问大量缓存不存在的数据(和不存在的空值),缓存命中率降低了)
 一:对空值进行缓存,设置较短的过期时间
 二:通过bitmaps设置可访问的白名单
@@ -300,17 +304,24 @@ cluster-require-full-coverage yes
 二:分散过期时间
 三:限流降级
 
+Redis为什么这么快?
+redis是:基于内存的k-v数据库+简单的数据结构+单线程(省去上下文切换和各种锁的问题)+多路IO复用技术
+单线程:基于Reator模式开发了自己的网络事件处理器(文件事件处理器是单线程的)
 
-###############Redis分布式锁##########################
-互斥性,不会发送死锁,谁的锁谁解锁,加锁解锁保证原子性
-实现分布式锁:SET key value [EX seconds|PX milliseconds] [NX|XX] [KEEPTTL]
-# nx:设置锁,ex设置过期时间:确保自动释放锁,防止死锁,delete手动释放锁
-set lock bingxi nx ex 20
-# 问题:某个操作超时,手动会误删其他操作的锁? uuid可以防止锁误删
-通过value的uuid来标识不同操作的锁,判断自己删自己的锁
-set lock uuid
-# 问题:(没有原子性)已经判断了uuid,正要手动delete正要删除时,锁过期时间到了自动删除了,其他操作获取到锁了,原来操作在删除会删除原来的锁
-使用lua脚本判断uuid在删除,保证原子性
+Redis为什么是单线程?
+CPU不是redis的瓶颈,不会有太多的计算和逻辑判断,最有可能机器内存和网络带宽
+
+Redis6.0为什么引入了多线程?
+瓶颈在网络I/O模块带来的CPU耗时,引入的多线程用来处理网络I/O部分。
+
+是否有并发安全问题?
+内存操作，依然是单线程运行的。edis 的多线程部分只是用来处理网络数据的读写和协议解析，执行命令仍然是单线程顺序执行，也就不存在并发安全问题
+
+如何开启多线程？
+配置文件开启多线程：
+io-thread-do-reads yes
+io-thread 线程数
+
 
 
 ###############Redis ACL#############################
