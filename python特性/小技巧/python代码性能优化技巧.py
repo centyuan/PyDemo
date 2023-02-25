@@ -40,9 +40,12 @@ for i in range(100):
 
 # 5.合理使用copy,deepcopy(deepcopy使用递归复制,慢一个数量级)
 
-# 6.其他
+# 6.在循环开始之前:设置一个局部变量保存一个函数的全局引用(或其他模块)(字典查询在大量调用时会降低性能)
+# python访问一个变量,函数或模块时步骤:1.查找本地变量locals(),2.查找全局变量globals(),3.查找__builtin__模块对象(实际上在模块对象的locals()查找)
+# 7.其他
 # xrange代替range(python3：range代替xrange)
 # 使用局部变量,避免global，局部变量比全局变量快
+# is运算符比==速度快,能用is情况尽量使用
 # if done is not None 比 if done !=None快,if done is True比if done ==True快一倍
 # (交换变量值:a,b=b,a)
 # while 1比while True快(后者可读性强，True是一个全局变量而非关键字)
