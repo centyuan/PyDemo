@@ -279,9 +279,18 @@ cluster nodes
 cluster-require-full-coverage yes
 
 
-# 七:Redis分布式锁
-互斥性,不会发送死锁,谁的锁谁解锁,加锁解锁保证原子性
-实现分布式锁:SET key value [EX seconds|PX milliseconds] [NX|XX] [KEEPTTL]
+# 七:分布式锁
+单体应用中通过锁解决共享资源访问问题,分布式锁是解决分布式系统中控制共享资源访问问题。
+与单体应用不同,分布式系统中竞争共享资源的粒度从线程升级为进程。
+实现方式：
+1.基于数据库实现
+!基于数据表记录的增删,值的唯一性(获取锁,插入记录,释放锁,删除记录)
+!基于数据库排它锁 select * from Lock where lock_name=xxx for update # for update在查询过程中给数据库增加排它锁
+2.基于Zookeeper实现
+3.基于Redis实现(结余setnx或事务multi的watch)
+特点:互斥性,不会发生死锁,谁的锁谁解锁,加锁解锁保证原子性
+基于setnx命令：set if not exists(当key的不存在时,将key的值设为value)
+语法:SET key value [EX seconds|PX milliseconds] [NX|XX] [KEEPTTL]
 # nx:设置锁,ex设置过期时间:确保自动释放锁,防止死锁,delete手动释放锁
 set lock bingxi nx ex 20
 # 问题:某个操作超时,手动会误删其他操作的锁? uuid可以防止锁误删
@@ -321,6 +330,10 @@ Redis6.0为什么引入了多线程?
 配置文件开启多线程：
 io-thread-do-reads yes
 io-thread 线程数
+
+not exists(当key的不存在时 ,将key的值设为value)
+
+
 
 
 
