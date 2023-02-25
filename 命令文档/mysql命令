@@ -106,13 +106,50 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 
 
 
+
+
+
+# 四:mysql性能优化(四个维度:1.架构,2.硬件,3.DB优化,4.sql优化)
+架构:集群读写分离,数据库切分
+硬件:高效的磁盘读写性能
+DB:参数优化(日志不能笑,缓存足够大,连接够用)
+my.ini或my.cnf配置文件
+sort/join/read/rnd buffer:4M或8M或16M
+tmp/heap table:96M或128M
+innodb_flush_log_at_trx_commit:对redo日志刷盘频率的设定
+当 innodb_flush_log_at_trx_commit 取值为 0 的时候，log buffer 会 每秒写入到日志文件并刷写（flush）到磁盘。但每次事务提交不会有任何影响，也就是 log buffer 的刷写操作和事务提交操作没有关系。在这种情况下，MySQL性能最好，但如果 mysqld 进程崩溃，通常会导致最后 1s 的日志丢失。
+当取值为 1 时，每次事务提交时，log buffer 会被写入到日志文件并刷写到磁盘。这也是默认值。这是最安全的配置，但由于每次事务都需要进行磁盘I/O，所以也最慢。
+当取值为 2 时，每次事务提交会写入日志文件，但并不会立即刷写到磁盘，日志文件会每秒刷写一次到磁盘。这时如果 mysqld 进程崩溃，由于日志已经写入到系统缓存，所以并不会丢失数据；在操作系统崩溃的情况下，通常会导致最后 1s 的日志丢失。
+sync_binlog:binlog刷盘的频率
+######innodb_flush_log_at_trx_commit和sync_binlog设置为1来保证主库和主从库的一致性
+long_query_time:sql执行时间限制
+interactive_timeout:交互模式下超时时间,五分钟或十分钟
+lock_wait_timeout:表锁锁定时间
+time_zone:使用datetime减少性能消耗
+wait_timeout:程序连接mysql超时时间,五分钟或十分钟
+innodb_buffer_pool_size:缓冲池大小(越大,磁盘I/O减少)2个G左右
+innodb_buffer_pool_instances:配置多个缓冲池实例
+tmp_table_size:临时表的最大大小
+
+explain检查sql语句
+sql优化:
+1.合理使用索引
+2.使用UNION ALL(不去重,所有数据)替代UNION(去重后)
+3.多用limit
+4.用连接查询代替子查询
+5.选择合理的字段类型
+6.join表不宜过多
+7.避免索引失效
+
 ### 索引失效情况
 （1）：like以%开头索引无效，当like以&结尾，索引有效。
-（2）：or语句前后没有同事使用索引，当且仅当or语句查询条件的前后列均为索引时，索引生效。
+（2）：or语句前后没有同时使用索引，当且仅当or语句查询条件的前后列均为索引时，索引生效。
 （3）：组合索引，使用的不是第一列索引时候，索引失效，即最左匹配规则。
 （4）：数据类型出现隐式转换，如varchar不加单引号的时候可能会自动转换为int类型，这个时候索引失效。
 （5）：在索引列上使用IS NULL或者 IS NOT NULL 时候，索引失效，因为索引是不索引空值得。
 （6）：在索引字段上使用，NOT、 <>、！= 、时候是不会使用索引的，对于这样的处理只会进行全表扫描。
 （7）：对索引字段进行计算操作，函数操作时不会使用索引。
 （8）：当全表扫描速度比索引速度快的时候不会使用索引。
+（9）：使用了select *(不会走索引,大量的回表操作)。
+
 
