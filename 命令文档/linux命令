@@ -1,4 +1,55 @@
-### liunu常用命令 ###
+# 1、查看CPU个数：
+lscpu
+# 2、查看CPU进程数、核数：
+cat /proc/cpuinfo
+# 3、查看内存总量：
+free -m
+# 4、查看磁盘挂载情况:
+lsblk
+# 5、查看磁盘分区情况：
+fdisk -l
+# 6、查看磁盘总量：
+df -h
+
+# 7.查看Linux内核版本命令
+     cat /proc/version
+     uname -a
+# 8. 查看Linux发现版
+     lsb_release -a
+     cat /etc/redhat-release  # 只适合Redhat系的Linux
+     cat /etc/issue
+
+# 9.查看物理CPU个数和型号
+# cut:-d:(表示以:分割)，-f2(-f配合-d去第2部分);# uniq -c(去重,-c显示有多少重复的)
+cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c
+
+# 10.查看单个物理CPU核心数
+# wc(-l显示列数-c显示Bytes数-w显示字数) 计算文件的Byte数，字数和列数
+# wc testfile
+# 3    92    598 testfile
+# 行数 单词数 字节数
+cat /proc/cpuinfo | grep "physical id" | sort |wc-l
+
+统计项目	统计方式	业务含义
+物理CPU的数量	cat /proc/cpuinfo | grep "physical id" | uniq | wc -l	物理机器插槽中CPU的数量4
+逻辑处理器数量	cat /proc/cpuinfo | grep "processor" | sort -u | wc -l	processor 0 ~ n - 1 ，其中 n 为逻辑处理器数量
+处理器内核数量	cat /proc/cpuinfo | grep "core id" | uniq | wc -l	所有物理CPU上的core的个数总和
+处理器内核数量	cat /proc/cpuinfo | grep "cpu cores" | sort | uniq	每个物理CPU中Core的个数
+逻辑处理器数量	cat /proc/cpuinfo | grep "siblings" | sort | uniq	每个物理CPU 内包含的逻辑处理器的数量
+
+# 11.内存占用前10
+ps aux | head -1;ps auxw | sort -rnk 4 | head -10
+
+# 12.cpu占用前10
+ps aux | head -1;ps aux | sort -rnk 3 | head -10
+
+# 13.查看某进程的cpu和内存使用情况
+top -p 1081 -H
+
+# 14.显示目录或文件的大小
+du -h /home/centyuan
+df -h：命令查看了一下磁盘使用情况
+df -i：查看了一下/data分区的索引节点(inode)，发现已经用满(IUsed=100%)，导致系统无法创建新目录和文件
 su切换用户后:在终端输入exit或logout或使用快捷方式ctrl+d，可以退回到原来用户，其实ctrl+d也是执行的exit命令
 sudo : 暂时切换到超级用户模式以执行超级用户权限，提示输入密码时该密码为当前用户的密码，而不是超级账户的密码。不过有时间限制，Ubuntu默认为一次时长15分钟。
 su ： 切换到某某用户模式，提示输入密码时该密码为切换后账户的密码，用法为“su 账户名称”。如果后面不加账户时系统默认为root账户，密码也为超级账户的密码。没有时间限制。
@@ -34,12 +85,8 @@ locate /etc/sh
 which      通常用来确定是否安装指定的软件,因为只从PATH环境变量制定的路径中取搜索命令
 find          实际搜寻硬盘查询文件名称(最强大的,可以通过文件的时间戳,文件的权限)
 
-# 显示目录或文件的大小
-du -h /home/centyuan
-df -h：命令查看了一下磁盘使用情况
-df -i：查看了一下/data分区的索引节点(inode)，发现已经用满(IUsed=100%)，导致系统无法创建新目录和文件
+
 
 rz:上传文件
 sz:下载文件
 
-、

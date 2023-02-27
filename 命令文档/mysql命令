@@ -7,6 +7,10 @@ insert into user (host,user,password,select_priv,insert_priv,update_priv) values
 3.创建用户
 create user 'username'@'host' identified by 'password';
 create user 'username'@'%' identified by 'password';
+###新创建用户无法登陆问题
+use mysql；
+delete from user where user='';
+flush privileges;
 # 对db_name下所有表都有查询(SELECT)权限
 grant select on db_name.* to 'username'@'%';
 # 对所有表有全部权限
@@ -15,6 +19,7 @@ grant all on *.* to 'username'@'%';
 drop user 'username'@'host';
 5.修改用户密码
 set password for 'username'@'host' = password('123password');
+update user set password=password("你的新密码") where user="root";
 6.创建数据库病设置字符集和排序规则
 create database data_name;
 create database data_name character set utf8 collate utf8_general_ci;
@@ -153,3 +158,15 @@ sql优化:
 （9）：使用了select *(不会走索引,大量的回表操作)。
 
 
+# 五:索引详解
+磁盘I/O:每次读取n*块个单位大小到内存
+二叉查找树->AVL平衡二叉树->B-Tree->B+Tree
+B-Tree:多路平衡二叉树,每个节点包含多对(子节点指针,键key,值data),相比于AVL缩减了节点数,减少了树的高度
+B+Tree:非叶子节点(双向链表)只存储key键,值data顺序存在同一层的叶子节点上,相比于B-Tree每个节点能存储更多的key,减少了树的高度和磁盘I/O次数
+1.什么是索引?
+对一列或多列值进行排序的数据结构()
+2.mysql有哪些索引?
+主键索引(聚簇索引,唯一索引unique唯一且不为NULL),复合索引(最多包含16列:where多条件最左原则),全文索引(char、varchar，text 列上可以创建全文索引,一般不使用,不是mysql专长)
+普通索引,空间索引(对空间数据类型字段建立索引,mysql有四种:GEOMETRY,POINT,LINESTRING,POLYGON)
+聚簇索引:节点存储索引和数据,找到索引就找数据
+非聚簇索引:节点值存储索引和数据地址

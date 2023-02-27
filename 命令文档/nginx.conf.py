@@ -38,7 +38,9 @@ http {
            #index vv.txt;  #设置默认页
            proxy_pass  http://mysvr;  #请求转向mysvr 定义的服务器列表
            deny 127.0.0.1;  #拒绝的ip
+           deny all; # 拒绝所有
            allow 172.18.5.54; #允许的ip
+
         }
         location / {
                 root /data/dist_32324/;

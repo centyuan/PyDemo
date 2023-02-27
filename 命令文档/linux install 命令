@@ -1,11 +1,11 @@
 解决依赖
 sudo apt-get -f install
 
-1:rpm包
+1:rpm包安装
 安装 rpm -ivh soft.version.rpm;
 卸载 rpm -e software
 
-2:dpkg包
+2:dpkg包安装
 
 安装dpkg -i soft.version.deb
 卸载dpkg -e software
