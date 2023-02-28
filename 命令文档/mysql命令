@@ -1,10 +1,14 @@
 mysql:单进程多线程模型,一个SQL语句无法利用多个cpu core
 # 一:基本命令
-1.数据库连接
+0.查看当前连接数
+show global status like 'Thread$';
+1.查看当前连接状态
+show processlist;
+2.数据库连接
 mysql -h 主机名 -u root -p
-2.添加用户
+3.添加用户
 insert into user (host,user,password,select_priv,insert_priv,update_priv) values ('localhost','guest',password('guest123'),'Y','Y','Y');
-3.创建用户
+4.创建用户
 create user 'username'@'host' identified by 'password';
 create user 'username'@'%' identified by 'password';
 ###新创建用户无法登陆问题
@@ -15,15 +19,15 @@ flush privileges;
 grant select on db_name.* to 'username'@'%';
 # 对所有表有全部权限
 grant all on *.* to 'username'@'%';
-4.删除用户
+5.删除用户
 drop user 'username'@'host';
-5.修改用户密码
+6.修改用户密码
 set password for 'username'@'host' = password('123password');
 update user set password=password("你的新密码") where user="root";
-6.创建数据库病设置字符集和排序规则
+7.创建数据库病设置字符集和排序规则
 create database data_name;
 create database data_name character set utf8 collate utf8_general_ci;
-7.删除数据库
+8.删除数据库
 drop table data_name;
 
 # 二:操作命令
@@ -34,7 +38,7 @@ show columns from user_table;
 show index from user_table;
 3.显示数据库所有以run开头的表信息
 show table status like'run%';
-4.创建表
+4.创建表,engine=指定存储引擎,每张表都可以指定存储引擎
 create table 'run_tb'(
     'run_id',int unsigend auto_increment,
     'run_title', varchar(100) not null,
@@ -170,3 +174,36 @@ B+Tree:非叶子节点(双向链表)只存储key键,值data顺序存在同一层
 普通索引,空间索引(对空间数据类型字段建立索引,mysql有四种:GEOMETRY,POINT,LINESTRING,POLYGON)
 聚簇索引:节点存储索引和数据,找到索引就找数据
 非聚簇索引:节点值存储索引和数据地址
+InnoBD索引采用B+的聚簇索引
+MyISAM索引采用B+的非聚簇索引
+
+# 六:mysql预编译(sql执行前会进行解析和校验)
+场景:SQL语句一样,参数不一样,可以对SQL语句预编译
+sql语句执行流程:
+连接层->服务层->引擎层->存储层
+sql语句->查询缓存(默认关闭不推荐使用,sql语句必须相同,切表数据表动大)->语法解析预处理器(检查是否有语法错误)->优化器->执行器
+语法:prepare name from statement;
+1定义.prepare statement_1 from 'select * from user where id=?'; # 通过?进行占位
+2参数.set @id=2;
+3执行.execute statement_1 using @id;
+
+
+# 七:sql注入预防
+1.不信任用户提交的数据(参数过滤,严格检查参数类型,转义,限制长度)
+2.mysql预编译(参数化查询,变量绑定)
+
+# 八:InnoDB和MyISAM区别
+MyISAM:支持表级别锁(限制了读/写的性能),不支持事务,拥有较高的插入和查询速度,B+的非聚簇索引,通常用于只读或以读为主的场景.
+怎么快速向数据库插入100万条数据?先用MyISAM插入数据,然后修改存储引擎为InnoDB
+InnoDB:支持行/表级别锁,支持事务/外键(数据的完整性和一致性更高),采用B+的聚簇索引,通常用于经常更新的场景.
+
+# 九:WAL技术(Write-Ahead Logging)RedoLog(对所有页面的操作写入日志文件,实现事务的持久性)
+Buffer Pool(Log Buffer)
+
+操作系统和内存:最小单位是页page
+操作系统和磁盘:最小单位是块block
+
+https://baijiahao.baidu.com/s?id=1711883948686737820&wfr=spider&for=pc
+https://www.cnblogs.com/MoonYear530/p/13698324.html#:~:text=%E5%8F%82%E6%95%B0%E5%8C%96%E6%9F%A5%E8%AF%A2%E6%98%AF%E5%9C%A8%E5%8E%9F%E6%9C%89%E7%9A%84%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%E4%B8%AD%EF%BC%8C%E7%94%A8%E5%8D%A0%E4%BD%8D%E7%AC%A6%E5%A1%AB%E5%85%85%E5%90%84%E4%B8%AA%E5%8F%82%E6%95%B0%EF%BC%8C%E7%84%B6%E5%90%8E%E5%9C%A8%E6%89%A7%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%AD%EF%BC%8C%E5%86%8D%E5%B0%86%E5%8F%82%E6%95%B0%E5%80%BC%E4%BC%A0%E5%85%A5%E7%9A%84%E4%B8%80%E7%A7%8D%E6%96%B9%E6%B3%95%E3%80%82%20%E8%BF%99%E6%84%8F%E5%91%B3%E7%9D%80%E5%8F%82%E6%95%B0%E5%8C%96%E6%9F%A5%E8%AF%A2%E7%9A%84%E8%A2%AB%E8%B0%83%E7%94%A8%E8%AF%AD%E5%8F%A5%E5%8F%AA%E8%A2%AB%E7%BC%96%E8%AF%91%E4%B8%80%E6%AC%A1%EF%BC%8C%E4%BD%86%E6%98%AF%E5%8F%AF%E4%BB%A5%E9%87%8D%E5%A4%8D%E4%BC%A0%E5%8F%82%E3%80%82%20%E6%AF%94%E5%A6%82%E4%B8%8B%E9%9D%A2%E8%BF%99%E6%9D%A1%E8%AF%AD%E5%8F%A5%EF%BC%9A%20sql%20%3D%20%22UPDATE%20%60transaction%60%20SET,%28customer_id%29s%20%E4%B9%9F%E6%98%AF%E5%8F%AF%E4%BB%A5%E7%9A%84%EF%BC%8C%E9%80%9A%E8%BF%87%20execute%20%28sql%2C%20data_tuple%29%20%E8%83%BD%E5%A4%9F%E6%9C%89%E6%95%88%E5%9C%B0%E9%98%B2%E6%AD%A2%20SQL%20%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB%EF%BC%8C%E5%BD%93%E7%84%B6%E5%AE%83%E6%9C%89%E6%9B%B4%E5%A4%9A%E5%85%B6%E4%BB%96%E5%A5%BD%E5%A4%84%E3%80%82
+mysql acid实现原理
+https://blog.csdn.net/qq_40634846/article/details/122226371
