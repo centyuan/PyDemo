@@ -204,7 +204,7 @@ Buffer Pool(Log Buffer)
 操作系统和磁盘:最小单位是块block
 
 # 十:mysql acid实现原理
-原子性(Atomicity):undo log指一个事务不可分割,是一个最小的操作单元(包含若干个操作),要么全部成功,要么全部失败
+原子性(Atomicity):(undo log回滚日志实现)指一个事务不可分割,是一个最小的操作单元(包含若干个操作),要么全部成功,要么全部失败
 持久性(Durability):redo log
 隔离性(Isolation):锁和mvcc
 一致性(Consistency):数据处于合法状态(满足预定约束就是合法)

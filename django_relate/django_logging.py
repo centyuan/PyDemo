@@ -225,5 +225,11 @@ LOGGING = {
             # 此记录器处理过的消息就不再让 django 记录器再次处理了
             'propagate': False
         },
+        # 记录器设置sql查询语句的log
+        "django.db.backends": {
+            "handlers": ["console"],
+            "propagate": True,
+            "level": 'DEBUG',
+        }
     }
 }
