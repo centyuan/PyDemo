@@ -112,12 +112,6 @@ load data local infile "/var/lib/mysql-files/CaseUrl.sql" into table CaseUrl
 set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 
 
-
-
-
-
-
-
 # 四:mysql性能优化(四个维度:1.架构,2.硬件,3.DB优化,4.sql优化)
 架构:集群读写分离,数据库切分
 硬件:高效的磁盘读写性能
@@ -126,9 +120,9 @@ my.ini或my.cnf配置文件
 sort/join/read/rnd buffer:4M或8M或16M
 tmp/heap table:96M或128M
 innodb_flush_log_at_trx_commit:对redo日志刷盘频率的设定
-当 innodb_flush_log_at_trx_commit 取值为 0 的时候，log buffer 会 每秒写入到日志文件并刷写（flush）到磁盘。但每次事务提交不会有任何影响，也就是 log buffer 的刷写操作和事务提交操作没有关系。在这种情况下，MySQL性能最好，但如果 mysqld 进程崩溃，通常会导致最后 1s 的日志丢失。
-当取值为 1 时，每次事务提交时，log buffer 会被写入到日志文件并刷写到磁盘。这也是默认值。这是最安全的配置，但由于每次事务都需要进行磁盘I/O，所以也最慢。
-当取值为 2 时，每次事务提交会写入日志文件，但并不会立即刷写到磁盘，日志文件会每秒刷写一次到磁盘。这时如果 mysqld 进程崩溃，由于日志已经写入到系统缓存，所以并不会丢失数据；在操作系统崩溃的情况下，通常会导致最后 1s 的日志丢失。
+ 当取值为 0 的时候，缓冲区的redo log会每秒写入到磁盘的日志文件。但每次事务提交不会有任何影响，也就是 log buffer 的刷写操作和事务提交操作没有关系。在这种情况下，MySQL性能最好，但如果 mysqld 进程崩溃，通常会导致最后 1s 的日志丢失。
+ 当取值为 1 时，每次事务提交时,缓冲区redo log保证一定会被写入到磁盘的日志文件。这也是默认值。这是最安全的配置，但由于每次事务都需要进行磁盘I/O，所以也最慢。
+ 当取值为 2 时，每次事务提交时,缓冲区redo log异步写入(不保证)到磁盘的日志文件。这时如果 mysqld 进程崩溃，由于日志已经写入到系统缓存，所以并不会丢失数据；在操作系统崩溃的情况下，通常会导致最后 1s 的日志丢失。
 sync_binlog:binlog刷盘的频率
 ######innodb_flush_log_at_trx_commit和sync_binlog设置为1来保证主库和主从库的一致性
 long_query_time:sql执行时间限制
@@ -205,13 +199,19 @@ Buffer Pool(Log Buffer)
 
 # 十:mysql acid实现原理
 原子性(Atomicity):(undo log回滚日志实现)指一个事务不可分割,是一个最小的操作单元(包含若干个操作),要么全部成功,要么全部失败
-持久性(Durability):redo log
-隔离性(Isolation):锁和mvcc
+隔离性(Isolation):(锁和mvcc实现)多个事务并发执行,事务之间相互隔离
+持久性(Durability):(redo log实现)InnoDB提供了一个缓存Buffer,读取和写入都先在Buffer中(并同时把操作记录到redo log,防止数据丢失)
+为什么将redo log的数据写到磁盘比将Buffer数据持久化到磁盘要快？
+1.Buffer数据持久化是随机写I/O,redo log是追加,顺序IO
+2.Buffer数据持久化是以页page为单位,redo log只需要写入的真正部分(减少了无效I/O)
 一致性(Consistency):数据处于合法状态(满足预定约束就是合法)
 从数据库层面，数据库通过原子性、隔离性、持久性来保证一致性。也就是说ACID四大特性之中，C(一致性)是目的，A(原子性)、I(隔离性)、D(持久性)是手段，是为了保证一致性，数据库提供的手段。数据库必须要实现AID三大特性，才有可能实现一致性。
 从应用层面，通过代码判断数据库数据是否有效，然后决定回滚还是提交数据。
 
-mysql acid实现原理
-https://blog.csdn.net/qq_40634846/article/details/122226371
-https://baijiahao.baidu.com/s?id=1711883948686737820&wfr=spider&for=pc
-https://www.cnblogs.com/MoonYear530/p/13698324.html#:~:text=%E5%8F%82%E6%95%B0%E5%8C%96%E6%9F%A5%E8%AF%A2%E6%98%AF%E5%9C%A8%E5%8E%9F%E6%9C%89%E7%9A%84%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%E4%B8%AD%EF%BC%8C%E7%94%A8%E5%8D%A0%E4%BD%8D%E7%AC%A6%E5%A1%AB%E5%85%85%E5%90%84%E4%B8%AA%E5%8F%82%E6%95%B0%EF%BC%8C%E7%84%B6%E5%90%8E%E5%9C%A8%E6%89%A7%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%AD%EF%BC%8C%E5%86%8D%E5%B0%86%E5%8F%82%E6%95%B0%E5%80%BC%E4%BC%A0%E5%85%A5%E7%9A%84%E4%B8%80%E7%A7%8D%E6%96%B9%E6%B3%95%E3%80%82%20%E8%BF%99%E6%84%8F%E5%91%B3%E7%9D%80%E5%8F%82%E6%95%B0%E5%8C%96%E6%9F%A5%E8%AF%A2%E7%9A%84%E8%A2%AB%E8%B0%83%E7%94%A8%E8%AF%AD%E5%8F%A5%E5%8F%AA%E8%A2%AB%E7%BC%96%E8%AF%91%E4%B8%80%E6%AC%A1%EF%BC%8C%E4%BD%86%E6%98%AF%E5%8F%AF%E4%BB%A5%E9%87%8D%E5%A4%8D%E4%BC%A0%E5%8F%82%E3%80%82%20%E6%AF%94%E5%A6%82%E4%B8%8B%E9%9D%A2%E8%BF%99%E6%9D%A1%E8%AF%AD%E5%8F%A5%EF%BC%9A%20sql%20%3D%20%22UPDATE%20%60transaction%60%20SET,%28customer_id%29s%20%E4%B9%9F%E6%98%AF%E5%8F%AF%E4%BB%A5%E7%9A%84%EF%BC%8C%E9%80%9A%E8%BF%87%20execute%20%28sql%2C%20data_tuple%29%20%E8%83%BD%E5%A4%9F%E6%9C%89%E6%95%88%E5%9C%B0%E9%98%B2%E6%AD%A2%20SQL%20%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB%EF%BC%8C%E5%BD%93%E7%84%B6%E5%AE%83%E6%9C%89%E6%9B%B4%E5%A4%9A%E5%85%B6%E4%BB%96%E5%A5%BD%E5%A4%84%E3%80%82
+# 十一:binlog
+概念:是记录所有表结构变更(create/alter table)以及表数据修改(insert/update/delete)的操作
+不会记录select/show,这类对数据本身没有修改的操作
+三大作用:
+恢复:
+复制:1.主库log dump线程将bin log 传给从库。2.从库I/O线程接受bin log并写入relay log,SQL线程从relay log读取并写入数据库
+审计:
