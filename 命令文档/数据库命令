@@ -1,16 +1,13 @@
-postgresql数据库
+https://blog.csdn.net/sinat_28371057/article/details/118073218
+###登录
+psql -U dbuser -d exampledb -h 127.0.0.1 -p 5432
 sudo -u postgres psql
 sudo su postgres
-
-https://blog.csdn.net/sinat_28371057/article/details/118073218
-postgresql:
-登录:
-psql -U dbuser -d exampledb -h 127.0.0.1 -p 5432
 
 /usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data/  初始化数据库
 /usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data -l logfile start
 
-配置数据库允许远程连接访问:
+###配置数据库允许远程连接访问:
 1修改监听地址cd
 sudo gedit /etc/postgresql/10/main/postgresql.conf
 #将listen_addresses='localhost'改为listen_addresses='*'
@@ -18,20 +15,21 @@ sudo gedit /etc/postgresql/10/main/postgresql.conf
 sudo gedit /etc/postgresql/10/main/pg_hba.conf
 #在文件末尾添加 host all all 0.0.0.0 0.0.0.0 md5 #表示允许任何IP连接
 
-备份：
+###备份：
  pg_dump  –h 127.0.0.1  -p  5432  -U  postgres -c  –f  dbname.sql  dbname
  pg_dump -h 164.82.233.54 -U postgres databasename > C:\databasename.bak
     使用如下命令可对全部pg数据库进行备份：
     pg_dumpall –h 127.0.0.1 –p 5432 -U postgres –c –f db_bak.sql
 
 
-恢复：
+###恢复：
 windows:
 psql -h localhost -U postgres -d new_db  -f "C:/emoneysit.bak"
 
 ubuntu:
 psql -h localhost -U emmweb -d emmweb < /home/jianghai/Desktop/emmweb.bak 
 
+###基本命令:
 -h：数据库服务器地址；
 -p：数据库端口号；
 -U：U 大写,表示用户名；
