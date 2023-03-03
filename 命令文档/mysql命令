@@ -28,9 +28,11 @@ update user set password=password("你的新密码") where user="root";
 create database data_name;
 create database data_name character set utf8 collate utf8_general_ci;
 8.删除数据库
-drop table data_name;
+drop database data_name;
 
 # 二:操作命令
+SELECT concat('DROP TABLE IF EXISTS ', table_name, ';')FROM information_schema.tablesWHERE table_schema = 'mydb';
+drop table table_name;
 1.显示表属性
 desc user_table;
 show columns from user_table;
