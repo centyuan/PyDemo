@@ -9,7 +9,13 @@ del key:删除
 unlink key:非阻塞删除,先将keys从keyspaces删除,真正的删除在后续异步操作中
 expire key 10:设置10秒过期时间
 ttl  key :-1表示永不过期,-2表示已过期
-
+info memory:查看内存使用情况
+config set maxmemory 100mb:动态命令配置redis最大内存 config get maxmemory
+淘汰策略:
+1.noeviction(默认,只读不写)
+2.lru:最近最少使用(allkeys-lru,volatile-lru)
+3.random:随机淘汰(allkeys-random,volatile-random)
+4.ttl:过期时间越长淘汰(volatite)
 
 
 # 二：五大数据类型:String字符串,List列表,Set集合,Hash哈希,Zset有序集合
@@ -287,7 +293,7 @@ cluster-require-full-coverage yes
 !基于数据表记录的增删,值的唯一性(获取锁,插入记录,释放锁,删除记录)
 !基于数据库排它锁 select * from Lock where lock_name=xxx for update # for update在查询过程中给数据库增加排它锁
 2.基于Zookeeper实现
-3.基于Redis实现(结余setnx或事务multi的watch)
+3.基于Redis实现(基于setnx或事务multi的watch)
 特点:互斥性,不会发生死锁,谁的锁谁解锁,加锁解锁保证原子性
 基于setnx命令：set if not exists(当key的不存在时,将key的值设为value)
 语法:SET key value [EX seconds|PX milliseconds] [NX|XX] [KEEPTTL]
