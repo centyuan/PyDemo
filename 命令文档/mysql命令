@@ -217,3 +217,4 @@ Buffer Pool(Log Buffer)
 恢复:
 复制:1.主库log dump线程将bin log 传给从库。2.从库I/O线程接受bin log并写入relay log,SQL线程从relay log读取并写入数据库
 审计:
+修改profile
