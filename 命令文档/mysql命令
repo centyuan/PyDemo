@@ -218,3 +218,5 @@ Buffer Pool(Log Buffer)
 复制:1.主库log dump线程将bin log 传给从库。2.从库I/O线程接受bin log并写入relay log,SQL线程从relay log读取并写入数据库
 审计:
 修改profile
+#### 大量外键问题:
+不影响select，影响update/insert/delete(当对子表进行写入操作,父表会被加上共享锁,对子表进行高并发时,父表的共享锁长时间不能释放,就不能对父表进行写入而只能读)
