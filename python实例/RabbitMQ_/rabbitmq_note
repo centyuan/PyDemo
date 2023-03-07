@@ -5,7 +5,7 @@
 3.发布订阅模式(publish/subscribe)
 4.routing路由模式:
 5.topic主题模式:#(代表0,1,多个),*(至少有一个)
-###exchange有多个种类：
+###exchange有几种？
 常用的有direct,fanout,topic,headers
 (fanout)1:N,Exchange不需要处理Route key,把消息路由到与该Exchange绑定Binding的所有Queue
 (topic)N:1,多个exchange路由到同一个queue,根据routing key的模糊匹配

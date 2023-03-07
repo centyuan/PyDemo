@@ -118,16 +118,15 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 架构:集群读写分离,数据库切分
 硬件:高效的磁盘读写性能
 DB:参数优化(日志不能笑,缓存足够大,连接够用)
-my.ini或my.cnf配置文件
+my.ini或my.cnf配置文件:
 sort/join/read/rnd buffer:4M或8M或16M
 tmp/heap table:96M或128M
 innodb_flush_log_at_trx_commit:对redo日志刷盘频率的设定
- 当取值为 0 的时候，缓冲区的redo log会每秒写入到磁盘的日志文件。但每次事务提交不会有任何影响，也就是 log buffer 的刷写操作和事务提交操作没有关系。在这种情况下，MySQL性能最好，但如果 mysqld 进程崩溃，通常会导致最后 1s 的日志丢失。
- 当取值为 1 时，每次事务提交时,缓冲区redo log保证一定会被写入到磁盘的日志文件。这也是默认值。这是最安全的配置，但由于每次事务都需要进行磁盘I/O，所以也最慢。
- 当取值为 2 时，每次事务提交时,缓冲区redo log异步写入(不保证)到磁盘的日志文件。这时如果 mysqld 进程崩溃，由于日志已经写入到系统缓存，所以并不会丢失数据；在操作系统崩溃的情况下，通常会导致最后 1s 的日志丢失。
+0:缓冲区的redo log会每秒写入到磁盘的日志文件。但每次事务提交不会有任何影响，也就是 log buffer 的刷写操作和事务提交操作没有关系。在这种情况下，MySQL性能最好，但如果 mysqld 进程崩溃，通常会导致最后 1s 的日志丢失。
+1:每次事务提交时,缓冲区redo log保证一定会被写入到磁盘的日志文件。这也是默认值。这是最安全的配置，但由于每次事务都需要进行磁盘I/O，所以也最慢。
+2:每次事务提交时,缓冲区redo log异步写入(不保证)到磁盘的日志文件。这时如果 mysqld 进程崩溃，由于日志已经写入到系统缓存，所以并不会丢失数据；在操作系统崩溃的情况下，通常会导致最后 1s 的日志丢失。
 sync_binlog:binlog刷盘的频率
-######innodb_flush_log_at_trx_commit和sync_binlog设置为1来保证主库和主从库的一致性
-long_query_time:sql执行时间限制
+(保证主库和主从库的一致性:innodb_flush_log_at_trx_commit和sync_binlog都设置为1)
 interactive_timeout:交互模式下超时时间,五分钟或十分钟
 lock_wait_timeout:表锁锁定时间
 time_zone:使用datetime减少性能消耗
@@ -136,8 +135,7 @@ innodb_buffer_pool_size:缓冲池大小(越大,磁盘I/O减少)2个G左右
 innodb_buffer_pool_instances:配置多个缓冲池实例
 tmp_table_size:临时表的最大大小
 
-explain检查sql语句
-sql优化:
+sql优化:explain检查sql语句定位优化点
 1.合理使用索引(一个表索引不超过5个),避免索引失效
 2.使用UNION ALL(不去重,所有数据)替代UNION(去重)
 3.多用limit
@@ -191,7 +189,6 @@ B+Tree:1.非叶子节点(双向链表)只存储键值+叶子节点指针,2.值da
 5.覆盖索引,非覆盖索引?
 覆盖索引:所查的字段在当前索引叶子节点上存在,不用回表,直接作为结果返回
 
-
 6.什么是索引下推?
 where多条件判断,对索引中包含的字段先做判断,再去回表没有索引的字段(减少回表次数)
 
@@ -217,7 +214,7 @@ InnoDB:支持事务,支持行/表级别锁,/外键(数据的完整性和一致�
 益处:加快执行速度,防止sql注入
 场景:SQL语句一样,参数不一样,可以对SQL语句预编译
 sql语句执行流程:
-连接层->服务层->引擎层->存储层
+连接层(处理连接/鉴权/安全管理)->服务层(系统管理/sql接口/缓存/解析/优化)->引擎层(具体与文件系统打交道)->存储层
 sql语句->查询缓存(默认关闭不推荐使用,sql语句必须相同,且表数据表动大)->语法解析预处理器(检查是否有语法错误)->优化器->执行器
 语法:prepare name from statement;
 1定义.prepare statement_1 from 'select * from user where id=?'; # 通过?进行占位
@@ -227,7 +224,7 @@ sql语句->查询缓存(默认关闭不推荐使用,sql语句必须相同,且表
 1.不信任用户提交的数据(参数过滤,严格检查参数类型,转义,限制长度)
 2.mysql预编译(参数化查询,变量绑定)
 
-# 八:mysql acid实现原理
+# 八:mysql 事务(不在分割的操作集合)acid实现原理
 原子性(Atomicity):(undo log回滚日志实现)指一个事务不可分割,是一个最小的操作单元(包含若干个操作),要么全部成功,要么全部失败
 隔离性(Isolation):(锁和mvcc实现)多个事务并发执行,事务之间相互隔离
 持久性(Durability):(redo log实现)InnoDB提供了一个缓存Buffer,读取和写入都先在Buffer中(并同时把操作记录到redo log,防止数据丢失)
@@ -235,18 +232,35 @@ sql语句->查询缓存(默认关闭不推荐使用,sql语句必须相同,且表
 从数据库层面，数据库通过原子性、隔离性、持久性来保证一致性。也就是说ACID四大特性之中，C(一致性)是目的，A(原子性)、I(隔离性)、D(持久性)是手段，是为了保证一致性，数据库提供的手段。数据库必须要实现AID三大特性，才有可能实现一致性。
 从应用层面，通过代码判断数据库数据是否有效，然后决定回滚还是提交数据。
 
+Innodb如何实现事务的?
+以update为例
+(1).开启事务,Innodb根据接受的update语句,找到数据所在页,并加该页缓存在Buffer pool(change buffer)中
+(2).执行update,修改Buffer pool中数据
+(3).生成对应的 undo log日志(便于事务回滚和mvcc)并写入Log Buffer中并关联redo log(可刷盘)
+(4).生成对应的 redo log日志(便于断电恢复数据)并写入Log Buffer中(可刷盘)
+(5).生成bin log(数据表结构变更日志:用于主从复制和数据库恢复)
+(6-1).事务提交,可触发redo log刷盘机制
+(6-2).事务回滚,则利用undo log日志进行回滚
+
+mysql有几种日志?
+bin log(记录sql),redo log(),undo log,slog log,一般日志
+
+mysql日志是否实时写入磁盘?(log buffer)
+bin log:
+sync_binlog=0:每次提交事务后不会马上写入到磁盘,先写到page cache,由操作系统决定写入什么时候写入磁盘(有丢失事务日志的风险)
+sync_binlog=1:每次提交事务都会执行fsync写入磁盘(强一致性,性能较低)
+sync_binlog=n:每次提交事务,先写到page cache,积累n个事务才fsync到磁盘(有丢失n个事务日志的风险)
+redo log和undo log:
+innodb_flush_log_at_trx_commit=0:每秒(log buffer中提交的事务)写入磁盘,系统并调用fsync写入磁盘(可能丢失一秒的数据)
+innodb_flush_log_at_trx_commit=1:有事务提交立即调用fsync写入磁盘(不会丢失,性能差)
+innodb_flush_log_at_trx_commit=2:有事务提交都写给操作系统的page cache,由操作系统决定什么时候调用fsync写入磁盘(一系列丢失)
+
+bin log有几种录入格式?
+STATEMENT(默认,文件较小),ROW(文件较大),MIXED(中和前两种)
 为什么将redo log的数据写到磁盘比将Buffer数据持久化到磁盘要快？
 1.Buffer数据持久化是随机写I/O,redo log是追加,顺序IO
 2.Buffer数据持久化是以页page为单位,redo log只需要写入的真正部分(减少了无效I/O)
 
-Innodb如何实现事务的?
-以update为例
-(1).Innodb根据接受的update语句,找到数据所在页,并加该页缓存在Buffer pool中
-(2).执行update,修改Buffer pool中数据
-(3).生成对应的 redo log 并写入Log Buffer中
-(4).生成对应的 undo log日志
-(5).事务提交,则把redo log进行持久化
-(6).事务回滚,则利用undo log日志进行回滚
 
 # 九:主从同步
 Mysql主从复制中有三个线程:Master(binlog dump thread) Slave(I/O thread,SQL thread)
@@ -261,12 +275,9 @@ Mysql主从复制中有三个线程:Master(binlog dump thread) Slave(I/O thread,
 延迟策略:Slave落后Master指定的时间
 
 
-
-
 #### 大量外键问题:
 不影响select，影响update/insert/delete(当对子表进行写入操作,父表会被加上共享锁,对子表进行高并发时,父表的共享锁长时间不能释放,就不能对父表进行写入而只能读)
+#### WAL技术(Write-Ahead Logging)RedoLog(对所有页面的操作写入日志文件,实现事务的持久性)
 
-# 八:WAL技术(Write-Ahead Logging)RedoLog(对所有页面的操作写入日志文件,实现事务的持久性)
-Buffer Pool(Log Buffer)
 
 
