@@ -6,11 +6,12 @@ python web分为两部分:服务器程序和应用程序
 客户端--nginx--socket--WSGI--Django(uwsgi根据请求调用Django工程的某个文件或函数)
 对并发的支持取决于WSGI程序的实现
 request对象线程隔离:
-1.django请求进来,会返回一个WSGIHandler的实例
+1.django请求进来,会返回一个WSGIHandler的实例(显示传递request参数对象)
 2.django(使用wsgiref)创建一个HttpRequest(其实是一个WSGIRequest对象-由wsgiref)对象,
 flask(使用werkzeug)全局的request对象(多个线程分别new 出多个相应的requeset对象)
 怎么保证各自线程里调用的request就是对应的对象? werkzeug:Local,LocalStack类
 用字典的方式实现该类实例对象的线程隔离(当前线程id作为key)
+(request作为全局变量,使用了werkzeug.local.Local()对象)
 
 """
 
