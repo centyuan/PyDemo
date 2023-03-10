@@ -13,7 +13,11 @@ def funA(fn):
     # 定义一个嵌套函数
     def say(arc):
         print("1:带参数的装饰器 say:", arc)
-        fn(arc + "AAAAAAAAAA")
+        if len(arc) > 10:
+            print("return直接返回,不执行后续func")
+            return 1
+        else:
+            fn(arc + "AAAAAAAAAA")
 
     return say
 
@@ -34,7 +38,7 @@ funB("http://c.biancheng.net/python")
 def funA(fn):
     # 定义一个嵌套函数
     def say(*args, **kwargs):
-        print('2:funA 中say')
+        print('2:funA 中say', args, kwargs)
         fn(*args, **kwargs)
 
     return say
@@ -47,7 +51,7 @@ def funB(arc):
 
 @funA
 def funC(name, arc):
-    print("2:funC",name, arc)
+    print("2:funC", name, arc)
 
 
 funB("http://c.biancheng.net")
@@ -83,7 +87,7 @@ def deco02(func):
     def wrapper(*args, **kwargs):
         print("3:装饰器2开始")
         func(*args, **kwargs)
-        print(f"3:装饰器1参数为{args}" )
+        print(f"3:装饰器1参数为{args}")
         print("3:装饰器2结束")
 
     return wrapper
@@ -95,5 +99,6 @@ def func(a, b):
     print("3:func开始")
     time.sleep(1)
     print("3:func结束 %d" % (a + b))
+
 
 func(3, 4)

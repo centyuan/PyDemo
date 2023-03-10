@@ -1,22 +1,45 @@
-# _*_ coding:utf-8 _*_
-# @Author : centyuan
-import doctest
+"""
+python中单元测试方法:
+unittest(内置)
+nose
+pytest(基于unittest)
+"""
+
+import pytest
+import requests
+
+data = [
+    ({"city": '上海', "key": "331eab8f3481f37868378fcdc76cb7cd", 'result': "查询成功!"}),
+
+    ({"city": "上海", "key": "331eab8f3481f37868378fcdc76cb7c", 'result': "错误的请求KEY"}),
+
+    ({"city": "上", "key": "331eab8f3481f37868378fcdc76cb7cd", 'result': "暂不支持该城市"})]
 
 
-def multiply(v1, v2):
-    """
-    >>> multiply(10,8)
-    80
-    >>> multiply("zhangsan,",5)
-    'zhangsan,zhangsan,zhangsan,zhangsan,zhangsan,'
-    """
-    return v1 * v2
+class TestCase:
+
+    def weather(self, city, key):
+        url = 'http://apis.juhe.cn/simpleWeather/query'
+
+        # 查询天气接口参数
+
+        data = {
+
+            'city': city,
+
+            'key': key
+
+        }
+
+        r = requests.post(url, data=data)
+
+        return r.json()
 
 
-if __name__ == "__main__":
-    doctest.testmod(verbose=True)
-    """
-    测试用例的位置必须放在整个模块文件的开头，或者紧接着对象声明语句的下一行。也就是可以被 __doc__ 这个属性引用到的地方
-    """
+if __name__ == '__main__':
+    d = {"city": "上海", "key": "331eab8f3481f37868378fcdc76cb7cd", 'result': "暂不支持该城市"}
 
-# unittest
+    c = TestCase()
+    result = c.weather(city=d["city"],key=d["key"])
+    print(result)
+
