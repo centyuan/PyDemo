@@ -1,3 +1,10 @@
+"""
+连接池实现:
+django-db-connection-pool
+PyMysqlPool
+重写mysql连接库实现
+"""
+
 ### 一:锁的概述
 """
 https://blog.csdn.net/zcl_love_wx/article/details/81983267
