@@ -16,23 +16,24 @@ import re
 #  \W  匹配任意不是字母，数字，下划线，汉字的字符
 """
 # 一：正则表达式基本操作
-# re.match: 尝试从字符串的起始位置l匹配一个模式，如果不是起始位置匹配成功的话，match():返回none,成功:返回(0,4)位置
-# re.search: 扫描整个字符串并返回第一个成功的匹配 返回(0,4)位置 否则返回None
+# 1.re.match: 尝试从字符串的起始位置l匹配一个模式，如果不是起始位置匹配成功的话
+# 失败返回none,2.成功返回一个对象<re.Match object; span=(0, 3), match='dxy'>
+# re.match().span():返回位置(0,3)
+# 2.re.search: 扫描整个字符串并返回第一个成功的匹配 返回(0,4)位置 否则返回None
 
-# re.findall: 在字符串中找到正则表达式所匹配的所有子串，并返回一个列表，如果没有找到匹配的，则返回空列表。
-# re.finditer: 和findall类型，返回一个迭代器
+# 3.re.findall: 在字符串中找到正则表达式所匹配的所有子串，并返回一个列表，如果没有找到匹配的，则返回空列表。
+# 4.re.finditer: 和findall类型，返回一个迭代器
+# 5.re.compile 函数用于编译正则表达式，生成一个正则表达式（ Pattern ）对象，供 match() 和 search() 这两个函数使用。
+# 6.使用方法:
 # pattern = re.compile(r'\d+')
 # m = pattern.match('one12twothree34four')
-# re.compile 函数用于编译正则表达式，生成一个正则表达式（ Pattern ）对象，供 match() 和 search() 这两个函数使用。
 
-# match search 可以group,findall finditer不能分组
 a = 'C|C++|Java|c#|Python|Javascript'
 b = 'py1aaa2thona123333ja1sss2va43241ccc2++'
 c = 'python 11java  javascript'
 d = """centyuan"""
 s = "ip='230.192.168.78',version='1.0.0',ip='230.192.168.20',version='1.0.0'，ip='230.192.168.100',version='1.0.0'"
-
-# 正则表达式分组
+# 正则表达式分组(match search 可以group,findall finditer不能分组)
 # 1.(?P<name>)命名分组
 result = re.search("ip='(?P<ip>\d+.\d+.\d+.\d+)", s)
 print('命名分组result:', result.group('ip'))
@@ -75,6 +76,7 @@ new_text = re.sub(r'(\d+)/(\d+)/(\d+)', r'\3-\1-\2', text)
 # sub() 函数中的第一个参数是被匹配的模式，第二个参数是替换模式。反斜杠数字比如 \3 指向前面模式的捕获组号。
 
 # 二：正则表达式实际案例
+#https://www.sojson.com/regex/generate
 # 1。实例之匹配电话号码
 strs = 'dsadasdgs031-1564653233adads2312-24644567dZDxz  《《《《 15808939049  《18382972834》'
 pat_1 = r'[0-9-()（）]{7,18}'  # 国内固话
@@ -96,9 +98,11 @@ print(result)
 
 # 3.匹配邮箱
 regex = r"([a-zA-Z0-9_.+-]+@[a-pr-zA-PRZ0-9-]+\.[a-zA-Z0-9-.]+)"
+# email_pat = r"\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}"
+
 html_content = "邮箱:centyuan@outlook.com qq邮箱：375319412@qq.com,gmail邮箱centyuan@gmail.com，可惜不 centyuan@163.com"
 emails = re.findall(regex, html_content)
-print('邮箱:emails',emails)
+print('邮箱:emails', emails)
 html_doc = """
 <li class="Sevli" open-window="https://www.vcag537.net/OnlineCS" op-width="550px" op-height="735px" op-resize="no" op-name="OCSCenter">
 </li>
@@ -129,4 +133,4 @@ html_doc = """
 <img src="http://j3.wdyxa.com/mh-mgm/pc/scripts/images/pz.png" alt="">
 
 """
-new_con = re.sub(r'<img.*?>',"[图片]",html_doc)
+new_con = re.sub(r'<img.*?>', "[图片]", html_doc)
