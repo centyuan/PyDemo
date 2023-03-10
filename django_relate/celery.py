@@ -1,3 +1,12 @@
+"""
+celery:Producer/Beat->Broker(消息代理)->worker(任务消费者)->backend(存储结果)
+Producer:调用celery提供的Api/函数/装饰器产生任务交给任务队列处理
+Beat:读取配置文件,将里面任务周期性发送给任务队列处理
+Broker:消息中间件(通常是消息队列或数据库:RabbitMQ/Redis),接受生产者任务发送过来的任务消息,存进队列再按序分发给worker
+Worker:执行任务的消费者(通常在多台服务器运行)
+Backend:任务处理完保存状态信息和结果
+"""
+
 # 一:定义任务
 from celery import Celery
 
@@ -33,6 +42,9 @@ task_name.delay(args1, args2, kwargs=value_1, kwargs2=value_2)
 ​
 # 方法二： apply_async方法，与delay类似，但支持更多参数
 task.apply_async(args=[arg1, arg2], kwargs={key:value, key:value})
+countdown=5:等待一段时间执行
+eta=now+timedelta(second=10):任务开始的时间
+expires=60:任务超时时间
 
 #4.flower Monitor
 https://docs.celeryq.dev/en/master/userguide/monitoring.html
@@ -110,13 +122,17 @@ def create_article(request):
 
 # 七:任务重试机制
 """
-@app.task(bind=True,default_retry_delay=30*60)
+@app.task(bind=True,max_retries=5,default_retry_delay=30*60,time_limit=1800)
 def add(self,x,y):
     try:
         something_raising()
     except Exception as exc:
         # default_retry_delay重试前会等待给定的时间,coutdown可以覆盖
         raise self.retry(exc=exc, countdown=60)
+bind=True:第一个参数为self
+max_retries=5:最大重试次数
+default_retry_delay=30*60:重试时间
+time_limit:任务超时
 """
 
 # 八:定时任务
@@ -167,9 +183,7 @@ CELERYD_CONCURRENCY = 4
 # 每个worker执行了多少任务就会死掉，默认是无限的:防止内存泄露和worker僵死
 CELERYD_MAX_TASKS_PER_CHILD = 40
 # 表示Worker在任务执行完后才向Broker发送acks:处理异常,一个任务可能会多次执行
-CELERY_ACKS_LATE=True
-
-
+CELERY_ACKS_LATE = True
 
 #########redis celery kombu版本问题
 # celery==4.4.2
