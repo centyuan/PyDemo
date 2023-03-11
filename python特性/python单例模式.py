@@ -29,6 +29,7 @@ my_singleton = My_Singleton()
 
 # 方式二:使用装饰器
 
+
 def Singleton(cls):
     _instance = {}
 
