@@ -3,7 +3,7 @@ celery:Producer/Beat->Broker(消息代理)->worker(任务消费者)->backend(存
 Producer:调用celery提供的Api/函数/装饰器产生任务交给任务队列处理
 Beat:读取配置文件,将里面任务周期性发送给任务队列处理
 Broker:消息中间件(通常是消息队列或数据库:RabbitMQ/Redis),接受生产者任务发送过来的任务消息,存进队列再按序分发给worker
-Worker:执行任务的消费者(通常在多台服务器运行)
+Worker:执行任务的消费者(通常在多台服务器运行)(空闲的worker去拉去消息)
 Backend:任务处理完保存状态信息和结果
 """
 
@@ -31,10 +31,11 @@ nohup celery -A CTFServer worker -B -l info --logfile=./celery.log
 #2. beat 
 celeyr -A proj beat 
 celery -A proj beat -s /home/celery/var/run/celerybeat-schedule
-celery -A FZ_Platform worker -B -l info -c 10 -D --logfile=celery.log
+celery -A FZ_Platform worker -B -l info -c 10 -D --logfile=celery.log -p gevent
 -B:代表celery -A proj beat 
 -c:协程数量
 -D:后台运行
+-p:实现并发的方式(perfork(默认多进程),eventlet,gevent)
 
 #3.任务调用
 # 方法一：delay方法
@@ -172,8 +173,7 @@ CELERY_ROUTES = {
     'periodic_deletion': {'queue': 'default', 'routing_key': 'default'},
 }
 
-# 十:
-# https://zhuanlan.zhihu.com/p/351328752
+# 十:常见问题 https://zhuanlan.zhihu.com/p/351328752
 # 任务过期时间,celery任务执行结果的超时时间
 CELERY_TASK_RESULT_EXPIRES = 60 * 20
 # 规定任务完成的时间
@@ -182,10 +182,20 @@ CELERY_TASK_TIME_LIMIT = 5  # 在5s内完成任务，否则执行该任务的wor
 CELERYD_CONCURRENCY = 4
 # 每个worker执行了多少任务就会死掉，默认是无限的:防止内存泄露和worker僵死
 CELERYD_MAX_TASKS_PER_CHILD = 40
+# 防止死锁
+CELERYD_FORCE = True
 # 表示Worker在任务执行完后才向Broker发送acks:处理异常,一个任务可能会多次执行
 CELERY_ACKS_LATE = True
+# 十一:注意事项 https://zhuanlan.zhihu.com/p/130934654
+# 1.默认"不公平"任务分配:禁用任务队列预取机制(会将任务成批发送给指定worker)
+# -O fair
+# 2.引用数据库数据(可能数据在任务执行前被修改)
+# 3.不在任务中使用数据库事务
+# 4.给任务指定了一个很长的countdown或一个eta
+# 5.ACKS行为:celery的默认行为是立即确认任务(通过@shared_task的acks_late为具体任务确定"延迟确认",而不是全局配置)
 
-#########redis celery kombu版本问题
+
+# redis celery kombu版本问题
 # celery==4.4.2
 # redis==3.4.3
 # kombu==4.6.8
