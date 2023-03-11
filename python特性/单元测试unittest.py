@@ -4,7 +4,10 @@ unittest(内置)
 nose
 pytest(基于unittest)
 """
-
+# 1. basic 函数测试
+def func(x):
+    return x+1
+def 
 import pytest
 import requests
 
@@ -35,18 +38,11 @@ class TestCase:
         return requests.post("http://apis.juhe.cn/idcard/index", data=data).json()
 
     # 单元测试
-
-    def test_01(self,data):
-        pass
+    @pytest.mark.parametrize("data", data)
+    def test_01(self, data):
+        r = TestCase.weather(city=data['city'], key=data['key'])
+        assert r['reason'] == data['result']
 
 
 if __name__ == '__main__':
-    d = {"city": "上海", "key": "331eab8f3481f37868378fcdc76cb7cd", 'result': "暂不支持该城市"}
-    d_card = {
-        "cardno": "130428197411155947",  # 身份证信息通过Faker随机创建
-        "key": "f40a75704fac353952a6534a18f9f437"}
-    c = TestCase()
-    result = c.weather(city=d["city"], key=d["key"])
-    print(result)
-    result = c.idCard(card_no=d_card["cardno"], key=d["key"])
-    print(result)
+    pass
