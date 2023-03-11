@@ -30,8 +30,8 @@ class Student(object):
 
     def __new__(cls, *args, **kwargs):
         print("2.这是__new__方法")
-        return object.__new__(cls)
-
+        # return object.__new__(cls)
+        return super().__new__(cls)
 
 s = Student("tom")
 '''结果如下：注意__new__的执行顺序在__init__之前
