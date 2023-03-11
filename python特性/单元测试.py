@@ -22,13 +22,21 @@ pytest:
      pytest.main(["-s"])
 @pytest.mark.smoke:自己标记运行时候使用-m参数来运行部分测试用例
 @pytest.mark.skip:跳过测试用例
-@pytest.mark.skipif:带条件跳过测试用例
+@pytest.mark.skipif(True,reasone="条件为True"):带条件跳过测试用例
 """
 
 
 # 1.函数测试
+# pytest.fixture()每个测试用例函数前先执行
+# scope:function/class(每个测试类会执行一次)
+# autouse:自动使用
+@pytest.fixture(scope="function")
+def login():
+    print("登录login。。。")
+
+
 @pytest.mark.p0
-def test_mark01():
+def test_mark01(login):
     print("函数级别的mark_p0")
 
 
@@ -38,7 +46,7 @@ def test_mark02():
 
 
 @pytest.mark.p2
-def test_mark03():
+def test_mark03(login):
     print("函数级别的mark_p2")
 
 
