@@ -30,9 +30,7 @@ class Solution:
 
     # 2.快慢指针
     def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if not head or head.next:
-            return None
-        slow, fast = head, head.next
+        slow, fast = head, head
         while 1:
             if not fast or not fast.next:
                 return None
@@ -40,7 +38,7 @@ class Solution:
             if fast == slow:
                 break
         fast = head
-        while fast!=slow:
+        while fast != slow:
             fast = fast.next
             slow = slow.next
         return fast

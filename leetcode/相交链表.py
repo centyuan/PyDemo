@@ -34,7 +34,7 @@ class Solution:
         m, n = 0, 0
         while headA:
             m += 1
-            headA = headA.Next
+            headA = headA.next
         while headB:
             n += 1
             headB = headB.next
