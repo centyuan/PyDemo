@@ -89,3 +89,4 @@ nohup python manage.py runserver 0.0.0.0:8001 &
 rz:上传文件
 sz:下载文件
 
+# 16.服务自启
