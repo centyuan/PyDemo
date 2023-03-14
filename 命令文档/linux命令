@@ -89,4 +89,37 @@ nohup python manage.py runserver 0.0.0.0:8001 &
 rz:上传文件
 sz:下载文件
 
-# 16.服务自启
+# 16.服务自启三种方式
+1.systemd
+cd /etc/systemd/system/
+vim test.service
+***********
+[Unit]
+Description = test
+After=network.target
+[Service]
+ExecStart=/home/tomcat/jenkins_8093/bin/startup.sh
+ExecStop=/home/tomcat/jenkins_8093/bin/shutdown.sh
+ExecReload=/bin/kill -s HUP $MAINPID
+[Install]
+WantedBy=multi-user.target
+***********
+systemctl enable|disable test.service
+(urs/lib/systemd/system/test.service)
+
+2./etc/rc.d/rc.local
+vim /etc/rc.d/rc.local
+自启命令
+
+3.crontab计划中的@reboot
+crontab -e
+@reboot /home/test.sh
+
+
+#17.linux启动过程
+1.开机质检(硬件引导):BIOS/UEFI(硬件初始化)
+2.内核引导:boot(加载内核)
+3.运行init/SystemV/Systemd(pid为1):(7个运行级别)挂载文件系统等
+4.系统初始化:rc.d
+
+
