@@ -135,17 +135,32 @@ innodb_buffer_pool_size:缓冲池大小(越大,磁盘I/O减少)2个G左右
 innodb_buffer_pool_instances:配置多个缓冲池实例
 tmp_table_size:临时表的最大大小
 
-sql优化:explain检查sql语句定位优化点
+sql优化:
+# https://www.zhihu.com/question/486105337/answer/2538190061
+explain检查sql语句定位优化点或开启慢查询定位优化点
+优化方向:(避免不要的列|分页优化|索引优化|JOIN优化|排序优化|union优化)
+避免不要的列
+1.避免使用select *
+2.多用limit
+3.选择合理的字段类型
+分页优化(数据量较大)
+1.延迟关联
+2.书签方式
+索引优化
 1.合理使用索引(一个表索引不超过5个),避免索引失效
-2.使用UNION ALL(不去重,所有数据)替代UNION(去重)
-3.多用limit
-4.用连接查询代替子查询
-5.选择合理的字段类型
-6.join表不宜过多(不超过5个)
-7.避免使用select *
+2.利用覆盖索引
+3.正确使用联合索引
+4.避免索引失效情况
+JOIN优化
+1.join表不宜过多(不超过5个)
+2.小表驱动大表
+3.用连接查询代替子查询
+排序优化
+1.利用索引排序
+union优化
+1.使用UNION ALL(不去重,所有数据)替代UNION(去重)
 
 ### 索引失效情况
-
 (1)like以%开头索引无效(当like以%结尾索引有效)
 (2)当or语句查询条件的前后列均为索引时,索引生效(or两边同时使用<和>)
 (3)联合索引,使用的不是第一列索引时候即最左匹配规则
@@ -172,7 +187,7 @@ B+Tree:1.非叶子节点(双向链表)只存储键值+叶子节点指针,2.值da
 一般高度为1-3:叶子节点16k(一条数据一般1k)存16条数据,非叶子节点存1170个指针=1170*1170*16=21902400
 
 2.什么是索引?
-对一列或多列值进行排序的数据结构
+对一列或多列值进行排序的数据结构(类似目录排序好了的,在小文件查找)
 
 3.mysql有哪些索引?那些字段可以建立对应索引?
 主键索引(聚簇索引,唯一索引unique唯一且不为NULL),复合索引(最多包含16列:where多条件最左原则),全文索引(char、varchar，text 列上可以创建全文索引,一般不使用,不是mysql专长)
@@ -197,6 +212,9 @@ where多条件判断,对索引中包含的字段先做判断,再去回表没有�
 数据唯一性差(比如性别只有两种数据)
 频繁更新的字段不用索引
 字段不在where语句后出现(where含IS NULL/IS NULL/IS NOT NULL/like "%"等,不用索引)
+不用无序的的值如身份证,uuid作为索引
+过长的字段使用前缀索引
+
 
 InnoBD主键索引采用B+的聚簇索引:
 每个InnoDB表都有且只有一个特殊的索引，称为聚簇索引 ，用于存储行数据。通常，聚簇索引与主键同义 。
@@ -236,10 +254,10 @@ Innodb如何实现事务的?
 以update为例
 (1).开启事务,Innodb根据接受的update语句,找到数据所在页,并加该页缓存在Buffer pool(change buffer)中
 (2).执行update,修改Buffer pool中数据
-(3).生成对应的 undo log日志(便于事务回滚和mvcc)并写入Log Buffer中并关联redo log(可刷盘)
-(4).生成对应的 redo log日志(便于断电恢复数据)并写入Log Buffer中(可刷盘)
-(5).生成bin log(数据表结构变更日志:用于主从复制和数据库恢复)
-(6-1).事务提交,可触发redo log刷盘机制
+(3).记录 undo log日志(便于事务回滚和mvcc)并写入Log Buffer中并关联redo log(可刷盘)
+(4).记录 redo log(prepare状态)日志(便于断电恢复数据)并写入Log Buffer中(可刷盘)
+(5).记录bin log(数据表结构变更日志:用于主从复制和数据库恢复)
+(6-1).事务提交,redo log(改为commit状态),可触发redo log刷盘机制
 (6-2).事务回滚,则利用undo log日志进行回滚
 
 mysql有几种日志?
@@ -250,7 +268,7 @@ bin log:
 sync_binlog=0:每次提交事务后不会马上写入到磁盘,先写到page cache,由操作系统决定写入什么时候写入磁盘(有丢失事务日志的风险)
 sync_binlog=1:每次提交事务都会执行fsync写入磁盘(强一致性,性能较低)
 sync_binlog=n:每次提交事务,先写到page cache,积累n个事务才fsync到磁盘(有丢失n个事务日志的风险)
-redo log和undo log:
+redo log()和undo log:
 innodb_flush_log_at_trx_commit=0:每秒(log buffer中提交的事务)写入磁盘,系统并调用fsync写入磁盘(可能丢失一秒的数据)
 innodb_flush_log_at_trx_commit=1:有事务提交立即调用fsync写入磁盘(不会丢失,性能差)
 innodb_flush_log_at_trx_commit=2:有事务提交都写给操作系统的page cache,由操作系统决定什么时候调用fsync写入磁盘(一系列丢失)
@@ -260,6 +278,11 @@ STATEMENT(默认,文件较小),ROW(文件较大),MIXED(中和前两种)
 为什么将redo log的数据写到磁盘比将Buffer数据持久化到磁盘要快？
 1.Buffer数据持久化是随机写I/O,redo log是追加,顺序IO
 2.Buffer数据持久化是以页page为单位,redo log只需要写入的真正部分(减少了无效I/O)
+
+bin log和redo log(两段提交)区别？
+1.写入redo log(prepare状态)
+2.写入bing log
+3.提交事务,redo log(改为commit)
 
 
 # 九:主从同步
@@ -274,10 +297,45 @@ Mysql主从复制中有三个线程:Master(binlog dump thread) Slave(I/O thread,
 异步策略:Master不会等待Slave回应就可以提交
 延迟策略:Slave落后Master指定的时间
 
+数据库的三大范？
+为设计冗余小,结构合理的数据库,设计数据库时必须满足一定范式(规则)
+一般设计都是反范式,通过冗余的数据避免跨表垮库查询,利用空间换时间,提高性能
+第一范式:表中所有字段是不可分解的原子值
+第二范式:表中每一列都和主键相关,而不能只与主键一部分相关(针对联合主键)(表中只保存一种数据,不可以把多种数据保存在同一个表中)
+第三范式:确保每列都和主键直接相关而不是间接相关
+
+varcahr和char区别？
+char(最多存放255个字符):
+长度固定,插入数据小于固定长度则用空格填充
+存取速度比varchar快很多(甚至50%),空间换时间
+varchar(最大存放65532个字符):
+长度可变,按实际插入数据来存储()
+
+blob和text区别？
+blob:存储二进制数据,没有字符集
+text:存储大字符串,有字符集(根据字符集的校对规则对值进行排序比较)
+
+DATETIME和TIMESTAMP区别？
+都表示日期和时间,格式一致,存储秒后6位小数
+区别
+日期范围:DATETIME(1000-01-01到9999-12-31),TIMESTAMP(1970-01-01到2038-01-09)
+存储空间:DATETIM为8字节,TIMESTAMP为4字节
+时区:DATETIME与时区无关,TIMESTAMP与时区有关
+默认值:DATETIME默认为null,TIMESTAMP默认为当前时间not null
+
+in和exists的区别？hash和loop
+表大小差不多,区别不大
+子查询表大的用exists,子查询表小用in
+not in:不走索引会全表扫描
+
+DECIMAL记录货币？
+float和double是二进制存储,有误差
+decimal是字符串存储
+
+怎么存储表情包emoji?
+字符串存储utf-8+mb4编码
 
 #### 大量外键问题:
 不影响select，影响update/insert/delete(当对子表进行写入操作,父表会被加上共享锁,对子表进行高并发时,父表的共享锁长时间不能释放,就不能对父表进行写入而只能读)
 #### WAL技术(Write-Ahead Logging)RedoLog(对所有页面的操作写入日志文件,实现事务的持久性)
-
-
 
