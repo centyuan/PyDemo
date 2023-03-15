@@ -3,12 +3,12 @@ description:
 有n阶楼梯,每次可以爬 1或2个台阶,有多少种方法可以爬到楼顶？
 是一个斐波拉契数列
 1.迭代+累加(动态转移即动态规划)
-2.递归+hashmap(避免重复计算)
+2.递归+hashmap(避免重复计算):时间复杂度:O(n平方)
 """
 
 
 class Solution:
-    # 1. 迭代+累加
+    # 1. 迭代+累加(斐波拉契数列)O(n)
     def climbStairs(self, n: int) -> int:
         if n == 1:
             return 1
