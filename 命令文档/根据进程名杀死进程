@@ -1,8 +1,9 @@
 #!/bin/sh
 
+# 一:kill xargs
 # ps -ef | grep procedure_name | grep -v grep | awk '{print $2}' | xargs kill -9
 
-# $#为传递到脚本的参数个数 -lt为检测左边的数是否小于右边的，如果是，则返回 true
+# 二:$#为传递到脚本的参数个数 -lt为检测左边的数是否小于右边的，如果是，则返回 true
 if [ $# -lt 1 ]
 then
   echo "缺少参数：procedure_name"
@@ -16,6 +17,7 @@ do
   kill -9 $i
 done
 
+# 三:example_demo
 PROCESS=`ps -ef | grep uwsgi | grep -v grep | grep root | awk '{print $2}'`
 for i in $PROCESS
 do
