@@ -6,6 +6,10 @@ from enum import Enum
 # FastAPI详解,https://cloud.tencent.com/developer/article/2035986
 # typing详解,https://www.jianshu.com/p/9b6b9a06cd3e
 # pydantic详解,https://blog.csdn.net/codename_cys/article/details/107675748
+"""
+FastApi:starlette,pydantic
+uvicorn,daphne,hypercorn 
+"""
 app = FastAPI()
 
 
