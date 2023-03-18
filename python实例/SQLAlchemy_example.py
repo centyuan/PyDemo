@@ -10,7 +10,7 @@ ModelBase = declarative_base()  # 元类
 # 1.ORM使用模式(先在数据库建好对应表)或使用ModelBase.metadata.create_all(engine)
 class User(ModelBase):
     __tablename__ = "auth_user"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, nullable=True, autoincrement=True)
     date_joined = Column(DateTime)
     username = Column(String(length=30))
     password = Column(String(length=128))
@@ -19,7 +19,7 @@ class User(ModelBase):
 # 2.初始化数据库连接
 engine = create_engine('mysql+pymysql://root:123456@localhost:3306/runoob')
 # 3.创建表
-# ModelBase.metadata.create_all(engine)
+# ModelBase.metadata.create_all(engine)                                                    
 # 4.创建DBsession
 DBsession = sessionmaker(bind=engine)
 # 5.创建session对象
@@ -50,12 +50,12 @@ for row in session.query(User)[:2]:
 record = session.query(User).filter(User.username == "李").first()
 print(record)
 # 更新数据
-li_user = session.query(User).filter(User.username=="老李老").first()
+li_user = session.query(User).filter(User.username == "老李老").first()
 li_user.username = "老李老"
 session.commit()
 print(li_user)
 # 删除数据
-laoli_user = session.query(User).filter(User.username=="老李老").first()
+laoli_user = session.query(User).filter(User.username == "老李老").first()
 session.delete(laoli_user)
 session.commit()
 """
