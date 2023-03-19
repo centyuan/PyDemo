@@ -128,5 +128,5 @@ if __name__ == '__main__':
                     break
                 # time.sleep(1)
             except Exception as e:
-                print(str(e),)
+                print(str(e),"到那了:",content)
                 time.sleep(10)
