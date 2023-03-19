@@ -19,7 +19,7 @@ class User(ModelBase):
 # 2.初始化数据库连接
 engine = create_engine('mysql+pymysql://root:123456@localhost:3306/runoob')
 # 3.创建表
-# ModelBase.metadata.create_all(engine)                                                    
+# ModelBase.metadata.create_all(engine)
 # 4.创建DBsession
 DBsession = sessionmaker(bind=engine)
 # 5.创建session对象
@@ -44,7 +44,7 @@ for row in query:
 for row in query.order_by(User.date_joined):
     print(row.id, row.username)
 # 限制条数
-for row in session.query(User)[:2]:
+for row in  session.query(User)[:2]:
     print(row.id)
 # 过滤
 record = session.query(User).filter(User.username == "李").first()

@@ -1,5 +1,7 @@
 from typing import Union, Optional
-from fastapi import FastAPI, Cookie, Header
+
+import uvicorn
+from fastapi import FastAPI, Cookie, Header, APIRouter
 from pydantic import BaseModel
 from enum import Enum
 
@@ -10,7 +12,9 @@ from enum import Enum
 FastApi:starlette,pydantic
 uvicorn,daphne,hypercorn 
 """
+user_apirouter = APIRouter()
 app = FastAPI()
+app.include_router(user_apirouter, prefix="/user", tags="用户相关接口")
 
 
 class Item(BaseModel):
@@ -20,6 +24,8 @@ class Item(BaseModel):
     tax: Optional[bool] = None
 
 
+# 格式化 SQLALchemy定义的模型实例
+# Item.from_orm(模型实例)
 @app.get("/")
 def read_root():
     return {"hello": "world"}
@@ -30,11 +36,13 @@ def read_root():
 # 指定类型了,FastAPI会强制检查
 # 联合类型Union[x,None]等价于可选类型Optional[x]
 def read_item(item_id: int, q: Optional[str] = None):
+    # q是url后?q=hello参数且为Optional选填
     return {"item_id": item_id, "q": q}
 
 
 # 1.pydantic model的叫请求体
 @app.post("/itmes/")
+# async 改成异步
 async def create_item(item: Item):
     return item
 
@@ -107,5 +115,10 @@ uvicorn fastapi_main:app --reload
 # 3.访问
 http://127.0.0.1:8000/items/5?q=somequery
 接口文档:http://127.0.0.1:8000/docs
+接口文档:http://127.0.0.1:8000/redoc
+        
 # 4.pydantic,数据验证,用来做模型校验
 """
+
+if __name__ == '__main__':
+    uvicorn.run("fastapi_main:app", host="0.0.0.0", port=8000, reload=True, debug=True)
