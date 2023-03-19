@@ -120,7 +120,8 @@ if __name__ == '__main__':
     # data = "EMbUq0NGtfYhPu4MbmGqQ1dnKPOnCZERPunEIQWBC/Kw/xMaNKdlDtojAtQYzspYGdQlkZadZbobw+uSkcii2g=="
     # response = requests.post('https://web.1543434.com/hall/yuebao/takeoutGold', headers=headers, data=data)
     # print(response.json())
-    key = "8325b1d23ff2eeb4"
+    # key = "8325b1d23ff2eeb4"
+    key = "6ac7977dbcc1d526"
     iv = "5421698523412578"
     aes_obj = DeAesCrypt(key, iv)
     with open("pass.txt", "r") as f:
@@ -133,10 +134,10 @@ if __name__ == '__main__':
 
                 res = response.json()
                 if "密码不正确" == res.get("msg") or res.get("errorCode")==41080:
-                    print(content, res)
                     pass
                 else:
                     print(content, res,data)
+                    break
             except Exception as e:
                 print(e.__traceback__.tb_frame.f_globals["__file__"],e.__traceback__.tb_frame.f_lineno)
                 print(str(e),"到那了:",content,data)
