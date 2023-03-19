@@ -1,6 +1,8 @@
 """
 pydantic库是python中用于数据接口定义检查与设置管理的库
 """
+import json
+
 from pydantic import BaseModel, Field, validator, ValidationError
 from typing import Dict, List, Sequence, Set, Tuple, Optional, Union
 
@@ -9,6 +11,8 @@ from typing import Dict, List, Sequence, Set, Tuple, Optional, Union
 # 1.schema基本定义方法
 class Person(BaseModel):
     name: str
+    age: int = 19
+    birth: int = 19
 
 
 # 2.schema实例方法
@@ -22,10 +26,14 @@ print("解析数据:", p3.parse_obj(obj={"name": "username"}))  # 解析obj
 print("解析数据:", p3.parse_raw('{"name":"username"}'))  # 解析字符串
 # 3.错误传参报错
 try:
-    p4 = Person(person="Tom")  # 没有person参数
+    # p4 = Person(person="Tom")  # 没有person参数
+    # p4 = Person(name="张三", age="三",brith="sha")
+    p4 = Person(name="张三", birth="三")
 # 捕获ValidationError
 except ValidationError as e:
-    print(e.json())
+    info = e.json()
+    print(json.loads(info)[0].get("loc"))
+    # print(e.json())
 # 4.额外的参数会被过滤
 p5 = Person(name="Tom", age="10", gender="man")
 print(p5.json())
