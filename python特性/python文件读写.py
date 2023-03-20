@@ -23,3 +23,29 @@ read:read([size])方法从文件当前位置起读取size个字节,没有参数�
 readline:每次读取一行，返回一个str对象（比readlines慢得多）
 readlines:每次按行读取整个文件内容，返回list
 '''
+
+
+# 读取大文件
+# 1.利用yield
+
+def chunk_file_reader(fp, block_size=1024):
+    while 1:
+        chunk = fp.read(block_size)
+        if not chunk:
+            break
+        yield chunk
+
+
+def read_big_file(file_path, size=1024):
+    with open(file_path, "r", encoding="utf-8") as f:
+        for chunk in chunk_file_reader(f):
+            print(chunk)
+
+
+# 2.利用open自带f
+
+def read_big_file2(file_path, new_file_path):
+    with open(file_path, "r", encoding="utf-8") as f:
+        for line in f:
+            with open(new_file_path, encoding="utf-8") as new_file:
+                new_file.write(line)
