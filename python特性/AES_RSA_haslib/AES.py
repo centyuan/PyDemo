@@ -35,17 +35,15 @@ class Encrypt:
 
     def zeropadding(self, text):
         while len(text) % 16 != 0:
-            text += '0'
+            text += '\0'
         return text
 
     def pkcs7padding(self, text):
         """明文使用chr(num)填充 """
-        bs = 16
         length = len(text)
-        bytes_length = len(text.encode('utf-8'))
-        padding_size = length if (bytes_length == length) else bytes_length
+        padding_size = length if (len(text.encode('utf-8')) == length) else len(text.encode('utf-8'))
         # 需要填充几位
-        padding = bs - padding_size % bs
+        padding = 16 - padding_size % 16
         # ord 字符串（Unicode 字符）作为参数，返回对应的 ASCII 数值，或者 Unicode 数值。
         padding_text = chr(padding) * padding  # chr 整数返回对应字符
         self.coding = chr(padding)
