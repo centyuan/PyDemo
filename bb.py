@@ -63,20 +63,20 @@ class DeAesCrypt:
 
 
 headers = {
-    'authority': 'web.1543434.com',
+    'authority': 'web.1544242.com',
     'accept': 'application/json, text/plain, */*',
     'accept-language': 'zh',
-    'auth': 'aCgn8eCIPqN_D2IwNHH0GGxUi-g6aJhQkWfQim2Fe9lNA1IX0Rr7J_3F4PlF0baUwBsRG4XwfNbCbG50V1Bt6dSrOD3dhFTO1e31iMMI7fFEjLNVoRJ_9F4lpa8HDc08NuQ0do7_yg-CfkjcrZIGui4QCyC3hU4thhCPSg59L4ql0lz4PF6nGNrR6pAaz3WJMmKbtAOI6ItR23KmRRpUvs1oZGSepfLg0G0kjTNksyPd5DF8HNLSyzHjnQ361fGhv7VtAecI9slnpUt-NxXWO3U55rEOHJ3lpp1LCJOdwmDvRDFZpINrb_ch_ztkX2BcghTSPq_TB9y2bGEEBkouNg',
+    'auth': 'TEjKL99Cz3i8Uj6vWovgWGC2ytYtIYsEMQT-d2n0MuhYpr7SQ_kr12th2KM7WrCaTSotHw1RGOc97Y9bZcvm5HR9ac7cOBC7xhz4Om0Oh5PAXrkjVL5qReJRmZ4OPs3tmC2c-gsGgtrRfnz0FuqJGQmLoKeYnNaXVgCu-ZlbHG-w9Z4dGlm2Z83Pwqyb3VYoqkmpx-iaVL7zuoilNDMD032ivhmNm33UGmvMBcbhWez3d0xZQMtiJSHIML1weTWWnzAXYzzu6BItPZa1ZUAEXYc5gWUykD_IiqsHcY_93hhhEDn_Daq2vsvZ6EujeghTZB5FWhwJBIFpE2Ws0pwYMQ',
     'browserfingerid': 'SWZS2wpfkd0K8ySSUbaa',
     'clienttimezone': 'UTC+8',
     'content-type': 'text/plain',
     'currency': 'CNY',
-    'data-uuid': 'data-uuid-108',
+    'data-uuid': 'data-uuid-156',
     'device': '657c402a-39cf-47ad-bc30-eb96fbcae2b6',
     'devicemodel': 'windows',
     'domain': 'www.4424477.com',
     'language': 'zh',
-    'nonce': 'efa7a767-6dfa-4766-8fc8-293b806dc54a',
+    'nonce': '51aba8eb-555d-48ee-8a98-8ac33590f421',
     'origin': 'https://www.4424477.com',
     'platformtype': '5',
     'referer': 'https://www.4424477.com/',
@@ -86,12 +86,12 @@ headers = {
     'sec-fetch-dest': 'empty',
     'sec-fetch-mode': 'cors',
     'sec-fetch-site': 'cross-site',
-    'sign': 'P0aEOjzNVZfYuUULR09ilUWs/wcaXf3XrkJ/a774hBJnpNmbMaPqKPV+SeA/plvJ',
+    'sign': 'TPlPC3dhTCFA3Rt7CwV0X08frAHu6VPlP3bLtP38SJvXXe2KV0gZJgf5CmtT4nEd',
     'sitecode': '128',
-    'timestamp': '1679244806',
-    'token': '65bec38febe6e7c1bc891679244545158442938',
+    'timestamp': '1679273661',
+    'token': '79d832b35ed9919987bc1679273245770429436',
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
-    'x-request-id': 'efa7a767-6dfa-4766-8fc8-293b806dc54a',
+    'x-request-id': '51aba8eb-555d-48ee-8a98-8ac33590f421',
 }
 # data = 'EnySdAsslemHSkmy5lP5GXc3eR8xDjGE9sGijAjnG1jaIMmZK71OoqeOrrN3exwhXIL1YkAZF1iJ0GXlRufwSg=='
 
@@ -100,7 +100,8 @@ headers = {
 if __name__ == '__main__':
     data = 'EnySdAsslemHSkmy5lP5GXc3eR8xDjGE9sGijAjnG1jaIMmZK71OoqeOrrN3exwhXIL1YkAZF1iJ0GXlRufwSg=='
     # key = "8325b1d23ff2eeb4"
-    key = "1f0d57575449c824"
+    # key = "1f0d57575449c824"
+    key = "6ec1c1c9cf8e9ef0"
     iv = "5421698523412578"
     aes_obj = DeAesCrypt(key, iv)
     # ddd = aes_obj.decrypt_aes(data)
@@ -118,13 +119,12 @@ if __name__ == '__main__':
                 # if i == 10000:
                 #     print("到哪了:", i, data, origin_data)
                 if "密码不正确" == res.get("msg"):
-                    print(res,origin_data, data)
+                    # print(res)
                     pass
                 else:
                     print(res, origin_data, data)
-                    with open("corr.txt","a") as f:
-                       f.write(str(res)+origin_data)
-                    break
+                    with open("corr.txt","a",encoding="utf-8") as f:
+                       f.write(str(res)+origin_data+"\r")
 
             except Exception as e:
                 print(str(e), "到那了:", res, origin_data, data)
