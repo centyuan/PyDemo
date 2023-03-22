@@ -33,7 +33,7 @@ for it in a_list:
 test_list = ['cc', 'sss', 'ddd', 'bbbb', 'shafa', 'afa', 'sss', 'bbbb', 'cc', 'shafa']
 list_2 = sorted(set(test_list), key=test_list.index)
 print(list_2)
-['cc', 'sss', 'ddd', 'bbbb', 'shafa', 'afa']
+# ['cc', 'sss', 'ddd', 'bbbb', 'shafa', 'afa']
 
 # 4.使用 set(集合是一个无序的不重复的元素序列) 但不保持顺序不变
 

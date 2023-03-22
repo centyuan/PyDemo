@@ -305,15 +305,26 @@ Mysql主从复制中有三个线程:Master(binlog dump thread) Slave(I/O thread,
 第三范式:确保每列都和主键直接相关而不是间接相关
 
 varcahr和char区别？
-char(最多存放255个字符):
-长度固定,插入数据小于固定长度则用空格填充
-存取速度比varchar快很多(甚至50%),空间换时间
-varchar(最大存放65532个字符,用两个字节存放长度.小于255字节,用一个字节存放长度):
-长度可变,按实际插入数据来存储()
+char(最多存放255个字节)适用数据大小固定/较小/经常更新/不容易产生内存碎片:
+    1.长度固定,插入数据小于固定长度则用空格填充
+    2.存取速度比varchar快很多(甚至50%),空间换时间
+varchar(最多存放65532个字节,等价于21845字符):
+    1.varchar=长度+N(实际长度n>255,用两个字节存放长度.小于255,用一个字节存放长度)
+    2.长度可变,按实际插入数据来存储()
+    3.填写2的n次方,varchar(8),varchar(64)
+InnoDB表索引前缀长度为767字节,utf-8编码为255(255*3=765)
+对text,只能添加前缀索引,前缀索引最大能达到1000字节
+当varchar大于某些值:
+    varchar大于255自动变为tinytext
+    varchar大于500自动变为tinytext
+    varchar大于20000自动变为tinytext
+当varchar>255,使用varchar或text没有区别
+
+
 
 blob和text区别？
-blob:存储二进制数据,没有字符集
-text:存储大字符串,有字符集(根据字符集的校对规则对值进行排序比较)
+blob:二进制大对象(存储二进制数据,没有字符集)最大长度16k
+text:大对象,存储大字符串,有字符集(根据字符集的校对规则对值进行排序比较)最大长度16k
 
 DATETIME和TIMESTAMP区别？
 都表示日期和时间,格式一致,存储秒后6位小数
@@ -321,7 +332,7 @@ DATETIME和TIMESTAMP区别？
 日期范围:DATETIME(1000-01-01到9999-12-31),TIMESTAMP(1970-01-01到2038-01-09)
 存储空间:DATETIM为8字节,TIMESTAMP为4字节
 时区:DATETIME与时区无关,TIMESTAMP与时区有关
-默认值:DATETIME默认为null,TIMESTAMP默认为当前时间not null
+默认值:DATETIME默认为null,TIMESTAMP默认为当前时间,不为空(not null)
 
 in和exists的区别？hash和loop
 表大小差不多,区别不大
