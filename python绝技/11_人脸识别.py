@@ -1,9 +1,9 @@
 import cv2
 import os
 
-ROOT = "D:/BaiduNetdiskDownload/python-demo/image"
-FACES = "D:/BaiduNetdiskDownload/python-demo/image"
-TRAIN = "D:/BaiduNetdiskDownload/python-demo/image"
+ROOT = "D:/BaiduNetdiskDownload/python_demo/image"
+FACES = "D:/BaiduNetdiskDownload/python_demo/image"
+TRAIN = "D:/BaiduNetdiskDownload/python_demo/image"
 
 def detect(srcdir=ROOT,tgtdir=FACES,train_dir=TRAIN):
     for fname in os.listdir(srcdir):
