@@ -85,6 +85,7 @@ if __name__ == '__main__':
     pool = ThreadPoolExecutor(20)  # 创建20个的线程池
     for i in range(1, 5):
         # 提交执行函数到线程池，立即返回，不阻塞
+        # submit参数是生成器对象,
         task1 = pool.submit(fuck('线程池' + str(i), 2, 3))
 
 """
