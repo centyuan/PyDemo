@@ -50,8 +50,8 @@ async def run(websocket, path):
             break
         except Exception as e:
             print("异常:",e)
-
+websocket_obj = websockets.serve(run, "127.0.0.1", 8181)
 if __name__ == '__main__':
     print("127.0.0.1:8181 websocket...")
-    asyncio.get_event_loop().run_until_complete(websockets.serve(run, "127.0.0.1", 8181))
+    asyncio.get_event_loop().run_until_complete(websocket_obj)
     asyncio.get_event_loop().run_forever()
