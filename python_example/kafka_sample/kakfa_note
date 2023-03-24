@@ -1,0 +1,54 @@
+#1.配置内网ip vim config/server.properties
+listeners=PLAINTEXT://10.0.0.11::9092
+#2.配置外网连接
+advertised.listeners=PLAINTEXT:ip:9092
+#3.后台运行
+nohup kafka-server-start.sh config/server.properties 2>&1 &
+#4.添加环境变量
+vim ~/.bashrc
+export KAFKA_HOME=/home/lighthouse/kafka_2.12-3.3.2
+export PATH=$KAFKA_HOME/bin:$PATH
+#5.查看所有topics
+kafka-topics.sh --list --bootstrap-server 43.136.217.222:9092
+#6.创建topics
+kafka-topics.sh --bootstrap-server 43.136.217.222:9092 --create --topic web --replication-factor 1 --partitions 3
+#7.查看某个topic状态
+kafka-topics.sh --describe --topic web --bootstrap-server 43.136.217.222:9092
+#8.查看消费组
+kafka-consumer-groups.sh --list --bootstrap-server 43.136.217.222:9092
+#9.查看生产与消费情况
+kafka-consumer-groups.sh --describe --bootstrap-server 43.136.217.222:9092
+#10.发送消息
+kafka-console-producer.sh --broker-list 43.136.217.222:9092 --topic web
+#11.消费,from-beginning消费之前的消息
+kafka-console-consumer.sh --topic web --bootstrap-server 43.136.217.222:9092 --from-beginning
+#12.消费多个topic
+kafka-console-consumer.sh --whitelist "web|quick_demo" --bootstrap-server 43.136.217.222:9092
+#13.单播消费,一条消息只能被某一个消费者消费
+分别在两个客户端执行
+kafka-console-consumer.sh --bootstrap-server 43.136.217.222:9092 --consumer-property group.id=testGroup --topic web
+#14.多播消费,一条消费能被多个消费者消费,类似publish-subscribe模式
+保证消费者属于不同的消费组
+kafka-console-consumer.sh --bootstrap-server 43.136.217.222:9092 --consumer-property group.id=testGroup2 --topic web
+
+### isr:In-Sync Replicas isr 是一个副本的列表，里面存储的都是能跟leader 数据一致的副本
+###3中发送消息的方法
+ack(0:立即发送,不等待ack,1:leader收到,-1:producer等ISR中所有的fllower都确认收到数据)
+1.立即发送(不care消息是否成功发送,大部分情况下会成功,producer会自动重试)
+2.同步发送(通过send方法发送消息,并返回Future对象,get()方法会等待Future对象，看send()方法是否成功)
+3.异步发送(通过有回调函数的send发送消息,当producer收到Kafka broker的response会触发回调函数)
+
+###3中kafka消费模式(客户端处理消息和提交反馈两个动作不是原子性)
+1.最多一次(客户端收到消息前自动提交反馈了)
+2.最少一次(客户端处理消息提交反馈,提交反馈时服务可能挂掉,kafka认为消息未被消费,产生消息重复推送)
+3.正好一次(保证消息处理和提交反馈在同一个事务中,既有原子性)
+
+### partition分区,leader-follower
+生产者在向某个主题发送消息时，会根据分配策略将消息发送到对应的分区
+kafka保证同一个分区内的数据是有序的，我们也可以认为一个分区就是一个有序的消息队列
+每个主题的某一个分区只能被同一个消费组下的其中一个消费者消费，因此我们可以说分区是消费并行度的基本单位。从消费者的角度讲，我们订阅消费了一个主题，也就订阅了该主题的所有分区
+
+### 消息可靠生产和可靠消费
+可靠生产:ack确认+重试,通过send方法发送消息,并返回Future对象,get()方法会等待Future对象，处理异常看send()方法是否成功
+可靠消费:手动提交offset+重试+死信队列,
+
