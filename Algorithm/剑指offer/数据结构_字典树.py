@@ -1,4 +1,4 @@
-#！/usr/bin/python3
+# ！/usr/bin/python3
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-9-8 下午7:28
@@ -14,13 +14,14 @@
 3.每个节点的所有子节点包含的字符都不相同
 """
 
+
 class TrieNode(object):
     def __init__(self):
         self.nodes = dict()
         self.is_leaf = False
 
-    #插入一个字到字典树中 word:str  type hints特性
-    def insert(self,word:str):
+    # 插入一个字到字典树中 word:str  type hints特性
+    def insert(self, word: str):
         curr = self
 
         for char in word:
@@ -29,22 +30,17 @@ class TrieNode(object):
             curr = curr.nodes[char]
         curr.is_leaf = True
 
-    #插入一列表的字到字典树中
-    def insert_many(self,words:[str]):
-        for word in  words:
+    # 插入一列表的字到字典树中
+    def insert_many(self, words: [str]):
+        for word in words:
             self.insert(word)
 
-    #在字典树里面查询一个字
-    def search(self,word:str):
+    # 在字典树里面查询一个字
+    def search(self, word: str):
         curr = self
         for char in word:
             if char not in curr.nodes:
-                return  False
+                return False
             curr = curr.nodes[char]
 
-        return  curr.is_leaf
-
-
-
-
-
+        return curr.is_leaf

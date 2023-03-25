@@ -68,39 +68,8 @@ a1.fn()
 a2 = A(20)
 a2.fn()
 
-# 4.python list和dict生成
-ls = [1, 2, 3, 4]
-list1 = [i for i in ls if i > 2]
-list2 = [i * 2 for i in ls if i > 2]
 
-dic1 = {x: x ** 2 for x in (2, 4, 6)}
-dic2 = {x: 'item' + str(x ** 2) for x in (2, 4, 6)}
-set1 = {x for x in 'hello world' if x not in 'low level'}
-
-# 5全局和局部变量
-num = 9
-
-
-def f1():
-    global num  # num是全局变量，函数内要修改的话使用global
-    num = 20
-
-
-def f2():
-    print(num)
-
-
-f2()
-f1()
-f2()
-
-# 6.交换变量
-a = 8;
-b = 9
-a, b = b, a
-
-
-# 7.默认方法
+# 4.默认方法
 class A(object):
     def __init__(self, a, b):
         self.a1 = a
@@ -117,7 +86,7 @@ class A(object):
 a1 = A(10, 20)
 a1.fn1()  # fn1方法没有定义时，会调用默认方法
 
-# 8包管理
+# 5.包管理
 """
 一个包里有mod1.py,mod2.py,mod3.py,
 使用from demopack import *导入模块时
@@ -125,7 +94,7 @@ a1.fn1()  # fn1方法没有定义时，会调用默认方法
 """
 
 
-# 9闭包
+# 6.闭包
 def mulby(num):
     def gn(val):
         return num * val
