@@ -1,14 +1,24 @@
-#！/usr/bin/python3
-# -*- coding:utf-8 -*-
-# author centyuan
-# @time 19-8-17 下午10:15
+import bisect
+from typing import List
 
-"""
-题目描述
-在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，
-每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
-"""
 
 class Solution:
-    def find(self,target,array):
-        pass
+    # 1.直接查找 O(nm)
+    def findNumberIn2DArray(self, matrix: List[int], target: int) -> bool:
+        x, y = 0, len(matrix[0]) - 1
+        while x <= len(matrix) - 1 and y >= 0:
+            if matrix[x][y] == target:
+                return True
+            elif matrix[x][y] > target:
+                y -= 1
+            else:
+                x += 1
+        return False
+
+    # 2.二分查找:对每一行使用二分查找 O(nlogm)
+    def findNumberIn2DArray_2(self, matrix: List[int], target: int) -> bool:
+        for row in matrix:
+            id_x = bisect.bisect_left(row, target)  # 没找到返r回插入的位置
+            if id_x < len(row) and row[id_x] == target:
+                return True
+        return False
