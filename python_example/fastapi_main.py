@@ -1,8 +1,8 @@
-from typing import Union, Optional
+from typing import Union, Optional, List
 
 import uvicorn
-from fastapi import FastAPI, Cookie, Header, APIRouter
-from pydantic import BaseModel
+from fastapi import FastAPI, Cookie, Header, APIRouter, Path, Query, Depends
+from pydantic import BaseModel, Field
 from enum import Enum
 
 # FastAPI详解,https://cloud.tencent.com/developer/article/2035986
@@ -12,9 +12,15 @@ from enum import Enum
 FastApi:starlette,pydantic
 uvicorn,daphne,hypercorn 
 """
-user_apirouter = APIRouter()
+user_apirouter = APIRouter()  # 每一个应用对应一个APIRoutert，在run里面导入
 app = FastAPI()
 app.include_router(user_apirouter, prefix="/user", tags="用户相关接口")
+
+
+# 使用ApiRouter
+@user_apirouter.get("/list")
+def user():
+    pass
 
 
 class Item(BaseModel):
@@ -22,6 +28,7 @@ class Item(BaseModel):
     price: float
     description: Optional[str] = None
     tax: Optional[bool] = None
+    population: int = Field(default=100, title="人口数量", description="国家人口数量")
 
 
 # 格式化 SQLALchemy定义的模型实例
@@ -79,9 +86,19 @@ async def read_item2(skip: int = 0, limit: int = 10):
 
 
 # 4.查询参数字符串校验,使用query
-# @app.get("/queryparams/")
+@app.get("/queryparams/")
+def query_params(
+        value1: str = Query(..., min_length=8, max_length=20, regex="^a"),  # 长度在8-20,以a开头
+        value2: List[int] = Query(default=["v1", "v2"], alias="别名")
+):
+    return value1, value2
 
-# 5.路径参数数字校验,使用path
+
+# 5.路径参数数字校验,使用path来传递路径参数,使用Path来校验
+@app.get("files/{file_path:path}")
+def filepath(file_path: str = Path(None, title="路径参数", description="描述", ge=1, le=20)):
+    return {"path": file_path}
+
 
 # 6.cookie
 @app.get("/cookies/")
@@ -104,6 +121,22 @@ class Re_model(BaseModel):
 @app.post("/response_model/")
 async def return_response(re_model: Re_model):
     return re_model
+
+
+"""Dependencies 依赖的声名,创建,导入"""
+
+
+# 1.函数作为依赖
+async def common_parameters(q: Optional[str] = None, page: int = 1, limit: int = 10):
+    return {"q": q, "page": page, "limit": limit}
+
+
+@app.get("/dependencies01")
+def dependencies01(commons: dict = Depends(common_parameters)):
+    return commons
+
+
+# 2.类作为依赖
 
 
 """
