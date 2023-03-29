@@ -137,7 +137,6 @@ class Tree:
 
         return res
 
-        pass
 
     # 递归
     def postorder1(self, root):
