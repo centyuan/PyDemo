@@ -2,7 +2,7 @@ from time import time
 
 """一:改进算法,选择合适的数据结构,优化时间复杂度"""
 
-# 1.使用dict查找元素而不是list
+# 1.使用dict查找元素而不是list,或者set(list)
 """
 dict使用了hash table，因此查找操作时间复杂度为O(1),
 list实际是个数组,O(n)
