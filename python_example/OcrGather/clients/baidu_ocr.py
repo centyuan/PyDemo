@@ -115,8 +115,7 @@ if __name__ == '__main__':
     api_key = 'lfQvGPWiWaYcPGt90n58PVhx'  # AK
     secret_key = 'ind5NK0lUMFtAj87uMkcmQASF6IswIZh '  # Sk
     baidu_client = BaiduSdk(app_id=app_id, api_key=api_key, secret_key=secret_key, level=2)
-    path = r"/develop_relate/filter_site/resource/screen_shot.png"
-    # mark, text = baidu_client.get_text(file_path='resource/DYEA.png')
+    path = r"D:\All_project\python-demo\captcha.png"
     mark, text = baidu_client.get_text(file_path=path)
     print('text:', text)
     # result = baidu_sdk(app_id, api_key, secret_key, file_path='resource/6RS5.png')

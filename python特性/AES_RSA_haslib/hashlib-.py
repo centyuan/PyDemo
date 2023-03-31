@@ -3,7 +3,7 @@ import hashlib
 # da = "望太微兮穆穆"
 da = "https://www.yedanrongqi.com.cn"
 da = "94:83:c4:1b:6e:9e"
-# 1.
+# 1.基本操作
 print('hhh:', hashlib.md5(da.encode('utf8')).hexdigest(), len(hashlib.md5(da.encode('utf8')).hexdigest()))
 print(hashlib.sha1(da.encode('utf8')).hexdigest())
 print(hashlib.sha224(da.encode('utf8')).hexdigest())
@@ -48,3 +48,10 @@ with open('s.txt', 'rb') as fd:
     data = fd.read()
     hs = hashlib.md5(data).hexdigest()
     print(hs)
+
+# 4.base64编码
+import base64
+
+encode_str = base64.b64encode("centyuan.com".encode("utf-8"))  # 参数为byte,先使用encode
+print(encode_str.decode("utf-8"))  # Y2VudHl1YW4uY29t
+
