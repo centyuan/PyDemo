@@ -194,6 +194,8 @@ SADD tag "C++" "Programming" "Mastering Series"
 EXEC
 # 4.discard 取消事务
 # 5.WATCH、UNWATCH在事务中用于乐观锁
+# watch库存键, 监视一个(或多个) key ，如果在事务执行之前这个(或这些) key 被其他命令所改动，那么事务将被打断。
+
 
 Second:管道（pipeline）
 redis是一种基于客户端-服务端模型以及请求/响应协议的TCP服务,默认在执行每次请求都会创建（连接池申请连接）和断开（归还连接池）一次连接操作
