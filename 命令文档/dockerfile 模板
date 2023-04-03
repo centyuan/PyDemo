@@ -1,9 +1,0 @@
-FROM  centos:6.7 #指定使用那个镜像源
-MAINTAINER  Fisher "centyuan@outlook.com"
-RUN /bin/echo 'root:123456' | chpasswd
-RUN useradd centyuan
-RUN /bin/echo 'centyuan:123456'| chpasswd
-RUN /bin/echo -e "LANG=\"en_US.UTF-8\"" >/etc/default/local
-EXPOSE 22
-EXPOSR 80
-CMD /usr/sbin/sshd -D

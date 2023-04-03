@@ -1,81 +1,105 @@
-1创建新容器： docker run ubuntu:15.10 /bin/echo "Hello world"
-#以 ubuntu15.10 镜像创建一个新容器，然后在容器里执行 bin/echo "Hello world"(容器里面运行一个程序)，然后输出结果。
-#docker: Docker 的二进制执行文件。
-#run:与前面的 docker 组合来运行一个容器。
-#ubuntu:15.10指定要运行的镜像，Docker首先从本地主机上查找镜像是否存在，如果不存在，Docker 就会从镜像仓库 Docker Hub 下载公共镜像。
-#/bin/echo "Hello world": 在启动的容器里执行的命令
+1.创建容器
+docker run ubuntu:15.10 /bin/echo "Hello world"
+以ubuntu15.10镜像创建一个新容器,然后在容器里执行 bin/echo "Hello world"(容器里面运行一个程序)，然后输出结果。
+ubuntu:15.10指定要运行的镜像，Docker首先从本地主机上查找镜像是否存在，如果不存在，Docker 就会从镜像仓库 Docker Hub 下载公共镜像。
 
-2运行交互式的容器：docker run -r -t ubuntu:15.10 /bin/bash
-#-t:在新容器内指定一个伪终端或终端。
-#-i:允许你对容器内的标准输入 (STDIN) 进行交互。
+2.运行交互式的容器
+docker run -r -t ubuntu:15.10 /bin/bash -p 8080:80
+-t:在新容器内指定一个伪终端或终端。
+-i:允许你对容器内的标准输入 (STDIN) 进行交互。
+-d:后台运行容器,并返回容器id
+-p:指定端口映射,格式为本机端口8080:容器端口80,将本机8080端口映射到容器80的端口
+-P:会随机映射一个端口到内部容器开放的网络端口
+-v:volume,绑定一个卷,格式为主机路径:容器路径
 
-3启动容器（后台模式）
+3.启动容器（后台模式）
 docker run -d ubuntu:15.10 /bin/sh -c "while true; do echo hello world; sleep 1; done"
 
-4需要确认容器有在运行，可以通过 docker ps 来查看
-docker ps
+4.需要确认容器有在运行，可以通过 docker ps 来查看
+docker ps -a
+docker start 2b1b7a428627 # 启动已停止运行的容器
+docker stop 2b1b7a428627  # 停止容器
 
-5在容器内使用docker logs命令，查看容器内的标准输出
- docker logs 2b1b7a428627
+5.在容器内使用docker logs命令，查看容器内的标准输出
+docker logs 2b1b7a428627
 
-6进入容器
+6.进入容器
 docker exec -ti 容器ID /bin/bash
-    在使用 -d 参数时，容器启动后会进入后台。此时想要进入容器，可以通过以下指令进入：
-    docker attach
-    docker exec：推荐大家使用 docker exec 命令，因为此命令会退出容器终端，但不会导致容器的停止。
-　　#通过docker创建守护运行（在使用-d参数时）的容器时，容器启动后会进入后台。用户无法看到容器中的信息。某些时候如果需要进入容器进行操作，有多种方法，包括使用docker attach命令、docker exec命令，以及nsenter工具等。
-# attach命令
+在使用 -d 参数时，容器启动后会进入后台。此时想要进入容器，可以通过以下指令进入：
+(1.docker attach
 docker attach 容器名称/ID
-　　在使用attach命令有时候并不方便。当多个窗口同时attach到同一个容器的时候，所有窗口都会同步显示。当某个窗口因命令阻塞时，其他窗口也无法执行操作了。
-# exec命令
-docker exec -ti 容器ID /bin/bash
-nsenter工具
+# 多个窗口同时attach到同一个容器的时候，所有窗口都会同步显示。当某个窗口因命令阻塞时，其他窗口也无法执行操作了。
+(2.docker exec
+docker exec -it 容器ID /bin/bash
+# 推荐大家使用 docker exec 命令，因为此命令会退出容器终端，但不会导致容器的停止。
+(3.nsenter工具
 
-7将容器打包为镜像
-docker commit -m  ""   -a  ""   容器ID（可以简写）  镜像名称
--m  提示信息    -a  作者         
+7.打包容器为镜像
+docker commit -m  "提示信息"   -a  "作者centyuan"   容器ID（可以简写）  image_name(镜像名称)
+-m:提示信息
+-a:作者
+docker push image_name # 上传镜像到hub.docker.com
 
+8.docker镜像导出导入
+docker save -o imagename.tar  nginx:latest
+docker export -o name.tar nginx:latest
+docker save > imagename.tar nginx:latest
+-o/>:表示输出到文件
+nginx:latest 表示源镜像名
+
+docker load  -i imagename.tar
+docker load  <  imagename.tar
+docker import nginx-test.tar nginx:imp
+-i和<表示从文件输入
+
+docker 宿主机与容器文件相互拷贝
+1宿主机拷贝到容器：
+sudo docker cp /home/centyuan/file(文件) or /home/centyuan/dir(目录) 容器name or ID:/root/
+2容器拷贝到宿主机：
+sudo docker cp mycontainer:/root/fiel.txt /home/centyuan/
+需要注意的是不管容器有没有启动，拷贝命令都会生效
+
+9.基本命令
 获取一个新的镜像： docker pull ubuntu:13.10
 查找镜像：docker search httpd
 搜索镜像：docker search centos 
 获取镜像：docker pull registry.cn-hangzhou.aliyuncs.com/1hpc/centos
-查看所有镜像：docker images
+查看本地所有镜像：docker images
 查看镜像id：docker images -q 
 删除镜像：docker rmi image_id 
 删除所有镜像：docker rmi $(docker images -q) 
 创建容器：docker run --name <container_name> centos:7,container_name是自己定义的容器名 
 查看所有容器：docker ps -a 
 查看运行容器：docker ps 
-查看容器id：d	ocker ps -q 
+查看容器id：docker ps -q
 进入容器：docker exec -it <container_id> bash 
 退出容器：exit 
 删除容器：docker rm <container_id> 
 删除所有容器：docker rm $(docker ps -aq) 
-端口映射：docker run -d -p 8080:80 hub.c.163.com/library/nginx，说明：-d 表示后台运行，-p 8080:80 表示将宿主机的8080端口映射到容器端口80。容器开放的端口在镜像说明里面会有，nginx开放80，mysql开放3306，一般本来他们监听什么端口，容器就开放什么端口。 
-启动/停止/重启容器：docker start/stop/restart <container_id> 
+端口映射：docker run -d -p 8080:80 hub.c.163.com/library/nginx
+启动/停止/重启容器：docker start/stop/restart <container_id>
 获取容器/镜像的元数据：docker inspect <container_id> 
-挂载数据卷：docker run -v host/machine/dir :container/path/dir --name volume_test_container centos:7，说明：数据卷的挂载相当于在宿主机的目录与容器目录创建了一个链接，你修改任何一方的内容，另一方的内容也会同步修改。创建数据卷的作用：当容器被删除的时候，容器内的数据也一起被删除。像数据库、媒体资源等文件我们通常都会使用 -v 将容器中的内容链接到宿主机，这样我们重新创建容器的时候再次-v，数据又回来了。 
-启动mysql容器：docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=qwerasdf -d mysql:5.7 
-，默认用户为root，密码qwerasdf
+挂载数据卷：docker run -v host/machine/dir :container/path/dir --name volume_test_container centos:7
+启动mysql容器：docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=qwerasdf -d mysql:5.7 # 默认用户为root，密码qwerasdf
+容器连接：docker run --name some-app --link some-mysql:mysql -d application-that-uses-mysql  mysql容器启动后，其他容器就可以来连接使用了，方法如下：
 
-mysql容器启动后，其他容器就可以来连接使用了，方法如下： 
-容器连接：docker run --name some-app --link some-mysql:mysql -d application-that-uses-mysql 
+10.Dockerfile用来构建镜像的文本文件
+一般格式:
+"""
+FROM centos:6.7  # 指定使用那个镜像
+MAINTAINER  Fisher "centyuan@outlook.com"
+RUN /bin/echo 'root:123456' | chpasswd  # RUN后面build时执行
+RUN useradd centyuan
+RUN /bin/echo 'centyuan:123456'| chpasswd
+RUN /bin/echo -e "LANG=\"en_US.UTF-8\"" >/etc/default/local
+EXPOSE 22
+EXPOSR 80
+CMD /usr/sbin/sshd -D   # CMD后面docker run时执行
 
-docker镜像导出导入：
- docker save -o imagename.tar  nginx:latest
- docker save > imagename.tar nginx:latest
-  -o和>表示输出到文件 nginx:latest是源镜像名
- docker export -o name.tar nginx-test
- nginx-test是源容器名
+"""
+docker build -t centos:V3  .  # 通过dockerfile构建镜像,.为上下文路径
 
- docker load  -i imagename.tar
- docker load <  imagename.tar
- -i和<表示从文件输入
- docker import nginx-test.tar nginx:imp 
+11.Docker Compose
+使用步骤:
+1.dockerfile定义应用程序环境镜像,2.docker-compose.yml定义构成应用程序的服务,3.docker-compose up启动并运行整个应用程序
 
-docker 宿主机与容器文件相互拷贝
-1宿主机拷贝到容器：
-  sudo docker cp /home/centyuan/file(文件) or /home/centyuan/dir(目录) 容器name or ID:/root/
-2容器拷贝到宿主机：
- sudo docker cp mycontainer:/root/fiel.txt /home/centyuan/
-需要注意的是不管容器有没有启动，拷贝命令都会生效
