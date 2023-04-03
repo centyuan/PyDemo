@@ -29,11 +29,11 @@ String:底层的数据结构为简单的动态字符串,类型Java的ArrayList,p
 # nx上锁,ex设置过期时间
 set cent bingxi nx ex 20
 set cent bingxi
-# 设置范围内的值
-set range cent abc
+# 取值的范围
+getrange cent 0 3
 # 设置和过期时间
 setex cent 20 bingxi
-# 新值换旧值
+# 设置新值并返回旧值
 getset cent newbingxi
 # 设置多个key value
 mset k1 v1 k2 v2 k3 v3
@@ -45,7 +45,7 @@ get cent
 # 取多个key
 mget k1 k2 k3
 # 取值的范围
-get range cent 0 3
+getrange cent 0 3
 # 值里面追加
 append cent yuan
 # 获取key长度
