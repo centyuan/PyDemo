@@ -1,5 +1,4 @@
-
-# 參考https://www.cnblogs.com/chengd/articles/7770898.html
+# https://www.cnblogs.com/chengd/articles/7770898.html
 # 1.threading.Lock()
 import threading
 
@@ -12,6 +11,7 @@ def change_it(n):
     balance = balance + n
     balance = balance - n
 
+
 def run_thread(n):
     for i in range(1000):
         # 获取锁
@@ -21,16 +21,17 @@ def run_thread(n):
             change_it(n)
         finally:
             lock.release()
+
+
 if __name__ == '__main__':
     # 加锁保证balance一直为0
-    t1 = threading.Thread(target=run_thread,args=(10,))
-    t2 = threading.Thread(target=run_thread,args=(15,))
+    t1 = threading.Thread(target=run_thread, args=(10,))
+    t2 = threading.Thread(target=run_thread, args=(15,))
     t1.start()
     t2.start()
     t1.join()
     t2.join()
     print(balance)
-
 
 # 2.threading.RLock(): RLock允许在同一线程中被多次acquire
 threading.RLock()
