@@ -41,13 +41,14 @@ show index from user_table;
 3.显示数据库所有以run开头的表信息
 show table status like'run%';
 4.创建表,engine=指定存储引擎,每张表都可以指定存储引擎
-create table 'run_tb'(
-    'run_id',int unsigend auto_increment,
-    'run_title', varchar(100) not null,
-    'run_author',varchar(40) not null,
-    'sub_data',date,
-    primary key('run_id')
-)engine=innodb default charset=utf-8;
+# CREATE TABLE IF NOT EXISTS `table_test`(
+CREATE TABLE  `table_test`(
+   `t_id` INT UNSIGNED AUTO_INCREMENT,
+   `t_title` VARCHAR(100) NOT NULL,
+   `t_author` VARCHAR(40) NOT NULL,
+   `sub_date` DATE,
+   PRIMARY KEY(`t_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 5.插入数据
 insert into table_name(field1,field2,field3,field4) values(value1,value2,value3,value4);
 6.更改字段类型
