@@ -1,11 +1,10 @@
+import time, random, os
 from concurrent.futures import ProcessPoolExecutor
-# from concurrent.futures.process import ProcessPoolExecutor
 from multiprocessing import Process, Pool, synchronize
 # synchronize包含一些同步原语:Lock、Condition、Semaphore、Event
-import time, random, os
 
-
-# 1. 创建Process实例,传入任务执行函数
+# 一:四种创建进程的方式
+# 1.multiprocessing.Process创建实例
 def run_proc(name):
     print('Run child process %s (%s)...' % (name, os.getpid()))
 
@@ -20,7 +19,7 @@ def long_tima_task(name):
 
 if __name__ == '__main__':
     print('父进程 %s.' % os.getpid())
-    p = Process(target=run_proc, args=('test',))
+    p = Process(target=run_proc, args=('test',))  # target传入任务执行函数
     print('开启新进程.')
     p.start()
     p.join()  # 等待子进程结束
@@ -28,7 +27,7 @@ if __name__ == '__main__':
     print('父进程结束%s.' % os.getpid())
 
 
-# 2. 派生Process的子类,重写run方法
+# 2. 继承mutliprocesing.Process,重写run方法
 class MyProcess(Process):
     def __init__(self):
         Process.__init__()
@@ -47,7 +46,7 @@ def main2():
     print("主进程终止")
 
 
-# 3.使用进程池
+# 3.使用进程池 multiprocessing.Pool
 def worker(arg):
     print("子进程开始执行>>> pid={},ppid={},编号{}".format(os.getpid(), os.getppid(), arg))
     time.sleep(0.5)
@@ -66,7 +65,7 @@ def main3():
     print("主进程终止")
 
 
-# 4. ProcessPoolExecutor  进程池
+# 4. concurrent.futures.ProcessPoolExecutor 进程池
 def task_(sleep_sec=10, tag='test'):
     print('[%s] start sleep' % tag)
     time.sleep(sleep_sec)
