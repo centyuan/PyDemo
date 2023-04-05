@@ -6,6 +6,8 @@ python manage.py test cccount.tests.XXXTestCase # 只执行某一个测试类
 """
 
 from django.test import TestCase
+
+
 class AccountRegister(models.Model):
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
@@ -50,3 +52,28 @@ class XXXTestCase(APITransactionTestCase):
         resp = response.json()
         self.assertEqual(resp['code'], 200)  # 根据情况断言返回结果
         self.assertEqual(resp['message'], 'ok')
+
+
+# 3.接口单元测试
+# setUpClass和tearDownClass这两个静态方法分别会在测试所有用例执行前后各执行一次
+# setUp和tearDown这两个方法会在每个测试用例前后都各执行一次
+class MyTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        print("setUpClass")
+
+    @classmethod
+    def tearDownClass(cls):
+        print("tearDownClass")
+
+    def setUp(self) -> None:
+        print("setUp")
+
+    def tearDown(self) -> None:
+        print("tearDown")
+
+    def test_1_func(self):
+        print("test_1_func")
+
+    def test_2_func(self):
+        print("test_2_func")

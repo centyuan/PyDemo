@@ -67,6 +67,6 @@ queryset.annotate(month=TruncMonth('created_at')).filter(month__range=created_ra
 # 9.算某月的总和, 利用aggregate, 并且制定时间, 这里要注意month制定的是某个月的1号
 queryset.annotate(month=TruncMonth('created_at')).filter(month='2019-11-01').aggregate(
     contract_amount=Sum('contract_amount'))
-"""
+
 # Django F对象和Q对象查询详解
 # http://c.biancheng.net/view/7693.html
