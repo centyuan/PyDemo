@@ -32,9 +32,9 @@ Hobby.object.aggregate(Max('student__age'))
 
 # 二:annotate
 # 1. 按学生分组，统计每个学生的爱好数量
+# 返回的结果依然是Student查询集，只不过多了hobbies__count这个字段
 Student.objects.annotate(Count('hobbies'))
 Student.objects.annotate(hobbies=Count('hobbies'))  # 指定返回名字 hobbies
-# 返回的结果依然是Student查询集，只不过多了hobbies__count这个字段
 
 # 2. 按爱好分组，在统计每组学生数量
 Hobby.objects.annotate(Count('student'))
@@ -42,7 +42,7 @@ Hobby.objects.annotate(Count('student'))
 # 3. 按爱好分组，在统计每组学生最大年龄
 Hobby.objects.annotate(Max('student__age'))
 
-# 4. 统计最受学生欢迎的5个爱好
+# 4. 统计最受学生欢迎的5个爱好,多一个student_num字段
 Hobby.objects.annotate(student_num=Count('student')).order_by('-student_num')[:5]
 
 # 5. 按学生名字分组，统计每个学生的爱好数量(名字相同的学生，爱好数量会叠加)
