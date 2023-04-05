@@ -93,6 +93,7 @@ git checkout --track origin/dev                      # 这时本地会新建一�
 # 初始化本地git仓库，并添加远程仓库
 git init                                                            # 初始化仓库
 git remote add origin git@192.168.8.105:GFPass/CdGFPWebManger.git   # 添加远程仓库
+git remote rm origin  # 删除远程仓库
 git add .
 git commit -m "Initial commit"
 git push -u origin master                                           # 1.将远程仓库origin的master分支与本地仓库master分支关联 2.push本地master
