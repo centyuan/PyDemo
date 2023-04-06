@@ -97,8 +97,8 @@ EXPOSR 80
 CMD /usr/sbin/sshd -D   # CMD后面docker run时执行
 
 """
-docker build -t centos:V3  .  # 通过dockerfile构建镜像,.为上下文路径
-
+# 使用Dockerfile构建镜像, . 为上下文路径 -t为镜像名字及标签,name:tag
+docker build -t centos:V3 .
 11.Docker Compose
 使用步骤:
 1.dockerfile定义应用程序环境镜像,2.docker-compose.yml定义构成应用程序的服务,3.docker-compose up启动并运行整个应用程序
