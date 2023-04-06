@@ -13,7 +13,7 @@ docker run -r -t ubuntu:15.10 /bin/bash -p 8080:80
 -v:volume,绑定一个卷,格式为主机路径:容器路径
 
 3.启动容器（后台模式）
-docker run -d ubuntu:15.10 /bin/sh -c "while true; do echo hello world; sleep 1; done"
+docker run -d ubuntu:15.10 /bin/sh -c "while true; do echo hello world; sleep 1; done"  --name my_ubunut
 
 4.需要确认容器有在运行，可以通过 docker ps 来查看
 docker ps -a
@@ -82,6 +82,7 @@ sudo docker cp mycontainer:/root/fiel.txt /home/centyuan/
 挂载数据卷：docker run -v host/machine/dir :container/path/dir --name volume_test_container centos:7
 启动mysql容器：docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=qwerasdf -d mysql:5.7 # 默认用户为root，密码qwerasdf
 容器连接：docker run --name some-app --link some-mysql:mysql -d application-that-uses-mysql  mysql容器启动后，其他容器就可以来连接使用了，方法如下：
+查看容器ip地址:docker inspect 容器名称/容器id | grep IPAddress   # docker会每个容器分配一个ip地址
 
 10.Dockerfile用来构建镜像的文本文件
 一般格式:
