@@ -40,79 +40,56 @@ git add *                                              # 通配符可以把当�
 git pull=git fetch +git merge #拉取远端repo并合并,git pull 命令等同于执行两个操作: 先使用 git fetch 从远程分支抓取最新的分支修改信息，然后使用 git merge 把修改合并进当前的分支。执行git pull 后会从克隆的位置拉取代码并更新本地仓库，就是把远端的修改同步到本地(clone不需要指定远程仓库,就是clone的)
 git push                                               # 推送本地,并合并到远程
 git fetch                                              # 从远程分支抓取最新的分支修改信息
-git merge -m 'merge experimental branch' experimental  # 合并分支到当前分支
-git branch -d experimental                             # 删除分支
-git reset --hard HEAD^                                 # 撤销一个合并
 
-'''版本回退'''
+"""分支管理"""
+git branch 或 git branch -a
+git branch -vv                                         # 查看本地分支的跟踪分支(上游分支)
+git branch  <branch>                                   # 创建分支
+git branch -d <branch>                                 # 删除分支
+git merge -m 'merge' <branch>                          # 合并分支到当前分支
+git branch -m <branch>                                 # 分支重命名
+git reset --hard HEAD^                                 # 撤销一个合并
+# 创建并切换本地dev分支后追踪origin的dev(取远程分支并分化一个新分支)
+git checkout -b dev origin/dev
+# 本地分支关联远程分支,本地已创建了分支
+git branch --set-upstream-to=origin/远程分支 本地分支
+git push origin test:master                            # 提交本地test分支作为远程的master分支,
+git push origin test:test                              # 提交本地test分支作为远程的test分支
+git push origin master:test                            # 提交本地的maste分支到远程的test分支,远程会自动创建test分支
+git push --set-upstream origin yuan                    # 本地切换到该分支，在追踪远程分支
+#如果远程新建了一个分支，本地没有该分支 这时本地会新建一个分支名叫 dev,会自动跟踪远程的同名分支dev
+git checkout --track origin/dev
+
+"""版本回退"""
+git reset --hard 版本号                                 # 返回到某个版本，放弃所有修改
 git reset --hard HEAD^                                 # 可以使工作目录回到上次提交的状态,HEAD表示当前版本
 git reset --hard HEAD^^                                # 上上一个版本,往上100个写成 HEAD~100
 git reset --hard commit_id                             # 可以用回到,回退前的新版本
 git reflog                                             # 用来记录你的每一次命令：便于查看commit_id
 
 
-'''修复未提交文件中的错误（重置）'''
-git reset --hard 版本号 //                              # 返回到某个版本，放弃所有修改
-git reset --hard HEAD^                                 # 可以使工作目录回到上次提交的状态,HEAD表示当前版本
-git reset --hard HEAD^^                                # 上上一个版本
-
-'''恢复一个文件'''
+"""恢复一个文件"""
 git checkout  readme.txt                               # 放弃本地readme.txt文件的修改
 git checkout //                                        # 放弃所有文件的所有修改
 git reset HEAD readme.txt (git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。)
 两种情况:
-	一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
-	一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
+一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
+一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
 
-'''修复已提交文件中的错误'''
-#1. 创建一个 新的提交（commit），在新的提交里撤消老的提交所作的修改。这种作法在你已经把代码发布的情况下十分正确.
-git revert HEAD  (HEAD为commit的名字,git log 可以查看)
-git revert HEAD^ (撤销上上次的提交 next-to-last)
-#2. 去修改你的 老提交（old commit）
-
-'''创建切换追踪远程分支'''
-git checkout -b dev origin/dev                         # 创建并切换本地dev分支后追踪origin的dev(取远程分支并分化一个新分支)
-git pull origin dev                                    # 拉取origin的dev分支到本地分支
-git branch -vv                                         # 查看本地分支的跟踪分支(上游分支)
-git branch --set-upstream-to=origin/远程分支 本地分支               # 本地分支关联远程分支,本地已创建了分支
-#拉取远程仓库：$ git pull [remoteName] [localBranchName]
-#推送远程仓库：$ git push [remoteName] [localBranchName]
-git push origin test:master                            # 提交本地test分支作为远程的master分支,
-git push origin test:test                              # 提交本地test分支作为远程的test分支
-git push origin master:test                            # 提交本地的maste分支到远程的test分支,远程会自动创建test分支
-git push --set-upstream origin yuan                    # 本地切换到该分支，在追踪远程分支
-#如果远程新建了一个分支，本地没有该分支
-git checkout --track origin/dev                      # 这时本地会新建一个分支名叫 dev ，会自动跟踪远程的同名分支 dev
-
-# 初始化本地git仓库，并添加远程仓库
+"""初始化本地git仓库，并添加远程仓库"""
 git init                                                            # 初始化仓库
 git remote add origin git@192.168.8.105:GFPass/CdGFPWebManger.git   # 添加远程仓库
-git remote rm origin  # 删除远程仓库
+git remote rm origin                                                # 删除远程仓库
 git add .
 git commit -m "Initial commit"
-git push -u origin master                                           # 1.将远程仓库origin的master分支与本地仓库master分支关联 2.push本地master
-# 等价于
+#将远程仓库origin的master分支与本地仓库master分支关联 2.push本地master
+git push -u origin master
+等价于
 # 1. git branch --set-upstream-to=origin/master  master
 # 2. git push origin master
 
-"""
 Git 全局设置:
-
 git config --global user.name "centyuan"
 git config --global user.email "centyuan@outlook.com"
 
-创建 git 仓库:
-mkdir small_tools
-cd small_tools
-git init
-touch README.md
-git add README.md
-git commit -m "first commit"
-git remote add origin git@gitee.com:centyuan/small_tools.git
-git push -u origin "master"
 
-已有仓库?
-cd existing_git_repo
-git remote add origin git@gitee.com:centyuan/small_tools.git
-git push -u origin "master"
-"""
