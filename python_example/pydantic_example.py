@@ -31,9 +31,11 @@ try:
     p4 = Person(name="张三", birth="三")
 # 捕获ValidationError
 except ValidationError as e:
-    info = e.json()
-    print(json.loads(info)[0].get("loc"))
-    # print(e.json())
+    # 访问错误的方式
+    print(e.errors())  # 1. e.errors()
+    print(e.json())  # 2. e.json()
+    print(str(e))  # 3. str(e)
+    print(json.loads(e.json())[0].get("loc"))
 # 4.额外的参数会被过滤
 p5 = Person(name="Tom", age="10", gender="man")
 print(p5.json())
