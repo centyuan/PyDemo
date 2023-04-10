@@ -4,7 +4,7 @@ docker run ubuntu:15.10 /bin/echo "Hello world"
 ubuntu:15.10指定要运行的镜像，Docker首先从本地主机上查找镜像是否存在，如果不存在，Docker 就会从镜像仓库 Docker Hub 下载公共镜像。
 
 2.运行交互式的容器
-docker run -r -t ubuntu:15.10 /bin/bash -p 8080:80
+docker run -i -t ubuntu:15.10 /bin/bash -p 8080:80
 -t:在新容器内指定一个伪终端或终端。
 -i:允许你对容器内的标准输入 (STDIN) 进行交互。
 -d:后台运行容器,并返回容器id
@@ -42,8 +42,8 @@ docker push image_name # 上传镜像到hub.docker.com
 
 8.docker镜像导出导入
 docker save -o imagename.tar  nginx:latest
-docker export -o name.tar nginx:latest
 docker save > imagename.tar nginx:latest
+docker export -o name.tar nginx:latest
 -o/>:表示输出到文件
 nginx:latest 表示源镜像名
 
@@ -96,10 +96,12 @@ RUN /bin/echo -e "LANG=\"en_US.UTF-8\"" >/etc/default/local
 EXPOSE 22
 EXPOSR 80
 CMD /usr/sbin/sshd -D   # CMD后面docker run时执行
-
+ENTERYPOINT
+tail -f /dev/null       # 防止容器启动后,主线程命令执行完退出
 """
 # 使用Dockerfile构建镜像, . 为上下文路径 -t为镜像名字及标签,name:tag
 docker build -t centos:V3 .
+exec /bin/bash "$@"
 11.Docker Compose
 使用步骤:
 1.dockerfile定义应用程序环境镜像,2.docker-compose.yml定义构成应用程序的服务,3.docker-compose up启动并运行整个应用程序
