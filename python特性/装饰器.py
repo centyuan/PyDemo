@@ -4,6 +4,7 @@ import time
 ＠函数”修饰的函数不再是原来的函数，而是被替换成一个新的东西（取决于装饰器的返回值），
 1如果装饰器函数的返回值为普通变量，那么被修饰的函数名就变成了变量名；
 2如果装饰器返回的是一个函数的名称，那么被修饰的函数名依然表示一个函数
+
 """
 
 """1:带参数的装饰器 嵌套一个函数，该函数带有的参数个数和被装饰器修饰的函数相同"""
@@ -63,6 +64,8 @@ funC("other_funB:Python教程：", "http://c.biancheng.net/python")
 例如打印:
 被装饰函数的.__doc__
 被装饰函数的.__name__
+@wraps
+保证被装饰函数还拥有原有属性,消除使用了装饰器的函数结构改变(如__name,__doc__)
 """
 """3:多个装饰器"""
 from functools import wraps
@@ -102,3 +105,44 @@ def func(a, b):
 
 
 func(3, 4)
+
+"""4.类作为装饰器"""
+
+
+# 类中定义__call__,类作为装饰器,会运行__call__内容
+class Animal:
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self, *args, **kwargs):
+        print("Animial的__call__")
+        return self.func(*args, **kwargs)
+
+
+@Animal
+def test(name, kind):
+    print("test running")
+    return f"{name}属于{kind}"
+
+
+"""5.为类加装饰器"""
+
+
+def decorator(func):
+    def wrapper(cls):
+        # 为类添加属性
+        cls.name = "张三"
+        # 为类添加方法
+        cls.do_some = func
+
+
+def printd(*args):
+    printd("类中printd函数")
+
+
+@decorator(printd)
+class Animal:
+    def __init__(self):
+        printd("类Animal的init方法")
+A = Animal()
+A.do_some()

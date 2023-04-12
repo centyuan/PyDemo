@@ -53,7 +53,7 @@ apt-get install packagename 安装一个新软件包
 apt-get remove packagename  卸载一个已安装的软件包（保留配置文件）
 apt-get autoremove packagename 移除之前被其他软件包依赖,但现在不再被使用的软件包
 apt-get purge packagename 不保留配置文件的移除
-apt-get --purge remove packagename  卸载一个已安装的软件包（删除配置文件）
+apt-get remove packagename --purge  卸载一个已安装的软件包（删除配置文件）
 dpkg --force-all --purge packagename   有些软件比较难卸载，而且还阻止了别的软件的应用，就可以用这个
 apt-get autoremove  因为apt会把已装或已卸的软件都备份在硬盘上，所以如果需要空间的话，可以这个命令来删除你已经删除的软件。
 apt-get clean:

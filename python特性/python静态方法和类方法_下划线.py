@@ -64,7 +64,7 @@ class Num:
     def one():
         print('1')
 
-    # 实例方法：能用实例化对象调用而不能用Num调用,调用的时候会将该对象参数自动传入
+    # 实例方法：只能用实例化对象调用,调用的时候会将该对象参数自动传入
     def two(self):
         print('2')
 
@@ -82,22 +82,28 @@ class Num:
         cls.three()
 
 
+# 1.类调用
 Num.one()  # 1
 # Num.two()         #TypeError: two() missing 1 required positional argument: 'self'
 Num.three()  # 3
 Num.go()  # 3
-print(dir(Num))
-if not hasattr(Num, 'var'):
-    print("no")
-else:
-    print("yes")
+# print(dir(Num))
+if hasattr(Num, 'var'):
+    print("var存在")
+if hasattr(Num, "_variable"):
+    print("_variable存在")
+if hasattr(Num, "__num"):
+    print("__num存在")
 
+# 2.实例调用
 i = Num()  # 类实例化
 # i.one()           #TypeError: one() takes 0 positional arguments but 1 was given
 i.two()  # 2
 i.three()  # 3
 i.go()
 print('num', Num.mro())
+
+# 3.调用父类方法
 """
 调用父类的三种方式
 1.父类名称.父类方法名(self,参数1,参数2)
