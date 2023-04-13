@@ -24,7 +24,7 @@ config set maxmemory 100mb:动态命令配置redis最大内存 config get maxmem
 
 # 1.String 类型
 String类型是二进制安全的。意思是 redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象。string 类型是 Redis 最基本的数据类型，string 类型的值最大能存储 512MB
-String:底层的数据结构为简单的动态字符串,类型Java的ArrayList,pyton的list,在第一次append也会超额分配,来减少频繁的内存分配
+底层的数据结构为:动态字符串,类型Java的ArrayList,pyton的list,在第一次append也会超额分配,来减少频繁的内存分配
 
 # nx上锁,ex设置过期时间
 set cent bingxi nx ex 20
@@ -64,8 +64,9 @@ publish channel_yuan helloworld # 推送消息到频道
 
 # 2.List 类型
 # List 是一个双向链表结构，单键多值,可以在头部或尾部插入数据性能高,操作中间值性能差
-List底层的数据结构为:quicklist 在列表元素较少的情况下会使用一块连续的内存存储(ziplist，压缩列表),将多个ziplist链起来组成链表
-:普通链表需要指针，比较浪费空间(只存int类型数据,结构上还要额外的prev,next)，redis List将多个ziplist使用双向指针串起来,即满足快速插入删除,又不会出现太大的空间冗余
+底层的数据结构为:(压缩链表|双端链表)
+在列表元素较少的情况下会使用一块连续的内存存储(ziplist，压缩列表),将多个ziplist链起来组成链表普通链表需要指针，比较浪费空间(只存int类型数据,结构上还要额外的prev,next)，
+redis List将多个ziplist使用双向指针串起来,即满足快速插入删除,又不会出现太大的空间冗余
 
 # 从左边插入一个或多个 ###从左边结果为n a u y
 lpush cent y u a n
@@ -89,7 +90,8 @@ lrem <key> <n> <value>
 
 
 # 3.Hash是一个键值(field=>value)对映射表 特别适合用户存储对象,每个 hash 可以存储 232 - 1 键值对（40多亿）
-# 对应数据结构有两种,ziplist(压缩列表),hashtable(哈希表),当field-value长度较短个数较少,使用ziplist,否则使用hashtable
+底层数据结构：ziplist(压缩列表),hashtable(哈希表)
+当field-value长度较短个数较少,使用ziplist,否则使用hashtable
 当hash对象可以同时满足一下两个条件时，哈希对象使用ziplist编码：
 1.哈希对象保存的所有键值对的键和值的字符串长度都小于64字节
 2.哈希对象保存的键值对数量小于512个
@@ -118,8 +120,8 @@ hsetnx <key> <field> <value>
 
 
 # 4. Set集合:无序,不重复
-# 和List类似,特殊是自动去重的,是string类型的无序集合,底层其实是一共value为null(所有value指向同一个内部值)的hash表即HashMap实现,
-# 所有添加,查找,删除的复杂度都为O(1)
+# 和List类似,特殊是自动去重的,是string类型的无序集合,所有添加,查找,删除的复杂度都为O(1)
+底层数据结构:HashMap,其实是value为null(所有value指向同一个内部值)的hash表
 
 # 添加，第二次插入相同元素将被忽略
 sadd <key> <value1> <value2>
@@ -147,8 +149,10 @@ sdiff <key1> <key2>
 
 # 5.Zset:有序集合,不重复
 # Zset集合元素关联一个评分(score),score被用来从最低到最高排序,元素唯一,score可以重复
-#底层使用了两个结构:1.hash,关联value和权重score,保障元素value的唯一性,通过value可以找到score
-                  2.跳跃表,在于给元素value排序,根据score范围获取元素列表
+底层数据结构:
+1.HashMap,关联value和权重score,保障元素value的唯一性,通过value可以找到score
+2.跳跃表,在于给元素value排序,根据score范围获取元素列表
+
 # 添加元素
 zadd <key> <score1> <value1> <score2> <value2>
 # 取出所有值
@@ -330,7 +334,7 @@ Redis缓存问题?
 三:限流降级
 
 Redis为什么这么快?
-r基于内存的k-v数据库+简单的数据结构+单线程(省去上下文切换和各种锁的问题)+多路IO复用技术
+基于内存的k-v数据库+简单的数据结构+单线程(省去上下文切换和各种锁的问题)+多路IO复用技术
 单线程:基于Reator模式开发了自己的网络事件处理器(文件事件处理器是单线程的)
 
 Redis为什么是单线程?
