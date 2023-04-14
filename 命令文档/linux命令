@@ -8,16 +8,24 @@ free -m
 lsblk
 # 5、查看磁盘分区情况：
 fdisk -l
-# 6、查看磁盘总量：
-df -h
+# 6、查看磁盘:
+df -h  # disk free以磁盤分区为单位查看文件系统
+du -ah # 显示文件或目录的大小
+cat test |sort|uniq -u  # -u仅显示不重复的,-d仅显示重复的
+### 找出系统最大的前十个文件 https://linux.cn/article-9495-1.html
+# find 的输出是文件名加一个换行符du 接受这个输入时会出现问题，我们需要用 -print0 选项把 find 输出的换行符改成 \0，
+# 这个大家很熟悉吧，字符串的结束标志，再配合用 xargs 将其分割成小块传给 du 命令
+find / -type f -print0 | xargs -O du -h |sort -rh|head -n 10
+find / -type f -exec du -Sh {} + | sort -rh | head -n 10
+
 
 # 7.查看Linux内核版本命令
-     cat /proc/version
-     uname -a
+ cat /proc/version
+ uname -a
 # 8. 查看Linux发现版
-     lsb_release -a
-     cat /etc/redhat-release  # 只适合Redhat系的Linux
-     cat /etc/issue
+ lsb_release -a
+ cat /etc/redhat-release  # 只适合Redhat系的Linux
+ cat /etc/issue
 
 # 9.查看物理CPU个数和型号
 # cut:-d:(表示以:分割)，-f2(-f配合-d去第2部分);# uniq -c(去重,-c显示有多少重复的)
