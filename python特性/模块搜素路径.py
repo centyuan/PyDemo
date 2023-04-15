@@ -34,7 +34,7 @@ print(sys.path)
 
 """
 step1:为待导入的模块创建module类的实例：模块对象(目前是空对象)将该module对象 插入sys.modules中
-step2:将该module对象 插入sys.modules中；
+step2:将该module对象 插入sys.modules(字典类型)中；
 step3:装载module的代码（如果需要，需先编译）；
 step4:执行新的module中对应的代码。
 """

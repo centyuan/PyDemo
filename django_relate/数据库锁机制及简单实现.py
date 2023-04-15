@@ -38,31 +38,16 @@ InnoDB行级锁基于索引实现,若查询字段无索引或索引失效，则�
 
 ### 三:悲观锁实现(适合写入修改操作频繁的)
 # 1.mysql里
-# 表锁
+# (1.表锁
 # 在执行查询语句（select）前，会自动给涉及的所有表加读锁
 # 在执行更新操作（update、delete、insert等）前，会自动给涉及的表加写锁。这个过程并不需要用户干预，因此不需要直接用lock table命令给MyISAM表显式加锁。
-# 显示加表锁:lock table user WRITE或READ,unlock tables
-# 行锁
-# 设置共享锁:select * from user where id=1 lock in share mode;
-# 设置排他锁(for update:没用索引/主键的话就是表锁，否则就是是行锁):select * from user where id=1 for update()
-# 2.django框架里
-# 行级锁
-# 使用select_for_update(nowait=False, skip_locked=False)
-# Entry.objects.select_for_update().filter(author=request.user)
-# select_for_update相关对象也被锁定,select_for_update具有“of”选项，用于显式地声明要锁定查询中的哪些表
-# 加互斥锁，由于mysql在查询时自动加的是共享锁，所以我们可以手动加上互斥锁。create、update、delete操作时，mysql自动加行级互斥锁
-# (ps:注意必须用在事务里面,所有的匹配行将被锁定,直到事务结束.这意味着可以通过锁防止数据被其他事务修改)
+# 显示加表锁:lock table user WRITE或READ,解锁:unlock tables
 
-"""
-　　一般情况下如果其他事物锁定了相关行,那么本查询将被阻塞,直到锁被释放.如果这不想要使查询阻塞的话,
-   使用select_for_update(nowait=True).如果其他事物持有冲突的锁,互斥锁,那么查询将引发DatabaseError异常.
-   你也可以使用select_for_update(skip_locked=True)忽略锁定的行. nowait和skip_locked是互斥的,
-   同时设置会导致ValueError.目前,postgresql,oracle和mysql数据库后端支持select_for_update().
-   但是,Mysql不支持nowait和skip_locked参数.
-   使用不支持这些选项的数据库后端(如MySQL)将nowait=True或skip_locked = True转换为select_for_update() 
-   将导致抛出DatabaseError异常,这可以防止代码意外终止.
-"""
-# 表级锁
+# (2.行锁:对查询结果集中所有行加锁
+# 设置共享锁:select * from user where id=1 lock in share mode;
+# 设置排他锁(for update:没用索引/主键的话就是表锁，否则就是是行锁):select * from user where id=1 for update
+# 2.django里
+# (1.表级锁
 # https://zhuanlan.zhihu.com/p/151767128
 # class LockingManager(models.Manager):
 #     def lock(self):
@@ -79,12 +64,36 @@ InnoDB行级锁基于索引实现,若查询字段无索引或索引失效，则�
 # User.objects.lock()
 # 解表锁：
 # User.objects.unlock()
+# (2.行级锁
+# 使用select_for_update(nowait=False, skip_locked=False)
+# Entry.objects.select_for_update().filter(author=request.user)
+# select_for_update相关对象也被锁定,select_for_update具有“of”选项，用于显式地声明要锁定查询中的哪些表
+# 加互斥锁，由于mysql在查询时自动加的是共享锁，所以我们可以手动加上互斥锁。create、update、delete操作时，mysql自动加行级互斥锁
+# (ps:注意必须用在事务里面,所有的匹配行将被锁定,直到事务结束.这意味着可以通过锁防止数据被其他事务修改)
+
+"""
+　　一般情况下如果其他事物锁定了相关行,那么本查询将被阻塞,直到锁被释放.如果这不想要使查询阻塞的话,
+   使用select_for_update(nowait=True).如果其他事物持有冲突的锁,互斥锁,那么查询将引发DatabaseError异常.
+   你也可以使用select_for_update(skip_locked=True)忽略锁定的行. nowait和skip_locked是互斥的,
+   同时设置会导致ValueError.目前,postgresql,oracle和mysql数据库后端支持select_for_update().
+   但是,Mysql不支持nowait和skip_locked参数.
+   使用不支持这些选项的数据库后端(如MySQL)将nowait=True或skip_locked = True转换为select_for_update() 
+   将导致抛出DatabaseError异常,这可以防止代码意外终止.
+"""
 
 ### 四:数据库事务
-
 # http://t.zoukankan.com/sundawei7-p-11656505.html
-# django事务开启方式
-# 1.全局开启(ps:，常用的事务处理方式是将每个请求都包裹在一个事务中。这个功能使用起来非常简单，
+# 1.mysql里开启事务
+"""
+begin/start transaction  # 开启事务
+update user_table set username="jack" where id=1;
+commit/rollback                   # 提交事务/回滚事务
+# 设置自动提交
+set autocommit=1  # 0为禁止自动提交
+"""
+
+# 2.django事务开启方式
+# (1.全局开启(ps:，常用的事务处理方式是将每个请求都包裹在一个事务中。这个功能使用起来非常简单，
 # 你只需要将它的配置项ATOMIC_REQUESTS设置为True。它是这样工作的：当有请求过来时，Django会在调用视图方法前开启一个事务。
 # 如果请求却正确处理并正确返回了结果，Django就会提交该事务。否则，Django会回滚该事务)
 # @transaction.non_atomic_requests 可以取消全局的事务开启（不推荐）
@@ -104,11 +113,11 @@ InnoDB行级锁基于索引实现,若查询字段无索引或索引失效，则�
 #     }，　　'other':{　　　　'ENGINE': 'django.db.backends.mysql',             ......　　} #还可以配置其他数据库
 # }
 
-# 2.局部使用事务
+# (2.局部使用事务
 # @transaction.atomic 函数装饰器
 # with transaction.atomic(): 上下文管理器
 # 一旦把atomic代码块放到try/except中，完整性错误就会被自然的处理掉了
-# 需要捕获异常添加一个嵌套的atomic来做
+# 需要捕获异常添加一个嵌套的atomic来做m
 # 嵌套 函数的事务嵌套上下文管理器的事务，上下文管理器的事务嵌套上下文管理器的事务
 from django.db import transaction
 
