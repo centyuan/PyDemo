@@ -21,7 +21,14 @@ config set maxmemory 100mb:动态命令配置redis最大内存 config get maxmem
 定时(每个过期key都需创建一个定时器)/惰性(访问key,判定key是否过期)/定期
 
 # 二：五大数据类型:String字符串,List列表,Set集合,Hash哈希,Zset有序集合
-
+"""
+底层数据结构:
+动态字符串:额外分配空间
+双端链表:新增一个对尾节点的引用
+压缩链表:
+字典:
+跳跃表:redis特有数据结构,在链表的基础上,增加多级索引,支持平均:O(logn)
+"""
 # 1.String 类型
 String类型是二进制安全的。意思是 redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象。string 类型是 Redis 最基本的数据类型，string 类型的值最大能存储 512MB
 底层的数据结构为:动态字符串,类型Java的ArrayList,pyton的list,在第一次append也会超额分配,来减少频繁的内存分配
@@ -90,7 +97,7 @@ lrem <key> <n> <value>
 
 
 # 3.Hash是一个键值(field=>value)对映射表 特别适合用户存储对象,每个 hash 可以存储 232 - 1 键值对（40多亿）
-底层数据结构：ziplist(压缩列表),hashtable(哈希表)
+底层数据结构：ziplist(压缩列表),hashtable(哈希表,redis采用链式哈希解决hash冲突)
 当field-value长度较短个数较少,使用ziplist,否则使用hashtable
 当hash对象可以同时满足一下两个条件时，哈希对象使用ziplist编码：
 1.哈希对象保存的所有键值对的键和值的字符串长度都小于64字节
@@ -150,7 +157,7 @@ sdiff <key1> <key2>
 # 5.Zset:有序集合,不重复
 # Zset集合元素关联一个评分(score),score被用来从最低到最高排序,元素唯一,score可以重复
 底层数据结构:
-1.HashMap,关联value和权重score,保障元素value的唯一性,通过value可以找到score
+1.压缩链表,关联value和权重score,保障元素value的唯一性,通过value可以找到score
 2.跳跃表,在于给元素value排序,根据score范围获取元素列表
 
 # 添加元素

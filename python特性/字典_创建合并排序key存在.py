@@ -2,7 +2,12 @@
 # -*- coding:utf-8 -*-
 # author centyuan
 # @time 19-7-30 下午3:32
+"""
+字典:底层依靠hash table实现(将键通过散列函数转变成了一个列表的索引),使用开放寻址法解决冲突
+1.使用hash获取键的散列值,散列值对数组长度取余,就是存放位置的索引
 
+
+"""
 
 print(dict.fromkeys(['a', 'b']))  # {'a': None, 'b': None}
 # dict.copy() 函数返回一个字典的浅复制。
