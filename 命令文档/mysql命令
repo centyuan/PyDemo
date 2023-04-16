@@ -162,18 +162,18 @@ union优化
 1.使用UNION ALL(不去重,所有数据)替代UNION(去重)
 
 ### 索引失效情况
-(1)like以%开头索引无效(当like以%结尾索引有效)
-(2)当or语句查询条件的前后列均为索引时,索引生效(or两边同时使用<和>)
-(3)联合索引,使用的不是第一列索引时候即最左匹配规则
-(4)对索引字段进行计算操作(where id-1=10)函数操作时不会使用索引
-(5)数据类型出现隐式转换,如varchar不加单引号的时候可能会自动转换为int类型,这个时候索引失效(where条件上进行了类型转换,比如字段是字符串类型,却填上数字)
-select * from t1 where num='c'; # 会把'c'转为0查出num=0的记录
-select * from t1 where name = 0 # 会把记录字符串name转为0,查出所有记录
-(6)使用了select *(不会走索引,大量的回表操作)
-(7)在索引列上使用IS NULL/IS NOT NULL/NOT IN/NOT EXISTS时候 索引失效，因为索引是不索引空值得
-(8)在索引字段上使用<>/!=时候是不会使用索引的，对于这样的处理只会进行全表扫描(比如where id>age,id,age都是索引列)
+(1)联合索引不满足最左匹配原则,联合索引最左边字段必须出现在查询条件中
+(2)错误使用like,以%开头如 like '%abc',(当like以%结尾索引有效)
+(3)错误使用or,or两边字段有一个没有创建索引(where id=2 or name="Tom")或两边为范围查询(where id>10 or id<20),导致失效
+(4)索引列参与运算, 如where id-1=10 或使用了函数 where SUBSTR(id_no,1,3)=100
+(5)类型隐式转换,where条件上进行了类型转换,比如字段是字符串类型,却填上了数字
+(6)两列做比较,即使两列都有索引,也会失效 where id>age
+(7)不等于比较,where name!="Tom" 或 where id<>"11" 有可能不走索引,查询结果集较小货走索引否则不走索引
+(8)非空判断(is not null / is null / not in / in / exists / not exists/ )
+使用where id_no is not null不走索引,is null走索引
+使用not exists 不走索引
+使用where id not in (2,3)普通索引则失效,主键走索引
 (9)当mysql估计全表扫描速度比索引速度快的时候不会使用索引(order by就是如果是select *则有大量回表,索引不走索引,走全表扫描到内存去排序)
-
 
 # 五:索引详解
 操作系统和内存:最小单位是页page
