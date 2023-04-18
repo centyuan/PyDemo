@@ -85,6 +85,9 @@ sudo docker cp mycontainer:/root/fiel.txt /home/centyuan/
 查看容器ip地址:docker inspect 容器名称/容器id | grep IPAddress   # docker会每个容器分配一个ip地址
 
 10.Dockerfile用来构建镜像的文本文件
+ADD和COPY区别
+都是复制文件/目录到容器
+ADD:支持远程复制,压缩文件会自动解压,不太稳定,尽量使用COPY
 一般格式:
 """
 FROM centos:6.7  # 指定使用那个镜像
