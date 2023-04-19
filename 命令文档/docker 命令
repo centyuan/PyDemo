@@ -109,3 +109,11 @@ exec /bin/bash "$@"
 使用步骤:
 1.dockerfile定义应用程序环境镜像,2.docker-compose.yml定义构成应用程序的服务,3.docker-compose up启动并运行整个应用程序
 
+
+11.docker网络模式
+1.host模式(--net=host),与宿主机在同一网络,没有独立ip,没有network namespace
+2.container模式(--net=container:容器name/id),新创建容器没有网卡和ip,而是和指定容器共享ip和端口范围
+3.none模式,封闭的网络环境
+4.bridge模式,没有--net参数默认网桥模式,通过veth-pair实现内部网卡和docker0网桥通信
+5.自定义模式
+
