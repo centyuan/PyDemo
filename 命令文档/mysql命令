@@ -316,8 +316,14 @@ Mysql主从复制中有三个线程:Master(binlog dump thread) Slave(I/O thread,
 1.主服务配置mysql.cnf:
 log-bin=mysql-bin   # 表示启用二进制文件-文件名称
 server-id=3307      # 表示server编号
+# 主服务还需要创建对应权限的用户用于数据同步
 2.从服务执行sql命令
+# 配置主服务
 change master to master_host="192.168.1.2",master_port=3306,master_user="copy",master_password="123456",master_log_file="mysql-bin.00001",master_log_pos=154;
+# 开启主从同步
+start slave
+# 查看是否成功
+show slave status \G;
 
 双主双从:缓解写压力
 1.主1配置
@@ -325,14 +331,14 @@ log-bin=mysql-bin
 server-id=3301
 auto_increment_increment=2 # 主键递增步长
 auto_increment_offset=1    # 从1开始
-log-slave-updates =        # 是否记录binglog
+log-slave-updates          # 是否记录binglog
 sync-binlog=1              # 几次事务记录binlog
 2.主2配置
 log-bin=mysql-bin
 server-id=3302
 auto_increment_increment=2 # 主键递增步长
 auto_increment_offset=2    # 从1开始
-log-slave-updates =        # 是否记录binglog
+log-slave-updates          # 是否记录binglog
 sync-binlog=1              # 几次事务记录binlog
 
 
