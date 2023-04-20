@@ -300,13 +300,43 @@ bin log和redo log(两段提交)区别？
 Mysql主从复制中有三个线程:Master(binlog dump thread) Slave(I/O thread,SQL thread)
 使用binlog+position偏移量进行增量同步
 1.Master所有变更都记录到binlog中去(MySQL Server层的实现)
-2.主节点binlog dump线程,当binlog有变动时,log dump线程读取内容并发送给从节点
+2.主节点binlog dump线程,当binlog有变动时,binlog dump线程读取内容并发送给从节点
 3.从节点I/O线程接收binlog,并写入到relay log(中继日志)中
 4.从节点SQL线程读取relay log并对数据进行重放
 同步策略:Master会等待所有的Slave回应后才提交(这个策略严重影响性能)
 半同步策略:Master至少等待一个Slave回应后才提交
 异步策略:Master不会等待Slave回应就可以提交
 延迟策略:Slave落后Master指定的时间
+
+
+
+# 十:mysql集群
+分片中间件:myCat/shardingSphere
+一主多从:缓解读压力
+1.主服务配置mysql.cnf:
+log-bin=mysql-bin   # 表示启用二进制文件-文件名称
+server-id=3307      # 表示server编号
+2.从服务执行sql命令
+change master to master_host="192.168.1.2",master_port=3306,master_user="copy",master_password="123456",master_log_file="mysql-bin.00001",master_log_pos=154;
+
+双主双从:缓解写压力
+1.主1配置
+log-bin=mysql-bin
+server-id=3301
+auto_increment_increment=2 # 主键递增步长
+auto_increment_offset=1    # 从1开始
+log-slave-updates =        # 是否记录binglog
+sync-binlog=1              # 几次事务记录binlog
+2.主2配置
+log-bin=mysql-bin
+server-id=3302
+auto_increment_increment=2 # 主键递增步长
+auto_increment_offset=2    # 从1开始
+log-slave-updates =        # 是否记录binglog
+sync-binlog=1              # 几次事务记录binlog
+
+
+
 
 数据库的三大范？
 为设计冗余小,结构合理的数据库,设计数据库时必须满足一定范式(规则)
@@ -360,4 +390,3 @@ decimal是字符串存储
 #### 大量外键问题:
 不影响select，影响update/insert/delete(当对子表进行写入操作,父表会被加上共享锁,对子表进行高并发时,父表的共享锁长时间不能释放,就不能对父表进行写入而只能读)
 #### WAL技术(Write-Ahead Logging)RedoLog(对所有页面的操作写入日志文件,实现事务的持久性)
-
