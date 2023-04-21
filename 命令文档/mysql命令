@@ -284,8 +284,11 @@ innodb_flush_log_at_trx_commit=0:每秒(log buffer中提交的事务)写入磁�
 innodb_flush_log_at_trx_commit=1:有事务提交立即调用fsync写入磁盘(不会丢失,性能差)
 innodb_flush_log_at_trx_commit=2:有事务提交都写给操作系统的page cache,由操作系统决定什么时候调用fsync写入磁盘(一系列丢失)
 
-bin log有几种录入格式?
-STATEMENT(默认,文件较小),ROW(文件较大),MIXED(中和前两种)
+binlog有几种录入格式?
+STATEMENT:默认方式,基于SQL语句的复制记录sql语句,文件较小
+ROW:基于行的复制,文件较大
+MIXED:前两种混合
+
 为什么将redo log的数据写到磁盘比将Buffer数据持久化到磁盘要快？
 1.Buffer数据持久化是随机写I/O,redo log是追加,顺序IO
 2.Buffer数据持久化是以页page为单位,redo log只需要写入的真正部分(减少了无效I/O)
@@ -305,12 +308,12 @@ Mysql主从复制中有三个线程:Master(binlog dump thread) Slave(I/O thread,
 4.从节点SQL线程读取relay log并对数据进行重放
 同步策略:Master会等待所有的Slave回应后才提交(这个策略严重影响性能)
 半同步策略:Master至少等待一个Slave回应后才提交
-异步策略:Master不会等待Slave回应就可以提交
+异步策略:Master不会等待Slave回应就可以提交(默认)
 延迟策略:Slave落后Master指定的时间
 
+mysql如何保证主从数据的一致性的？
 
-
-# 十:mysql集群
+# 十:mysql主从方案
 分片中间件:myCat/shardingSphere
 一主多从:缓解读压力
 1.主服务配置mysql.cnf:

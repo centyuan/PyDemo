@@ -6,6 +6,21 @@ import time
 2如果装饰器返回的是一个函数的名称，那么被修饰的函数名依然表示一个函数
 
 """
+"""装饰器自己接受参数"""
+
+
+def valid_permission(Spermission):
+    def valid_(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            print("装饰器自己接受参数", Spermission)
+            result = func(*args, **kwargs)
+            return result
+
+        return wrapper
+
+    return valid_
+
 
 """1:带参数的装饰器 嵌套一个函数，该函数带有的参数个数和被装饰器修饰的函数相同"""
 
@@ -144,5 +159,7 @@ def printd(*args):
 class Animal:
     def __init__(self):
         printd("类Animal的init方法")
+
+
 A = Animal()
 A.do_some()
