@@ -255,9 +255,9 @@ AOF备份文件异常恢复:
 appendonly no 改为yes
 redis-check-aof--fix appendonly.aof 进行恢复
 
-# 六:Redis集群
+# 六:Redis集群三种方案
 1.主从复制
-2.哨兵
+2.哨兵sentinel
 3.Cluster
 
 #1.主从(一主二从,薪火相传,反客为主)
@@ -273,19 +273,22 @@ dbfilename dump6379.rdb
 #4.启动几个redis redis-server /myredis/redis6379.conf
 #5.查看主从情况:info replication
 #6.设置主从:slaveof 127.0.0.1 6379
-# 主从同步:
+# 主从同步流程:
 1.第一次从服务连上主服务器后,向主服务器发送数据同步请求
 2.主服务器数据持久化到RDB文件,将RDB文件发送到从服务器进行同步
 3.每次主服务器写操作后,主动将数据同步到从服务器
 
-#2.哨兵模式
-1.选择优先级靠前的2.选择偏移量最大的(偏移量指获得原主机数据最全的)3.选择runid最小的从服务(Redis实例启动后随机生成一个40位的runid)
-# 创建sentinel.conf
+#2.哨兵模式:基于主从模式,增加了哨兵来监控与自动处理故障
+# 配置流程
+# 1.创建sentinel.conf
 sentinel monitor mymaster 127.0.0.1 6379 1
 mymaster:为监控对象起的名称,1为至少有多少哨兵同意
-# 启动哨兵
+# 2.启动哨兵
 redis-sentinel /myredis/sentinel.conf
-
+# 选举new master策略
+1.选择优先级靠前的
+2.选择偏移量最大的(偏移量指获得原主机数据最全的)
+3.选择runid最小的slave从服务(Redis实例启动后随机生成一个40位的runid)
 
 #3.Cluster集群配置(16384个插槽,写入数据,计算key的插槽分配到对应主服务所在的插槽)
 # 集群实现扩容,集群不支持多键操作

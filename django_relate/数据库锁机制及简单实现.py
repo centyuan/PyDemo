@@ -1,7 +1,12 @@
 """
 连接池实现:
-django-db-connection-pool
-PyMysqlPool
+django:
+1.django-mysqlpool
+2.django-db-connection-pool
+3.sqlalchemy
+python:
+1.PyMysqlPool
+2.pymsql+DBUtils(DBUtils 是一套用于管理数据库连接池的Python包)
 重写mysql连接库实现
 """
 
@@ -132,3 +137,14 @@ def viewfunc(request):
 
     transaction.commit()  # 手动提交事务，默认是自动提交的，也就是说如果你没有设置取消自动提交，
     # 那么这句话不用写，如果你配置了那个AUTOCOMMIT=False，那么就需要自己手动进行提交。
+
+
+#### 五:数据库读写分离
+# settings.py配置DATABASES_ROUTERS = []
+class DBRouter(object):
+    def db_for_write(self, model, **hits):
+        return "default"
+
+    def db_for_read(self, model, **hits):
+        import random
+        return random.choice(["slave1", "slave2", "slave3"])
