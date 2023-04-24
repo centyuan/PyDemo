@@ -1,3 +1,9 @@
+# 一:三种ES基本操作
+# 1.使用request发送http请求
+# 2.使用官方提供的elasticsearch
+# 3.ORM包elasticsearch-dsl
+
+# 二:查询描述
 """
 1、must (must字段对应的是个列表，也就是说可以有多个并列的查询条件，一个文档满足各个子条件后才最终返回)
 2、should (只要符合其中一个条件就返回)
@@ -40,6 +46,7 @@ match_phrase是分词的，text也是分词的。match_phrase的分词结果必�
 和match_phrase区别的是，不需要连续，顺序还可以调换。
 
 """
+# 三:Elasticsearch包操作
 from elasticsearch import Elasticsearch
 
 es = Elasticsearch([{"host": "123.60.180.204", "port": 9200}], timeout=3600)
@@ -53,14 +60,14 @@ query = {
 re = es.search(index="teacher", body=query)
 # term/terms查询,terms可以指定多个条件
 query = {
-    "query":{
-        "term":{
+    "query": {
+        "term": {
             # "name":["汪老师","老师"]
-            "name":"老师"
+            "name": "老师"
         }
     }
 }
-result = es.search(index="teacher",body=query)
+result = es.search(index="teacher", body=query)
 print(result)
 # 范围查询
 # query = {
@@ -87,3 +94,47 @@ print(result)
 #     {"name": "老师", "description": "老师", "sex": "女"}
 # ]
 # es.bulk(index="teacher",doc_type="_doc",body=doc)
+
+# 四:elasticsearch-dsl
+
+from datetime import datetime
+from elasticsearch_dsl import Document, Date, Nested, Boolean, analyzer, InnerDoc, Completion, Keyword, Text, Integer
+
+from elasticsearch_dsl.connections import connections
+
+connections.create_connection(hosts=["123.060.180.204:9200"])
+# es = connections.create_connection(hosts=["127.0.0.1:9200"], timeout=20)
+# res = Search(using=es).index("test_index").query()
+
+class Article(Document):
+    title = Text(fields={'title': Keyword()})
+    author = Text()
+
+    class Index:
+        name = 'myindex'  # 索引名
+
+
+if __name__ == '__main__':
+    Article.init()  # 创建映射
+    # 保存数据
+    article = Article()
+    article.title = "test"
+    article.author = "lxx"
+    article.save()  # 保存数据
+
+    # # 查询数据
+    # s = Article.search()
+    # s = s.filter('match', title="test")
+    # results = s.execute()
+    # print(results)
+
+    # # 删除数据
+    # s = Article.search()
+    # s = s.filter('match', title="test").delete()
+    # # 修改数据
+    # s = Article().search()
+    # s = s.filter('match', title="test")
+    # results = s.execute()
+    # print(results[0])
+    # results[0].title = "xxx"
+    # results[0].save()
