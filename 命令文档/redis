@@ -127,6 +127,7 @@ hsetnx <key> <field> <value>
 
 
 # 4. Set集合:无序,不重复
+# 统计在线用户数量:loin-user还可以bitmap
 # 和List类似,特殊是自动去重的,是string类型的无序集合,所有添加,查找,删除的复杂度都为O(1)
 底层数据结构:HashMap,其实是value为null(所有value指向同一个内部值)的hash表
 
