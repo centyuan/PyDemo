@@ -199,3 +199,7 @@ CELERY_ACKS_LATE = True
 # celery==4.4.2
 # redis==3.4.3
 # kombu==4.6.8
+
+# celery==5.2.7
+# redis==4.3.4
+# kombu==5.2.4
