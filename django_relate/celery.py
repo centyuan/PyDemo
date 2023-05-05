@@ -173,6 +173,7 @@ CELERY_ROUTES = {
     'periodic_deletion': {'queue': 'default', 'routing_key': 'default'},
 }
 
+# celery -A CTFServer worker -B -l info --logfile=celery.log -Q 队列名(启动worker来消费指定队列的任务)
 # 十:常见问题 https://zhuanlan.zhihu.com/p/351328752
 # 任务过期时间,celery任务执行结果的超时时间
 CELERY_TASK_RESULT_EXPIRES = 60 * 20
