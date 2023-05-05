@@ -159,6 +159,11 @@ app.conf.beat_schedule = {
     },
 
 }
+# 周期任务
+@app.on_after_configure.connect
+def setup_periodic_tasks(sender,**kwargs):
+    # 每三秒
+    sender.add_preiodic_task(3.0)
 
 # 九:定义任务队列
 # https://www.cnblogs.com/chaolumeng/p/12318989.html
