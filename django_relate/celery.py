@@ -33,7 +33,7 @@ celeyr -A proj beat
 celery -A proj beat -s /home/celery/var/run/celerybeat-schedule
 celery -A FZ_Platform worker -B -l info -c 10 -D --logfile=celery.log -p gevent
 -B:代表celery -A proj beat 
--c:协程数量
+-c:worker数量(根据-p实现并发模式的来)
 -D:后台运行
 -p:实现并发的方式(perfork(默认多进程),eventlet,gevent)
 
