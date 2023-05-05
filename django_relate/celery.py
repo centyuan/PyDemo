@@ -46,6 +46,8 @@ task.apply_async(args=[arg1, arg2], kwargs={key:value, key:value})
 countdown=5:等待一段时间执行
 eta=now+timedelta(second=10):任务开始的时间
 expires=60:任务超时时间
+task.apply_async(args=[arg1,arg2],queue="default",routing_key="task.hello",priority=5)
+# priority设置任务优先级,提前配置队列为优先级队列
 
 #4.flower Monitor
 https://docs.celeryq.dev/en/master/userguide/monitoring.html
@@ -192,6 +194,9 @@ CELERYD_MAX_TASKS_PER_CHILD = 40
 CELERYD_FORCE = True
 # 表示Worker在任务执行完后才向Broker发送acks:处理异常,一个任务可能会多次执行
 CELERY_ACKS_LATE = True
+#全局设置任务的默认priority
+TASK_DEFAULT_PRIORITY=5
+
 # 十一:注意事项 https://zhuanlan.zhihu.com/p/130934654
 # 1.默认"不公平"任务分配:禁用任务队列预取机制(会将任务成批发送给指定worker)
 # -O fair
