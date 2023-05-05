@@ -27,7 +27,7 @@ result.result()  # 获取结果
 """
 #1. worker 
 nohup celery -A CTFServer worker -B -l info --logfile=./celery.log
-
+默认 celery worker 执行后默认会开启cpu个数个进程来保持多个任务的并发。
 #2. beat 
 celeyr -A proj beat 
 celery -A proj beat -s /home/celery/var/run/celerybeat-schedule
