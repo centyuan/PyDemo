@@ -69,6 +69,7 @@ class demo(BaseModel):
     time: Union[int, str]  # 允许多种数据类型(2020,"2020":字符串和数字都可以传入)
     username: str = Field(alias="user_name")  # 传入参数定义别名
     person: List[Person]  # schema 嵌套
+    # Optional[int] 等价于 Union[int, None]
 
 
 # 三 数据类型检查(通过validator和config实现更复杂的数据类型检查)
