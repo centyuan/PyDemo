@@ -72,3 +72,24 @@ create database exampledb owner centyuan;
 将example数据库所有权限赋予centyuan,否则centyuan只能登录，没有任何数据库操作权限。
 grant all privileges on database exampledb to centyuan;
 
+###mysql性能极限
+mysql单表字段数:建议20-50
+mysql默认单字段大小：
+存储最大空间为1M,可以修改max_allowed_packet=16
+mysql单表：
+ 老版mysql3.22中,还是ISAM存储引擎,单表限制为4GB
+ 之后为INNODB 单表限制64TB
+数据库:
+Cmshelp 团队做CMS 系统评测时的结果来看,
+MySQL单表大约在2千万条记录（4G）下能够良好运行，
+经过数据库的优化后5千万条记录（10G）下运行良好。
+阿里巴巴《Java 开发手册》提出单表行数超过 500 万行或者单表容量超过 2GB，才推荐进行分库分表。
+
+###PostgreSQL性能极限
+最大单个数据库大小:不限
+最大数据单表大小:32TB
+单条记录大小:1.6TB
+单字段最大允许:1GB
+单表允许最大记录数:不限
+单表最大字段数:250-1600取决于字段类型
+单表最大索引数:不限
