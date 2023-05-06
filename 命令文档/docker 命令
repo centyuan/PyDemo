@@ -117,3 +117,10 @@ exec /bin/bash "$@"
 4.bridge模式,没有--net参数默认网桥模式,通过veth-pair实现内部网卡和docker0网桥通信
 5.自定义模式
 
+
+12.下载pythonbao
+# pip download -r requirements.txt -d /tmp
+# pip install *
+#  pip install --no-index --find-links=/local/dir/ -r requirements.txt
+# --no-index：忽略包索引
+# --find-links:指定的url,如果是本地目录,file://url
