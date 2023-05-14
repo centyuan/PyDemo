@@ -1,6 +1,9 @@
-# ！/usr/bin/python3
-# -*- coding:utf-8 -*-
-# author centyuan
+"""
+uuid全称:Universally Unique Identifier即通用唯一识别码,无序
+由一组32位的16进制数字构成(8位-4位-4位-4位-12位)
+由几部分组成(当前的日期和时间,时钟序列,全局的唯一IEEE机器识别号)
+使用最普遍的是微软的GUID
+"""
 
 
 import uuid

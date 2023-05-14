@@ -138,3 +138,6 @@ if __name__ == '__main__':
     # print(results[0])
     # results[0].title = "xxx"
     # results[0].save()
+# ./bin/elasticsearch-plugin install https://github.com/NLPchina/elasticsearch-analysis-ansj/releases/download/v7.6.2/elasticsearch-analysis-ansj-7.6.2.0-release.zip
+
+ # docker run --name my_es7 -p 9200:9200  -p 9300:9300 -e "discovery.type=single-node" -e ES_JAVA_OPTS="-Xms84m -Xmx512m" -v /root/my_elasticsearch/data:/usr/share/elasticsearch/data -v  /root/my_elasticsearch/plugins:/usr/share/elasticsearch/plugins -d elasticsearch:7.6.2
