@@ -150,3 +150,85 @@ asyncio.run_coroutine_threadsafe(do_some_work(4), new_loop)
 
 # call_soon():让asyncio直接传入函数,不用async定义个协程
 # call_soon_threadsafe和call_soon一样，会考虑线程安全
+
+
+
+# 四:asyncio并发的正确/错误姿势
+# https://zhuanlan.zhihu.com/p/72887901
+# https://zhuanlan.zhihu.com/p/73568282
+
+import time
+import asyncio
+
+
+async def do1():
+    print("do1:Starting")
+    await asyncio.sleep(1)
+    print("do1:Ending")
+    return "do1"
+
+async def do3():
+    print("do3:Starting")
+    await asyncio.sleep(3)
+    print("do3:Ending")
+    return "do3"
+
+async def main1():
+    # Way1.gather并发执行
+    return_1,return_3 = await asyncio.gather(do1(),do3())  # gather按照顺序返回
+    # Way2.asyncio.ensure_future或loop.create_task或asyncio.create_task(python3.7新增高阶接口 asyncio.run())
+    # task1 = asyncio.create_task(do1())
+    # task3 = asyncio.create_task(do3())
+    # await task1
+    # await task3
+    # # Way3.错误不能并发
+    # await do1()
+    # await do3()
+
+### asyncio.gather和asyncio.wait区别
+### aysncio.ensure_future和loop.create_task和asyncio.create_task
+async def main3():
+    # Way1.gather并发执行
+    return_1,return_3 = await asyncio.gather(do1(),do3())  # gather按照顺序返回函数返回值
+    done,pending = await asyncio.wait(do1(),do3())  # wait返回完成任务列表和等待完成任务的列表 
+    # 默认情况下,wait会等全部任务执行完成,所以pending默认是空的
+    # 参数返回时机:return_when(ALL_COMPLETED/FIRST_COMPLETED/FIRST_EXCEPTION)
+    # Way2.asyncio.ensure_future或loop.create_task或asyncio.create_task接受的参数是一个协程(python3.7新增高阶接口 asyncio.run())
+    # task1 = asyncio.create_task(do1())      
+    # task3 = asyncio.create_task(do3())
+    # await task1
+    # await task3
+    # # Way3.错误不能并发
+    # await do1()
+    # await do3()
+
+async def main():
+    await main1()
+    await main3()
+def perf_(func):
+    print("*"*10) 
+    start = time.perf_counter()
+    asyncio.run(func())
+    print(f"{func.__name__}花费:{time.perf_counter()-start}")
+
+
+# asyncio.shield():屏蔽取消操作
+if __name__ =="__main__":
+    # asyncio.run(main())
+    asyncio.run(main1())
+    perf_(main)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
