@@ -66,7 +66,8 @@ def test(i):
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     tasks = [test(i) for i in range(3)]
-    loop.run_until_complete(asyncio.wait(tasks))
+    coroutines = tasks 
+    loop.run_until_complete(asyncio.wait(coroutines))
     loop.close()
 
 
@@ -81,7 +82,8 @@ async def test(i):
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     tasks = [test(i) for i in range(3)]
-    loop.run_until_complete(asyncio.wait(tasks))
+    coroutines = tasks 
+    loop.run_until_complete(asyncio.wait(coroutines))
     loop.close()
 
 """
