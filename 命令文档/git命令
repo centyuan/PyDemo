@@ -35,7 +35,9 @@ ssh-add -k key.pem
 ssh root@IP
 
 # 三:git常用操作
-
+git add -A # 保存所有修改
+git add .  # 保存所有新增和修改,不包括删除
+git add -u # 保存所有修改和删除,不包括新增
 git add *                                              # 通配符可以把当前目录下所有修改的新增的文件都自动添加
 git pull=git fetch +git merge #拉取远端repo并合并,git pull 命令等同于执行两个操作: 先使用 git fetch 从远程分支抓取最新的分支修改信息，然后使用 git merge 把修改合并进当前的分支。执行git pull 后会从克隆的位置拉取代码并更新本地仓库，就是把远端的修改同步到本地(clone不需要指定远程仓库,就是clone的)
 git push                                               # 推送本地,并合并到远程
