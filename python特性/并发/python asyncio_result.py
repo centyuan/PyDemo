@@ -215,7 +215,7 @@ def perf_(func):
 # asyncio.shield():屏蔽取消操作
 if __name__ =="__main__":
     # asyncio.run(main())
-    asyncio.run(main1())
+    asyncio.run(main1())  # 3.7的新增高阶接口,隐式创建loop去执行task
     perf_(main)
 
 
