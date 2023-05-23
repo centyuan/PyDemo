@@ -6,9 +6,13 @@
 """
 1.ssh-keygen -t rsa -C "your_email@email.com" -f ~/.ssh/id_rsa_gitlab
 -t:指定秘钥类型,默认是哟共SSH-2的RSA秘钥
--C:指定秘钥备注,一般使用邮箱
+-C:指定秘钥备注,一般使用邮箱作为注释
 -N:可以的指定密钥对,后面不用输入password
--f:指定秘钥存放目录和文件名
+-f:指定秘钥存放目录和文件名,默认:~/.ssh/id_rsa(私钥id_rsa,公钥id_rsa.pub)
+-P:提供旧密码,空表示不需要密码(-P '')
+-N:提供新密码,空表示不需要密码(-N '')
+-q:安静模式
+-y:读取OpenSSH格式密钥文件并将OpenSSH公钥输出到stdout
 输入完毕后程序同时要求输入一个密语字符串(passphrase)，空表示没有密语。
 接着会让输入2次口令(password)，空表示没有口令。
 2.配置多个key:生成多个gitlab的sshkey，并且重命名为id_rsa_gitlab
