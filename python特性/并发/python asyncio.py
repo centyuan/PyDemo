@@ -1,5 +1,4 @@
 """
-https://zhuanlan.zhihu.com/p/72887901
 python协程(Coroutine)
 1.认为线程是轻量级的进程,协程理解为轻量级线程,即微线程
 2.协程可以再执行函数A时可以中断后去执行函数B
