@@ -1,11 +1,24 @@
 # 《python高性能编程》
-# 1.使用功能time计时
+# 1.计时time模块(time.perf_counter()/time.process_time()或者timeit模块
 import random
 from timeit import Timer
+import timeit 
 
 t_1 = Timer('t=a;a=b;b=t', 'a=2;b=3').timeit()
 t_2 = Timer('a,b=b,a', 'a=4;b=5').timeit()
-print('方式1:',t_1, t_2)
+t_3 = timeit.timeit('"-".join(str(n) for n in range(100))',number=10000)
+print('方式1:',t_1, t_2,t_3)
+"""
+time.perf_counter():会计算sleep时间
+time.process_time():不会计算sleep时间
+python3.7以上提供三个精确到纳秒的计时:
+time.perf_couter_ns()
+time.process_time_ns()
+time.time_ns()
+"""
+
+
+
 # 2. 使用linux命令/usr/bin/time -p python timefn.py
 """
 Length of x: 1000 
