@@ -11,7 +11,7 @@ import time
 2:通过add_done_callback()回调
 https://zhuanlan.zhihu.com/p/59621713
 """
-# 一:协程嵌套
+# 一:协程嵌套三种处理结果方式
 
 now = lambda: time.time()
 
@@ -22,7 +22,7 @@ async def do_some_work(x):
     return "协程嵌套Done after {}s".format(x)
 
 
-# 1.main处理结果,性能最差
+# 1.main处理结果
 async def main():
     print('main1-----------')
     coroutine1, coroutine2, coroutine3 = do_some_work(1), do_some_work(2), do_some_work(4)
