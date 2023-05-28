@@ -2,6 +2,8 @@ mysql:单进程多线程模型,一个SQL语句无法利用多个cpu core
 # 一:基本命令
 0.查看当前连接数
 show global status like 'Thread$';
+show variables like "%timeout%";
+show variables like "log_%";
 1.查看当前连接状态
 show processlist;
 2.数据库连接
@@ -401,6 +403,8 @@ decimal是字符串存储
 #### WAL技术(Write-Ahead Logging)RedoLog(对所有页面的操作写入日志文件,实现事务的持久性)
 
 # 十一:主键方案(自增id/uuid/雪花算法)
+https://www.zhihu.com/question/397289720
+https://juejin.cn/post/7153273187366043661
 三种方案:自增id/uuid/雪花算法及其改进算法
 1.uuid导致页分裂,性能问题,存储空间较大
 分布式id实现方式:
