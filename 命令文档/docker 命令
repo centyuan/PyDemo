@@ -115,6 +115,7 @@ exec /bin/bash "$@"
 2.container模式(--net=container:容器name/id),新创建容器没有网卡和ip,而是和指定容器共享ip和端口范围
 3.none模式,封闭的网络环境
 4.bridge模式,没有--net参数默认网桥模式,通过veth-pair实现内部网卡和docker0网桥通信
+eth0 <---> docker0(bridge) <-veth--ehto-> docker container
 5.自定义模式
 
 
