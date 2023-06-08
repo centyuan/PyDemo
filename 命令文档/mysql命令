@@ -313,9 +313,8 @@ Mysql主从复制中有三个线程:Master(binlog dump thread) Slave(I/O thread,
 异步策略:Master不会等待Slave回应就可以提交(默认)
 延迟策略:Slave落后Master指定的时间
 
-mysql如何保证主从数据的一致性的？
-
 # 十:mysql主从方案
+mysql如何保证主从数据的一致性的？
 分片中间件:myCat/shardingSphere
 一主多从:缓解读压力
 1.主服务配置mysql.cnf:
@@ -346,8 +345,50 @@ auto_increment_offset=2    # 从1开始
 log-slave-updates          # 是否记录binglog
 sync-binlog=1              # 几次事务记录binlog
 
+# 十一:主键方案(自增id/uuid/雪花算法)
+https://www.zhihu.com/question/397289720
+https://juejin.cn/post/7153273187366043661
+三种方案:自增id/uuid/雪花算法及其改进算法
+1.uuid导致页分裂,性能问题,存储空间较大
+分布式id实现方式:
+uuid/单机数据库自增ID+步长/Redis自增ID/跳跃式自增ID/Snowflake及其改进算法
+
+雪花算法(保证递增性):64位
+1位:符号位
+43位:时间戳
+10位:机器id
+12位:一个节点一毫秒产生ID的数量(4096)
+
+# 十二:性能极限
+###mysql性能极限
+mysql单表字段数:建议20-50
+mysql默认单字段大小：
+存储最大空间为1M,可以修改max_allowed_packet=16
+mysql单表：
+ 老版mysql3.22中,还是ISAM存储引擎,单表限制为4GB
+ 之后为INNODB 单表限制64TB
+数据库:
+Cmshelp 团队做CMS 系统评测时的结果来看,
+MySQL单表大约在2千万条记录（4G）下能够良好运行，
+经过数据库的优化后5千万条记录（10G）下运行良好。
+阿里巴巴《Java 开发手册》提出单表行数超过 500 万行或者单表容量超过 2GB，才推荐进行分库分表。
+
+###PostgreSQL性能极限
+最大单个数据库大小:不限
+最大数据单表大小:32TB
+单条记录大小:1.6TB
+单字段最大允许:1GB
+单表允许最大记录数:不限
+单表最大字段数:250-1600取决于字段类型
+单表最大索引数:不限
 
 
+"Lost connection to MySQL server during query" ?
+1网络延迟高
+2.读/写:导致数据传输超时，net_read_timeout/net_write_timeout
+3.连接初始化超时,connect_timeout 默认30s
+4.传输中使用了较大的string field或blob field 导致超过了max_allowed_packet
+https://blog.csdn.net/zyself/article/details/91376690
 
 数据库的三大范？
 为设计冗余小,结构合理的数据库,设计数据库时必须满足一定范式(规则)
@@ -371,8 +412,6 @@ InnoDB表索引前缀长度为767字节,utf-8编码为255(255*3=765)
     varchar大于500自动变为tinytext
     varchar大于20000自动变为tinytext
 当varchar>255,使用varchar或text没有区别
-
-
 
 blob和text区别？
 blob:二进制大对象(存储二进制数据,没有字符集)最大长度16k
@@ -402,16 +441,4 @@ decimal是字符串存储
 不影响select，影响update/insert/delete(当对子表进行写入操作,父表会被加上共享锁,对子表进行高并发时,父表的共享锁长时间不能释放,就不能对父表进行写入而只能读)
 #### WAL技术(Write-Ahead Logging)RedoLog(对所有页面的操作写入日志文件,实现事务的持久性)
 
-# 十一:主键方案(自增id/uuid/雪花算法)
-https://www.zhihu.com/question/397289720
-https://juejin.cn/post/7153273187366043661
-三种方案:自增id/uuid/雪花算法及其改进算法
-1.uuid导致页分裂,性能问题,存储空间较大
-分布式id实现方式:
-uuid/单机数据库自增ID+步长/Redis自增ID/跳跃式自增ID/Snowflake及其改进算法
 
-雪花算法(保证递增性):64位
-1位:符号位
-43位:时间戳
-10位:机器id
-12位:一个节点一毫秒产生ID的数量(4096)
