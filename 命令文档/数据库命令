@@ -93,3 +93,10 @@ MySQL单表大约在2千万条记录（4G）下能够良好运行，
 单表允许最大记录数:不限
 单表最大字段数:250-1600取决于字段类型
 单表最大索引数:不限
+
+
+1网络延迟高
+2.读/写:导致数据传输超时，net_read_timeout/net_write_timeout
+3.连接初始化超时,connect_timeout 默认30s
+4.传输中使用了较大的string field或blob field 导致超过了max_allowed_packet
+https://blog.csdn.net/zyself/article/details/91376690
