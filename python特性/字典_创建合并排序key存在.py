@@ -54,7 +54,10 @@ print(d)
 d3 = dict(d1, **d2)
 print('dict():', d3)
 
-# 4.字典的常规处理
+# 4.{**d1,"name":"张三"}
+d3 = {**d1,"name":"张三"}
+print(d3)
+# 5.字典的常规处理
 for k, v in d1.items():
     d3[k] = v
 for k, v in d2.items():
