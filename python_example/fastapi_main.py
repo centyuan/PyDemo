@@ -98,7 +98,15 @@ def query_params(
 @app.get("files/{file_path:path}")
 def filepath(file_path: str = Path(None, title="路径参数", description="描述", ge=1, le=20)):
     return {"path": file_path}
+"""
+可选参数：
+当为查询参数设置默认值时,则参数在URL中不是必须的,不想添加默认值,则可以设置为None
+必需的,不声明任何默认值就可以了
 
+可选参数做类型提示：
+Union[int,None] 
+Optional[int]
+"""
 
 # 6.cookie
 @app.get("/cookies/")
