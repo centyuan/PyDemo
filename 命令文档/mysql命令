@@ -66,6 +66,9 @@ alter table system_info drop column email;
 alter table system_info rename email to new_email;
 11.清空表或删除记录
 delete from table_name; 或 delete from table_name where id=1;
+# 删除select记录报错:mysql不允许对同一个表同时进行查询和更新
+# 解决方案:对查询结果生产一个派生表,对派生表查询
+delete from table_user  where id in (select id from (select id  from table_user where sex is null) as tmp);
 12.插入记录
 insert into table_name(field1,field2,field3) values(value1,value2,value3);
 13.更新记录
