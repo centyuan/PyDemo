@@ -33,7 +33,8 @@ create database data_name character set utf8 collate utf8_general_ci;
 drop database data_name;
 
 # 二:操作命令
-SELECT concat('DROP TABLE IF EXISTS ', table_name, ';')FROM information_schema.tablesWHERE table_schema = 'mydb';
+SELECT concat('DROP TABLE IF EXISTS ', table_name, ';')FROM information_schema.tablesWHERE table_schema = 'mydb';\
+删除表
 drop table table_name;
 1.显示表属性
 desc user_table;
