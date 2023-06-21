@@ -55,15 +55,15 @@ git branch -d <branch>                                 # 删除分支
 git merge -m 'merge' <branch>                          # 合并分支到当前分支
 git branch -m <branch>                                 # 分支重命名
 git reset --hard HEAD^                                 # 撤销一个合并
-#创建并切换本地dev分支后追踪origin的dev(取远程分支并分化一个新分支)
+# 创建并切换本地dev分支后追踪origin的dev(取远程分支并分化一个新分支)
 git checkout -b dev origin/dev
-#本地分支关联远程分支,本地已创建了分支
+# 本地分支关联远程分支,本地已创建了分支
 git branch --set-upstream-to=origin/远程分支 本地分支
 git push origin test:master                            # 提交本地test分支作为远程的master分支,
 git push origin test:test                              # 提交本地test分支作为远程的test分支
 git push origin master:test                            # 提交本地的maste分支到远程的test分支,远程会自动创建test分支
 git push --set-upstream origin yuan                    # 本地切换到该分支，在追踪远程分支
-#如果远程新建了一个分支，本地没有该分支 这时本地会新建一个分支名叫 dev,会自动跟踪远程的同名分支dev
+# 如果远程新建了一个分支，本地没有该分支 这时本地会新建一个分支名叫 dev,会自动跟踪远程的同名分支dev
 git checkout --track origin/dev
 
 """版本回退"""
