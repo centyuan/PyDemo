@@ -15,7 +15,7 @@
 -y:读取OpenSSH格式密钥文件并将OpenSSH公钥输出到stdout
 输入完毕后程序同时要求输入一个密语字符串(passphrase)，空表示没有密语。
 接着会让输入2次口令(password)，空表示没有口令。
-2.配置多个key:生成多个gitlab的sshkey，并且重命名为id_rsa_gitlab
+2.配置多个key(./ssh/known_hosts已知的主机公钥清单):生成多个gitlab的sshkey，并且重命名为id_rsa_gitlab
 .ssh目录下：创建config文件添加如下内容：
 host github.com
      HostName github.com
@@ -37,6 +37,12 @@ sudo chmod 600 key.pem
 ssh-add -k key.pem
 3.正常登录堡垒机
 ssh root@IP
+4.配置ssh免密登录(.ssh/authorized_keys存放免密登录的公钥)
+    (1.生成公钥 ssh-keygen -t rsa
+    (2.将公钥复制到免密登录机器
+        ssh-copy-id  -i ~/.ssh/id_rsa.pub 192.168.1.3
+        scp -p ~/.ssh/id_rsa.pub root@192.168.1.3:/root/.ssh/authorized_keys
+        cat复制
 
 # 三:git常用操作
 git add -A # 保存所有修改
