@@ -10,7 +10,7 @@ lsblk
 fdisk -l
 # 6、查看磁盘:
 df -h  # disk free以磁盤分区为单位查看文件系统
-du -ah # 显示文件或目录的大小
+du -ah # 显示文件或目录的大小 --max-depth=1 
 cat test |sort|uniq -u  # -u仅显示不重复的,-d仅显示重复的
 ### 找出系统最大的前十个文件 https://linux.cn/article-9495-1.html
 # find 的输出是文件名加一个换行符du 接受这个输入时会出现问题，我们需要用 -print0 选项把 find 输出的换行符改成 \0，
