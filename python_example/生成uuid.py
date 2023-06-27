@@ -12,6 +12,11 @@ print(uuid.uuid1())
 print(uuid.uuid3(uuid.NAMESPACE_DNS, 'yuanlin'))
 print(uuid.uuid4())
 print(uuid.uuid5(uuid.NAMESPACE_DNS, 'yuanlin'))
+# uuid命名空间
+uuid.NAMESPACE_DNS表示标准域名
+uuid.NAMESPACE_URL
+uuid.NAMESPACE_OID
+uuid.NAMESPACE_X500
 
 # 1去掉-
 str1 = "3cfc8d7a-f169-11e9-af5b-58a023321f81"
@@ -33,3 +38,24 @@ uuid4()：这是基于随机数的uuid，既然是随机就有可能真的遇到
 
 uuid5()：这个和uuid3()貌似并没有什么不同，也是由用户来指定namespace和字符串，不过这里用的散列并不是MD5，而是SHA1.
 """
+UUID只读属性:
+print("UUID is ", UUID)
+print("UUID Type is ",type(UUID))
+print('UUID.bytes   :', UUID.bytes)
+print('UUID.bytes_le :', UUID.bytes_le)
+print('UUID.hex     :', UUID.hex)
+print('UUID.int     :', UUID.int)
+print('UUID.urn     :', UUID.urn)
+print('UUID.variant :', UUID.variant)
+print('UUID.version :', UUID.version)
+print('UUID.fields  :', UUID.fields)
+print("Prining each field seperately")
+print('UUID.time_low            : ', UUID.time_low)
+print('UUID.time_mid            : ', UUID.time_mid)
+print('UUID.time_hi_version     : ', UUID.time_hi_version)
+print('UUID.clock_seq_hi_variant: ', UUID.clock_seq_hi_variant)
+print('UUID.clock_seq_low       : ', UUID.clock_seq_low)
+print('UUID.node                : ', UUID.node)
+print('UUID.time                : ', UUID.time)
+print('UUID.clock_seq           : ', UUID.clock_seq)
+print('UUID.SafeUUID           : ', UUID.is_safe)
