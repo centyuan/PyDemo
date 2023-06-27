@@ -132,3 +132,19 @@ crontab -e
 
 
 docker run --name my_es7 -p 9200:9200  -p 9300:9300 -e "discovery.type=single-node" -e ES_JAVA_OPTS="-Xms84m -Xmx512m" -v /root/my_elasticsearch/data:/usr/share/elasticsearch/data -d elasticsearch:7
+
+
+#18.查看端口是否打开
+wget ip:port
+curl -v ip:port 
+telnet ip port 
+nc -zv ip port 
+ssh -v ip -p port
+ssh -v -p port root@ip
+lsof -i:port
+netstat -lntp 
+   -l 列出所有监听端口
+   -n 以数字形式显示地址和端口
+   -t 列出所有tcp协议连接 -u 列出所有udp连接 -a 列出所有连接
+   -p 显示占用该端口的进程
+#connection refused 表示端口没有服务监听
