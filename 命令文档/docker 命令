@@ -87,7 +87,8 @@ sudo docker cp mycontainer:/root/fiel.txt /home/centyuan/
 10.Dockerfile用来构建镜像的文本文件
 ADD和COPY区别
 都是复制文件/目录到容器
-ADD:支持远程复制,压缩文件会自动解压,不太稳定,尽量使用COPY
+ADD:1.支持url远程复制(推送使用curl/wget,使用ADD会创建更多的镜像层),2.压缩文件会自动解压,不太稳定,尽量使用COPY
+COPY:在multi-stage中,可以把前一阶段构建的产物拷贝到当前镜像中
 一般格式:
 """
 FROM centos:6.7  # 指定使用那个镜像
