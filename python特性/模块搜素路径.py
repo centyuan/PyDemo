@@ -31,6 +31,8 @@
     上述三个可以打包在module里
     多个module可以打包在package里
     多个package可以打包在library里
+
+三:库library,严格说python中没有库的概念
 """
 import sys
 import os
