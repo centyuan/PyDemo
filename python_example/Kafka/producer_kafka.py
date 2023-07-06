@@ -9,7 +9,18 @@ from typing import List
 # https://zhuanlan.zhihu.com/p/637683728
 #batch_size: 批次大小,默认64kb,生产者将发送到相同分区的多个信息打包为一个批次,为0表示禁用
 #linger.ms: 消息停留时间,到这个时间后必须发送
+"""
+场景1消息需要按顺序发送并且只能在一个partation上:
+    retries:重试次数
+    max_in_flight_requests_per_connection=1:控制生产者在收到服务器响应之前只能发送一个消息
 
+场景2只关心吞吐量-容许少量消息发送失败，不关注消息顺序
+    异步发送+acks=0
+
+场景3需要知道消息是否发送成功,不关注消息顺序
+    异步发送+回调
+    retries=0 
+"""
 
 class MyProducer():
     def __init__(self, bootstrap_servers:str=None,topic:str=None):
