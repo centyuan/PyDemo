@@ -112,12 +112,14 @@ exec /bin/bash "$@"
 
 
 11.docker网络模式
-1.host模式(--net=host),与宿主机在同一网络,没有独立ip,没有network namespace
-2.container模式(--net=container:容器name/id),新创建容器没有网卡和ip,而是和指定容器共享ip和端口范围
-3.none模式,封闭的网络环境
-4.bridge模式,没有--net参数默认网桥模式,通过veth-pair实现内部网卡和docker0网桥通信
+### https://zhuanlan.zhihu.com/p/199298498
+1.host模式(--net=host),共享主机的网络空间,使用主机的ip/端口,没有独立ip,没有network namespace
+2.bridge模式,没有--net参数默认网桥模式,通过veth-pair实现内部网卡和docker0网桥通信
 eth0 <---> docker0(bridge) <-veth--ehto-> docker container
+Network namespace--->veth<--->veth-br--->bridge--->etho(nat转换)--->公网
 Docker server启动时,会在主机上创建一个名为docker0的虚拟网桥(类似于物理交换机),主机上的所有容器就通过虚拟网桥连在了一个二层网络中,
+3.container模式(--net=container:容器name/id),新创建容器没有网卡和ip,而是和指定容器共享ip和端口范围
+4.none模式,封闭的网络环境
 5.自定义模式
 
 
