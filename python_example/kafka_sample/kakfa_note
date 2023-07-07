@@ -1,12 +1,15 @@
 ### 基础概念
+https://zhuanlan.zhihu.com/p/442468709
+
 Producer：Producer 即生产者，消息的产生者，是消息的入口
 Broker：Broker 是 kafka 一个实例，每个服务器上有一个或多个 kafka 的实例，简单的理解就是一台 kafka 服务器，kafka cluster表示集群的意思
 Topic：消息的主题，可以理解为消息队列，kafka的数据就保存在topic。在每个 broker 上都可以创建多个 topic 。
 Partition：Topic的分区，每个 topic 可以有多个分区，分区的作用是做负载，提高 kafka 的吞吐量。同一个 topic 在不同的分区的数据是不重复的，partition 的表现形式就是一个一个的文件夹！
 Replication：每一个分区都有多个副本，副本的作用是做备胎，主分区（Leader）会将数据同步到从分区（Follower）。当主分区（Leader）故障的时候会选择一个备胎（Follower）上位，成为 Leader。在kafka中默认副本的最大数量是10个，且副本的数量不能大于Broker的数量，follower和leader绝对是在不同的机器，同一机器对同一个分区也只可能存放一个副本
 Message：每一条发送的消息主体。
-Consumer：消费者，即消息的消费方，是消息的出口。
+Consumer：消费者，即消息的消费方，是消息的出口,在实际的应用中，建议消费者组的consumer的数量与partition的数量保持一致！
 Consumer Group：我们可以将多个消费组组成一个消费者组，在 kafka 的设计中同一个分区的数据只能被消费者组中的某一个消费者消费。同一个消费者组的消费者可以消费同一个topic的不同分区的数据，这也是为了提高kafka的吞吐量！
+
 Zookeeper：kafka 集群依赖 zookeeper 来保存集群的的元信息，来保证系统的可用性。
 
 
@@ -60,7 +63,11 @@ ack(0:立即发送,不等待ack,1:leader收到,-1:producer等ISR中所有的fllo
 kafka保证同一个分区内的数据是有序的，我们也可以认为一个分区就是一个有序的消息队列
 每个主题的某一个分区只能被同一个消费组下的其中一个消费者消费，因此我们可以说分区是消费并行度的基本单位。从消费者的角度讲，我们订阅消费了一个主题，也就订阅了该主题的所有分区
 
+### kafka如何将数据写入到对应的分区
+1.send指定的分区
+2.没有指定分区,则根据key的hash出一个分区
+3.没有指定也没有key,则会轮询出一个分区
+
 ### 消息可靠生产和可靠消费
 可靠生产:ack确认+重试,通过send方法发送消息,并返回Future对象,get()方法会等待Future对象，处理异常看send()方法是否成功
 可靠消费:手动提交offset+重试+死信队列,
-
