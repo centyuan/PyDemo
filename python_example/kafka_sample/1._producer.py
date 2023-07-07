@@ -21,6 +21,10 @@ from kafka.errors import kafka_errors
 场景3需要知道消息是否发送成功,不关注消息顺序
     异步发送+回调
     retries=0 
+
+发送消息:外网或跨网段需要添加advertised.listeners=PLAINTEXT://hostname:9092
+1.从zookeeper拿到partition分区的leader地址
+2.将消息发送给leader
 """
 
 class MyProducer():

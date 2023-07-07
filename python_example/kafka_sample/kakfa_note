@@ -1,5 +1,6 @@
 ### 基础概念
 https://zhuanlan.zhihu.com/p/442468709
+https://juejin.cn/post/7238604003599695928
 
 Producer：Producer 即生产者，消息的产生者，是消息的入口
 Broker：Broker 是 kafka 一个实例，每个服务器上有一个或多个 kafka 的实例，简单的理解就是一台 kafka 服务器，kafka cluster表示集群的意思
