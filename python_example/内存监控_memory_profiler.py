@@ -8,7 +8,7 @@ memory_profiler：是按每行代码查看内存占用的工具
 def readiso():
     start_time = time.time()
     count = 0
-    with open('assets/60960684_p0.png', 'rb') as f:
+    with open('Assets/60960684_p0.png', 'rb') as f:
         f.seek(0, 2)
         total = f.tell()
         f.seek(count)
