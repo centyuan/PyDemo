@@ -101,11 +101,12 @@ data与json既可以是str类型，也可以是dict类型。
 区别：
 1、data为dict时，如果不指定content-type，默认为application/x-www-form-urlencoded，相当于普通form表单提交的形式
 2、data为str时，如果不指定content-type，默认为text/plain
+3、data为json.dumps()时，如果不指定content-type，默认为application/json
 
-3、json为dict时，如果不指定content-type，默认为application/json
-4、json为str时，如果不指定content-type，默认为application/json
+4、json为dict时，如果不指定content-type，默认为application/json
+5、json为str时，如果不指定content-type，默认为application/json
 
-5、payloag 负载
+6、payloag 负载
 用data参数提交数据时，request.body的内容则为a=1&b=2的这种形式：表单形式
 用json参数提交数据时，request.body的内容则为'{"a": 1, "b": 2}'的这种形式：json形式
 
