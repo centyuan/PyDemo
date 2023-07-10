@@ -95,7 +95,7 @@ to_data = {'token': 'J9BC', 'value': 1, 'tradeCode': 'J9BC_USDT',
 to_url = 'https://www.j9bcrest.com/api/swap/open/calc/to'
 to_res = requests.post(to_url, headers=new_h, json=to_data)
 '''
-
+https://juejin.cn/post/6959742146781904904
 在通过requests.post()进行POST请求时，传入报文的参数有两个，一个是data，一个是json。
 data与json既可以是str类型，也可以是dict类型。
 区别：
