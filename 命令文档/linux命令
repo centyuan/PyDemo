@@ -82,7 +82,7 @@ whereis    查看可执行文件的位置(搜索很快,从数据库中差,不从
 || 表示上一条命令执行失败后，才执行下一条命令，如  cat nofile || echo "fail"
 | 表示管道，上一条命令的输出，作为下一条命令参数:echo 'yes' | wc -l
 &和nohup 区别:
-&:1.结果输出到终端，2.Ctrl+c发送SIGINT信号，程序免疫,3.关闭session发送SIGKILL信号,程序关闭
+&:1.结果输出到终端，2.Ctrl+c发送SIGINT信号，程序免疫,3.关闭session发送SIGHUP信号,程序关闭
 nohup:1.结果默认输出到nohup.out,2.Ctrl+c发送SIGINT信号,程序关闭,3.关闭session发送SIGHUP信号，程序免疫
 不挂断后台运行(nohup $ 同时使用)
 nohup python run.py >aceess.log 2>&1  &
