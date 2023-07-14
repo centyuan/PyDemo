@@ -1,4 +1,5 @@
 """
+
 1.常用的多线程模块
 _thread:python3(python2为thread)
 threading 推荐使用
@@ -7,6 +8,9 @@ thread提供了低级别的、原始的线程以及一个简单的锁。_thread�
 2.可以使用 ThreadPoolExecutor 来实现线程池
 从Python3.2开始，标准库为我们提供了concurrent.futures模块，它提供了ThreadPoolExecutor和ProcessPoolExecutor两个类，
 实现了对threading和multiprocessing的进一步抽象（这里主要关注线程池），不仅可以帮我们自动调度线程
+
+主进程在子进程未结束时退出,linux内核会将子进程的父进程ID改为1,也就是init进程。
+主线程退出后子线程状态依赖于所在的进程,进程没有退出则子线程正常执行,进程退出则所有线程都会退出。
 
 """
 
