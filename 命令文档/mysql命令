@@ -65,10 +65,19 @@ alter table system_info drop column email;
 10.字段改名
 alter table system_info rename email to new_email;
 11.清空表或删除记录
+"""清空表记录三种方式"""
+# 1. delete
 delete from table_name; 或 delete from table_name where id=1;
 # 删除select记录报错:mysql不允许对同一个表同时进行查询和更新
 # 解决方案:对查询结果生产一个派生表,对派生表查询
 delete from table_user  where id in (select id from (select id  from table_user where sex is null) as tmp);
+# 2.truncate
+truncate table_name 
+# 3.use information_schema 清空所有表记录
+select table_name,table_schema from information_schema.tables where table_schema='alphacapture_bigai'
+select table_name,table_schema from information_schema.tables where table_schema like '%alphacapture_bigai%'
+select concat('truncate table',table_schema,'.',table_name,';') from information_schema.tables where table_schema in ('数据库1','数据库2')
+
 12.插入记录
 insert into table_name(field1,field2,field3) values(value1,value2,value3);
 13.更新记录
@@ -97,6 +106,13 @@ select * from Student limit 3,5; # 从第三条记录,查询五条
 select * from Student limit (n-1)*m,m; # 第n也查询m条记录
 23.join连表查询 on 条件
 select Sites.id,Sites.name,Log.count,Log.date from Sites inner join Log on Sites.id=Log.site_id;
+
+23.查看表占用磁盘空间大小,M单位
+查看单个表
+select concat(round(sum(DATA_LENGTH/1024/1024),2),'M') as table_size  from information_schema.tables where table_schema='csjdemo' AND table_name='demo2';
+SELECT (`DATA_LENGTH`+ `INDEX_LENGTH`)/1024/1024  as `table_data_size`  from `TABLES` WHERE TABLE_NAME ='tableName' and TABLE_SCHEMA='dbName';
+查看数据库
+SELECT (sum(`DATA_LENGTH`) +sum(`INDEX_LENGTH`))/1024/1024   as `db_data_size`  from `TABLES` where `TABLE_SCHEMA`='dbName';
 
 
 三: 复制,导入导出数据
@@ -397,6 +413,8 @@ MySQL单表大约在2千万条记录（4G）下能够良好运行，
 单表最大索引数:不限
 
 
+# 十三 额外问题及思路
+
 "Lost connection to MySQL server during query" ?
 1网络延迟高
 2.读/写:导致数据传输超时，net_read_timeout/net_write_timeout
@@ -451,12 +469,12 @@ decimal是字符串存储
 怎么存储表情包emoji?
 字符串存储utf-8+mb4编码
 
-#### 大量外键问题:
+大量外键问题？
 不影响select，影响update/insert/delete(当对子表进行写入操作,父表会被加上共享锁,对子表进行高并发时,父表的共享锁长时间不能释放,就不能对父表进行写入而只能读)
 #### WAL技术(Write-Ahead Logging)RedoLog(对所有页面的操作写入日志文件,实现事务的持久性)
 
 
-### 不使用外键强关联
+不使用外键强关联问题？
 主要存在以下问题
 1.在该表进行增删改查会触发查询关联表的记录是否存在,该性能消耗系统是允许的
 2.数据一致性全部交给数据库,数据库是否能承受
@@ -464,3 +482,33 @@ decimal是字符串存储
 4.后期的分库分表,外键约束格外离谱
 这些问题在互联网公司显得很严重,访问量大的时候,mysql系统上无法得到解决的
 https://www.cnblogs.com/JethroYu/p/13570630.html
+
+
+delete,truncate,drop有什么区别?
+执行速度:drop>truncate>delete
+# 1.delete
+1.属于数据库DML操作语言,只删数据不删表结构,会走事务,执行时触发trigger
+2.delete执行时,会将删除数据缓存到rollback segement中,事务commit之后生效
+3.delete删除全部数据,MyISAM会立刻释放磁盘空间,InnoDB不会释放
+4.delete from table_name where 带条件的MyISAM和InnoDB都不会释放磁盘空间
+5.delete之后optimize table table_name会立刻释放磁盘空间,不管MyISAM或InnoDB
+6.delete操作是一行一行删除,且产生删除操作日志,并记录到redo和undo
+7.delete删除后id会继续递增
+ALTER TABLE TableName AUTO_INCREMENT=1； # 将auto_increment重置
+# 2.truncate
+1.属于DDL定义语言,不走事务,原数据不放到rollback segement中,执行不触发trigger
+2.truncate table table_name会立刻释放磁盘空间不论MyISAM或InnoDB,类似drop table然后create table,做了优化
+3.快速清空表,并重置auto_increment的值
+    MyISAM：truncate会重置auto_increment为1,delete后不变
+    InnoDB: truncate会重置auto_incrment为1,delete后不变(delete之后重启则auto_increment为1)
+    也就是说，InnoDB的表本身是无法持久保存auto_increment。delete表之后auto_increment仍然保存在内存，但是重启后就丢失了，只能从1开始。实质上重启后的auto_increment会从 SELECT 1+MAX(ai_col) FROM t 开始。
+
+SET FOREIGN_KEY_CHECKS=0;            #取消外键约束
+TRUNCATE TABLE  table_name;            
+SET FOREIGN_KEY_CHECKS=1;            #设置外键约束:
+# 3. drop
+1.属于DDL定义的语言
+2.drop之后立刻释放磁盘空间,不管是MyISAM或InnoDB
+3.drop且删除表结构,被依赖的约束(constrain),触发器(trigger),索引(index)
+4.依赖该表的存储过程/函数将保留,状态为invalid
+delete是把目录撕了，truncate是把书的内容撕下来烧了，drop是把书烧了
