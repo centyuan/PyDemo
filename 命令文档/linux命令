@@ -149,7 +149,7 @@ netstat -lntp
    -p 显示占用该端口的进程
 #connection refused 表示端口没有服务监听
 
-#19杀死所有进程
+#19杀死所有进程 ps j -A查看进程组id
  kill -9 -PGID  # 通过kill向整个进程组发送信号
  killall 进程名  # 通过killall直接对进程名操作
  ps aux | grep '进程名' | awk '{print $2}' | xargs kill
