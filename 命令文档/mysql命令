@@ -114,6 +114,18 @@ SELECT (`DATA_LENGTH`+ `INDEX_LENGTH`)/1024/1024  as `table_data_size`  from `TA
 查看数据库
 SELECT (sum(`DATA_LENGTH`) +sum(`INDEX_LENGTH`))/1024/1024   as `db_data_size`  from `TABLES` where `TABLE_SCHEMA`='dbName';
 
+24.创建主键primary三种方式
+create table table_name(
+    uid INT PRIMARY KEY,
+    uname VARCHAR(10),
+)
+create table table_name(
+    uid INT,
+    uname VARCHAR(10),
+    PRIMARY KEY(uid),  # 或者PRIMARY KEY(uid,uname)联合主键
+)
+alter table table_name add PRIAMRY KEY(udi);  # 添加主键约束
+alter table table_name drop PRIMARY KEY;      # 删除主键约束 
 
 三: 复制,导入导出数据
 
