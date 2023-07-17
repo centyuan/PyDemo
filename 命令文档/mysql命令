@@ -127,6 +127,15 @@ create table table_name(
 alter table table_name add PRIAMRY KEY(udi);  # 添加主键约束
 alter table table_name drop PRIMARY KEY;      # 删除主键约束 
 
+25.创建唯一索引三种方式
+create table table_name(
+    uid INT,
+    uname VARCHAR(10),
+    UNIQUE []
+)
+alter table table_name unique index(filed_name,filed_name)
+create UNIQUE INDEX indexName on table_name(filed_name,filed_name)
+
 三: 复制,导入导出数据
 
 # 1.复制n条记录并创建
