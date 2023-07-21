@@ -213,6 +213,33 @@ decimal.Decimal(str_num).quantize(decimal.Decimal("0.01"),rouding="ROUND_HALF_UP
 4."%.2f"%float(str_num) 四舍五入
 
 
+#### yum换源
+
+yum install -y wget 
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+阿里的: wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+网易的：wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.163.com/.help/CentOS7-Base-163.repo
+
+# 方案1
+rm -f /var/lib/rpm/__db.00*  # 删除rpm数据文件
+rpm --rebuilddb              # 重建rpm数据文件
+# 方案2
+rm -f /var/lib/rpm/.rpm.lock 
+rm -f /var/lib/rpm/.dbenv.lock
+
+yum clean all  # 清除缓存
+yum makecache  # 重新建立缓存
+
+yum install -y memcached  mongodb-org-tools libmemcached-devel
+
+
+sed -i 's/word/new_word/g' file_name
+DDL: Data Definition Language
+DDL允许用户定义数据，即创建表、删除表、修改表结构这些操作。通常,DDL由数据库管理员执行
+DML: Data Manipulation Language
+DML为用户提供添加、删除、更新数据的能力，这些是应用程序对数据库的日常操作。
+DQL: Data Query Language
+DQL允许用户查询数据，这也是通常最频繁的数据库日常操作。
 
 
 
