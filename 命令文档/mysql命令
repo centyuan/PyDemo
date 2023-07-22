@@ -495,6 +495,25 @@ decimal是字符串存储
 #### WAL技术(Write-Ahead Logging)RedoLog(对所有页面的操作写入日志文件,实现事务的持久性)
 
 
+delete删除记录使用binlog回滚？
+恢复数据时可以先备份,在停止所有写入操作:flush tables with read lock或 set global read_only=1同时配置文件里设置read_only防止重启失效
+    -1.查看binglog是否开启
+        show variables like '%log_bin%';
+    -2.查看数据文件存放路径
+        show variables like '%datadir%';
+        show master status;  # 查看当前正在写入的binlog
+        show master logs;    # 查看所有binlog  show binary logs;
+    -3.查看binlog日志内容
+        show binlog events in 'mysql-bin.000001'\G;  # 确定需要回滚的事务的position
+    -4.将需要恢复的事务里的操作转为sql
+        /opt/bitnami/mysql/bin/mysqlbinlog  --no-defaults -v --database=alphacapture_bigai --start-position="966048" --stop-position="981142" /bitnami/mysql/data/mysql-bin.000007 > /tmp/mysqllog.sql
+        --base64-output=decode-rows：数据转换正常的字符，如果不设置这个参数将显示base64的数据
+    -5.将导出导出sql的delete转换为insert
+        cat srliao.sql.bak| sed -n '/###/p' | sed 's/### //g;s/\/\*.*/,/g;s/DELETE FROM/;INSERT INTO/g;s/WHERE/SELECT/g;' |sed -r 's/(@17.*),/\1;/g' | sed 's/@1=//g'| sed 's/@[1-9]=/,/g' | sed 's/@[1-9][0-9]=/,/g' > mysqllogOK.sql
+    -6.执行insert sql
+        source /tmp/mysqllogOK.sql
+    
+
 不使用外键强关联问题？
 主要存在以下问题
 1.在该表进行增删改查会触发查询关联表的记录是否存在,该性能消耗系统是允许的
