@@ -71,6 +71,10 @@ cat tac nl more less head tail
 # 17.搜索文件命令(whereis which find locate)
 find       实际搜寻硬盘查询文件名称(最强大的,可以通过文件的时间戳,文件的权限)
 locate     配合数据库查看文件位置(快而全,通过/var/lib/mlocate/mlocate.db数据库查找,每天自动更新一次)
+grep  -c "查找字符串" 文件名 或者 grep "查找字符串" 文件名 | wc -l  # 搜索查找匹配的行数
+grep  -r "查找字符串" 文件名                                      # 递归搜索某个目录及其子目录所有
+grep  -H -r  "查找字符串" 文件名  | cut -d: -f1 | uniq            # 搜素并列出文件名
+
 # 查找指定目录下的不同文件类型，如查找 /etc 下所有以 sh 开头的文件：
 locate /etc/sh
 which      通常用来确定是否安装指定的软件,因为只从PATH环境变量制定的路径中取搜索命令
