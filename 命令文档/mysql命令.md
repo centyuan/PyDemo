@@ -797,6 +797,7 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 >    4. 将需要恢复的事务里的操作转为sql
 >
 >       ```shell
+>        #使用--start-position或--start-datetime="2022-03-20 10:00:00"
 >       /opt/bitnami/mysql/bin/mysqlbinlog  --no-defaults -v --database=database_name --start-position="966048" --stop-position="981142" /bitnami/mysql/data/mysql-bin.000007 > /tmp/mysqllog.sql
 >       ```
 >
