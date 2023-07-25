@@ -209,8 +209,23 @@ round(2.675, 2) 的结果，不论我们从python2还是3来看，结果都应�
   
 3.decimal.Decimal(传入字符串数字) 浮点数不准确
 decimal.Decimal(str_num).quantize(decimal.Decimal("0.01"),rouding="ROUND_HALF_UP")
-
+保留小数方式:
+  ROUND_CEILING   总是趋向正无穷大方向取值
+  ROUND_FLOOR     总是趋向负无穷大方向取值
+  ROUND_DOWN      总是趋向0方向取值
+  ROUND_UP        总是趋向0反方向取值
+  ROUND_HALF_UP    四舍五入
+  ROUND_HALF_DOWN   大于等于5向0方向取整,
+  ROUND_HALF_EVEN   四舍六入双五
+  ROUND_05UP        最后一位是0/5,
 4."%.2f"%float(str_num) 四舍五入
+
+#### yaml语法
+直接写成多行字符串,第二行开始必须有一个单空格缩进
+|保留换行符: "Foo\nBar\n"
+>折叠换行符: "Foo Bar\n"
++表示保留文字块末尾的换行:
+-表示删除字符串末尾的换行:
 
 
 #### yum换源
@@ -232,17 +247,15 @@ yum makecache  # 重新建立缓存
 
 yum install -y memcached  mongodb-org-tools libmemcached-devel
 
-
+#### sed替换
 sed -i 's/word/new_word/g' file_name
+
+### mysql 
 DDL: Data Definition Language
 DDL允许用户定义数据，即创建表、删除表、修改表结构这些操作。通常,DDL由数据库管理员执行
 DML: Data Manipulation Language
 DML为用户提供添加、删除、更新数据的能力，这些是应用程序对数据库的日常操作。
 DQL: Data Query Language
 DQL允许用户查询数据，这也是通常最频繁的数据库日常操作。
-
-
-
-
 
 """
