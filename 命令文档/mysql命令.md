@@ -304,6 +304,11 @@ INSERT into reyo (`num`,`overtime`) SELECT `num`,`overtime` from reyo where id I
 
 ```sql
 mysqldump -u root -p dbname>dbname.sql	
+
+mysqldump -u root -p --all-databses >all-data-$(date+%F).sql  # 备份所有数据库
+mysqldump -u root -p -databases auth mysql >auth-mysql.sql    # 备份auth和mysql数据库
+mysqldump -u root -p dbname table_name >table_name.sql        # 备份数据库
+mysqldump -u root -p -d dbname table_name > table_name.sql    # 备份表结构
 ```
 
 
