@@ -71,6 +71,7 @@ filename:lineno(function)：stall每个函数调用的具体信息；
 
 # 4. heapy:追踪python内存中所有对象,用户查找内存泄露
 
+# 5.py-spy
 
-# 5. perf/stat
+# 6. perf/stat
 
