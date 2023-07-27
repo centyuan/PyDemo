@@ -12,13 +12,13 @@ print('毫秒级时间戳:', int(round(t * 1000)))
 print('微秒级时间戳:', int(round(t * 1000000)))
 
 # 2.时间元组即struct_time对象
-struct_time = time.localtime()
+struct_time = time.localtime()  # time.struct_time(tm_year=2023, tm_mon=7, tm_mday=27, tm_hour=16, tm_min=55, tm_sec=3, tm_wday=3, tm_yday=208, tm_isdst=0)
 print('时间元组:', struct_time, struct_time.tm_year, struct_time.tm_mday,struct_time.tm_hour)
 print('转为时间元组:', time.localtime(time.time()), time.localtime(1670848011))
 print('时间元组转为时间戳:', time.mktime(time.localtime()))
 
 # 3.可读的格式化时间
-print('可读的格式化时间time.asctime():', time.asctime())
+print('可读的格式化时间time.asctime():', time.asctime())  # Thu Jul 27 16:55:03 2023
 print('时间元组转可读的格式化时间:', time.asctime(time.localtime(time.time())))
 print('输出当前时间,time.strftime--%Y-%m-%d %H:%M:%S:', time.strftime("%Y-%m-%d %H:%M:%S"))
 print('输出当前时间,time.strftime--%a %b %d %H:%M:%S %Y:', time.strftime("%a %b %d %H:%M:%S %Y"))
