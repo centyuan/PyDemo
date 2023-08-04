@@ -70,13 +70,17 @@ git push --set-upstream origin yuan                    # 本地切换到该分�
 git checkout --track origin/dev                       # 如果远程新建了一个分支，本地没有该分支 这时本地会新建一个分支名叫 dev,会自动跟踪远程的同名分支dev
 
 
-"""版本回退"""
+"""版本回退 git reset"""
+三种模式:
+mixed(默认):撤回之后所有内容全部放进工作区
+soft:撤回之后所有内容全部放进暂存区
+hard:撤回并清空工作目录和暂存区所有修改
 git reset --hard 版本号                                 # 返回到某个版本，放弃所有修改
 git reset --hard HEAD^                                 # 可以使工作目录回到上次提交的状态,HEAD表示当前版本
 git reset --hard HEAD^^                                # 上上一个版本,往上100个写成 HEAD~100
 git reset --hard commit_id                             # 可以用回到,回退前的新版本
 git reflog                                             # 用来记录你的每一次命令：便于查看commit_id
-
+git checkout  [commit] <filepaht>                      # 只回退某个文件到某个版本
 
 """恢复一个文件"""
 git checkout  readme.txt                               # 放弃本地readme.txt文件的修改
