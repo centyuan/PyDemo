@@ -303,7 +303,7 @@ INSERT into reyo (`num`,`overtime`) SELECT `num`,`overtime` from reyo where id I
 2.导出整个数据库
 
 ```sql
-mysqldump -u root -p dbname>dbname.sql	
+mysqldump -u root -ppassword dbname>dbname.sql	
 
 mysqldump -u root -p --all-databases >all-data-$(date+%F).sql  # 备份所有数据库
 mysqldump -u root -p --databases auth mysql >auth-mysql.sql    # 备份auth和mysql数据库
