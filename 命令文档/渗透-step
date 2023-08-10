@@ -78,8 +78,15 @@ sqlmap.py -u  http://192.168.1.104/sqll/Less 1/?id=1 --dbs
 https://www.cmd5.com/
 # 8. burpsuite
 
-# 9.xss漏洞(Cross-Site Scripting 跨站脚本攻击)：反射型,存储型,DOM型
-
+# 9.xss漏洞(Cross-Site Scripting 跨站脚本攻击)：
+反射型,存储型,DOM型
+xss攻击两大要素:1.攻击者提交恶意代码,2.浏览器执行恶意代码
+如何防御xss？
+1.对输入内容的特定字符进行编码,例如表示html标记的<>等号
+2.对重要的cookie设置httpOnly，防止客户端通过document.cookie读取cookie，此http头由服务端设置
+3.将不可信的值输出URL参数之前，进行URLEncode操作,而对于从URL参数中获取值一定要进行格式检测，比如你需要的时URL，就判读是否满足URL格式
+4.不要使用Eval来解析并进行不确定的数据或代码,对于json解析请使用JSON.parse()方法
+5.后端接口也要做到关键字符过滤
 
 #10.文件上传漏洞
 JS检测绕过:1.浏览器插件,删除检测文件后缀的JS代码,2.抓包,改成可执行文件后缀在上传
