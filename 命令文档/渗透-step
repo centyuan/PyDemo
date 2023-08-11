@@ -5,6 +5,7 @@ http代理:fiddler,burpsuite,mitmproxy
 漏洞利用:SQLMap,metasploit,hydra(爆破)
 抓包工具:wireshark,tcpdump
 内网渗透:cobaltstrike,mimikatz(明文抓取window密码)
+shodan zoomeye fofa
 """
 
 # 一.信息收集
