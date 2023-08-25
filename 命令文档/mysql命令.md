@@ -469,6 +469,7 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 > 4.字段不在where语句后出现(where含IS NULL/IS NULL/IS NOT NULL/like "%"等,不用索引)
 > 5.过长的字段使用前缀索引
 > 6.参与计算的字段不适合建立索引
+> 7.可能产生乱码的字段作为主键或唯一索引
 >
 > **那些情况适合建立索引?**
 >
