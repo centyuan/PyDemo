@@ -85,10 +85,18 @@ git checkout  [commit] <filepaht>                      # 只回退某个文件�
 """恢复一个文件"""
 git checkout  readme.txt                               # 放弃本地readme.txt文件的修改
 git checkout //                                        # 放弃所有文件的所有修改
+
+
+""" 取消暂存多个文件"""
+
 git reset HEAD readme.txt (git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。)
 两种情况:
 一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
 一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
+
+git restore --staged <文件1> <文件2> # 或 .取消所有 --staged 取消暂存，保存对文件的修改
+git restore <文件名>   # 取消暂存并撤销对文件的修改
+
 
 """初始化本地git仓库，并添加远程仓库"""
 git init                                                            # 初始化仓库
