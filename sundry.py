@@ -138,7 +138,10 @@ except Exception as e:
 2.sys.exc_info 和last_traceback
 
 3.traceback信息均来源于traceback object对象,这个对象则是通过 sys.exc_info()来获取的
-exc_type, exc_value, exc_traceback = sys.exc_info()
+try：
+    pass
+except Exception:
+    exc_type, exc_value, exc_traceback = sys.exc_info()
 
 https://blog.csdn.net/yuanfate/article/details/119916008
 https://zhuanlan.zhihu.com/p/614825330
@@ -148,11 +151,11 @@ https://zhuanlan.zhihu.com/p/614825330
 (2: print_exception
   traceback.print_exception(exc_type,exc_value,exc_traceback,limit=None,file=sys.stdout)
   与print_tb相比,打印信息多了开头的 Traceback(most...)以及最后一行的异常类型和value信息
-(3: print_exc 简化搬到print_exception，省略了sys.exc_info()
+(3: print_exc 简化版的print_exception，省略了sys.exc_info()
   traceback.print_exc(limit=None,file=None,chain=True)
   traceback.print_exc(file=open("log.txt","w+")) # 将一擦会给你信息写入到文件中
   
-(4: format_exc(limit=None,chain=True) 不打印,返回一个字符串,效果和print_exc一致
+(4:format_exc(limit=None,chain=True) 不打印,返回一个字符串,效果和print_exc一致
   print(traceback.format_exc())
   
 (5:extract_tb(tb, limit=None)：从traceback对象中提取堆栈跟踪信息，
