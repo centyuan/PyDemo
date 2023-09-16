@@ -1,11 +1,8 @@
 https://blog.csdn.net/sinat_28371057/article/details/118073218
 ###登录
-psql -U dbuser -d exampledb -h 127.0.0.1 -p 5432
-sudo -u postgres psql
-sudo su postgres
-
-/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data/  初始化数据库
-/usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data -l logfile start
+1.psql -U dbuser -d exampledb -h 127.0.0.1 -p 5432
+2.sudo -u postgres psql
+3.sudo su postgres
 
 ###配置数据库允许远程连接访问:
 1修改监听地址cd
@@ -15,14 +12,14 @@ sudo gedit /etc/postgresql/10/main/postgresql.conf
 sudo gedit /etc/postgresql/10/main/pg_hba.conf
 #在文件末尾添加 host all all 0.0.0.0 0.0.0.0 md5 #表示允许任何IP连接
 
-###备份：
+###数据备份：
  pg_dump  –h 127.0.0.1  -p  5432  -U  postgres -c  –f  dbname.sql  dbname
  pg_dump -h 164.82.233.54 -U postgres databasename > C:\databasename.bak
     使用如下命令可对全部pg数据库进行备份：
     pg_dumpall –h 127.0.0.1 –p 5432 -U postgres –c –f db_bak.sql
 
 
-###恢复：
+###数据恢复：
 windows:
 psql -h localhost -U postgres -d new_db  -f "C:/emoneysit.bak"
 
@@ -35,40 +32,29 @@ psql -h localhost -U emmweb -d emmweb < /home/jianghai/Desktop/emmweb.bak 
 -U：U 大写,表示用户名；
 -d：数据库名称；
 -f：把备份文件放在哪里；
-设置密码
-\password
-列出所有数据库
-\l
-列出数据库下所有表
-\d
-切换数据库
-\c database_name
-# 退出
-\q
-列出所有用户
-\du
-切换用户
-\c - user_name
-查看SQL命令解释
-\h select
-查看psql命令列表
-\?
-查看时区和时间
-select now();
-show timezone;
-select * from pg_timezone_names;
-修改时区
-set time zone "RPC"; # session级
-alter role all/rolename set timezone="UTC"; # 用户级别
-alter database dbname set timezone="UTC";  #数据库级别
-全局修改时区需修改配置文件-postgresql.conf
 
-修改管理员密码
-alter user postgres with password "Isoon@qzmp";
-添加数据库新用户
-create user centyuan with password '123456';
-创建数据库
-create database exampledb owner centyuan;
+初始化数据库:
+    /usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data/ 
+    /usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data -l logfile start
+设置密码：\password     
+列出所有数据库：\l
+列出数据库下所有表：\d 或 \dt
+切换数据库：\c database_name
+查看表结构: \d table_name
+退出：\q
+列出所有用户：\du
+切换用户：\c - user_name
+查看SQL命令解释：\h select
+查看psql命令列表：\?
+查看时区和时间：select now(); 或show timezone; 或select * from pg_timezone_names;
+修改时区：set time zone "RPC"; # session级
+    alter role all/rolename set timezone="UTC"; # 用户级别
+    alter database dbname set timezone="UTC";  #数据库级别
+    全局修改时区需修改配置文件-postgresql.conf
+
+修改管理员密码：alter user postgres with password "Isoon@qzmp";
+添加数据库新用户：create user centyuan with password '123456';
+创建数据库：create database exampledb owner centyuan;
 将example数据库所有权限赋予centyuan,否则centyuan只能登录，没有任何数据库操作权限。
 grant all privileges on database exampledb to centyuan;
 
