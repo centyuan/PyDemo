@@ -74,20 +74,24 @@ funB("http://c.biancheng.net")
 funC("other_funB:Python教程：", "http://c.biancheng.net/python")
 
 """
-使用装饰器时，有一些细节需要注意：被装饰后的函数其实已经是另一个函数了，它的函数名及属性等，都是属于新函数，
-所以,Python的functools包中提供了一个叫wraps的装饰器来消除这样的副作用
+使用装饰器时，有一些细节需要注意：被装饰后的函数其实已经是另一个函数了，原有的的函数名等属性都会丢失。
 例如打印:
 被装饰函数的.__doc__
 被装饰函数的.__name__
-@wraps
-保证被装饰函数还拥有原有属性,消除使用了装饰器的函数结构改变(如__name,__doc__)
+解决办法:
+ 1. from functools import update_wrapper
+    @wraps
+    保证被装饰函数还拥有原有属性,消除使用了装饰器的函数结构改变(如__name,__doc__)
+ 2. from functools import wraps  # 是对update_wrapper更高级的封装
+
+
 """
 """3:多个装饰器"""
 from functools import wraps
-
+from functools import update_wrapper
 
 def deco01(func):
-    @wraps(func)
+    @wraps(func)  # 1.保证原有属性
     def wrapper(*args, **kwargs):
         print("3:装饰器1开始")
         startTime = time.time()
@@ -97,7 +101,7 @@ def deco01(func):
         print("3:装饰器1时间为%d ms" % msecs)
         print("3:装饰器1结束")
 
-    return wrapper
+    return wrapper   # 2保证原有属性.return update_wrapper(wrapper, func) 
 
 
 def deco02(func):
