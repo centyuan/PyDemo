@@ -79,3 +79,6 @@ def main4():
     ret = future.result()
     print('result is %s' % str(ret))
     process_pool.shutdown()
+
+# 5.subprocess 创建新进程(subprocess.run 或 subprocess.Popen)
+
