@@ -8,3 +8,5 @@ reason:
         ret.text.encode("gbk","ignore").decode("gbk")
       3.可以改变标准输出的默认编码)
         sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf8') 
+2.re.findall:TypeError: expected string or bytes-like object
+   findall()第二个参数需要字符串
