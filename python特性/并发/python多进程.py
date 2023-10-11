@@ -81,4 +81,4 @@ def main4():
     process_pool.shutdown()
 
 # 5.subprocess 创建新进程(subprocess.run 或 subprocess.Popen)
-
+ stdout, stderr = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE).communicate()
