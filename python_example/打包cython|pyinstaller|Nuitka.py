@@ -20,6 +20,8 @@ if __name__ == "__main__":
 4.执行并生产.so
 python setup.py build_ext --inplace
 
+或手动从命令行编译,使用 /user/local/bin/cython将.py/.pyx编译成C/C++ or /usr/local/bin/cythonize将.py/.pyx编译成C/C++后在编译成.so
+
 ### 二:编译整个目录
 py2so
 
