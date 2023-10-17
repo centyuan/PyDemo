@@ -22,3 +22,5 @@ print("Name:%10s Age:%8d Height:%8.2f" % ("Aviad", 25, 1.83))
 name = 'Tom'
 age = 20
 print(f'姓名是：{name},年龄是：{age}')
+new_name = "{name}"
+name = new_name.format(name="age")
