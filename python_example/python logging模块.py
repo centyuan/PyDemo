@@ -127,3 +127,5 @@ logger = logging.getLogger("ES_log")
 logger.setLevel(logging.INFO)
 logger.addHandler(cm_handler)
 logger.info("ES日志")
+
+# 5. loguru
