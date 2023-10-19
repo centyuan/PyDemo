@@ -94,5 +94,6 @@ setuptools是distutils增强版
     4.安装 python setup.py install  # pip instal xxx.wheel
 
 """
-cython
+cython教程
 https://www.cnblogs.com/traditional/tag/Cython/
+https://www.bookstack.cn/read/cython-doc-zh/docs-3.md
