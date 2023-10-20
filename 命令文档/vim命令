@@ -47,6 +47,8 @@ u(undo取消):
 <<:
 	整行向左回退
 
+    
+
 # 4.查找替换
 r(replace),c(change),s(substitute)
 r:
@@ -89,11 +91,18 @@ ctrl+o：
 	vs(vertical split) :sp(split)
 设置行号:
 	number set
-
-可视化模式visual：
-	v：字符可视化模式
-	V：行可视化模式
-	ctrl+V或ctrl+Q：块可视化模式
+批量操作:
+    可视化模式visual：
+        v：字符可视化模式
+        V：行可视化模式
+        ctrl+V或ctrl+Q：块可视化模式
+    批量注释:
+       ctrl+V进入快可视化模式
+       shift+i进入行首插入模式
+       输入#按两下ESC，则所有选中行都有#
+    批量缩进:
+       进入可视化模式
+       <或>进行缩进
 进入可视visual模式：
 	进入后可以使用d删除，使用y复制，最后p粘贴
 
