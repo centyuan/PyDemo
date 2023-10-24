@@ -226,9 +226,19 @@ if __name__ =="__main__":
 
 
 
+# 六:执行普通方法 cal_soon(即刻执行),call_at(),call_later(指定时间之后执行)
 
-
-
+def call_back(time_sleep):
+    print(f"sleep {time_sleep} success")
+def stop_loop(loop):
+    loop.stop()
+    
+if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    loop.call_soon(call_back, 2) # 即刻执行
+    loop.call_later(2, call_back, 2) # 
+    loop.call_soon(stop_loop, loop)
+    loop.run_forever()
 
 
 
