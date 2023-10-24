@@ -10,3 +10,13 @@ reason:
         sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf8') 
 2.re.findall:TypeError: expected string or bytes-like object
    findall()第二个参数需要字符串
+
+3.Linux报“invalid ELF header”
+    1.检查文件是否完整
+        md5sum your_file
+    2.检查可执行文件是否损坏
+        file your_file 返回文件是ELF
+    3.检查共享库是否缺失
+        ldd your_file
+    4.检查系统是否支持
+    
