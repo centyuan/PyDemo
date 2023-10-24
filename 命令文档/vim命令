@@ -93,13 +93,17 @@ ctrl+o：
 	number set
 批量操作:
     可视化模式visual：
-        v：字符可视化模式
-        V：行可视化模式
-        ctrl+V或ctrl+Q：块可视化模式
+       v命令进入的字符可视化模式（Characterwise visual mode)，文本选择是以字符为单位的。
+       V命令进入的行可视化模式（Linewise visual mode)，文本选择是以行为单位的
+       ctrl-V进入的块可视化模式（Blockwise visual mode），可以选择一个矩形内的文本。
     批量注释:
        ctrl+V进入快可视化模式
        shift+i进入行首插入模式
        输入#按两下ESC，则所有选中行都有#
+    批量反注释：
+       ctrl+V进入块可视化模式
+       x或d删除选中内容
+       ESC退出
     批量缩进:
        进入可视化模式
        <或>进行缩进
