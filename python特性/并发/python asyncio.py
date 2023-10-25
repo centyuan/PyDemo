@@ -12,6 +12,7 @@ future:代表将来执行或没有执行的任务的结果,和task没有本质�
 (task是future的子类,再一次封装,实际开发中不需要操作future这种底层对象,而是task)
 async:python3.5后用于定义协程
 await:执行遇到await后,会挂起当前执行函数,针对耗时的操作
+await后面为可等待对象(Future,task,另一个协程)
 """
 import asyncio
 
