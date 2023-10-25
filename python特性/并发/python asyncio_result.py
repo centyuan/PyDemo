@@ -241,5 +241,9 @@ if __name__ == "__main__":
     loop.run_forever()
 
 
-
+# 七：多线程,loop遇到某个协程阻塞会停止整个事件循环,从而阻止了其他协程继续执行,使用多线程防止阻塞
+   loop.run_in_executor(ThreadPoolExecutor(), callback) 线程池+这个阻塞函数
+   loop.call_soon_threadsafe(callback, *args) 将同步方法注册到新线程的loop去
+   asyncio.run_coroutine_threadsafe(coroutine, loop)将异步方法注册到新线程的loop中去,返回值是concurrent.futures.Future对象,.result()获取返回结果
+   3.9后使用 asyncio.to_thread(func, )
 
