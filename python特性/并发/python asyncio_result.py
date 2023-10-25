@@ -247,4 +247,4 @@ if __name__ == "__main__":
    asyncio.run_coroutine_threadsafe(coroutine, loop)将异步方法注册到新线程的loop中去,返回值是concurrent.futures.Future对象,.result()获取返回结果
    3.9后使用 asyncio.to_thread(func, )
 
- 
+ # https://docs.python.org/zh-cn/3/library/asyncio-task.html
