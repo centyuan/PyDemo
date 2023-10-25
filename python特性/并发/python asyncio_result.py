@@ -222,7 +222,7 @@ if __name__ =="__main__":
 # 五:aysncio.get_event_loop和asyncio.new_event_loop和asyncio.set_event_loop
 
 主线程:get_event_loop会创建一个event loop,并且多次调用始终返回该loop
-其他线程:get_event_loop会报错,正确使用是loop = asyncio.new_event_loop asyncio.set_event_loop(loop)
+其他线程:get_event_loop会报错,正确使用是loop = asyncio.new_event_loop创建一个本地线程循环 asyncio.set_event_loop(loop)
 
 
 
