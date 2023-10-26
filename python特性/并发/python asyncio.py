@@ -14,7 +14,7 @@ async:python3.5后用于定义协程
 await:执行遇到await后,会挂起当前执行函数,针对耗时的操作
 await后面为可等待对象(Future,task,另一个协程)
 
-https://www.cnblogs.com/traditional/p/17403428.html
+https://www.cnblogs.com/traditional/tag/%E6%B7%B1%E5%BA%A6%E8%A7%A3%E5%AF%86%20asyncio/
 """
 import asyncio
 
