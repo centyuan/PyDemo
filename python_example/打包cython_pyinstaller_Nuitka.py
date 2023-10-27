@@ -15,7 +15,7 @@ from Cpython.Build import cythonize
 
 if __name__ == "__main__":
     file_name =  "D:\Vscode_project\test_something\test.py"
-    setup(ext_modules=cythonize([file_name]))  # [file_name,file_nam2]多个文件
+    setup(ext_modules=cythonize([file_name],language_level=3))  # [file_name,file_nam2]多个文件
 
 4.执行并生产.so
 python setup.py build_ext --inplace
