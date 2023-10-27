@@ -18,6 +18,8 @@ if __name__ == "__main__":
     setup(ext_modules=cythonize([file_name],language_level=3))  # [file_name,file_nam2]多个文件
 
 4.执行并生产.so
+# build_ext 编译个c/c++扩展
+# --inplace 忽略build-lib，将编译后的扩展放到源目录中，与纯Python模块放在一起
 python setup.py build_ext --inplace
 
 或手动从命令行编译,使用 /user/local/bin/cython将.py/.pyx编译成C/C++ or /usr/local/bin/cythonize将.py/.pyx编译成C/C++后在编译成.so
