@@ -1,5 +1,5 @@
 """
-### 一:单文件加密
+### 一:单文件加密 https://www.cnblogs.com/traditional/tag/Cython/
 打包成.so,源代码保护
 1.pip install cython
     安装python-devel和gcc: yum install python-devel && yum install gcc
