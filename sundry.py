@@ -298,5 +298,5 @@ https://www.bilibili.com/video/BV13d4y1b7md/?spm_id_from=333.788
 4.机器学习框架
         pytorch:
              视频: pytorch龙曲良
-             书籍: 《深度学习与pytorch》
+             书籍: 《深度学习与pytorch》,《python机器学习:基于Pytorch和Scikit-learn》
 """
