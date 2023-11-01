@@ -1,2 +1,2 @@
-1.监督学习supervised learning 有正确答案y
-  无监督学习 unsupervised learning 
+1.监督学习supervised learning 数据是有标签的
+  无监督学习 unsupervised learning  数据没有标签的
