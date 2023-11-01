@@ -46,7 +46,8 @@ Firewall_data = [
 ]
 
 print(sorted(Firewall_data, key=lambda x: x.get('create_time'), reverse=True))
-
+# from functools import attrgetter / itemgetter 代替
+# print(sorted(Firewall_data, key=attrgetter("create_time")) list使用itemgetter(1)代替
 
 #   python3 sorted() 去掉cmp参数, 使用cmp_to_key 转换函数
 #   排序规则函数(先比较score，在比较time)
