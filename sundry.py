@@ -276,4 +276,27 @@ DML为用户提供添加、删除、更新数据的能力，这些是应用程�
 DQL: Data Query Language
 DQL允许用户查询数据，这也是通常最频繁的数据库日常操作。
 
+
+
+
+python相关思考:
+https://www.bilibili.com/video/BV13d4y1b7md/?spm_id_from=333.788
+基础知识:
+1.高等数学/线性代数/概率论基础(张宇/汤家凤)
+高等数学-宋浩:https://www.bilibili.com/video/BV1Eb411u7Fw/?spm_id_from=333.337.search-card.all.click
+线性代数-宋浩:https://www.bilibili.com/video/BV1aW411Q7x1/?spm_id_from=333.337.search-card.all.click
+概率论基础-宋浩:https://www.bilibili.com/video/BV1ot411y7mU/?spm_id_from=333.337.search-card.all.click
+2.python
+        视频: 小甲鱼,
+       书籍:《Python编程从入门到实践第3版》/《利用python进行数据分析第三版》
+3.机器学习
+       视频: 网易版吴恩达机器学习/吴恩达Deeplearning/李宏毅老师机器学习
+        https://www.bilibili.com/video/BV1Pa411X76s/?spm_id_from=333.337.search-card.all.click
+       书籍:
+           机器学习:《机器学习--西瓜书》/《机器学习精讲》/《机器学习实战》
+            深度学习:《神经网络与深度学习》/《深度学习》
+4.机器学习框架
+        pytorch:
+             视频: pytorch龙曲良
+             书籍: 《深度学习与pytorch》
 """
