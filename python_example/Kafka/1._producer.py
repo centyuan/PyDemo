@@ -23,6 +23,9 @@ from kafka.errors import kafka_errors
     retries=0 
 
 发送消息:外网或跨网段需要添加advertised.listeners=PLAINTEXT://hostname:9092
+外网访问或有代理的都需要配置这个外部地址/代理地址,advertised.listeners 指明客户端通过哪个 ip 可以访问到当前节点
+advertised.listeners=PLAINTEXT://outward-nginx:9092
+
 1.从zookeeper拿到partition分区的leader地址
 2.将消息发送给leader
 """
