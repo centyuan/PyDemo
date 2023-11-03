@@ -192,11 +192,12 @@ pod调度策略:
  2.节点标签选择器
  3.节点亲和性:硬亲和和软亲和
  
-### 几种数据
+### pandas 各种存储格式对比
 jay/feather/hdf5/pickle/parquet/csv
 
 feather/parquet:有数据冗余排除算法,可以节省空间
-pickle:实现二进制协议,用于序列化和反序列化python对象结构
+hdf,SQL：支持SQL索引
+pickle(pkl):实现二进制协议,用于序列化和反序列化python对象结构
 pickle不可以保存lambda函数,序列化对象,dill可以保存
 字符串类型:
   save速度:feather>parquet>hdf5>pickle/csv>SQL
@@ -275,6 +276,7 @@ DML: Data Manipulation Language
 DML为用户提供添加、删除、更新数据的能力，这些是应用程序对数据库的日常操作。
 DQL: Data Query Language
 DQL允许用户查询数据，这也是通常最频繁的数据库日常操作。
+
 
 
 
