@@ -277,7 +277,30 @@ DML为用户提供添加、删除、更新数据的能力，这些是应用程�
 DQL: Data Query Language
 DQL允许用户查询数据，这也是通常最频繁的数据库日常操作。
 
+### 
+lass基础架构即服务
+pass平台即服务
+sass软件即服务
 
+git hook:
+  客户端钩子: pre-commit,prepare-commit-msg,commit-msg,post-commit 
+  服务器钩子: pre-receive,post-receive,update
+  直接使用 git pre-commit 工具  pip install pre-commit 
+
+《8 号 Python 增强规范》（Python Enhacement Proposal #8），简称PEP8:针对代码格式而编订的python代码指南
+Google Style
+项目管理：
+  PDM：python包和依赖管理工具
+  Black(Formatter)：python官方推出来的用于检查代码是否复合PEP8规范, 自动修复，代码格式化
+  ruff(Linter): 使用Rust编写的超快Python静态分析工具，性能远超flake8和pylint (对代码语法词法进行扫描分析，有效定位代码缺陷并及时纠正问题,引入了不被使用的代码)
+      
+ mypy: 静态类型检查
+ flake8: 检查代码格式/语法/逻辑错误,只提示不修改
+  
+1：总结技术栈和关键技术
+   vscode作为开发环境,PDM项目管理, 构建工具make,Dockerfile镜像构建,GitLab ci/cd打包使用Black代码格式还，使用ruff进行linter，静态分析
+   fastapi,
+2：总结项目经验
 
 
 
