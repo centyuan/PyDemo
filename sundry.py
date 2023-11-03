@@ -22,7 +22,9 @@ Google Style
    fastapi,
 2：总结项目经验
 https://zhuanlan.zhihu.com/p/584541699
- 建投alpha digital lab项目: 生产地址https://alphadig.csc108.com/login
+
+####中信建投-alpha digital lab项目 基金业绩归因分析#### 
+生产地址https://alphadig.csc108.com/login
   业绩归因的方法和意义:
   为什么需要业绩归因？
       持续获取稳健和丰厚的投资收益，是投资者的需求，也是基金管理人的目标
@@ -48,3 +50,10 @@ https://zhuanlan.zhihu.com/p/584541699
 业绩优劣：收益、风险、风险调整收益
 业绩稳定性：收益稳定性、风格稳定性
 综合评价：成本调整收益
+
+
+#### 中信建投-alpha capture ####
+ 观点，分析师，团队，授权机构，好像没啥东西
+
+
+#### 东方证券-期货资金管理系统  ####
