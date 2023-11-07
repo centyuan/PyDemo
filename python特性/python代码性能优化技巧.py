@@ -53,9 +53,10 @@ for i in range(100):
 # 优化包含多个判断(对于and，应该把满足条件少的放在前面，对于or，把满足条件多的放在前面)ps:充分利用Lazy-evaluation
 # 使用最佳的反序列化方式(eval,cPickle,json) json比cPickel快3倍,比eval快20倍
 """
-终级大杀器：PyPy PyPy是用RPython(CPython的子集)实现的Python，根据官网的基准测试数据，它比CPython实现 的Python要快6倍以上。
-快的原因是使用了Just‑in‑Time(JIT)编译器，即动态编译器，与静态编译 器(如gcc,javac等)不同，它是利用程序运行的过程的数据进行优化。
-由于历史原因，目前pypy中 还保留着GIL，不过正在进行的STM项目试图将PyPy变成没有GIL的Python。
-如果python程序中含有C扩展(非cffi的方式)，JIT的优化效果会大打折扣，甚至比CPython慢（比 Numpy）。
-所以在PyPy中最好用纯Python或使用cffi扩展。 随着STM，Numpy等项目的完善，相信PyPy将会替代CPython。
+  采用了RPython编写的PyPy是一个专为Python配备的即时JIT编译器，RPython是Python的一个静态类型的子集，不同于CPyton解释器，PyPy对源代码进行编译，生成CPU可直接运行的机器码。
+  由于JIT特性，执行速度更快，长时间运行的应用更能从缓冲中受益，大部分的C扩展模块都在PyPy中得到支持,根据官网的基准测试数据，它比CPython实现 的Python要快6倍以上
+  由于历史原因，目前pypy中 还保留着GIL，不过正在进行的STM项目试图将PyPy变成没有GIL的Python。
+  如果python程序中含有C扩展(非cffi的方式)，JIT的优化效果会大打折扣，甚至比CPython慢（比 Numpy）。
+  所以在PyPy中最好用纯Python或使用cffi扩展。 随着STM，Numpy等项目的完善，相信PyPy将会替代CPython。
+  详细描述了CPython和PyPy的不同：https://doc.pypy.org/en/latest/cpython_differences.html
 """

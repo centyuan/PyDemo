@@ -1,13 +1,18 @@
 
+"""
 一：解释器
 https://zhuanlan.zhihu.com/p/661894167
 1.CPython
 
 2.Pyston
   从CPyhton解释器衍生出的分支，实现了性能优化，有可能加速高达30%，由于缺乏兼容的二进制包，需要重新编译
+  
 3.PyPy
   采用了RPython编写的PyPy是一个专为Python配备的即时JIT编译器，RPython是Python的一个静态类型的子集，不同于CPyton解释器，PyPy对源代码进行编译，生成CPU可直接运行的机器码。
-  由于JIT特性，执行速度更快，长时间运行的应用更能从缓冲中受益，大部分的C扩展模块都在PyPy中得到支持
+  由于JIT特性，执行速度更快，长时间运行的应用更能从缓冲中受益，大部分的C扩展模块都在PyPy中得到支持,根据官网的基准测试数据，它比CPython实现 的Python要快6倍以上
+  由于历史原因，目前pypy中 还保留着GIL，不过正在进行的STM项目试图将PyPy变成没有GIL的Python。
+  如果python程序中含有C扩展(非cffi的方式)，JIT的优化效果会大打折扣，甚至比CPython慢（比 Numpy）。
+  所以在PyPy中最好用纯Python或使用cffi扩展。 随着STM，Numpy等项目的完善，相信PyPy将会替代CPython。
   详细描述了CPython和PyPy的不同：https://doc.pypy.org/en/latest/cpython_differences.html
 
 4.RustPython
@@ -37,3 +42,4 @@ python代码真正被CPU运行前，Python先把代码（.py文件）编译成�
  如果想生成test.pyc，我们可以使用Python内置模块py_compile来编译。
  加载模块时，如果同时存在.py和.pyc，Python会尝试使用.pyc，如果.pyc的编译时间早于.py的修改时间，则重新编译.py并更新.pyc。
   
+ """
