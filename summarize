@@ -1,6 +1,13 @@
 lass基础架构即服务
 pass平台即服务
 sass软件即服务
+东方证券
+中信建投
+华夏基金
+海通证券
+中金财富
+湘财证券
+
 
 git hook:
   客户端钩子: pre-commit,prepare-commit-msg,commit-msg,post-commit 
