@@ -75,3 +75,9 @@ kafka保证同一个分区内的数据是有序的，我们也可以认为一个
 
 ### 上次遇到的错误
 kafka.errors.kafkaTimeoutError:KafkaTimeoutError:Batch for TopicPartition(topic="notifyCenter_topic",partition=0) containing 1 record(s) expired:30 seconds have passed since last append 
+
+可以正常后去kafka topic信息
+发送消息时报这个错,原因是和kafka连接使用了代理，在发送消息时，拿到具体的节点地址不能发送，需要改成代理才行
+kafka对跨网络的访问有个专门的参数:
+advertised.listeners=PLAINTEXT://hostname:9092
+这个参数配置了,默认返回给生产者或消费者的就是这个参数的内容
