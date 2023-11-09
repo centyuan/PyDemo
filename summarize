@@ -56,8 +56,19 @@ Google Style
 综合评价：成本调整收益
 
 
-#### 中信建投证券 alpha caputre系统(alpha capture system) ####
-收集和跟踪投资观点表现的商业系统，一般称为alpha捕获系统
+#### 中信建投证券csc alpha caputre系统(alpha capture system) ####
+项目名称: 中信建投Alpha Caputre系统
+项目描述:对成功投资者的观点进行收集，并跟踪投资观点表现的商业系统，一般称为alpha捕获系统，根据不同的输入和规则,生成一个Alpha最好的投资组合,从而引导投资人进行投资
+项目范围:
+    6月-8月
+    前端采用vue，展示用户界面,用户可选择投资的股票,看多和看空方向,期望价格,目标仓位,以及止损价格
+    后端采用FastAPI，处理用户提交的投资信息，从实时行情数据进行数据查询，针对用户选取的股票计算出Dar return,Day Alpha,Alpha,Return等数值
+    实时行情数据接入:包括开盘价格,30min VWAp,收盘价格存储到数据库供后端处理，结算时由Airflow从bigquant拉取
+项目业绩: 
+   1. 增加机构张红管理和分析师授权等功能，修改观点排名和分析排名 团队排名等逻辑
+   2. 修复遗留数据展示和处理Bug
+   3. 解决客户技术问题(数据入库和回滚)
+     
 地址:https://bigalphacapture.com/
 1. 观点创建
      一:用户提交观点(新增观点基本信息(证券代码，证券名称，预期价格，初始仓位,基准代码，开启日期,关闭日期),查询基准代码,查询证券名称)
@@ -89,7 +100,7 @@ https://bigquant.xcsc.com/
 技术栈: Gitlab CI/CD Makefile Cython Docker K8s Airflow FastApi Tortoise SQLAlchemy Pandas  Nameko grpc
 项目业绩: 
    1. 维护系统正常运行，及时解决排查用户反馈的实盘问题，迭代开发新功能和修复老版本Bug
-   2. 优化部分接口性能, 将响应时间缩短了百分之五十
+   2. 优化部分接口性能(如登录获取持仓信息和获取实盘资金), 将响应时间缩短了百分之五十
    3. 自动交易申报流程改造
    
 
