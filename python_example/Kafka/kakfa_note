@@ -72,3 +72,6 @@ kafka保证同一个分区内的数据是有序的，我们也可以认为一个
 ### 消息可靠生产和可靠消费
 可靠生产:ack确认+重试,通过send方法发送消息,并返回Future对象,get()方法会等待Future对象，处理异常看send()方法是否成功
 可靠消费:手动提交offset+重试+死信队列,
+
+### 上次遇到的错误
+kafka.errors.kafkaTimeoutError:KafkaTimeoutError:Batch for TopicPartition(topic="notifyCenter_topic",partition=0) containing 1 record(s) expired:30 seconds have passed since last append 
