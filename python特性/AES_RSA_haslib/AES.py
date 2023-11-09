@@ -7,9 +7,7 @@ import base64
 """
 对称加密:AES,DES(采用同一个秘钥加解密,计算量小,加密速度快)
 非对称加密:RSA(采用公钥和私钥,加密时间长,速度慢,适用少量数据)
-"""
 
-"""
 AES的区块长度固定为128位，密钥长度则可以是128 bit，192 bit 或256位 bit 。换算成字节长度，就是密码必须是 16个字节，24个字节，32个字节:
 1. 在Python中进行AES加密解密时，所传入的密文、明文、秘钥、iv偏移量、都需要是bytes（字节型）数据。python 在构建aes对象时也只能接受bytes类型数据。
 2. 当秘钥，iv偏移量，待加密的明文，字节长度不够16字节或者16字节倍数的时候需要进行补全。
@@ -25,6 +23,11 @@ AES加密模式:
     密码反馈模式(CFB)
     输出反馈模式(OFB)
 
+AES和DES区别:主要区别在于加密过程,在DES中,将明文分为两半,在进一步处理,AES是整个块一起处理
+首选AES:
+AES加密速度更快，对内存需求较低,分组长度和密钥长度(密钥长度更长最大256,DES密钥长度只有56bit,用穷举法很难破解)设计灵活，安全性较高
+
+   
 """
 
 
@@ -74,7 +77,28 @@ class Encrypt:
         # rstrip 删除text末尾指定的字符
         return text.rstrip(self.coding)
 
+from Crypto.Cipher import DES
+class ExpirationCheck:
+   key = b")EOz@@P*"  # 密钥 8位或16位,必须为bytes"
+   des = DES.new(key,DES.MODE_ECB)
 
+   @classmethod
+   def encrypt(cls, text:str)->str:
+       padded_text = cls.padding(text)
+       _res = cls.des.encrypt(padded_text.encode("utf-8"))
+       return base64.decode(_res).decode()
+
+   @classmethod
+   def decrypt(cls, text:str)->str:
+       _res = base64.b64decode(text)
+       _res = cls.des.decrypt(_res)
+       return _res.decode().rstrip(" ")
+   @classmethod
+   def padding(cls, text:str)->str:
+       while len(text) % 8 !=0:
+           text +=" "
+       return text 
+ 
 if __name__ == '__main__':
     key = 'ONxYDyNaCoyTzsp83JoQ3YYuMPHxk3j7'
     print(len(key))
