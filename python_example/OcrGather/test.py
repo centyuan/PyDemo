@@ -12,3 +12,4 @@ host = ''
 
 # 腾讯sdk:pip install tencentcloud-sdk-python-OcrGather
 
+# pyocr

@@ -164,10 +164,10 @@ https://zhuanlan.zhihu.com/p/614825330
 (2: print_exception
   traceback.print_exception(exc_type,exc_value,exc_traceback,limit=None,file=sys.stdout)
   与print_tb相比,打印信息多了开头的 Traceback(most...)以及最后一行的异常类型和value信息
+
 (3: print_exc 简化版的print_exception，省略了sys.exc_info()
   traceback.print_exc(limit=None,file=None,chain=True)
   traceback.print_exc(file=open("log.txt","w+")) # 将一擦会给你信息写入到文件中
-  
 (4:format_exc(limit=None,chain=True) 不打印,返回一个字符串,效果和print_exc一致
   print(traceback.format_exc())
   
