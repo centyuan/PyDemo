@@ -1,5 +1,5 @@
 """
-Django中单元测试方法是django.test.TestCase(在unittest.TestCase基础上封装)
+Django中方法是django.test.TestCase(在unittest.TestCase基础上封装)
 python manage.py test # 执行整个项目的单元测试
 python manage.py test account # 只执行account模块
 python manage.py test cccount.tests.XXXTestCase # 只执行某一个测试类

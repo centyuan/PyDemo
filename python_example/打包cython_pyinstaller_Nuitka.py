@@ -79,8 +79,9 @@ if __name__ == "__main__":
 # python setup.py build_ext --inplace
 
 
-### 五:setuptools打包(distutils)
+### 五:setuptools打包(distutils)并上传到pypi
 """
+项目打包发布总结:
 python包分发:源码包/二进制包
 源码包: .zip/.tar.gz
 二进制包: egg/wheel
@@ -90,10 +91,18 @@ setuptools是distutils增强版
 
     1.确定项目结构
     2.编写setup.py(打包相关信息)
-    3.python setup.py sdist --formats=gztar,zip  # 源码包
+      LICENSE:可以通过github创建项目的时候选择,选择"MIT License" 后面需要添加对应的License版本
+      README.md:项目的介绍
+      setup.py: 打包时用到的元数据信息
+      project_name: 项目主要的代码目录
+    3.python3 setup.py sdist bdist_wheel     
+      python setup.py sdist --formats=gztar,zip  # 源码包
       python setup.py bdist_wininst              # 打包成exe
       python setup.py bdist                      # 多种格式 
-    4.安装 python setup.py install  # pip instal xxx.wheel
+    4.同目录下产生dist目录(包括.whl和tar.gz源码包)
+    5.twine check dist/*                         # twine是上传包到pypi的主要工具  
+    6.twine uplaod dist/*                        # 上传
+    7.安装 python setup.py install  # pip instal xxx.wheel    
 
 """
 # cython教程
