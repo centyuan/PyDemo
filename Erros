@@ -1,0 +1,22 @@
+1.UnicodeEncodeError: 'gbk' codec can't encode character '\xe4' in position 79: illegal multibyte sequence
+reason: 
+   windows控制台问题，控制台编码为GBK
+   solution:
+      1.直接替换不能解码的
+        ret.text.replace("\xe4", "**")
+      2.编码在解码
+        ret.text.encode("gbk","ignore").decode("gbk")
+      3.可以改变标准输出的默认编码)
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf8') 
+2.re.findall:TypeError: expected string or bytes-like object
+   findall()第二个参数需要字符串
+
+3.Linux报“invalid ELF header”
+    1.检查文件是否完整
+        md5sum your_file
+    2.检查可执行文件是否损坏
+        file your_file 返回文件是ELF
+    3.检查共享库是否缺失
+        ldd your_file
+    4.检查系统是否支持
+    
