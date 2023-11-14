@@ -3,16 +3,15 @@
 python3.7之前,叫pdb,python debugger
 python3.7之后,breakpoint作为关键字,作为断点插入
 """
+"""
 # 1.pdb
     # 非浸入式    
-        python -m pdb filename.py   
+    python -m pdb filename.py   
     # 浸入式修改
     import pdb;pdg.set_trace()
 
 # 2.breakpoint
     breakpoint()
-
-"""
 pdb相关命令:
 查看源代码:
     l或ll
@@ -51,6 +50,5 @@ pdb相关命令:
     w
 退出pdb
     q
-
 
 """

@@ -9,13 +9,6 @@ import os
 # 1.sys.path
 
 """
-sys.path:模块搜索路径的字符串集合，是一个list 初始化时使用PYTHONPATH环境变量的值,Python解释器会自动将当前工作目录添加到sys.path
-Python import搜索的路径顺序:
-在程序中导入时，如下顺序
-1、Python 标准库模块
-2、Python 第三方模块
-3、应用程序自定义模块
-
 import的搜索顺序:
 首先判断这个module是不是built-in即内建模块，如果是则引入内建模块，如果不是则在一个称为sys.path的list中寻找
 sys.path在python脚本执行时动态生成，包括以下3个部分：
