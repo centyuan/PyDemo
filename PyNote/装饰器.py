@@ -1,94 +1,59 @@
-import time
-
 """
-＠函数”修饰的函数不再是原来的函数，而是被替换成一个新的东西（取决于装饰器的返回值），
-1如果装饰器函数的返回值为普通变量，那么被修饰的函数名就变成了变量名；
-2如果装饰器返回的是一个函数的名称，那么被修饰的函数名依然表示一个函数
+函数装饰器:
+ 1.用于在源码中标记函数,已某种方式增强函数的行为
+ 2.装饰器是可调用函数,参数是一个函数,返回另一个函数或可调用对象
+ 3.装饰器在加载模块时立即执行
 
-"""
-"""装饰器自己接受参数"""
-
-
-def valid_permission(Spermission):
-    def valid_(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            print("装饰器自己接受参数", Spermission)
-            result = func(*args, **kwargs)
-            return result
-
-        return wrapper
-
-    return valid_
-
-
-"""1:带参数的装饰器 嵌套一个函数，该函数带有的参数个数和被装饰器修饰的函数相同"""
-
-
-def funA(fn):
-    # 定义一个嵌套函数
-    def say(arc):
-        print("1:带参数的装饰器 say:", arc)
-        if len(arc) > 10:
-            print("return直接返回,不执行后续func")
-            return 1
-        else:
-            fn(arc + "AAAAAAAAAA")
-
-    return say
-
-
-@funA
-def funB(arc):
-    print("1:带参数的装饰器 funB:", arc)
-
-
-# 等价于
-# funB = funA(funB)
-# funB("str")
-funB("http://c.biancheng.net/python")
-
-"""2:多个参数 ，*args 和 **kwargs 表示接受任意数量和类型的参数。"""
-
-
-def funA(fn):
-    # 定义一个嵌套函数
-    def say(*args, **kwargs):
-        print('2:funA 中say', args, kwargs)
-        fn(*args, **kwargs)
-
-    return say
-
-
-@funA
-def funB(arc):
-    print("2:funB:C语言中文网：", arc)
-
-
-@funA
-def funC(name, arc):
-    print("2:funC", name, arc)
-
-
-funB("http://c.biancheng.net")
-funC("other_funB:Python教程：", "http://c.biancheng.net/python")
-
-"""
 使用装饰器时，有一些细节需要注意：被装饰后的函数其实已经是另一个函数了，原有的的函数名等属性都会丢失。
 例如打印:
 被装饰函数的.__doc__
 被装饰函数的.__name__
 解决办法:
  1. from functools import update_wrapper
-    @wraps
-    保证被装饰函数还拥有原有属性,消除使用了装饰器的函数结构改变(如__name,__doc__)
+   return update_wrapper(wrapper, func) 
  2. from functools import wraps  # 是对update_wrapper更高级的封装
-
+  @wraps
+    保证被装饰函数还拥有原有属性,消除使用了装饰器的函数结构改变(如不支持关键字参数且覆盖了__name,__doc__属性)
 
 """
-"""3:多个装饰器"""
+
+
+import time
 from functools import wraps
 from functools import update_wrapper
+
+# 1.函数装饰器
+
+def time_calc(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start_time = time.perf_counter()
+        result = func(*args, **kwargs)
+        speed_time = time.perf_counter()-start_time
+        return result
+    return wrapper
+
+# 2.带参数的装饰器(采用三层函数定义装饰器)
+
+def valid_permission(per):
+    def valid_(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            print("2:装饰器接受参数",per)
+            result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return valid_
+
+@valid_permission(per="可执行")
+def hello(a,b):
+    print("2:",a,b)
+
+hello(1,2)
+
+
+# 3.多个装饰器
+
 
 def deco01(func):
     @wraps(func)  # 1.保证原有属性
@@ -108,8 +73,11 @@ def deco02(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         print("3:装饰器2开始")
+        startTime = time.time()
         func(*args, **kwargs)
-        print(f"3:装饰器1参数为{args}")
+        endTime = time.time()
+        msecs = (endTime - startTime) * 1000
+        print("3:装饰器2时间为%d ms" % msecs)
         print("3:装饰器2结束")
 
     return wrapper
@@ -125,26 +93,25 @@ def func(a, b):
 
 func(3, 4)
 
-"""4.类作为装饰器"""
-
-
-# 类中定义__call__,类作为装饰器,会运行__call__内容
+# 4.类装饰器(类作为装饰器,实质使用了类方法的__call__来实现类的直接调用,类中定义__call__,类作为装饰器,会运行__call__内容)
+    
 class Animal:
     def __init__(self, func):
         self.func = func
-
+    
     def __call__(self, *args, **kwargs):
-        print("Animial的__call__")
+        print("4:类装饰器Animial的__call__")
         return self.func(*args, **kwargs)
 
 
 @Animal
 def test(name, kind):
-    print("test running")
+    print("4:test running")
     return f"{name}属于{kind}"
 
+test("name","kind")
 
-"""5.为类加装饰器"""
+# 5.为类加装饰器(可以修改类属性,类方法)
 
 
 def decorator(func):
@@ -152,18 +119,20 @@ def decorator(func):
         # 为类添加属性
         cls.name = "张三"
         # 为类添加方法
-        cls.do_some = func
-
+        cls.work = func
+        return cls
+    return wrapper
 
 def printd(*args):
-    printd("类中printd函数")
+    print("5:类中printd函数")
 
 
 @decorator(printd)
-class Animal:
+class Dog:
     def __init__(self):
-        printd("类Animal的init方法")
+        printd("5:类Animal的init方法")
 
 
-A = Animal()
-A.do_some()
+dog = Dog()
+dog.do_some()
+print()
