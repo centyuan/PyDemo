@@ -22,6 +22,7 @@ portfolio = [
 ]
 expensive = heapq.nlargest(3, portfolio, key=lambda s: s['price'])  # 最贵的三个
 cheap = heapq.nsmallest(3, portfolio, key=lambda s: s['price'])
+print(expensive,cheap)
 # 1.查找唯一的最小或最大（N=1）的元素的话，那么使用min()和max()函数会更快些。
 # 2.查找的元素个数相对比较小的时候， heapq.nlargest() heapq.nsmallest()很适合
 # 3.如果N的大小和集合大小接近的时候，先排序这个集合然后再使用切片操作会更快点（sorted(items)[:N]或者是sorted(items)[-N:]
