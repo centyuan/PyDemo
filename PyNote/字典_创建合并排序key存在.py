@@ -129,6 +129,7 @@ def custom_sorted(x, y):
 
 to_rank = sorted(rank, key=cmp_to_key(custom_sorted))
 print("cmp_to_key排序:", to_rank)
+
 """8.类似的使用itemgetter排序"""
 from operator import itemgetter
 
