@@ -117,9 +117,9 @@ rank = [
 def custom_sorted(x, y):
     # 先比较分数，分数相同在比较时间
     if x["score"] > y["score"]:
-        return 1
+        return 1   # 改变x,y位置
     if x["score"] < y["score"]:
-        return -1
+        return -1  # 不改变x,y位置
     if x["score"] == y["score"]:
         if x["time"] > y["time"]:
             return 1

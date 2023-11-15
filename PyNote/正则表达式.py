@@ -35,10 +35,10 @@ d = """centyuan"""
 s = "ip='230.192.168.78',version='1.0.0',ip='230.192.168.20',version='1.0.0'，ip='230.192.168.100',version='1.0.0'"
 # 正则表达式分组(match search 可以group,findall finditer不能分组)
 # 1.(?P<name>)命名分组
-result = re.search("ip='(?P<ip>\d+.\d+.\d+.\d+)", s)
+result = re.search("ip=(?P<ip>\d+.\d+.\d+.\d+)", s)
 print('命名分组result:', result.group('ip'))
 result1 = re.findall("(?P<ip>\d+.\d+.\d+.\d+)", s)
-print("result1:", result1)
+print("fidall返回list:", result1)
 
 # 2. groups,group
 datepat = re.compile(r'(\d+)/(\d+)/(\d+)')  # '(\\d+)/(\\d+)/(\\d+)'

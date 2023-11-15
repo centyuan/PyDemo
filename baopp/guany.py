@@ -179,7 +179,18 @@ def time_use(func):
     return wrapper
 
 
+# 9.自定义排序
+from functools import cmp_to_key
+rank = [
+    {"score":12, "time":"2023-11-16"},
+    {"score":11, "time":"2023-11-15"},
+    {"score":10, "time":"2023-11-14"},
+]
+def sorted_func(x,y):
+    if x["score"] > y["score"]:
+        return 1   # 1改变位置
 
+ranked = sorted(rank,key=cmp_to_key(sorted_func))
 
 
 
