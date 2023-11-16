@@ -32,7 +32,7 @@ typedef struct {
 }PyTupleObject;
 
 区别:
-列表是动态的，属于可变序列，可以使用[append](https://link.zhihu.com/?target=https%3A//www.olzz.com/tag/append/)()、[extend](https://link.zhihu.com/?target=https%3A//www.olzz.com/tag/extend/)()、[insert](https://link.zhihu.com/?target=https%3A//www.olzz.com/tag/insert/)()、remove()和pop()等方法实现添加和[修改列表](https://link.zhihu.com/?target=https%3A//www.olzz.com/tag/xiugailiebiao/)元素，
+列表是动态的，属于可变序列，可以使用append、extend、insert、remove和pop等方法实现添加和修改列表元素，
 
 元组是静态的，属于不可变序列，无法增加、删除、修改元素，除非整体替换
 
