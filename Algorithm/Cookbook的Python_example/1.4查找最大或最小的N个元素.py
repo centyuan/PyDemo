@@ -1,8 +1,12 @@
 """
 question:
 怎么从一个集合中获得最大或者最小的N个元素列表
-heapq模块有两个函数：nlargest()和nsmallest()可以完美解决这个问题。
-提供了很好的性能
+heapq实现了一个适合列表一起使用的最小堆排序算法，提供了很好的性能
+有两个函数：nlargest()和nsmallest()可以完美解决这个问题
+
+堆排序的时间复杂度:
+O(n logn)
+
 """
 import heapq
 
