@@ -72,6 +72,7 @@ t_1 = Timer('t=a;a=b;b=t', 'a=2;b=3').timeit()
 t_2 = Timer('a,b=b,a', 'a=4;b=5').timeit()
 t_3 = timeit.timeit('"-".join(str(n) for n in range(100))',number=10000)
 print('方式1:',t_1, t_2,t_3)
+# python -m timeit "x=(1,2,3)"
 """
 time.perf_counter():会计算sleep时间
 time.process_time():不会计算sleep时间
