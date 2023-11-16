@@ -10,6 +10,7 @@
 解决办法:
  1. from functools import update_wrapper
    return update_wrapper(wrapper, func) 
+   
  2. from functools import wraps  # 是对update_wrapper更高级的封装
   @wraps
     保证被装饰函数还拥有原有属性,消除使用了装饰器的函数结构改变(如不支持关键字参数且覆盖了__name,__doc__属性)
