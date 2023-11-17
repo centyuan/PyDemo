@@ -18,5 +18,5 @@ else:
 
 
 # 4.try except else:没有异常发生,else被执行
-# 总结:在所有情况下,如果异常或return,break,continue导致控制权跳到外面,else也会被跳过
+# 总结:在所有情况下,如果异常,或return,break,continue导致控制权跳到外面,else也会被跳过
 

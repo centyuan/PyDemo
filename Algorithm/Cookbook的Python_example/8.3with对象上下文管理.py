@@ -26,6 +26,10 @@ conn = LazyConnection(('www.python.org', 80))
 编写上下文管理器的主要原理是你的代码会放到 with 语句块中执行:
 1.当出现 with语句的时候，对象的 __enter__() 方法被触发，它返回的值 (如果有的话) 会被赋值给as 声明的变量。
 2.然后，with 语句块里面的代码开始执行。最后，__exit__() 方法被触发进行清理工作。
+3.与函数和模块不同,with块没有定义新的作用域
+with open("xx.py","w") as f:
+    pass
+print(f.closed)  # 返回True
 """
 
 
