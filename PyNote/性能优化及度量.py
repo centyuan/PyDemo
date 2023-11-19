@@ -36,22 +36,29 @@ for i in range(100):
 
 # 4.使用列表解析(要比在循环中重新构建一个新的 list 更为高效),推导式或生成器表达式
 
-
 # 5.合理使用copy,deepcopy(deepcopy使用递归复制,慢一个数量级)
 
 # 6.在循环开始之前:设置一个局部变量保存一个函数的全局引用(或其他模块)(字典查询在大量调用时会降低性能)
 # python访问一个变量,函数或模块时步骤:1.查找本地变量locals(),2.查找全局变量globals(),3.查找__builtin__模块对象(实际上在模块对象的locals()查找)
-# 7.其他
-# xrange代替range(python3：range代替xrange)
-# 使用局部变量,避免global，局部变量比全局变量快
-# is运算符比==速度快,能用is情况尽量使用
-# if done is not None 比 if done !=None快,if done is True比if done ==True快一倍
-# (交换变量值:a,b=b,a)
-# while 1比while True快(后者可读性强，True是一个全局变量而非关键字)
-# 内建函数通常较快,add(a,b)优于a+b
-# 优化循环:循环外能做的事放在循环外面
-# 优化包含多个判断(对于and，应该把满足条件少的放在前面，对于or，把满足条件多的放在前面)ps:充分利用Lazy-evaluation
-# 使用最佳的反序列化方式(eval,cPickle,json) json比cPickel快3倍,比eval快20倍
+# 7.其他xrange代替range(python3：range代替xrange)
+
+# 8.使用局部变量,避免global，局部变量比全局变量快
+
+# 9.is运算符比==速度快,能用is情况尽量使用
+
+# 10.if done is not None 比 if done !=None快,if done is True比if done ==True快一倍
+
+# 11.(交换变量值:a,b=b,a)
+
+# 12.while 1比while True快(后者可读性强，True是一个全局变量而非关键字)
+
+# 13.内建函数通常较快,add(a,b)优于a+b
+
+# 14.优化循环:循环外能做的事放在循环外面
+
+# 15.优化包含多个判断(对于and，应该把满足条件少的放在前面，对于or，把满足条件多的放在前面)ps:充分利用Lazy-evaluation
+
+# 16.使用最佳的反序列化方式(eval,cPickle,json) json比cPickel快3倍,比eval快20倍
 """
   采用了RPython编写的PyPy是一个专为Python配备的即时JIT编译器，RPython是Python的一个静态类型的子集，不同于CPyton解释器，PyPy对源代码进行编译，生成CPU可直接运行的机器码。
   由于JIT特性，执行速度更快，长时间运行的应用更能从缓冲中受益，大部分的C扩展模块都在PyPy中得到支持,根据官网的基准测试数据，它比CPython实现 的Python要快6倍以上

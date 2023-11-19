@@ -68,6 +68,7 @@ class demo(BaseModel):
     gen = "man"  # 也可以直接定义默认值
     time: Union[int, str]  # 允许多种数据类型(2020,"2020":字符串和数字都可以传入)
     username: str = Field(alias="user_name")  # 传入参数定义别名
+    price: float = Field(..., description="商品价格", gt=1,lt=1000) # ...表示必填项,
     person: List[Person]  # schema 嵌套
     # Optional[int] 等价于 Union[int, None]
 
