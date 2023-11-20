@@ -1,0 +1,57 @@
+Django执行流程:
+1.nginx作为接入层,通过反向代理，监听80端口获取请求连接
+2.将请求交给wsgi server
+3.wsgi server调用django的wsgi.py 处理请求
+4.WSGIHandler的__call__函数就是整个逻辑处理流程
+5.WSGIHandler __init__中的加载中间件，对request对象做处理
+6.urlpatterns匹配对应视图view处理逻辑
+7.中间件处理response
+8.返回response
+
+
+DRF执行流程:
+rest-framwork在urlpatterns指定的逻辑层上，增加了对应处理流程(比如请求方法判定，权限鉴定)
+1.到url,执行views.TestView.as_view()函数
+2.as_view方法是被定义在rest_framework/views.py里面的一个静态方法，所以可以通过类名直接调用
+3.父类的as_view方法是定义在django/views/generic/base.py里面的View类中的方法。在这个方法中最终会执行cls.dispatch,在第一步中我们知道cls是<class 'app01.views.TestView'>
+4.dispatch是定义在TestView继承的父类APIView(rest_framework/views.py)里面的方法。在这个方法里面，首先通过 request = self.initialize_request(request, *args, **kwargs)这条语句重新封装了request对象
+5.initialize_request是APIView类里面的一个方法，重新封装了request对象，增加了一些属性信息
+    return Request(
+    request,
+    parsers=self.get_parsers(),
+    authenticators=self.get_authenticators(),
+    negotiator=self.get_content_negotiator(),
+    parser_context=parser_context
+)
+    1.认证信息：主要通过APIView类中的get_authenticators(rest_framework/views.py)方法获取，这个方法会返回一个所有认证对象的列表[auth() for auth in self.Authentication_classes]
+在全局定义的authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES
+    2.在rest_framework/authentication.py中定义了几种认证类型
+
+    class BaseAuthentication(object) 基本认证类
+
+    class BasicAuthentication(BaseAuthentication) 基础认证类
+
+    class SessionAuthentication(BaseAuthentication) 会话认证类
+
+    class TokenAuthentication(BaseAuthentication) 令牌认证类
+
+    class RemoteAuthentication(BaseAuthentication) 远程用户认证类
+
+    一般情况我们需要自定义认证类，也可以使用django-oauth-toolkit组件进行认证。
+
+6.dispatch中的initialize_request方法执行完成之后，还有执行一个重要方法是self.initial(request, *args, **kwargs)，这个方法也是APIView类里的。在这个方法里面初始化被重新封装的request对象。实现以下功能
+    1.版本处理（version, scheme = self.determine_version(request, *args, **kwargs) request.version, request.versioning_scheme = version, scheme）
+
+    2.用户认证（self.perform_authentication(request)）
+
+    3.权限(self.check_permissions(request）
+
+    4.访问频率限制 (self.check_throttles(request))
+
+    认证:
+    1.执行APIView里面的perform_authentication方法，该方法返回request.user,则会调用<rest_framework.request.Request object at 0x10e80deb8>里面的user方法。在user方法里面最终调用了Request类里面的_authenticate方法
+    2.执行rest_framework.request.Request类中的_authenticate方法，这个方法会遍历认证类(遍历认证对象列表，并执行里面的authenticate方法，获取认证信息，并根据认证结果给self.user, self.auth赋值。由于user,和auth都有property属性，
+    所以给赋值的时候先在先执行setter方法
+
+7.dispatch中的initial方法执行完之后，会继续判断request.method并执行method相应的method.
+

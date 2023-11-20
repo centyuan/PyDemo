@@ -1,0 +1,22 @@
+中间件作用:
+修改请求:传送到view中的HttpRequest对象
+修改响应:view返回的HttpResponse对象
+
+
+五个钩子函数:配置多个中间件时，会按照 MIDDLEWARE中 的注册顺序，顺序执行
+process_request(self,request)
+    视图函数之前执行
+    返回值:
+    None: 交给下一个中间件处理
+    HttpResponse: 将不执行后续视图函数之前执行的方法以及视图函数，直接以该中间件为起点，倒序执行中间件，且执行的是视图函数之后执行的方法
+
+process_response(self, request, response)
+    process_response 方法是在视图函数之后执行的，必须要有返回值，且必须是response
+
+process_view(self, request, view_func, view_args, view_kwargs)
+    process_view 方法是在视图函数之前，process_request 方法之后执行的
+    返回值可以是 None、view_func(request) 或 HttpResponse 对象。
+
+process_exception(self, request, exception)
+    process_exception 方法只有在视图函数中出现异常了才执行
+process_template_response(self,request,response)

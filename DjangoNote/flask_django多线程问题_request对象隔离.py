@@ -15,7 +15,7 @@ flask(使用werkzeug)全局的request对象(多个线程分别new 出多个相�
 
 """
 
-""" 
+"""  
 flask请求到响应流程:
 1.请求过来,调用Flask.__call__,返回wsgi_app(environ,start_response)
 2.生成request请求对象和请求上下文环境 ctx = self.request_context(environ)

@@ -34,8 +34,6 @@ direct Exchange是RabbitMQ Broker的默认Exchange它有一个特别的属性对
 在使用这个类型的Exchange时,可以不必指定routing key的名字,在此类型下创建的Queue有一个默认的routing key,这个routing key一般同Queue同名。
 
 
-
-
 ### 死信队列:
 1.消息过期
 2.消息被拒绝

@@ -1,0 +1,51 @@
+
+# https://blog.csdn.net/qq_35952638/article/details/103101820
+1. python2.x 和python3.x区别
+ python3使用print()
+ python3字符串编码格式使用Unicode,python2采用ASCII
+ python3源文件编码格式默认使用utf-8，python2默认使用ASCII
+
+2. python2.7:2010年发布,成为python2.x最后一个版本
+
+3. python3.0:2008年发布
+
+4. python3.4:2014年发布
+    采用pip作为默认包安装方式,
+    增加模块(pathlib,enum,asyncio,statistics,tracemalloc )
+
+5. python3.5:2015年发布,
+    扩展了迭代拆包运算符 * 、字典拆包运算符 **
+    增加关键字 async、await
+    增加语法：类型注释
+    增加语法：使用 Python2 风格的百分号 % 来格式化字符串
+    增加标准库 typing
+
+6. python3.6:2016年发布
+    dict 中的元素按插入顺序排序
+    增加语法: f-strings
+
+7. python3.7:2018年发布
+
+8. python3.8:2019年发布
+    增加语法：海马表达式 a := input()
+    增加语法：定义函数时，在正斜杆 / 之前的参数都会被视作位置参数。
+
+9. python3.9：2020发布
+    运算符合并字典： d1 | d2 
+
+10. python3.10:2021发布
+    增加语法：match-case 模式匹配。
+    增加语法：用 | 运算符连接多个类型，表示 Union 类型
+
+11. python3.11: 2022发布
+    CPython 解释器优化了加载模块、调用函数等操作，使得 Python3.11 比 Python3.10 的启动速度、运行速度快了 10%~60% 
+    增加了标准异常类型 BaseExceptionGroup、ExceptionGroup ，用于将多个异常打包为一组。异常组只能用语法 except* 捕捉
+
+12. python3.12:2023发布
+    简化定义泛型的语法
+    旧的方式:
+    from typing import TypeVar, Generic
+    T = TypeVar('T')
+    class Test(Generic[T]):
+        def __init__(self, value: T) -> None:
+             pass
