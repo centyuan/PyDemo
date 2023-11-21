@@ -15,6 +15,11 @@ await:执行遇到await后,会挂起当前执行函数,针对耗时的操作
 await后面为可等待对象(Future,task,另一个协程)
 
 https://www.cnblogs.com/traditional/tag/%E6%B7%B1%E5%BA%A6%E8%A7%A3%E5%AF%86%20asyncio/
+
+使用uvloop代替asyncio默认事件循环
+import uvloop
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+使得任何对 asyncio.get_event_loop() 的调用都将返回一个 uvloop 的实例
 """
 import asyncio
 

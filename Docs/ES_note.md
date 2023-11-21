@@ -1,10 +1,14 @@
-# 一:三种ES基本操作
-# 1.使用request发送http请求
-# 2.使用官方提供的elasticsearch
-# 3.ORM包elasticsearch-dsl
+#### 一:三种ES基本操作
 
-# 二:查询描述
-"""
+>1.使用request发送http请求
+>
+>2.使用官方提供的elasticsearch
+>
+>3.ORM包elasticsearch-dsl
+
+####  二:查询描述
+
+```
 1、must (must字段对应的是个列表，也就是说可以有多个并列的查询条件，一个文档满足各个子条件后才最终返回)
 2、should (只要符合其中一个条件就返回)
 3、must_not (与must相反，也就是说可以有多个并列的查询条件，一个文档各个子条件后才最终的结果都不满足)
@@ -45,12 +49,15 @@ match_phrase是分词的，text也是分词的。match_phrase的分词结果必�
 
 和match_phrase区别的是，不需要连续，顺序还可以调换。
 
-"""
-# 三:Elasticsearch包操作
+```
+
+
+
+####  三:Elasticsearch包操作
+
+```
 from elasticsearch import Elasticsearch
-
 es = Elasticsearch([{"host": "123.60.180.204", "port": 9200}], timeout=3600)
-
 # 1.查询
 query = {
     "query": {
@@ -58,6 +65,7 @@ query = {
     }
 }
 re = es.search(index="teacher", body=query)
+
 # term/terms查询,terms可以指定多个条件
 query = {
     "query": {
@@ -69,42 +77,44 @@ query = {
 }
 result = es.search(index="teacher", body=query)
 print(result)
+
 # 范围查询
-# query = {
-#     "query":{
-#         ""
-#     }
-# }
+ query = {
+  "query":{""}
+  }
+
 # 2.插入单条数据
-
-# result = es.index(index="teacher", doc_type="_doc", body={
-#     "name": "老师名称",
-#     "description": "是个可爱的语文老师",
-#     "age": "20",
-#     "sex": "男"
-# })
-
+result = es.index(index="teacher", doc_type="_doc", body={
+"name": "老师名称",
+"description": "是个可爱的语文老师",
+"age": "20",
+"sex": "男"
+})
 # 3.插入多条数据
-# doc = [
-#     {"index": {"_index": "teacher", "_type": "_doc", "_id": 1}},
-#     {"name":"汪老师","description":"语文老师","age":26,"sex":"女"},
-#     {"index": {"_index": "teacher", "_type": "_doc", "_id": 2}},
-#     {"name": "何老师", "description": "政治老师", "age": 26},
-#     {"index": {"_index": "teacher", "_type": "_doc", "_id": 2}},
-#     {"name": "老师", "description": "老师", "sex": "女"}
-# ]
-# es.bulk(index="teacher",doc_type="_doc",body=doc)
+doc = [
+{"index": {"_index": "teacher", "_type": "_doc", "_id": 1}},
+{"name":"汪老师","description":"语文老师","age":26,"sex":"女"},
+{"index": {"_index": "teacher", "_type": "_doc", "_id": 2}},
+{"name": "何老师", "description": "政治老师", "age": 26},
+{"index": {"_index": "teacher", "_type": "_doc", "_id": 2}},
+{"name": "老师", "description": "老师", "sex": "女"}
+]
+es.bulk(index="teacher",doc_type="_doc",body=doc)
+```
 
-# 四:elasticsearch-dsl
 
+
+#### 四:elasticsearch-dsl
+
+```
 from datetime import datetime
 from elasticsearch_dsl import Document, Date, Nested, Boolean, analyzer, InnerDoc, Completion, Keyword, Text, Integer
 
 from elasticsearch_dsl.connections import connections
 
 connections.create_connection(hosts=["123.060.180.204:9200"])
-# es = connections.create_connection(hosts=["127.0.0.1:9200"], timeout=20)
-# res = Search(using=es).index("test_index").query()
+es = connections.create_connection(hosts=["127.0.0.1:9200"], timeout=20)
+res = Search(using=es).index("test_index").query()
 
 class Article(Document):
     title = Text(fields={'title': Keyword()})
@@ -113,7 +123,6 @@ class Article(Document):
     class Index:
         name = 'myindex'  # 索引名
 
-
 if __name__ == '__main__':
     Article.init()  # 创建映射
     # 保存数据
@@ -121,23 +130,51 @@ if __name__ == '__main__':
     article.title = "test"
     article.author = "lxx"
     article.save()  # 保存数据
+# # 查询数据
+# s = Article.search()
+# s = s.filter('match', title="test")
+# results = s.execute()
+# print(results)
 
-    # # 查询数据
-    # s = Article.search()
-    # s = s.filter('match', title="test")
-    # results = s.execute()
-    # print(results)
+# # 删除数据
+# s = Article.search()
+# s = s.filter('match', title="test").delete()
+# # 修改数据
+# s = Article().search()
+# s = s.filter('match', title="test")
+# results = s.execute()
+# print(results[0])
+# results[0].title = "xxx"
+# results[0].save()
+```
 
-    # # 删除数据
-    # s = Article.search()
-    # s = s.filter('match', title="test").delete()
-    # # 修改数据
-    # s = Article().search()
-    # s = s.filter('match', title="test")
-    # results = s.execute()
-    # print(results[0])
-    # results[0].title = "xxx"
-    # results[0].save()
-# ./bin/elasticsearch-plugin install https://github.com/NLPchina/elasticsearch-analysis-ansj/releases/download/v7.6.2/elasticsearch-analysis-ansj-7.6.2.0-release.zip
 
- # docker run --name my_es7 -p 9200:9200  -p 9300:9300 -e "discovery.type=single-node" -e ES_JAVA_OPTS="-Xms84m -Xmx512m" -v /root/my_elasticsearch/data:/usr/share/elasticsearch/data -v  /root/my_elasticsearch/plugins:/usr/share/elasticsearch/plugins -d elasticsearch:7.6.2
+
+#### 五:性能优化
+
+>**写优化：**
+>
+>尽量采用批量提交，合理设置磁盘，设置段合并速度，减少refresh次数（从内存刷新到文件缓存中），
+>
+>加大flush设置（多大的值之后从文件缓存中flush到磁盘上），减少副本的数量，
+>
+>内存，文件缓存系统，磁盘
+>
+>**读优化：**
+>
+>避免大结果集合深翻
+>
+>选择合适的路由
+>
+>合理的设置SearchType
+>
+>定期删除.del文件
+>
+>合理的设置堆大小
+
+#### Others
+
+    # ./bin/elasticsearch-plugin install https://github.com/NLPchina/elasticsearch-analysis-ansj/releases/download/v7.6.2/elasticsearch-analysis-ansj-7.6.2.0-release.zip
+    
+     # docker run --name my_es7 -p 9200:9200  -p 9300:9300 -e "discovery.type=single-node" -e ES_JAVA_OPTS="-Xms84m -Xmx512m" -v /root/my_elasticsearch/data:/usr/share/elasticsearch/data -v  /root/my_elasticsearch/plugins:/usr/share/elasticsearch/plugins -d elasticsearch:7.6.2
+ # 

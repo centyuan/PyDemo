@@ -20,3 +20,5 @@ reason:
         ldd your_file
     4.检查系统是否支持
     
+4.syntaxerror non-ascii character
+ 使用Python3
