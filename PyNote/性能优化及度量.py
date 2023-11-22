@@ -5,7 +5,8 @@ from time import time
 # 1.使用dict查找元素而不是list,或者set(list)
 """
 dict使用了hash table，因此查找操作时间复杂度为O(1),
-          """
+
+"""
 t = time()
 list_demo = ['a', 'b', 'is', 'python', 'jason', 'hello', 'phone', 'test', 'apple', 'ind', 'var', 'bana']
 # list_demo = dict.fromkeys(list,True)

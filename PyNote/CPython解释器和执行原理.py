@@ -9,7 +9,7 @@ https://zhuanlan.zhihu.com/p/661894167
   
 3.PyPy
   采用了RPython编写的PyPy是一个专为Python配备的即时JIT编译器，RPython是Python的一个静态类型的子集，不同于CPyton解释器，PyPy对源代码进行编译，生成CPU可直接运行的机器码。
-  由于JIT特性，执行速度更快，长时间运行的应用更能从缓冲中受益，大部分的C扩展模块都在PyPy中得到支持,根据官网的基准测试数据，它比CPython实现 的Python要快6倍以上
+  由于JIT特性，在运行过程中会进行优化(比如:频繁调度的热点代码会编译成本地机器码)执行速度更快，长时间运行的应用更能从缓冲中受益，大部分的C扩展模块都在PyPy中得到支持,根据官网的基准测试数据，它比CPython实现 的Python要快6倍以上
   由于历史原因，目前pypy中 还保留着GIL，不过正在进行的STM项目试图将PyPy变成没有GIL的Python。
   如果python程序中含有C扩展(非cffi的方式)，JIT的优化效果会大打折扣，甚至比CPython慢（比 Numpy）。
   所以在PyPy中最好用纯Python或使用cffi扩展。 随着STM，Numpy等项目的完善，相信PyPy将会替代CPython。
@@ -17,7 +17,9 @@ https://zhuanlan.zhihu.com/p/661894167
 
 4.RustPython
   由Rust编写的Python解释器，RustPython和CPython类似，但可以选择启用JIT编译器
+
 5.Stackless Python
+
 6.Micro Python
 
 性能可以使用Cython或Nuitka将python代码编译成c，再编译成机器码
