@@ -5,7 +5,9 @@ http代理:fiddler,burpsuite,mitmproxy
 漏洞利用:SQLMap,metasploit,hydra(爆破)
 抓包工具:wireshark,tcpdump
 内网渗透:cobaltstrike,mimikatz(明文抓取window密码)
-shodan zoomeye fofa
+信息收集:shodan zoomeye fofa
+漏洞扫描:goby
+
 """
 
 # 一.信息收集
@@ -155,17 +157,37 @@ nginx畸形解析漏洞:
 3.filetype
 4.双文件上传 # 上传两个文件:第一个正常图片，第二个为木马
 
-#XSS常用的小工具
-Hackbar
-Live HTTP Headers
+"""xss攻击
+xss全称Cross Site Scripting即跨域脚本攻击
+原理：攻击者往web页面插入恶意可执行的网页脚本代码，当用户浏览网站时候，恶意代码被执行
+攻击类型分类:
+  1.反射性XSS(非持久性): xss代码随请求一起发出,服务端响应并返回xss代码,浏览器解析并执行xss代码
+  2.存储型XSS: 攻击脚本永久的存放到目标服务器上(一般攻击点在留言/评论上)
+  3.基于DOM的XSS
+  4.以及其他
+防范措施:
 
-# 免费xss平台(或自己搭建xss利用平台)
+
+XSS常用的小工具：
+Hackbar、Live HTTP Headers
+
+免费xss平台(或自己搭建xss利用平台)：
 xss 盗取cookie后，使用啊D注入工具利用
 xss+beef劫持浏览器
 xss+beef+msf劫持浏览器后，利用浏览器漏洞,msf生成meterpreter
 
-# xss漏洞扫描
+xss漏洞扫描工具:
 wvs,椰树web漏洞扫描,w3af
+
+CSRF跨站请求伪造:
+原理:攻击者通过技术手段骗用户浏览器去访问自己曾经认证过的网站并执行一些请求
+防范措施:
+ 1.表单中添加一个随机数字验证码,强制用户和应用访问
+ 2.检查Referer Head 头
+ 3.请求参数里增加一个随机的token
+ 4.参数加密
+
+"""
 
 # wireshark cain进行嗅探
 # Cobaltstrike

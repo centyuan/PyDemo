@@ -3,6 +3,10 @@
 # author centyuan
 # @time 19-9-7 下午10:24
 
+"""
+二叉树的查找效率为是 logN ,通杀插入新的节点而不必移动全部节点,用树形结构存储索引，能同时兼顾插入和查询性能
+
+"""
 # 满二叉树：树中除了叶子节点，每个节点都有两个子节点
 # 完全二叉树：在满二叉树上，最后一层的叶子节点均在最左边
 # 完美二叉树：在完全二叉树上，树的叶子节点均在最后一层(也就是一个完美的三角形)
@@ -63,7 +67,7 @@ class Node(object):
 
 class Tree(object):
     def __init__(self):
-        self.root = Node('root')
+        self.root = Node("root")
 
     # 添加
     def add(self, item):
@@ -106,7 +110,9 @@ class Tree(object):
             return False
         parent = self.get_parent(item)
         if parent:
-            del_node = parent.left if parent.left.item == item else parent.right  # 待删除节点
+            del_node = (
+                parent.left if parent.left.item == item else parent.right
+            )  # 待删除节点
             if del_node.left is None:
                 if parent.left.item == item:
                     parent.left = del_node.right
@@ -146,5 +152,3 @@ class Tree(object):
                 return True
         else:
             return False
-
-

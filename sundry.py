@@ -274,3 +274,15 @@ https://www.bilibili.com/video/BV13d4y1b7md/?spm_id_from=333.788
              视频: pytorch龙曲良
              书籍: 《深度学习与pytorch》,《python机器学习:基于Pytorch和Scikit-learn》
 """
+
+
+### python安全问题
+"""
+assert:
+  不要使用语句来防止用户不能访问的代码段
+
+xml/pickle解析:
+
+
+
+"""
