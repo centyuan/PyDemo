@@ -22,7 +22,8 @@ show variables like "log_%";
 **1.查看当前连接状态**
 
 ```sql
-show processlist;
+show processlist; # 或者show full processlist 或 select * from information_schema.processlist
+# 查看正在运行的线程以及命令
 ```
 
 **2.数据库连接**
@@ -294,7 +295,7 @@ alter table table_name unique index(filed_name,filed_name)
 create UNIQUE INDEX indexName on table_name(filed_name,filed_name)
 ```
 
-### 三: 数据复制/导入/导出
+###  数据(复制|导入|导出)操作
 
 **1.复制n条记录并创建**
 
@@ -340,7 +341,7 @@ load data local infile "/var/lib/mysql-files/CaseUrl.sql" into table CaseUrl
 set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 ```
 
-### 四:mysql性能优化
+### Mysql性能优化
 
 >四个维度:
 >
@@ -352,71 +353,120 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 >
 >4.sql优化
 
-- 架构:集群读写分离,数据库切分
-- 硬件:高效的磁盘读写性能
-- DB:参数优化(日志不能笑,缓存足够大,连接够用)
+##### 架构
 
-  - my.ini或my.cnf配置文件:
+> 使用集群负载(MariaDB Galera Cluster，Mysql innoDB cluster，Percona XtraDB cluster )，读写分离，数据库切分
 
-    1. sort/join/read/rnd buffer:4M或8M或16M
-    2. tmp/heap table:96M或128M
-    3. innodb_flush_log_at_trx_commit:对redo日志刷盘频率的设定
-       0:缓冲区的redo log会每秒写入到磁盘的日志文件。但每次事务提交不会有任何影响，也就是 log buffer 的刷写操作和事务提交操作没有关系。在这种情况下，MySQL性能最好，但如果 mysqld 进程崩溃，通常会导致最后 1s 的日志丢失。
-       1:每次事务提交时,缓冲区redo log保证一定会被写入到磁盘的日志文件。这也是默认值。这是最安全的配置，但由于每次事务都需要进行磁盘I/O，所以也最慢。
-       2:每次事务提交时,缓冲区redo log异步写入(不保证)到磁盘的日志文件。这时如果 mysqld 进程崩溃，由于日志已经写入到系统缓存，所以并不会丢失数据；在操作系统崩溃的情况下，通常会导致最后 1s 的日志丢失。
-       sync_binlog:binlog刷盘的频率
-    4. (保证主库和主从库的一致性:innodb_flush_log_at_trx_commit和sync_binlog都设置为1)
-    5. interactive_timeout:交互模式下超时时间,五分钟或十分钟
-    6. lock_wait_timeout:表锁锁定时间
-    7. time_zone:使用datetime减少性能消耗
-    8. wait_timeout:程序连接mysql超时时间,五分钟或十分钟
-    9. innodb_buffer_pool_size:缓冲池大小(越大,磁盘I/O减少)2个G左右
-    10. innodb_buffer_pool_instances:配置多个缓冲池实例
-    11. tmp_table_size:临时表的最大大小
-- sql优化
+##### 硬件
 
-  https://www.zhihu.com/question/486105337/answer/2538190061
+>高效的磁盘读写性能
 
-  explain:查看sql的执行计划,检查sql语句定位优化点或开启慢查询定位优化点
-  优化方向:(避免不要的列|分页优化|索引优化|JOIN优化|排序优化|union优化)
+##### DB
 
-  1.  避免不要的列
-  - 避免使用select *
-  - 多用limit
-  - 选择合理的字段类型
-  1.  分页优化(数据量较大)
-  - 延迟关联
-  - 书签方式
-  1.  索引优化
-  - 合理使用索引(一个表索引不超过5个),避免索引失效
-  - 利用覆盖索引
-  - 正确使用联合索引
-  - 避免索引失效情况
-  1.  JOIN优化
-  - join表不宜过多(不超过5个)
-  - 小表驱动大表
-  - 用连接查询代替子查询
-  1.  排序优化
-  - 利用索引排序
-  1.  union优化
-  - 使用UNION ALL(不去重,所有数据)替代UNION(去重)
-
-> **索引失效情况:**
+>参数优化(日志不能笑,缓存足够大,连接够用)
 >
-> (1)联合索引不满足最左匹配原则,联合索引最左边字段必须出现在查询条件中
-> (2)错误使用like,以%开头如 like '%abc',(当like以%结尾索引有效)
-> (3)错误使用or,or两边字段有一个没有创建索引(where id=2 or name="Tom")或两边为范围查询(where id>10 or id<20),导致失效
-> (4)索引列参与运算, 如where id-1=10 或使用了函数 where SUBSTR(id_no,1,3)=100
-> (5)类型隐式转换,where条件上进行了类型转换,比如字段是字符串类型,却填上了数字
-> (6)两列做比较,即使两列都有索引,也会失效 where id>age
-> (7)不等于比较,where name!="Tom" 或 where id<>"11" 有可能不走索引,查询结果集较小货走索引否则不走索引
-> (8)非空判断(is not null / is null / not in / in / exists / not exists/ )
-> 使用where id_no is not null不走索引,is null走索引
-> 使用not exists 不走索引
-> 使用where id not in (2,3)普通索引则失效,主键走索引
-> (9)当mysql估计全表扫描速度比索引速度快的时候不会使用索引(order by就是如果是select *则有大量回表,索引不走索引,走全表扫描到内存去排序)
+>my.ini或my.cnf配置文件
+>```
+>1.sort/join/read/rnd buffer:4M或8M或16M
+>2.tmp/heap table:96M或128M
+>3.innodb_flush_log_at_trx_commit  # 对redo日志刷盘频率的设定
+>	0:缓冲区的redo log会每秒写入到磁盘的日志文件。但每次事务提交不会有任何影响，也就是 log buffer 的刷写操作和事务提交操作没有关系。在这种情况下，MySQL性能最好，但如果 mysqld 进程崩溃，通常会导致最后 1s 的日志丢失
+>	1:每次事务提交时,缓冲区redo log保证一定会被写入到磁盘的日志文件。这也是默认值。这是最安全的配置，但由于每次事务都需要进行磁盘I/O，所以也最慢
+>	2:每次事务提交时,缓冲区redo log异步写入(不保证)到磁盘的日志文件。这时如果 mysqld 进程崩溃，由于日志已经写入到系统缓存，所以并不会丢失数据；在操作系统崩溃的情况下，通常会导致最后 1s 的日志丢失。
+>sync_binlog:binlog刷盘的频率
+>
+>4.innodb_flush_log_at_trx_commit和sync_binlog都设置为1 (保证主库和主从库的一致性)
+>5.interactive_timeout:交互模式下超时时间,五分钟或十分钟
+>6.lock_wait_timeout:表锁锁定时间
+>7.time_zone:使用datetime减少性能消耗
+>8.wait_timeout:程序连接mysql超时时间,五分钟或十分钟
+>9.innodb_buffer_pool_size:缓冲池大小(越大,磁盘I/O减少)2个G左右
+>10.innodb_buffer_pool_instances:配置多个缓冲池实例
+>11.tmp_table_size:临时表的最大大小
+>```
+>
+>
 
-### 五:索引详解
+##### sql语句优化
+
+>[mysql](https://www.zhihu.com/question/486105337/answer/2538190061)
+>
+>**explain:**查看sql的执行计划,检查sql语句定位优化点或开启慢查询定位优化点
+>
+>优化方向:(避免不要的列|分页优化|索引优化|JOIN优化|排序优化|union优化)
+>
+>**优化表结构**
+>
+>```
+>1.尽量使用数字型字段(引擎在处理查询和连接时会逐个比较字符串中每一个字符，而对于数字型而言只需要比较一次就够了)
+>2.尽可能的使用 varchar 代替 char(变长字段存储空间小，可以节省存储空间)
+>3.索引列大量重复数据时，可以把索引删除掉(比如)
+>```
+>
+>**索引优化**
+>
+>```
+>- 合理使用索引(一个表索引不超过5个),避免索引失效
+>- 利用覆盖索引
+>- 正确使用联合索引
+>- 避免索引失效情况
+>```
+>
+>**避免不要的列**
+>
+>```
+>- 避免使用select *
+>- 多用limit
+>- 选择合理的字段类型
+>```
+>
+>**分页优化(数据量较大)**
+>
+>```
+>- 延迟关联
+>- 书签方式
+>```
+>
+>**JOIN优化**
+>
+>```
+>- join表不宜过多(不超过5个)
+>- 小表驱动大表
+>- 用连接查询代替子查询
+>```
+>
+>**排序优化**
+>
+>```
+>利用索引排序
+>```
+>
+>**union优化**
+>
+>```
+>使用UNION ALL(不去重,所有数据)替代UNION(去重)
+>```
+
+##### 索引失效的情况
+
+```
+(1)联合索引不满足最左匹配原则,联合索引最左边字段必须出现在查询条件中
+(2)错误使用like,以%开头如 like '%abc',(当like以%结尾索引有效)
+(3)错误使用or,or两边字段有一个没有创建索引(where id=2 or name="Tom")或两边为范围查询(where id>10 or id<20),导致失效
+(4)索引列参与运算, 如where id-1=10 或使用了函数 where SUBSTR(id_no,1,3)=100
+(5)类型隐式转换,where条件上进行了类型转换,比如字段是字符串类型,却填上了数字
+(6)两列做比较,即使两列都有索引,也会失效 where id>age
+(7)不等于比较,where name!="Tom" 或 where id<>"11" 有可能不走索引,查询结果集较小货走索引否则不走索引
+(8)非空判断(is not null / is null / not in / in / exists / not exists/ )
+使用where id_no is not null不走索引,is null走索引
+使用not exists 不走索引
+使用where id not in (2,3)普通索引则失效,主键走索引
+(9)当mysql估计全表扫描速度比索引速度快的时候不会使用索引(order by就是如果是select *则有大量回表,索引不走索引,走全表扫描到内存去排序)
+```
+
+
+
+### 索引详解
 
 > 操作系统和磁盘:最小单位是块block
 > 操作系统和内存:最小单位是页page
@@ -463,6 +513,8 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 
 #### mysql有哪些索引?那些字段可以建立对应索引
 
+> 任何标准版最多创建16个索引列
+>
 > 普通索引：加快查询
 > 主键索引：聚簇索引,唯一索引unique唯一且不为NULL
 > 复合索引: **多个字段的索引**最多包含16列:where多条件最左原则),可用于包含所有列或第一列,前两列,前三列...等,blob和text也能创建索引, 但是必须指定前面多少位,组合索引查询遵循**最左前缀原则**,能够避免**回表查询**
@@ -476,11 +528,33 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 #### 聚集索引和非聚集索引区别
 
 > **都是B+Tree数据结构**
-> 聚簇索引：就是叶子节点中存储的就是完整的行数据，索引和数据存储在一起
+> 聚簇索引：索引的叶节点就是数据节点，叶子节点中数据域存储数据文件本身，索引和数据存储在一起
 >
-> 非聚簇索引：索引文件和数据文件是分开的，所以查询数据会多一次查询
+> 非聚簇索引：叶节点仍然是索引节点，索引文件和数据文件是分开的，只不过有一个指针指向对应的数据块，所以查询数据会多一次查询
 >
-> 因此聚簇索引的查询速度会快于非聚簇索引的查询速度，在Mysql的存储引擎中，「InnoDB支持聚簇索引，MyISAM不支持聚簇索引，MyISAM支持非聚簇索引
+> 因此聚簇索引的查询速度会快于非聚簇索引的查询速度，在Mysql的存储引擎中，「InnoDB支持聚簇索引，MyISAM支持非聚簇索引
+
+#### InnoDB/MyISAM区别
+
+> MyISAM:不支持事务,支持表级别锁(限制了读/写的性能),拥有较高的插入和查询速度,B+的非聚簇索引,通常用于只读或以读为主的场景.
+> 怎么快速向数据库插入100万条数据?先用MyISAM插入数据,然后修改存储引擎为InnoDB
+> InnoDB:支持事务,支持行/表级别锁,/外键(数据的完整性和一致性更高),采用B+的聚簇索引,通常用于经常更新的场景.
+
+#### InnoDB和MyISAM索引区别
+
+> InnoBD主键索引采用B+的聚簇索引:
+>
+>  每个InnoDB表都有且只有一个特殊的索引，称为聚簇索引 ，用于存储行数据。通常，聚簇索引与主键同义 。
+>
+> 1. 表定义了主键,则pk就是聚集索引
+> 2. 没有定义主键,第一个非空唯一索引列就是聚集索引
+> 3. 否则,InnoDB会创建一个隐藏的row-id作为聚集索引
+>
+> MyISAM索引采用B+的非聚簇索引:
+>
+> ```
+> 不存储全部数据,只存储数据行的地址
+> ```
 
 #### 什么是回表
 
@@ -511,33 +585,15 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 > 2. 关联字段需要建立索引，例如外键字段，student表中的classid,   classes表中的schoolid 等
 > 3. 排序字段可以建立索引
 
-#### InnoDB/MyISAM区别
 
-> MyISAM:不支持事务,支持表级别锁(限制了读/写的性能),拥有较高的插入和查询速度,B+的非聚簇索引,通常用于只读或以读为主的场景.
-> 怎么快速向数据库插入100万条数据?先用MyISAM插入数据,然后修改存储引擎为InnoDB
-> InnoDB:支持事务,支持行/表级别锁,/外键(数据的完整性和一致性更高),采用B+的聚簇索引,通常用于经常更新的场景.
 
-#### InnoDB和MyISAM索引区别
-
-> InnoBD主键索引采用B+的聚簇索引:
->
->     每个InnoDB表都有且只有一个特殊的索引，称为聚簇索引 ，用于存储行数据。通常，聚簇索引与主键同义 。
->
-> 1. 表定义了主键,则pk就是聚集索引
-> 2. 没有定义主键,第一个非空唯一索引列就是聚集索引
-> 3. 否则,InnoDB会创建一个隐藏的row-id作为聚集索引
->
-> MyISAM索引采用B+的非聚簇索引:
->
->     不存储全部数据,只存储数据行的地址
-
-### 七:mysql预编译
+### Mysql预编译
 
 > ****
 > #### Mysql架构
 >
 > ```
-> **连接层**：处理连接/鉴权/安全管理)
+> **连接层**：处理连接/鉴权/安全管理
 > 
 > **服务层**：系统管理/sql接口/缓存/解析/预处理/优化
 > 
@@ -549,10 +605,16 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 > #### sql语句执行流程:
 >
 > ```
-> 客户端请求 ---> 连接器（验证用户身份，给予权限） ---> 查询缓存（存在缓存则直接返回，不存在则执行后续操作） ---> 分析器（对SQL进行词法分析和语法分析操作） ---> 优化器（主要对执行的sql优化选择最优的执行方案方法） ---> 执行器（执行时会先看用户是否有执行权限，有才去使用这个引擎提供的接口） ---> 去引擎层获取数据返回（如果开启查询缓存则会缓存查询结果）
+> 1.客户端发送请求
+> 2.连接器（验证用户身份，给予权限）
+> 3.查询缓存（存在缓存则直接返回，不存在则执行后续操作）
+> 4.分析器（对SQL进行词法分析和语法分析操作）
+> 5.优化器（主要对执行的sql优化选择最优的执行方案方法）
+> 6.执行器（执行时会先看用户是否有执行权限，有才去使用这个引擎提供的接口）
+> 7.去引擎层获取数据返回（如果开启查询缓存则会缓存查询结果）
 > ```
 >
-> sql执行前会进行解析和校验)
+> **SQL语句预编译**
 >
 > **益处**:加快执行速度,防止sql注入
 > **场景**:SQL语句一样,参数不一样,可以对SQL语句预编译
@@ -568,7 +630,7 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 > 1. 不信任用户提交的数据(参数过滤,严格检查参数类型,转义,限制长度)
 > 2. .mysql预编译(参数化查询,变量绑定)
 
-### 七:mysql 事务
+### Mysql 事务
 
 #### ACID?
 
@@ -577,15 +639,20 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 > **持久性(Durability)**:(redo log实现)InnoDB提供了一个缓存Buffer,读取和写入都先在Buffer中(并同时把操作记录到redo log,防止数据丢失)
 > **一致性(Consistency)**:数据处于合法状态(满足预定约束就是合法)
 > 从数据库层面，数据库通过原子性、隔离性、持久性来保证一致性。也就是说ACID四大特性之中，C(一致性)是目的，A(原子性)、I(隔离性)、D(持久性)是手段，是为了保证一致性，数据库提供的手段。数据库必须要实现AID三大特性，才有可能实现一致性。
-> 从应用层面，通过代码判断数据库数据是否有效，然后决定回滚还是提交数据。Innodb如何实现事务的?
-> 以update为例
-> (1).开启事务,Innodb根据接受的update语句,找到数据所在页,并加该页缓存在Buffer pool(change buffer)中
+> 从应用层面，通过代码判断数据库数据是否有效，然后决定回滚还是提交数据。
+>
+> **Innodb如何实现事务的?**
+> 以update为例:
+>
+> ```
+> (1).开启事务,Innodb根据接受的update语句,找到数据所在页,并修改该页缓存在Buffer pool(change buffer)中
 > (2).执行update,修改Buffer pool中数据
 > (3).记录 undo log日志(便于事务回滚和mvcc)并写入Log Buffer中并关联redo log(可刷盘)
 > (4).记录 redo log(prepare状态)日志(便于断电恢复数据)并写入Log Buffer中(可刷盘)
 > (5).记录bin log(数据表结构变更日志:用于主从复制和数据库恢复)
 > (6-1).事务提交,redo log(改为commit状态),可触发redo log刷盘机制
 > (6-2).事务回滚,则利用undo log日志进行回滚
+> ```
 >
 > ```
 > MVCC多版本控制:实现MVCC时用到了一致性视图，用于支持读提交和可重复读的实现
@@ -593,7 +660,6 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 > 在Mysql的MVCC中规定每一行数据都有多个不同的版本，一个事务更新操作完后就生成一个新的版本，并不是对全部数据的全量备份，因为全量备份的代价太大了
 > ```
 >
-> 
 
 #### 事务隔离级别
 
@@ -612,6 +678,7 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 >读提交 （READ COMMITTED）
 >可重复读 （REPEATABLE READ）
 >串行化 （SERIALIZABLE）
+>InnoDB默认是可重复读
 >```
 >
 >| 隔离级别 | 脏读   | 不可重复读 | 幻读   |
@@ -638,20 +705,59 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 
 
 
-### 八:mysql有几种日志
+### Mysql有几种日志
 
-> bin log(记录sql),redo log(),undo log,slog log,一般日志
+> bin log(二进制日志记录sql)
+> ```
+> 记录了数据库所有执行的DDL和DML语句（除了数据查询语句select、show等），以事件形式记录并保存在二进制文件中
+> ```
+>
+> **redo log(重做日志): InnoDB特有**
+>
+> ```
+> 记录了对于InnoDB存储引擎的事务日志,防止数据丢失，以便数据持久化
+> ```
+>
+> **undo log(回滚日志): InnoDB特有**
+>
+> ```
+> 事务执行失败或调用了rollback,利用该日志进行回滚
+> ```
+>
+>
+> slow uery log(慢查询日志)
+>
+> ```
+> 记录时间内超过long_query_time这个时间的查询语句,用来定位查询语句查询效率，以便进行优化
+> ```
+>
+> general log(一般查询日志)
+> ```
+> 一般查询日志记录了所有对MySQL数据库请求的信息，无论请求是否正确执行
+> ```
+>
+> error log(错误日志)
+> ```
+> 错误日志文件对MySQL的启动、运行、关闭过程进行了记录，能帮助定位MySQL问题
+> ```
 
 #### mysql日志是否实时写入磁盘?(log buffer)
 
-> bin log:
+> **bin log**
+>
+> ```
 > sync_binlog=0:每次提交事务后不会马上写入到磁盘,先写到page cache,由操作系统决定写入什么时候写入磁盘(有丢失事务日志的风险)
 > sync_binlog=1:每次提交事务都会执行fsync写入磁盘(强一致性,性能较低)
 > sync_binlog=n:每次提交事务,先写到page cache,积累n个事务才fsync到磁盘(有丢失n个事务日志的风险)
-> redo log()和undo log:
+> ```
+>
+> **redo log()和undo log**
+>
+> ```
 > innodb_flush_log_at_trx_commit=0:每秒(log buffer中提交的事务)写入磁盘,系统并调用fsync写入磁盘(可能丢失一秒的数据)
 > innodb_flush_log_at_trx_commit=1:有事务提交立即调用fsync写入磁盘(不会丢失,性能差)
 > innodb_flush_log_at_trx_commit=2:有事务提交都写给操作系统的page cache,由操作系统决定什么时候调用fsync写入磁盘(一系列丢失)
+> ```
 
 #### binlog有几种录入格式?
 
@@ -670,112 +776,55 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 > 2.写入bing log
 > 3.提交事务,redo log(改为commit)
 
-### 九:锁机制
+### 锁机制
 
 >**锁种类**
 >
 >```
 >1.锁粒度划分
->  表锁:粒度最大的锁，开销小，加锁快，不会出现死锁，粒度大导致并发性低()
->  页锁：介于行锁和表锁之间的一种锁,页锁是在BDB中支持的一种锁机制，也很少没人提及和使用
->  行锁: 粒度最小，加锁开销性能大，加锁慢，并且会出现死锁，但是行锁的锁冲突的几率低，并发性能高(行锁是InnoDB默认的支持的锁机制，MyISAM不支持行锁)
->  
+>表锁:粒度最大的锁，开销小，加锁快，不会出现死锁，粒度大导致并发性低()
+>页锁：介于行锁和表锁之间的一种锁,页锁是在BDB中支持的一种锁机制，也很少没人提及和使用
+>行锁: 粒度最小，加锁开销性能大，加锁慢，并且会出现死锁，但是行锁的锁冲突的几率低，并发性能高(行锁是InnoDB默认的支持的锁机制，MyISAM不支持行锁)
+>
 >2.使用方式划分
->  共享锁、排它锁
+>共享锁、排它锁
 >3.思路划分
->  乐观锁、悲观锁
+>乐观锁、悲观锁
 >
 >```
 >
 >**死锁**
 >
+>指两个或以上的进程，因争夺资源而互相等待的现象
+>
+>关键在于:两个会以上的Session加锁的顺序不一致
+>
+>解决关键是: 让不同的Session加锁有序
+>
+>排查死锁流程
+>
+>```
+>1.查看死锁日志
+>show engine innodb status\G  # 查看当前事务内锁的状态
+>2.找出死锁sql
+>3.分析sql加锁情况
+>4.模拟死锁案发
+>5.分析死锁日志
+>6.分析死锁结果
+>```
+>
 >死锁在InnoDB中才会出现死锁
 >
->>1.对表有高并发时，尽量对该表执行串行化
->>
->>2.设置参数,innodb_lock_wait_timeout 超时时间
->>
->>3.innodb_deadlock_detect打开,当发现死锁时，自动回滚某个事务
+>```
+>1.对表有高并发时，尽量对该表执行串行化
+>2.调整SQL 执行顺序， 避免 update/delete 长时间持有锁的SQL在事务前面
+>3.设置参数,innodb_lock_wait_timeout 超时时间
+>4.innodb_deadlock_detect打开,当发现死锁时，自动回滚某个事务
+>```
 
-### 十:mysql主从方案
 
->Mysql主从复制中有三个线程:Master(binlog dump thread) Slave(I/O thread,SQL thread)
->使用binlog+position偏移量进行增量同步
->
->**1.同步过程**
->
->    1. Master所有变更都记录到binlog中去(MySQL Server层的实现)
->    1. 主节点binlog dump线程,当binlog有变动时,binlog dump线程读取内容并发送给从节点
->    1. 从节点I/O线程接收binlog,并写入到relay log(中继日志)中
->    1. 从节点SQL线程读取relay log并对数据进行重放
->
->**2.同步策略**
->
->- 同步策略:Master会等待所有的Slave回应后才提交(这个策略严重影响性能)
->- 半同步策略:Master至少等待一个Slave回应后才提交
->- 异步策略:Master不会等待Slave回应就可以提交(默认)
->- 延迟策略:Slave落后Master指定的时间
 
-mysql如何保证主从数据的一致性的？
-
-分片中间件:myCat/shardingSphere
-
-**一主多从:缓解读压力**
-
-1. 主服务配置mysql.cnf:
-
-   > #主服务还需要创建对应权限的用户用于数据同步
-   >
-   > log-bin=mysql-bin   # 表示启用二进制文件-文件名称
-   > server-id=3307      # 表示server编号
-   >
-2. 从服务执行sql命令
-
-   > \# 1.配置主服务
-   >
-   > change master to master_host="192.168.1.2",master_port=3306,master_user="copy",master_password="123456",master_log_file="mysql-bin.00001",master_log_pos=154;
-   >
-   > \# 2.开启主从同步
-   >
-   > start slave
-   >
-   > \# 3.查看是否成功
-   >
-   > show slave status \G;
-   >
-
-**双主双从:缓解写压力**
-
-1. 主1配置
-
-   > log-bin=mysql-bin
-   >
-   > server-id=3301
-   >
-   > auto_increment_increment=2 # 主键递增步长
-   >
-   > auto_increment_offset=1   # 从1开始
-   >
-   > log-slave-updates      # 是否记录binglog
-   >
-   > sync-binlog=1        # 几次事务记录binlog
-   >
-2. 主2配置
-
-   > log-bin=mysql-bin
-   >
-   > server-id=3302
-   >
-   > auto_increment_increment=2 # 主键递增步长
-   >
-   > auto_increment_offset=2   # 从1开始
-   >
-   > log-slave-updates      # 是否记录binglog
-   >
-   > sync-binlog=1        # 几次事务记录binlog
-   >
-
-### 十一:主键方案(自增id/uuid/雪花算法)
+### 主键方案(自增id/uuid/雪花算法)
 
 > https://www.zhihu.com/question/397289720
 > https://juejin.cn/post/7153273187366043661
@@ -834,7 +883,7 @@ mysql如何保证主从数据的一致性的？
 > 12bit: 自增值
 > ```
 
-### 十二:性能极限
+### 性能极限
 
 **mysql性能极限**
 
@@ -860,7 +909,106 @@ mysql如何保证主从数据的一致性的？
 > 单表最大字段数:250-1600取决于字段类型
 > 单表最大索引数:不限
 
-### 十三 额外问题及思路
+### 主从方案
+
+>Mysql主从复制中有三个线程:Master(binlog dump thread) Slave(I/O thread,SQL thread)
+>使用binlog+position偏移量进行增量同步
+>
+>**同步过程**
+>
+>   1. Master所有变更都记录到binlog中去(MySQL Server层的实现)
+>   1. 主节点binlog dump线程,当binlog有变动时,binlog dump线程读取内容并发送给从节点
+>   1. 从节点I/O线程接收binlog,并写入到relay log(中继日志)中
+>   1. 从节点SQL线程读取relay log并对数据进行重放
+>
+>**同步策略**
+>
+>- 同步策略:Master会等待所有的Slave回应后才提交(这个策略严重影响性能)
+>- 半同步策略:Master至少等待一个Slave回应后才提交
+>- 异步策略:Master不会等待Slave回应就可以提交(默认)
+>- 延迟策略:Slave落后Master指定的时间
+>
+>**同步延迟原因**
+>
+>```
+>从服务器的里面读取binlog的线程仅有一个，从服务器sql执行时间过长或sql对表上锁了，主服务器的SQL大量积压，未被同步到从服务器里
+>```
+>
+>**同步延迟解决**
+>
+>```
+>1.选择更好的从服务器，或从服务器只做备份
+>2.sync_binlog=1，innodb_flush_log_at_trx_commit = 1 都设置为1
+>3.
+>```
+>
+>
+
+mysql如何保证主从数据的一致性的？
+
+分片中间件:myCat/shardingSphere
+
+**一主多从:缓解读压力**
+
+1. 主服务配置mysql.cnf:
+
+   > #主服务还需要创建对应权限的用户用于数据同步
+   >
+   > log-bin=mysql-bin   # 表示启用二进制文件-文件名称
+   > server-id=3307      # 表示server编号
+
+2. 从服务执行sql命令
+
+   > \# 1.配置主服务
+   >
+   > change master to master_host="192.168.1.2",master_port=3306,master_user="copy",master_password="123456",master_log_file="mysql-bin.00001",master_log_pos=154;
+   >
+   > \# 2.开启主从同步
+   >
+   > start slave
+   >
+   > \# 3.查看是否成功
+   >
+   > show slave status \G;
+
+**双主双从:缓解写压力**
+
+1. 主1配置
+
+   > log-bin=mysql-bin
+   >
+   > server-id=3301
+   >
+   > auto_increment_increment=2 # 主键递增步长
+   >
+   > auto_increment_offset=1   # 从1开始
+   >
+   > log-slave-updates      # 是否记录binglog
+   >
+   > sync-binlog=1        # 几次事务记录binlog
+
+2. 主2配置
+
+   > log-bin=mysql-bin
+   >
+   > server-id=3302
+   >
+   > auto_increment_increment=2 # 主键递增步长
+   >
+   > auto_increment_offset=2   # 从1开始
+   >
+   > log-slave-updates      # 是否记录binglog
+   >
+   > sync-binlog=1        # 几次事务记录binlog
+
+### 集群
+
+>raft协议:
+>MariaDB Galera Cluster
+>Mysql innoDB cluster 
+>Percona XtraDB cluster 
+
+### 额外问题及思路
 
 **"Lost connection to MySQL server during query" ?**
 

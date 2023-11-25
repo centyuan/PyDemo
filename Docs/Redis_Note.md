@@ -34,12 +34,10 @@ tags:
 > 事件驱动机制:
 >  奶茶做好了并不知道是谁的，就需要每个问下，这个就是select模型,最多只能监听1024个socket,poll解决了这个限制
 >  奶茶做好了也不知道是谁的,就大声喊下“某某的奶茶好了",这就是多路复用中的epoll模型
+>  ```
 >  
->  
-> 
-> ```
->
-> 
+
+
 
 #### 1.基础命令
 
@@ -66,6 +64,10 @@ config set maxmemory 100mb:动态命令配置redis最大内存 config get maxmem
 定时(每个过期key都需创建一个定时器)/惰性(访问key,判定key是否过期)/定期
 ```
 
+
+
+![Redis数据类型](https://pic4.zhimg.com/v2-83d9146cac1b288a30fbb841534b6e73_r.jpg)
+
 #### 2.五大基本数据类型
 
 > 在Redis有个核心对象**redisObject**,用来表示String,Hash,List,Set,ZSet 
@@ -81,8 +83,8 @@ config set maxmemory 100mb:动态命令配置redis最大内存 config get maxmem
 > int, raw,embstr
 > 1.如果是整数值就会使用int的存储方式
 > 2.使用【简单动态字符串SDS】(Simple dynamic string):
->  如果是字符串且长度大于32个字节,,encoding设置为raw
->  如果是字符串且长度小于等于32个字节,encoding设置为embstr
+> 如果是字符串且长度大于32个字节,,encoding设置为raw
+> 如果是字符串且长度小于等于32个字节,encoding设置为embstr
 > ```
 >
 > **SDS与c语言字符串对比**
@@ -111,11 +113,13 @@ config set maxmemory 100mb:动态命令配置redis最大内存 config get maxmem
 >
 > 底层实现：
 >
->   Redis3.2之前:
+> Redis3.2之前:
 >
 >   - 列表中元素较少和长度较小时: ziplist(压缩链表)
 >
 >    - 列表中元素角度和长度较大时: linkedlist(双向链表)
+>
+> **在 Redis 7.0 中，压缩列表数据结构已经废弃了，交由 listpack 数据结构来实现了。**
 >
 >   Redis3.2之后：quicklist
 >
@@ -243,7 +247,7 @@ config set maxmemory 100mb:动态命令配置redis最大内存 config get maxmem
 >  2. 所有元素长度小于64字节
 > ```
 >
-> ###### skiplist 
+> ###### skiplist
 >
 > ```
 > 跳跃表是一种有序的数据结构,每个节点维持多个指向其他节点的指针，从而能快速访问
@@ -267,10 +271,10 @@ Lists（列表）
 Sets（集合）
 Sorted sets（有序集合）
 Hashes（哈希）
-Bit arrays (or simply bitmaps)（位图）
-HyperLogLogs 用来做基数统计
-geospatial 用来经纬度
-Streams
+BitMap（2.2 版新增）：二值状态统计的场景，比如签到、判断用户登陆状态、连续签到用户总数等；
+HyperLogLog（2.8 版新增）：海量数据基数统计的场景，比如百万级网页 UV 计数等；
+GEO（3.2 版新增）：存储地理位置信息的场景，比如滴滴叫车；
+Stream（5.0 版新增）：消息队列，相比于基于 List 类型实现的消息队列，有这两个特有的特性：自动生成全局唯一消息ID，支持以消费组形式消费数据
 ```
 
 
@@ -426,7 +430,7 @@ getbit <key> offset
 
 #### 4.Redis事务
 
->Redis事务(transaction)可以理解为一个打包的批量执行脚本，多个命令缓存在服务端,没有像Mysql关系型数据库事务隔离级别的概念，不能保证原子性操作,中间某条指令的失败不会导致前面已做指令的回滚,也不会造成后续的指令不做。
+>Redis事务(transaction)可以理解为一个打包的批量执行脚本，多个命令缓存在服务端,没有像Mysql关系型数据库事务隔离级别的概念，**不能保证原子性操作,中间某条指令的失败不会导致前面已做指令的回滚,也不会造成后续的指令不做**
 >
 >**特点**:
 >
@@ -468,13 +472,11 @@ getbit <key> offset
 
 #### 5.管道Pipeline
 
->Pipeline是客户端行为,Pipeline打包的命令会被立即执行,事务是服务端行为，事务会被缓存，一起执行
+>管道技术(Pipeline)是客户端提供的一种批处理技术，用于一次处理多个 Redis 命令，从而提高整个交互的性能
+>
+>事务：是服务端行为，事务会被缓存，一起执行
 
->redis是一种基于客户端-服务端模型以及请求/响应协议的TCP服务
->
->1.默认在执行每次请求都会创建（连接池申请连接）和断开（归还连接池）一次连接
->
->2.服务器进程会系统调用read()读取消息,处理完成后调用write把返回结果写入,这一过程涉及用户态到内核太的切换，管道使read/write一次处理多个命令
+>redis是基于客户端-服务端模型以及请求/响应协议的TCP服务,服务器进程会系统调用read()读取消息,处理完成后调用write把返回结果写入,这一过程涉及用户态到内核太的切换，管道使read/write一次处理多个命令,可以解决多个命令执行时的网络等待
 >
 >通常一个请求会遵循以下步骤:
 >
@@ -644,14 +646,14 @@ dbfilename dump.rdb
 
 #### 8.淘汰策略
 
->Redis提供了**6种的淘汰策略**，其中默认的是`noeviction`，这6中淘汰策略如下：
+>Redis提供了**6种的淘汰策略**，其中默认的是`no-eviction`，这6中淘汰策略如下：
 >
->1. `noeviction`(**默认策略**)：不删除策略,若是内存的大小达到阀值的时候，所有申请内存的指令都会报错。
+>1. `no-eviction`(**默认策略**)：不删除策略,若是内存的大小达到阀值的时候，所有申请内存的指令都会报错。
 >2. `allkeys-lru`：在所有key中优先删除最近最少使用(less recently used ,LRU) 的 key。
 >3. `volatile-lru`：所有**设置了过期时间的key使用LRU算法**进行淘汰。
 >4. `allkeys-random`：所有的key使用**随机淘汰**的方式进行淘汰。
 >5. `volatile-random`：所有**设置了过期时间的key使用随机淘汰**的方式进行淘汰。
->6. `volatile-ttl`：在设置了超时时间（expire ）的key中优先删除剩余时间(time to live,TTL) 短的key。。
+>6. `volatile-ttl`：在设置了过期时间（expire ）的key中优先删除剩余时间(time to live,TTL) 短的key。。
 
 
 
@@ -766,6 +768,24 @@ dbfilename dump.rdb
 >1.对数据库中的空值进行缓存,设置较短的过期时间(维护较简单，但是效果不好)
 >
 >2.使用布隆过滤器(维护复杂，效果很好)
+>
+>**布隆过滤器**
+>
+>```
+>是一个很长的二进制向量和一系列随机映射函数，用于检索一个元素是否在一个集合中
+>优点：
+>	空间效率和查询时间都比一般的算法要好的多，增加和查询的时间复杂度为O(N)N为hash函数个数
+>缺点：
+>	是有一定的误识别率和删除困难
+>```
+>
+>Redis中的布隆过滤器底层是**一个大型位数组（二进制数组）+多个无偏hash函数**
+>
+>```
+>多个hash函数计算一个值的不同hash，并产生多个索引值,将数组上对应的索引位置置为1
+>```
+>
+>
 
 ##### 2.缓存击穿
 
@@ -829,3 +849,7 @@ dbfilename dump.rdb
 >
 >io-thread 线程数
 >```
+
+
+
+参考[Redis常见面试题](https://cloud.tencent.com/developer/article/2315477)

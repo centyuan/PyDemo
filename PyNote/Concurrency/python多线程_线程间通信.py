@@ -40,8 +40,10 @@ def run_thread(n):
             lock.release()
 
 
-if __name__ == '__main__':
-    t1, t2 = threading.Thread(target=run_thread, args=(10,)), threading.Thread(run_thread, args=(20,))
+if __name__ == "__main__":
+    t1, t2 = threading.Thread(target=run_thread, args=(10,)), threading.Thread(
+        run_thread, args=(20,)
+    )
     t1.start()
     t2.start()
     t1.join()
