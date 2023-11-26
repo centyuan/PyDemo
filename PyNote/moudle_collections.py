@@ -16,13 +16,12 @@ UserString：
 # 1.namedtuple命名元组
 from collections import namedtuple
 
-point = namedtuple("Points","x", "y")
-p1 = point(2,2)  # p1类型是point也是tuple类型
+point = namedtuple("Points", "x y")
+p1 = point(2, 2)  # p1类型是point也是tuple类型
 # 赋值
-p1._make([5,5])
+p1._make([5, 5])
 # 改值
 p1._replace(x=10)
 
-# deque双端队列 
+# deque双端队列
 from collections import deque
-

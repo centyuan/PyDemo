@@ -5,7 +5,7 @@
 
 
 class Solution:
-    # 1.暴力法
+    # 1.暴力法 时间复杂度为 n平方
     def twoSum(self, nums, target):
         for i in range(len(nums)):
             for j in range(i + 1, len(nums)):
@@ -13,19 +13,18 @@ class Solution:
                     return [i, j]
         return []
 
-    # 2.hash表
+    # 2.hash表 时间复杂度 O(n)到 O(1)
     def twoSum1(self, nums, target):
-        hash_table = dict((value, index) for index, value in enumerate(nums))
-        print(hash_table)
-        for value in hash_table.keys():
-            print("value-target",value,target)
-            if target - value in hash_table and target-value!=value:
-                return hash_table[value], hash_table[target - value]
+        hashtable = dict()
+        for i, num in enumerate(nums):
+            if target - num in hashtable:
+                return [hashtable[target - num], i]
+            hashtable[nums[i]] = i
         return []
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     solution = Solution()
-    nums =[3,3]
+    nums = [3, 3]
     target = 6
     print(solution.twoSum1(nums, target))

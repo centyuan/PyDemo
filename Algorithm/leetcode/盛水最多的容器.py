@@ -5,7 +5,14 @@
 """
 # 1.暴力解法
 
-# 2.双指针
+"""
+2.双指针,最开始左右指针指向数组的左右两端
+最开始:min(left,right)*(right-left)
+第二步:移动较小的指针，如果相同，移动任意一个
+第三步:直到两个指针重合
+为什么
+双指针代表的是 可以作为容器边界的所有位置的范围
+"""
 from typing import List
 
 
@@ -14,7 +21,7 @@ class Solution:
         area, l, r = 0, 0, len(height) - 1
 
         while l < r:
-            ans = max(height[l], height[r]) * (r - l)
+            ans = min(height[l], height[r]) * (r - l)
             area = max(ans, area)
             if height[l] <= height[r]:
                 l += 1
