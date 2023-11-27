@@ -491,30 +491,23 @@ getbit <key> offset
 #### 6.配置说明
 
 ```
-# 1.开启远程访问
-注释bind 127.0.0.1
-关闭保护模式:protected-mode no
-# 2.tcp-backlog未完成三次握手队列+已完成三次握手队列(高并发提升客户端连接,改成更大的值)
-tcp-backlog 511 
-# 3.连接超时配置 0为永不超时,秒为单位
-timeout 0
-# 4.tcp-keepalive
-# 300秒执行一次心跳检测,来决定是否释放连接
-tcp-keepalive 300
-# 5.设置密码
-requirepass 123456
+**redis.conf**
+# 开启远程访问
+	注释bind 127.0.0.1
+	关闭保护模式:protected-mode no
+tcp-backlog 511     # tcp-backlog未完成三次握手队列+已完成三次握手队列(高并发提升客户端连接,改成更大的值)
+timeout 0           # 连接超时配置 0为永不超时,秒为单位
+tcp-keepalive 300   # 300秒执行一次心跳检测,来决定是否释放连接
+requirepass 123456  # 设置密码
 conig set requirepass 123456   # 命令设置
-# 6.设置客户端最大连接数
-maxclients 10000
-# 7.后台启动
-修改redis.conf:daemonize yes
+maxclients 10000    # 设置客户端最大连接数
+daemonize yes  # 设置后台启动
+slave-priority 100   # 哨兵模式配置优先级 值越小优先级越高
+maxmemory 3G         # 置内存大小一般为3G
+dbfilename dump.rdb  # 配置RDB持久化文件名
+rdbcompression yes   # 指定存储至本地数据库时是否压缩数据
+
 #多实例关闭,指定端口关闭:redis-cli -p 6379 shutdown
-# 8.哨兵模式配置优先级 值越小优先级越高
-slave-priority 100
-# 9.设置内存大小
-maxmemory 3G   # 一般为3G
-# 10.配置RDB持久化文件名
-dbfilename dump.rdb
 ```
 
 #### 7.Redis持久化方案
@@ -675,11 +668,12 @@ dbfilename dump.rdb
 >
 >3.Cluster
 
-##### 1.主从(一主二从,薪火相传,反客为主)
+##### 1.主从
 
->从服务挂了,重启之后变成master需要手动slaveof加入,然后会同步主服务器数据,主服务挂了,重启不影响主从之间关系
->
->从服务下还可以设置从服务,手动:slaveof no one主服务挂了,从服务变为主服务:
+>一主二从,薪火相传,反客为主
+>	master： read/wirte
+>	slave:    only read 
+>一般是读写分离,master负责write，slave负责read，slave要变成master需要手动slaveof加入,master挂了重启不影响主从之间关系
 >
 >**配置流程:**
 >
@@ -699,16 +693,23 @@ dbfilename dump.rdb
 >
 >**主从同步流程:**
 >
->1.第一次从服务连上主服务器后,向主服务器发送数据同步请求
->2.主服务器数据持久化到RDB文件,将RDB文件发送到从服务器进行同步
->3.每次主服务器写操作后,主动将数据同步到从服务器
+>```
+>1.slave启动后向master发送SYNC命令,master收到请求后,使用bgsave保存快照(RDB持久化),期间执行的些命令会被缓存起来
+>2.master将快照发给slave,并且继续缓存期间的写命令
+>3.slave收到快照后就会加载到内存中
+>4.最后master将缓存的命令同步给slave       
+>```
 
-##### 2.哨兵模式(基于主从模式,增加了哨兵来监控与自动处理故障)
 
+
+##### 2.哨兵模式
+
+>基于主从模式,增加了哨兵来监控与自动处理故障
+>
 >哨兵模式有以下的优点（功能点）：
 >
 >1. **监控**：监控master和slave是否正常运行，以及哨兵之间也会相互监控
->2. **自动故障恢复**：当master出现故障的时候，会自动选举一个slave作为master顶上去
+>2. **自动故障恢复**：当master出现故障的时候，会自动选举一个slave作为master顶上去,选举算法**Raft算法**
 >
 >**配置流程:**
 >
@@ -724,9 +725,24 @@ dbfilename dump.rdb
 >3.选择runid最小的slave从服务(Redis实例启动后随机生成一个40位的runid)
 >```
 >
+>当哨兵启动后，会与master建立一条连接，用于订阅master的`_sentinel_:hello`频道,该频道用于获取监控该master的其它哨兵的信息。并且还会建立一条定时向master发送INFO命令获取master信息的连接
+>
+>**当哨兵与master建立连接后，定期会向（10秒一次）master和slave发送INFO命令，若是master被标记为主观下线，频率就会变为1秒一次**
+>
 >
 
-##### 3.Cluster集群配置(16384个插槽,写入数据,计算key的插槽分配到对应主服务所在的插槽)
+##### 3.Cluster集群配置
+
+>集群模式实现了数据的分布式存储和数据的分片,每个节点存储不同内容
+>
+>**Redis Cluster:**
+>
+>```
+>**多主多从，去中心化**：从节点作为备用，复制主节点，不做读写操作
+>**不支持处理多个key**：因为数据分散在多个节点，在数据量大高并发的情况下会影响性能
+>**支持动态扩容节点**：算是Rerdis Cluster最大的优点之一
+>**节点之间相互通信，相互选举，不再依赖sentinel**：准确来说是主节点之间相互“监督”，保证及时故障转移
+>```
 
 >```
 ># 集群实现扩容,集群不支持多键操作
@@ -736,18 +752,44 @@ dbfilename dump.rdb
 >cluster-node-timeout 15000            # 设置节点失联时间单位为毫秒,超过该时间,集群自动进行主从切换
 >
 >2.启动每个Redis实例 redis-server /myredis/redis.conf,确保nodes-xxxx.conf等文件都生成
+>
 >3.在redis src下执行依赖ruby环境,实现redis实例合成集群
 ># 1.表示一主一从
->redis-cli --cluster create --cluster-replicas  1 ip:port ip2:port2
+>	redis-cli --cluster create --cluster-replicas  1 ip:port ip2:port2
 ># 集群连接-c
->redis-cli -c -p 6379
+>	redis-cli -c -p 6379
 ># 查看集群状态
->cluster nodes
+>	cluster nodes
 ># yes为某一段插槽的主从挂了,整个集群都挂掉.no为某一段插槽主从挂了,该插槽数据不能使用
->cluster-require-full-coverage yes
+>	cluster-require-full-coverage yes
 >```
 >
 >更多参考:[Redis主从复制、哨兵、Cluster三种模式](https://zhuanlan.zhihu.com/p/194143258)
+>
+>**哈希槽**
+>
+>````
+>一个Redis Cluster包含（0-16384)各哈希槽
+>3个节点:A节点(0-5499),B节点(5500-10999),C节点(11000-16383)
+>计算方式: slot=CRC16（key）/16384
+>````
+>
+>**集群中执行命令流程**
+>
+>```
+>1.客户端向集群节点发送数据命令
+>2.计算键key属于那个槽slot
+>3.槽在当前节点直接执行命令
+>  槽不在当前节点:节点向客户端返回Redirected(MOVED命令),指引客户端转向至正确的节点,并再次发送要执行的命令
+>```
+>
+>
+>
+>**Redis Cluster是如何将数据分片的?** 
+>
+>
+>
+>
 
 #### 11.三大缓存问题
 
