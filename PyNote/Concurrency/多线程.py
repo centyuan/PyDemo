@@ -1,17 +1,12 @@
 """
-
-1.常用的多线程模块
+多线程实现方式：
+thread:提供了低级别的、原始的线程以及一个简单的锁。
 _thread:python3(python2为thread)
-threading 推荐使用
-thread提供了低级别的、原始的线程以及一个简单的锁。_thread有的，threading都有，
+threading: 推荐使用,_thread有的，threading都有
+ThreadPoolExecutor: 实现线程池
 
-2.可以使用 ThreadPoolExecutor 来实现线程池
 从Python3.2开始，标准库为我们提供了concurrent.futures模块，它提供了ThreadPoolExecutor和ProcessPoolExecutor两个类，
 实现了对threading和multiprocessing的进一步抽象（这里主要关注线程池），不仅可以帮我们自动调度线程
-
-主进程在子进程未结束时退出,linux内核会将子进程的父进程ID改为1,也就是init进程。
-主线程退出后子线程状态依赖于所在的进程,进程没有退出则子线程正常执行,进程退出则所有线程都会退出。
-
 """
 
 import threading
@@ -19,8 +14,7 @@ import _thread
 from concurrent.futures import ThreadPoolExecutor
 import time
 
-# 一.threading
-# 方式1._thread.start
+# _thread
 """
 try:
    _thread.start_new_thread( print_func, ("Thread-1", 2, ) )
@@ -28,7 +22,8 @@ try:
 except:
    print ("Error: 无法启动线程")
 """
-# 方式2 threading.Thread 建议采用
+
+# threading.Thread
 """
 threading.currentThread() 返回当前线程变量
 threading.enumerate() 返回当前存在的所有线程对象的列表
@@ -42,7 +37,7 @@ join()     # 等待至线程中止,对于需要长时间运行的线程或需要
 isAlive() 返回线程是否活动的
 getName()返回线程名
 setName()设置线程名
-"""
+
 
 
 class MyThread(threading.Thread):
@@ -53,9 +48,9 @@ class MyThread(threading.Thread):
         self.counter = counter
 
     def run(self):
-        print('开始线程(类实现):' + self.name)
+        print("开始线程(类实现):" + self.name)
         fuck(self.name, self.counter, 10)
-        print('退出线程(类实现):' + self.name)
+        print("退出线程(类实现):" + self.name)
 
 
 def fuck(thread_name, delay, counter):
@@ -66,9 +61,9 @@ def fuck(thread_name, delay, counter):
 
 
 def all_run():
-    thread_1 = MyThread(1, 'thread_1', 1)
-    thread_2 = MyThread(2, 'thread_2', 2)
-    thread_3 = threading.Thread(target=fuck, args=('线程函数实现', 2, 4))
+    thread_1 = MyThread(1, "thread_1", 1)
+    thread_2 = MyThread(2, "thread_2", 2)
+    thread_3 = threading.Thread(target=fuck, args=("线程函数实现", 2, 4))
     print("开始主线程A:")
 
     thread_1.start()
@@ -82,28 +77,19 @@ def all_run():
     print("退出主线程A")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # all_run()
     pool = ThreadPoolExecutor(20)  # 创建20个的线程池
     for i in range(1, 5):
         # 提交执行函数到线程池，立即返回，不阻塞
         # submit参数是生成器对象,
-        task1 = pool.submit(fuck('线程池' + str(i), 2, 3))
+        task1 = pool.submit(fuck("线程池" + str(i), 2, 3))
+
 
 """
-task.done()         # 定某个任务是否完成
-task.cancel()       # 用于取消某个任务,该任务没有放入线程池中才能取消成功
-task.result()       # result方法可以获取task的执行结果 
 
-as_completed()      # 一次性获取所有结果
-all_task = [executor.submit(get_html, (url)) for url in urls]
-for future in as_completed(all_task):
-    data = future.result()
-    print("in main: get page {}s success".format(data))
-    
-"""
 
-# 二.线程池
+# 线程池
 """
 四种线程池实现方式
 1.from multiprocessing.dummy import Pool as ThreadPool  # 线程池
@@ -144,18 +130,18 @@ def queue_pool():
     queue.join()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     queue_pool()
 
     # setDaemon()方法。主线程A中，创建了子线程B，并且在主线程A中调用了B.setDaemon(),
     # 这个的意思是，把主线程A设置为守护线程，这时候，要是主线程A执行结束了，
     # 就不管子线程B是否完成,一并和主线程A退出.这就是setDaemon方法的含义
-    """  
-1.thread.join
-使用join函数，主线程将被阻塞，一直等待被使用了join方法的线程运行完成(可以设置超时join(5) )
+"""  
+1.thread.join：
+使用join函数，主线程将被阻塞，一直等待被使用了join方法的线程运行完成(可以设置超时时间join(5) )
 
 
-2.thread.setDaemon
+2.thread.setDaemon：
 Python多线程的默认情况（设置线程setDaemon(False)），主线程执行完自己的任务以后，就退出了，此时子线程会继续执行自己的任务，直到自己的任务结束
 比如在启动线程前设置thread.setDaemon(True)，就是设置该线程为守护线程，
 表示该线程是不重要的,进程退出时不需要等待这个线程执行完成。
@@ -167,10 +153,16 @@ setDaemon() ： 设置此线程是否被主线程守护回收。默认False不�
 example:
 usage:开启守护线程，同时给join设置超时
 result:超时未处理完毕的子线程将被直接终止
-    """
+"""
 
 # 三:concurrent.futures.ThreadPoolExecutor
-from concurrent.futures import ThreadPoolExecutor, as_completed, wait, ALL_COMPLETED, FIRST_COMPLETED
+from concurrent.futures import (
+    ThreadPoolExecutor,
+    as_completed,
+    wait,
+    ALL_COMPLETED,
+    FIRST_COMPLETED,
+)
 import threading
 import time
 
@@ -192,7 +184,9 @@ def Actioin(max, a, b, c):
 
 # 1.创建一个线程池 submit(fn, *args, **kwargs)
 pool = ThreadPoolExecutor(max_workers=5)
-future_1 = pool.submit(Actioin, 10, "yuan", "bingx", "xi")  # 提交一个task，并传入参数:传参不要元组，接着往后写，有多少写多少
+future_1 = pool.submit(
+    Actioin, 10, "yuan", "bingx", "xi"
+)  # 提交一个task，并传入参数:传参不要元组，接着往后写，有多少写多少
 future_2 = pool.submit(Actioin, 20, "君君", "臣臣", "父父")
 
 # 2.添加回调函数
@@ -204,7 +198,9 @@ future_1.cancelled()  # 返回 Future 代表的线程任务是否被成功取消
 future_1.running()  # 如果该 Future 代表的线程任务正在执行、不可被取消，该方法返回 True
 future_1.exception(timeout=None)  # 获取该 Future 代表的线程任务所引发的异常。如果该任务成功完成，没有异常，则该方法返回 None
 # 3.等待线程池中的任务执行完后再执行其他线程
-wait(future_1, return_when=FIRST_COMPLETED)  # return_when:表示wait返回结果的条件,FIRST_COMPLETED:表示完成第一个任务后就执行主线程
+wait(
+    future_1, return_when=FIRST_COMPLETED
+)  # return_when:表示wait返回结果的条件,FIRST_COMPLETED:表示完成第一个任务后就执行主线程
 
 # 4. as_completed 使用as_completed方法一次取出所有任务的结果。
 """

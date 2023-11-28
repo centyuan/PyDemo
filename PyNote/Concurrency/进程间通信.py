@@ -11,7 +11,7 @@
 8.文件
 9.锁: multiprocessing.Lock
 Python中如何实现进程间通信?
-常用的三种方式:
+常用的几种方式:
 1.multiprocessing.Queue()
 2.multiprocessing.Pipe()
 3.multiprocessing.Array()

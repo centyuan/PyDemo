@@ -1,23 +1,30 @@
 """
-queue.Queue()
-threading.Event
-threading.Condition
-"""
-# 一:全局变量(全局变量)+锁与同步
-# threading.Lock()
-# threading.RLock() 允许在同一个线程中多次acquire
-# treading.Condition() 更高级锁
-# threading.Semaphore() 内部管理着一个计数器。调用 acquire() 会使这个计数器 -1，release() 则是+1(可以多次release()，
-# threading.Event() 全局定义了一个“Flag”，如果“Flag”值为 False，那么当程序执行 event.wait 方法时就会阻塞；如果“Flag”值为True，那么执行event.wait 方法时便不再阻塞。
-# 死锁问题,两个线程都执行函数,并获取直接线程锁,调用对方对象的方法
-"""
+# 同步锁
+threading.Lock():
+threading.RLock():
+    递归锁,允许在同一个线程中多次acquire
+threading.Semaphore():
+    内部管理着一个计数器。调用 acquire() 会使这个计数器 -1，release() 则是+1(可以多次release()，
+
+treading.Condition():
+    更高级锁
+threading.Event():
+    全局定义了一个“Flag”，如果“Flag”值为 False，那么当程序执行 event.wait 方法时就会阻塞；如果“Flag”值为True，那么执行event.wait 方法时便不再阻塞。
+死锁问题:
+    两个线程都执行函数,并获取直接线程锁,调用对方对象的方法
+
 http://c.biancheng.net/view/2620.html
 如何避免死锁:
 1.避免在一个线程里,对多个Lock进行锁定,acquire
 2.需要多个Lock锁定时,按照相同的加锁顺序
 3.使用定时锁,acquire()可指定timeout参数
 4.死锁检测::是一种依靠算法机制来实现的死锁预防机制，它主要是针对那些不可能实现按序加锁，也不能使用定时锁的场景的
+
+# 通信
+threading.Queue()
 """
+
+
 import threading
 
 balance = 0
