@@ -1,20 +1,34 @@
+"""
+hash算法:MD5、SHA1、SHA256
+MD5: 128位散列值(16字节),快速,安全不足
+SHA1: 160位散列值(20字节)---40个十六进制数表示，一般，安全线高
+SHA256: 256位散列值(32字节)---64个十六进制数表示,较慢,安全性高
+
+
+"""
+
+
 import hashlib
 
 # da = "望太微兮穆穆"
 da = "https://www.yedanrongqi.com.cn"
 da = "94:83:c4:1b:6e:9e"
 # 1.基本操作
-print('hhh:', hashlib.md5(da.encode('utf8')).hexdigest(), len(hashlib.md5(da.encode('utf8')).hexdigest()))
-print(hashlib.sha1(da.encode('utf8')).hexdigest())
-print(hashlib.sha224(da.encode('utf8')).hexdigest())
-print(hashlib.sha256(da.encode('utf8')).hexdigest())
-print(hashlib.sha384(da.encode('utf8')).hexdigest())
-print(hashlib.sha512(da.encode('utf8')).hexdigest())
+print(
+    "hhh:",
+    hashlib.md5(da.encode("utf8")).hexdigest(),
+    len(hashlib.md5(da.encode("utf8")).hexdigest()),
+)
+print(hashlib.sha1(da.encode("utf8")).hexdigest())
+print(hashlib.sha224(da.encode("utf8")).hexdigest())
+print(hashlib.sha256(da.encode("utf8")).hexdigest())
+print(hashlib.sha384(da.encode("utf8")).hexdigest())
+print(hashlib.sha512(da.encode("utf8")).hexdigest())
 print(hashlib.md5(da.encode()))
 
 # 2.
 m = hashlib.md5()
-m.update(da.encode('utf-8'))
+m.update(da.encode("utf-8"))
 print("2:", m.hexdigest())
 ms = "8bcfaaac9ccc3768596b72ba34d5dc77"
 if ms == m.hexdigest():
@@ -36,15 +50,15 @@ def md5_sign(dict_map, key):
         else:
             str2 = "&" + str(k) + "=" + str(v)
             list_l.append(str2)
-    content = ''.join([str(i) for i in list_l])
+    content = "".join([str(i) for i in list_l])
     con = content + "&key={}".format(key)
     m = md5()
-    m.update(con.encode(encoding='UTF-8'))
+    m.update(con.encode(encoding="UTF-8"))
     sign = m.hexdigest()
     return sign.upper(), content
 
 
-with open('s.txt', 'rb') as fd:
+with open("s.txt", "rb") as fd:
     data = fd.read()
     hs = hashlib.md5(data).hexdigest()
     print(hs)
@@ -54,4 +68,3 @@ import base64
 
 encode_str = base64.b64encode("centyuan.com".encode("utf-8"))  # 参数为byte,先使用encode
 print(encode_str.decode("utf-8"))  # Y2VudHl1YW4uY29t
-
