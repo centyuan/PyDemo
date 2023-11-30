@@ -234,7 +234,7 @@ config set maxmemory 100mb:动态命令配置redis最大内存 config get maxmem
 >
 > ##### 5.Zset有序集合
 >
-> >有序（有限score排序，score相同则元素字典序），自动去重的集合数据类型
+> >有序（score从小到大排序，score相同则元素字典序），自动去重的集合数据类型
 >
 > 底层实现: ziplist 和skiplist(跳跃表)
 >
@@ -886,11 +886,32 @@ rdbcompression yes   # 指定存储至本地数据库时是否压缩数据
 >
 >```
 >配置文件开启多线程：
->
 >io-thread-do-reads yes
->
 >io-thread 线程数
 >```
+>
+>**如何实现优先级队列？**
+>
+>```
+>使用Zset,是一个有序队列,每个元素member都有一个分数score
+>```
+>
+>**如何实现延迟队列?**
+>
+>使用Zset，score为当前时间+时间戳
+>
+>```
+>生产者:
+># key为队列的名称，score为当前的时间戳+延迟时间，member为消息体
+>zadd key score member
+>消费者:一直循环从redis的zset队列获取数据
+># key为队列的名称，min为0，max为当前的时间戳，limit为单次个数
+>zrangebyscore key min max limit
+>消费删除:
+>zrem key member
+>```
+>
+>
 
 
 
