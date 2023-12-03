@@ -5,38 +5,42 @@
 import logging
 import os
 
-logging.debug(u"苍井空")
-logging.info(u"麻生希")
-logging.warning(u"小泽玛利亚")  # 默认生成的root logger的level是logging.WARNING,低于该级别的就不输出了
-logging.error(u"桃谷绘里香")
-logging.critical(u"泷泽萝拉")
+logging.debug("苍井空")
+logging.info("麻生希")
+logging.warning("小泽玛利亚")  # 默认生成的root logger的level是logging.WARNING,低于该级别的就不输出了
+logging.error("桃谷绘里香")
+logging.critical("泷泽萝拉")
 
 # 1.日志输出到控制台
-import logging  # 引入logging模块
+import logging  # 引入logging模块  # noqa: E402
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')  # logging.basicConfig函数对日志的输出格式及方式做相关配置
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s",
+)  # logging.basicConfig函数对日志的输出格式及方式做相关配置
 # logging.basicConfig函数进行配置了日志级别和日志内容输出格式；因为级别为DEBUG
 # 所以会将DEBUG级别以上的信息都输出显示再控制台上。
-logging.info('this is a loggging info message')
-logging.debug('this is a loggging debug message')
-logging.warning('this is loggging a warning message')
-logging.error('this is an loggging error message')
-logging.critical('this is a loggging critical message')
+logging.info("this is a loggging info message")
+logging.debug("this is a loggging debug message")
+logging.warning("this is loggging a warning message")
+logging.error("this is an loggging error message")
+logging.critical("this is a loggging critical message")
 
 # 2.日志输出到文件
-import logging
+import logging  # noqa: E402
 
 # 1 创建一个logger
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-log_path = ''
-log_file = log_path + 'logging_test.log'
+log_path = ""
+log_file = log_path + "logging_test.log"
 # 2 创建一个handler，用于写入日志文件
 fh = logging.FileHandler(log_file)
 fh.setLevel(logging.DEBUG)  # 设置日志级别
 # 3 定义handler的输出格式
-formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
+formatter = logging.Formatter(
+    "%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s"
+)
 fh.setFormatter(formatter)  # 设置Formatter
 # 4 将logger添加到handler里面
 logger.addHandler(fh)  # 添加一个Handler logger.removeHanlder() 删除一个handler
@@ -45,7 +49,7 @@ logger.addHandler(fh)  # 添加一个Handler logger.removeHanlder() 删除一个
 try:
     open("sklearn.txt", "rb")
     raise ValueError("错误")
-except Exception as e:
+except Exception:
     # 下面三种方式三选一，推荐使用第一种
     logging.exception("Exception occurred")
     logging.error("Exception occurred", exc_info=True)
@@ -74,8 +78,7 @@ logger.info("Finish")
 """
 
 # 3. logging项目使用
-from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler, MemoryHandler
-
+from logging.handlers import RotatingFileHandler  # noqa: E402
 
 # MemoryHandler 输出到内存指定buffer
 
@@ -90,15 +93,19 @@ class Logger:
 
     def __init__(self, log_name: str = "application.log", log_level=logging.DEBUG):
         path = os.getcwd() + os.sep + "logs"
-        fmt = logging.Formatter('[%(asctime)s.%(msecs)03d][%(levelname)s][%(filename)s][%(lineno)d] %(message)s',
-                                '%Y-%m-%d %H:%M:%S')
+        fmt = logging.Formatter(
+            "[%(asctime)s.%(msecs)03d][%(levelname)s][%(filename)s][%(lineno)d] %(message)s",
+            "%Y-%m-%d %H:%M:%S",
+        )
         self.logger = logging.getLogger(path)
         self.logger.setLevel(log_level)
         # 流handler 输出到sys.stdout,sys.stderr输出到控制台
         stream_handler = logging.StreamHandler()
         stream_handler.setFormatter(fmt)
         # RotatingFileHandler 循环日志文件
-        rotate_handler = RotatingFileHandler(path + os.sep + log_name, maxBytes=1024 * 1024 * 50, backupCount=5)
+        rotate_handler = RotatingFileHandler(
+            path + os.sep + log_name, maxBytes=1024 * 1024 * 50, backupCount=5
+        )
         # TimedRotatingFileHandler 定时生成新日志文件
         self.logger.addHandler(stream_handler)
         self.logger.addHandler(rotate_handler)
@@ -117,11 +124,12 @@ flume+kafka+spark准实时写入ES
 logging+CMRESHanlder实时写入ES
 通过python elasticsearch包
 """
-from cmreslogging.handlers import CMRESHandler
+from cmreslogging.handlers import CMRESHandler  # noqa: E402
 
-cm_handler = CMRESHandler(hosts=[{
-    "host": "localhost", "port": 9200
-}], es_index_name="log_index", auth_type=CMRESHandler.AuthType.NO_AUTH
+cm_handler = CMRESHandler(
+    hosts=[{"host": "localhost", "port": 9200}],
+    es_index_name="log_index",
+    auth_type=CMRESHandler.AuthType.NO_AUTH,
 )
 logger = logging.getLogger("ES_log")
 logger.setLevel(logging.INFO)

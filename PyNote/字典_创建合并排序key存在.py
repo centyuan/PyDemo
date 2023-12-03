@@ -99,7 +99,7 @@ for word in sorted(index, key=str.upper):
     print(word)
 
 """7.排序(自定义排序) cmp_to_key"""
-from functools import cmp_to_key, reduce
+from functools import cmp_to_key
 
 rank = [
     {'score': 12, 'time': '2022-08-04'},
@@ -126,7 +126,7 @@ to_rank = sorted(rank, key=cmp_to_key(custom_sorted))
 print("cmp_to_key排序:", to_rank)
 
 """8.类似的使用itemgetter排序"""
-from operator import itemgetter
+from operator import itemgetter  # noqa: E402
 
 new_rank = sorted(rank, key=itemgetter('score'))  # 根据一个字段排序
 print("itemgetter排序:", new_rank)
