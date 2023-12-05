@@ -125,12 +125,15 @@ def custom_sorted(x, y):
 to_rank = sorted(rank, key=cmp_to_key(custom_sorted))
 print("cmp_to_key排序:", to_rank)
 
-"""8.类似的使用itemgetter排序"""
+"""
+8.类似的使用itemgetter排序
+operator.itemgetter 比lambda快点
+"""
 from operator import itemgetter  # noqa: E402
 
 new_rank = sorted(rank, key=itemgetter('score'))  # 根据一个字段排序
 print("itemgetter排序:", new_rank)
-new_rack = sorted(rank, key=itemgetter('score', 'time'), reverse=True)
+new_rack = sorted(rank, key=itemgetter('score', 'time'), reverse=True) # 支持多个keys
 print("itemgetter排序:", new_rank)
 new_rank = sorted(rank, key=lambda item: item['score'])
 

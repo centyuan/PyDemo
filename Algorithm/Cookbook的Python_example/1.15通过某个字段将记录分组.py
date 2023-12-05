@@ -11,9 +11,9 @@ rows = [
     {'address': '重庆', 'date': '2022-08-12'},
     {'address': '武汉', 'date': '2022-08-10'},
 ]
-from operator import itemgetter
-from itertools import groupby
 from collections import defaultdict
+from itertools import groupby
+from operator import itemgetter  # noqa: E402
 
 # 先排序
 rows.sort(key=itemgetter('date'))  # 排序
