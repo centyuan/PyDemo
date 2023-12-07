@@ -10,16 +10,23 @@ import requests
 
 """
 pytest:
-1.文件名必须以test_.py开始或结尾
+1.测试文件以 test_xx.py 命名需要以 test_开头（或_test 结尾）
 2.测试函数以test开头
 3.测试类必须以Test开头,不能带有构造方法,__init__
 4.断言使用assert 
+
 运行:
-1.pytest 按照用例规则自动去匹配
-2.pytest 文件名 
-3.pytest 文件名::类名::方法名或文件名:函数名
-4. if __name__ == "__main__":
-     pytest.main(["-s"])
+1.pytest               # 运行所有
+2.pytest 1_test.py     # 指定模块
+3.pytest ./test_py     # 指定目录
+4.pytest 文件名::类名::方法名或文件名:函数名
+
+5. if __name__ == "__main__":
+     pytest.main()        # 运行所有
+     pytest.main(["1_test.py"])  #   指定模块
+     pytest.main(["./1_test.py"]) # 指定目录
+     pytest.main(["1_test.py::Test01Class"] # 指定类名
+     
 @pytest.mark.smoke:自己标记运行时候使用-m参数来运行部分测试用例
 @pytest.mark.skip:跳过测试用例
 @pytest.mark.skipif(True,reasone="条件为True"):带条件跳过测试用例
