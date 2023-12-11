@@ -1026,7 +1026,7 @@ mysql如何保证主从数据的一致性的？
 > 第二范式:表中每一列都和主键相关,而不能只与主键一部分相关(针对联合主键)(表中只保存一种数据,不可以把多种数据保存在同一个表中)
 > 第三范式:确保每列都和主键直接相关而不是间接相关
 
-**varcahr和char区别？**
+#### **varcahr和char区别？**
 
 > char(最多存放255个字节)适用数据大小固定/较小/经常更新/不容易产生内存碎片:
 > 1.长度固定,插入数据小于固定长度则用空格填充
@@ -1045,12 +1045,12 @@ mysql如何保证主从数据的一致性的？
 > varchar大于20000自动变为tinytext
 > 当varchar>255,使用varchar或text没有区别
 
-**blob和text区别？**
+#### **blob和text区别？**
 
 > blob:二进制大对象(存储二进制数据,没有字符集)最大长度16k
 > text:大对象,存储大字符串,有字符集(根据字符集的校对规则对值进行排序比较)最大长度16k
 
-**DATETIME和TIMESTAMP区别？**
+#### **DATETIME和TIMESTAMP区别？**
 
 > 都表示日期和时间,格式一致,存储秒后6位小数
 > 区别
@@ -1059,26 +1059,34 @@ mysql如何保证主从数据的一致性的？
 > 时区:DATETIME与时区无关,TIMESTAMP与时区有关
 > 默认值:DATETIME默认为null,TIMESTAMP默认为当前时间,不为空(not null)
 
-**in和exists的区别？**
+#### **in和exists的区别？**
 
 > https://blog.csdn.net/jinjiniao1/article/details/92666614
 
-**DECIMAL记录货币？**
+#### **DECIMAL记录货币？**
 
 > float和double是二进制存储,有误差
 > decimal是字符串存储
 
-**怎么存储表情包emoji?**
+#### **怎么存储表情包emoji?**
 
 > 字符串存储utf-8+mb4编码
 
-**大量外键问题？**
+#### 字符集和排序规则
+
+>参考:
+>
+>[MySQL建立数据库时字符集和排序规则的选择](https://blog.csdn.net/hsuehgw/article/details/128737673)
+>
+>[utf8mb4总结](https://blog.csdn.net/qq_17555933/article/details/101445526)
+
+#### **大量外键问题？**
 
 > 不影响select，影响update/insert/delete(当对子表进行写入操作,父表会被加上共享锁,对子表进行高并发时,父表的共享锁长时间不能释放,就不能对父表进行写入而只能读)
 
 > WAL技术(Write-Ahead Logging)RedoLog(对所有页面的操作写入日志文件,实现事务的持久性)
 
-**delete删除记录使用binlog回滚？**
+#### **delete删除记录使用binlog回滚？**
 
 > 恢复数据时可以先备份,在停止所有写入操作:flush tables with read lock或 set global read_only=1同时配置文件里设置read_only防止重启失效
 >
@@ -1115,7 +1123,7 @@ mysql如何保证主从数据的一致性的？
 >    source /tmp/mysqllogOK.sql
 >    ```
 
-**大公司为什么不使用外键强关联问题？**
+#### **大公司为什么不使用外键强关联问题？**
 
 > 主要存在以下问题
 > 1.在该表进行增删改查会触发查询关联表的记录是否存在,该性能消耗系统是允许的
@@ -1125,8 +1133,9 @@ mysql如何保证主从数据的一致性的？
 > 这些问题在互联网公司显得很严重,访问量大的时候,mysql系统上无法得到解决的
 > https://www.cnblogs.com/JethroYu/p/13570630.html
 
-**delete,truncate,drop有什么区别?**
-**执行速度**:drop>truncate>delete
+#### **delete,truncate,drop有什么区别?**
+
+> **执行速度**:drop>truncate>delete
 
 **1.delete**
 
@@ -1159,3 +1168,4 @@ mysql如何保证主从数据的一致性的？
 > 3.drop且删除表结构,被依赖的约束(constrain),触发器(trigger),索引(index)
 > 4.依赖该表的存储过程/函数将保留,状态为invalid
 > delete是把目录撕了，truncate是把书的内容撕下来烧了，drop是把书烧了
+
