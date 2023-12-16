@@ -2,9 +2,9 @@
 pydantic库是python中用于数据接口定义检查与设置管理的库
 """
 import json
+from typing import Dict, List, Optional, Set, Tuple, Union
 
-from pydantic import BaseModel, Field, validator, ValidationError
-from typing import Dict, List, Sequence, Set, Tuple, Optional, Union
+from pydantic import BaseModel, Field, ValidationError, validator
 
 
 # 一.基本使用
@@ -24,6 +24,7 @@ print("解析数据对象:", Person.parse_obj(obj={"name": "username"}))
 print("解析数据对象:", Person.parse_raw('{"name":"username"}'))
 print("解析数据:", p3.parse_obj(obj={"name": "username"}))  # 解析obj
 print("解析数据:", p3.parse_raw('{"name":"username"}'))  # 解析字符串
+
 # 3.错误传参报错
 try:
     # p4 = Person(person="Tom")  # 没有person参数
@@ -36,9 +37,11 @@ except ValidationError as e:
     print(e.json())  # 2. e.json()
     print(str(e))  # 3. str(e)
     print(json.loads(e.json())[0].get("loc"))
+
 # 4.额外的参数会被过滤
 p5 = Person(name="Tom", age="10", gender="man")
 print(p5.json())
+
 # 5.数据类型自动转换
 p6 = Person(name=321)
 print(p6.json())  # {"name": "321"}

@@ -23,8 +23,14 @@ asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 """
 import asyncio
 
+# 实现协程的几种方式 https://zhuanlan.zhihu.com/p/104918655
+"""
+python2.x yield+sened 利用生成器实现协程
+python3.4 asyncio+yield from asyncio实现协程
+python3.5 asyncio +async/await
+第三方模块: greenlet/gevent
 
-# https://zhuanlan.zhihu.com/p/104918655
+"""
 # 1.python2.x yield+send 利用生成器实现协程
 def consumer():
     r = ''
@@ -69,7 +75,7 @@ def test(i):
     """
     把asyncio.sleep(1)看成是一个耗时1秒的IO操作，在此期间主线程并未等待，而是去执行EventLoop中其他可以执行的coroutine了，因此可以实现并发执行
     """
-    r = yield from asyncio.sleep(1)
+    yield from asyncio.sleep(1)
     print('test_end', i)
 
 
@@ -96,18 +102,3 @@ if __name__ == '__main__':
     loop.run_until_complete(asyncio.wait(coroutines))
     loop.close()
 
-"""
-1.创建coroutine对象:coroutine = test(i)
-2.创建任务:task=loop.create_task(coroutine) 或task=asyncio.ensure_future(coroutine)
-# task finished后:task.result()
-3.绑定回调函数结果:
-def callback(future):
-    # future.result()获取返回值
-    print('callback':future.result())
-task = loop.create_task(coroutine)
-# 绑定回调
-task.add_done_callback(callback) 
-4.将task加入事件循环
-loop.run_until_complete(task)
-print(task.result())
-"""
