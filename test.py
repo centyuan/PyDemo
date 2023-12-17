@@ -1,45 +1,50 @@
-import json
-import os
+import asyncio
 
-import requests
-from openai import AzureOpenAI
-from PIL import Image
 
-AZURE_OPENAI_API_KEY = "f5cabfc396804fdd8c22ac74da9dd958"
-AZURE_OPENAI_ENDPOINT = "ac71d6444a714877851e7ee75f7fff3c"
+class CoroutinePool:
+    def __init__(self, max_works):
+        self.max_works = max_works
+        self.tasks = []
+        self.task_queue = asyncio.Queue()
 
-client = AzureOpenAI(
-    api_version="2023-12-01-preview",  
-    api_key=AZURE_OPENAI_API_KEY,
-    azure_endpoint=AZURE_OPENAI_ENDPOINT
-    # api_key=os.environ["AZURE_OPENAI_API_KEY"],  
-    # azure_endpoint=os.environ['AZURE_OPENAI_ENDPOINT']
-)
+    def submit_task(self, task, *args, **kwargs):
+        self.task_queue.put_nowait([task, args, kwargs])
 
-result = client.images.generate(
-    model="dalle3", # the name of your DALL-E 3 deployment
-    prompt="a close-up of a bear walking throughthe forest",
-    n=1
-)
+    async def __aenter__(self):
+        for i in range(self.max_works):
+            # asyncio.create_task(self._task_handle())
+            self.tasks.append(asyncio.create_task(self._task_handle()))
 
-json_response = json.loads(result.model_dump_json())
+        return self
 
-# Set the directory for the stored image
-image_dir = os.path.join(os.curdir, 'images')
+    async def __aexit__(self, exc_type, exc, tb):
+        await self.task_queue.join()
 
-# If the directory doesn't exist, create it
-if not os.path.isdir(image_dir):
-    os.mkdir(image_dir)
+        for task in self.tasks:
+            task.cancel()
 
-# Initialize the image path (note the filetype should be png)
-image_path = os.path.join(image_dir, 'generated_image.png')
+        await asyncio.gather(*self.tasks, return_exceptions=True)
 
-# Retrieve the generated image
-image_url = json_response["data"][0]["url"]  # extract image URL from response
-generated_image = requests.get(image_url).content  # download the image
-with open(image_path, "wb") as image_file:
-    image_file.write(generated_image)
+    async def _task_handle(self):
+        while True:
+            task, args, kwargs = await self.task_queue.get()
+            await task(*args, **kwargs)
+            self.task_queue.task_done()
 
-# Display the image in the default image viewer
-image = Image.open(image_path)
-image.show()
+
+
+
+async def f(i):
+    await asyncio.sleep(1)
+    print(i, asyncio.current_task().get_name())
+
+
+async def main():
+    async with CoroutinePool(5) as pool:
+        for i in range(10):
+            pool.submit_task(f, i)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+
