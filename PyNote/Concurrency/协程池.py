@@ -7,6 +7,7 @@ from threading import Thread
 import aiohttp
 
 
+#### queue.Queue
 class AsyncPool:
     """
     1.动态添加任务
@@ -122,4 +123,45 @@ if __name__ == '__main__':
     print("run time: ", end_time - start_time)
 
 
-aiopools 
+#### asyncio.Queue 也是先进先出
+
+class CoroutinePool:
+    def __init__(self,size):
+        self.size = size
+        self.tasks = []
+        self.task_queue = asyncio.Queue()
+
+    def submit_task(self,task,*args,**kwargs):
+        self.task_queue 
+
+    async def __aenter__(self):
+        for i in range(self.size):
+            self.tasks.append(asyncio.create_task(self._task_handle()))
+        return self
+    
+    async def __aexit(self,exc_type,exc_val,exc_tab):
+        await self.task_queue.join()
+        for task in self.tasks:
+            task.cancel()
+        await asyncio.gather(*self.tasks,return_exceptions=True)
+        
+    async def _task_handle(self):
+        while True:
+            task, args, kwargs = await self.task_queue.get()
+            await task(*args,**kwargs)
+            self.task_queue.task_done()
+
+
+async def f(i):
+    await asyncio.sleep(1)
+    print(i, asyncio.current_task().get_name())
+
+
+async def main():
+    async with CoroutinePool(5) as pool:
+        for i in range(10):
+            pool.submit_task(f, i)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

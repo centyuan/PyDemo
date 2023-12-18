@@ -30,6 +30,11 @@ python3.4 asyncio+yield from asyncio实现协程
 python3.5 asyncio +async/await
 第三方模块: greenlet/gevent
 
+真正运行协程
+acyncio.run(main())
+await main()
+
+
 """
 # 1.python2.x yield+send 利用生成器实现协程
 def consumer():

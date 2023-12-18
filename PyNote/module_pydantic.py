@@ -89,6 +89,7 @@ class Password(BaseModel):
 
         if not is_valid(password):
             raise ValueError("password is invalid")
+        return password
 
     # 对类中某一个基本类型同一格式要求
     class Config:

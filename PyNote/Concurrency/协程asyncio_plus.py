@@ -1,5 +1,30 @@
 import asyncio
 
+#### 基本概念
+"""
+asyncio.run():直接执行一个协程对象,debug 为 True，事件循环将以调试模式运行
+asyncio.get_running_loop( ) ：获取当前正在运行的事件循环，如果没有，抛出异常。
+asyncio.set_event_loop(loop)：将当前循环设置为指定的事件循环。
+asyncio.new_event_loop( ) ：创建一个新的事件循环
+loop.get_event_loop()：获取当前事件循环，3.10 版本 开始这个函数将是 get_running_loop()的别名
+loop.run_until_complete(future) ：运行直到 future（协程对象） 执行完毕（获取返回值）
+loop.run_forever( )：运行直到 stop 被调用。
+loop.stop( )：停止事件循环。
+loop.close( ) ：关闭事件循环，所有相关回调，循环全部会被关闭。
+如果使用的是 asyncio.run()：进行执行，则不需要手动关闭。
+loop.is_running( ) ：判断事件循环是否在运行。
+loop.is_closed( ) ：判断事件循环是否关闭。
+
+创建任务:
+loop.create_task()
+asyncio.wait_for(aw, timeout)：等待一个协程对象执行，并且在timeout秒后抛出超时错误。（等待单个协程对象）
+
+asyncio.run_coroutine_threadsafe(coro, loop)：向指定事件循环提交一个协程
+asyncio.to_thread(func, /, args, **kwargs)：在线程中运行函数（在协程内执行一个不支持协程的函数）3.9 版本功能
+
+"""
+# https://assistest.cn/2021/07/26/yi-bu-xie-cheng/
+
 #### 获取协程返回值:有2种方案可以获取返回值
 
 # 1. task.result():只有运行完毕后才能获取，若没有运行完毕，result()方法不会阻塞去等待结果，而是抛出 asyncio.InvalidStateError 错误
@@ -23,7 +48,7 @@ def callback(future):
 loop = asyncio.get_event_loop()
 coro = coroutine_example()
 task = loop.create_task(coro) 
-task.add_done_callback(fn)  # 绑定回调函数
+task.add_done_callback(callback)  # 绑定回调函数
 # task finished后:task.result()
 loop.run_until_complete(task)
 
@@ -232,6 +257,7 @@ if __name__ == "__main__":
 """
 主线程:get_event_loop会创建一个event loop,并且多次调用始终返回该loop
 其他线程:get_event_loop会报错,正确使用是loop = asyncio.new_event_loop创建一个本地线程循环 asyncio.set_event_loop(loop)
+
 """
 
 
@@ -255,9 +281,12 @@ if __name__ == "__main__":
 """
 
 
-#### 多线程+协程(协程的异步编程+Mysql(不支持异步)),loop遇到某个协程阻塞调用会停止整个事件循环,从而阻止了其他协程继续执行,使用多线程防止阻塞
-
+#### 协程+多线程(协程的异步编程+Mysql(不支持异步))
+# https://www.cnblogs.com/jaydenjune/articles/10903903.html
 """
+协程里面是不能加入阻塞IO的,oop遇到某个协程阻塞调用会停止整个事件循环,从而阻止了其他协程继续执行，但某些时候(比如某个库或接口,只能提供阻塞,就可以把它放在线程中去执行)
+在协程中集成阻塞IO,比如说MySQL库是阻塞的,PyMySQL和MySQLClient都是阻塞的,那在协程中如果去强行使用MySQL这三个库怎么办?就可以使用多线程　　
+
 loop.run_in_executor(ThreadPoolExecutor(), callback) 线程池+这个阻塞函数,没有执行器默认使用ThreadPoolExecutor
 loop.call_soon_threadsafe(callback, *args) 将同步方法注册到新线程的loop去
 asyncio.run_coroutine_threadsafe(coroutine, loop)将异步方法注册到新线程的loop中去,返回值是concurrent.futures.Future对象,.result()获取返回结果
