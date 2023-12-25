@@ -40,9 +40,12 @@ raise和raise..from区别:
 在显示错误信息时，raise只显示错误类型，raise...from...还会显示导致错误的原因（原因是from 后面的部分）
 """
 
+from typing import Any, List
+
 
 class FooError(ValueError):
-    def __init__(self, error):
+    def __init__(self, error: str, *args: List[Any]):
+        super().__init__(*args)
         self.error = error
 
     def __str__(self):
