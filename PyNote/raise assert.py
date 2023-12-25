@@ -16,18 +16,18 @@ raise [exceptionName [(reason)]]
 就可以把错误堆栈打印出来，然后分析错误原因，同时，让程序继续执行下去。
 """
 try:
-    print('try...')
-    r = 10 / int('a')
-    print('result:', r)
+    print("try...")
+    r = 10 / int("a")
+    print("result:", r)
 except ValueError as e:
-    print('ValueError:', e)
+    print("ValueError:", e)
 except ZeroDivisionError as e:  # 可以有多个except来捕获不同类型的异常
-    print('ZeroDivisionError:', e)
+    print("ZeroDivisionError:", e)
 else:  # 没有错误发生
-    print('no error!')
+    print("no error!")
 finally:  # 都会执行
-    print('finally...')
-print('END')
+    print("finally...")
+print("END")
 
 # 二:自定义抛出错误 raise
 """
@@ -42,24 +42,29 @@ raise和raise..from区别:
 
 
 class FooError(ValueError):
-    pass
+    def __init__(self, error):
+        self.error = error
+
+    def __str__(self):
+        return self.error
 
 
 def foo(s):
     n = int(s)
     if n == 0:
-        raise FooError('invalid value: %s' % s)  # 自定义异常
-        raise ValueError('invalid value: %s' % s)
+        raise FooError("invalid value: %s" % s)  # 自定义异常
+        raise ValueError("invalid value: %s" % s)
     return 10 / n
 
 
 # foo('0')
 
+
 def bar():
     try:
-        foo('0')
+        foo("0")
     except ValueError as e:
-        print('ValueError!')
+        print("ValueError!")
         raise ValueError("错误") from e  # 只有一个raise
 
 
@@ -70,9 +75,9 @@ def bar():
 python assert断言检查某个条件表达式是否为真,其返回值为假，就会触发异常。
 可以理解assert断言语句为raise-if-not，
 """
-print('assert:')
+print("assert:")
 a = 888
-assert type(a) == str, 'a is type of int'  # 后面为异常信息
+assert type(a) == str, "a is type of int"  # 后面为异常信息
 
 # result：
 # Traceback (most recent call last):
