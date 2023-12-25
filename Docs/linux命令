@@ -157,4 +157,17 @@ netstat -lntp
  kill -9 -PGID  # 通过kill向整个进程组发送信号
  killall 进程名  # 通过killall直接对进程名操作
  ps aux | grep '进程名' | awk '{print $2}' | xargs kill
- 
+
+#20环境变量
+Linux登录时:
+首先启动/etc/profile ,在启动用户目录下:~/.bash_profile,~/.bash_login, ~/.profile,如果~/.bash_profile文件存在的话,一般还会执行~/.bashrc
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+fi  
+执行顺序:/etc/profile→ (~/.bash_profile | ~/.bash_login | ~/.profile)→~/.bashrc →/etc/bashrc
+/etc/profile: 对系统内所有用户生效的，并从/etc/profile.d目录的配置文件中搜集shell的设置。
+/etc/bashrc: 对每一个运行bash shell的用户执行此文件.当bash shell被打开时,该文件被读取（即每次新开一个终端，都会执行bashrc）
+~/.bash_profile: 是针对用户来设定的，交互式、login 方式进入 bash 运行的，意思是只有用户登录时才会生效
+~/.bashrc: 交互式 non-login 方式进入 bash 运行的，用户不一定登录，只要以该用户身份运行命令行就会读取该文件
+
+
