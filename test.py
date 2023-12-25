@@ -43,7 +43,12 @@ async def main():
     async with CoroutinePool(5) as pool:
         for i in range(10):
             pool.submit_task(f, i)
-
+    if pool.task_queue.empty():
+        print("pool.task_queue.empty()",pool.task_queue.empty())
+    else:
+        print("pool.task_queue.empty()",pool.task_queue.empty())
+    get_nowait = pool.task_queue.get_nowait()
+    print("get_nowait",get_nowait)
 
 if __name__ == "__main__":
     asyncio.run(main())

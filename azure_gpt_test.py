@@ -3,7 +3,7 @@ from typing import Any, List
 
 from openai import AzureOpenAI
 
-API_KEY = os.getenv("AZURE_OPENAI_KEY", "f5cabfc396804fdd8c22ac74da9dd958")
+API_KEY = os.getenv("AZURE_OPENAI_KEY", "a5cabfc396804fdd8c22ac74da9dd951")
 API_ENDPOINT = os.getenv(
     "AZURE_OPENAI_ENDPOINT", "https://fnopenaifordev.openai.azure.com/"
 )
