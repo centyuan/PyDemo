@@ -2,6 +2,23 @@
 # Author centyuan
 # Date 2019/10/24 22:21
 
+"""
+def select_related(self, *fields)
+    性能相关：表之间进行join连表操作，一次性获取关联的数据。
+
+    总结：
+    1. select_related主要针一对一和多对一关系进行优化。
+    2. select_related使用SQL的JOIN语句进行优化，通过减少SQL查询的次数来进行优化、提高性能。
+
+def prefetch_related(self, *lookups)
+    性能相关：多表连表操作时速度会慢，使用其执行多次SQL查询在Python代码中实现连表操作。
+
+    总结：
+    1. 对于多对多字段（ManyToManyField）和一对多字段，可以使用prefetch_related()来进行优化。
+    2. prefetch_related()的优化方式是分别查询每个表，然后用Python处理他们之间的关系。
+
+"""
+
 # many-to-many   创建一个经典的多对多关系:一本书可以有多个作者，一个作者可以有多本书
 from django.db import models
 from time import timezone
