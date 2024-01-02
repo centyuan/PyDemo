@@ -170,4 +170,22 @@ fi
 ~/.bash_profile: 是针对用户来设定的，交互式、login 方式进入 bash 运行的，意思是只有用户登录时才会生效
 ~/.bashrc: 交互式 non-login 方式进入 bash 运行的，用户不一定登录，只要以该用户身份运行命令行就会读取该文件
 
+#21ssh命令的三种代理功能
+# https://www.cnblogs.com/cangqinglang/p/12732661.html
+# https://www.jianshu.com/p/08840b4ac0cb
+正向代理(-L):本地启动端口,把本地端口数据转发到远端
+1.远程端口映射到其他机器(HostB 上启动一个 PortB 端口，映射到 HostC:PortC 上，在 HostB 上运行)
+ssh -L 0.0.0.0:PortB:HostC:PortC user@HostC
+或者
+ssh user@HostB -L 0.0.0.0:PortB:HostC:PortC
+ssh user@HostB -fNL 0.0.0.0:PortB:HostC:PortC
+-f: 表示本地主机的ssh客户端在后台运行
+-N: 表示不执行远程命令，只用于转发端口，及本地主机在登录了192.168.0.3后，不会分配一个tty窗口
+-L: 选项表示这是一个本地转发模式，它的参数是 port:host:hostport，对应到这里是4000:192.168.0.3:5000
 
+2.本地端口通过跳板映射到其他机器(HostA 上启动一个 PortA 端口，通过 HostB 转发到 HostC:PortC上，在 HostA 上运行)
+ssh -L 0.0.0.0:PortA:HostC:PortC user@HostB 
+
+反向代理(-R):让远端启动端口，把远端端口数据转发到本地
+1.HostA 将自己可以访问的 HostB:PortB 暴露给外网服务器 HostC:PortC，在 HostA 上运行
+ssh -R HostC:PortC:HostB:PortB  user@HostC
