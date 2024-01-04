@@ -189,3 +189,14 @@ ssh -L 0.0.0.0:PortA:HostC:PortC user@HostB
 反向代理(-R):让远端启动端口，把远端端口数据转发到本地
 1.HostA 将自己可以访问的 HostB:PortB 暴露给外网服务器 HostC:PortC，在 HostA 上运行
 ssh -R HostC:PortC:HostB:PortB  user@HostC
+
+#22 /etc/sudoers 文件
+sudo是Linux下常用的允许普通用户使用超级用户权限的工具,用户调用sudo并输入用户密码后，用户获得了一张存活期为5分钟(值可以在编译时候改变)的票
+sudo的配置文件为/etc/sudoers,基础配置：
+root ALL=(ALL) ALL
+用户账号,允许用户从哪些地方连接,运行切换的身份,允许执行的命令
+用户或用户组无密码配置:建议放在最后,以免被其他配置覆盖,导致不生效
+hlyuan ALL=(ALL) NOPASSWD:ALL
+%hlyuan ALL=(ALL) NOPASSWD:ALL
+
+
