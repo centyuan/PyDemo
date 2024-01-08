@@ -2,6 +2,8 @@ import asyncio
 
 #### 基本概念
 """
+https://www.cnblogs.com/traditional/
+
 asyncio.run():直接执行一个协程对象,debug 为 True，事件循环将以调试模式运行
 asyncio.get_running_loop( ) ：获取当前正在运行的事件循环，如果没有，抛出异常。
 asyncio.set_event_loop(loop)：将当前循环设置为指定的事件循环。
@@ -29,29 +31,31 @@ asyncio.to_thread(func, /, args, **kwargs)：在线程中运行函数（在协�
 
 # 1. task.result():只有运行完毕后才能获取，若没有运行完毕，result()方法不会阻塞去等待结果，而是抛出 asyncio.InvalidStateError 错误
 
+
 async def coroutine_example():
     await asyncio.sleep(1)
     return "你好"
+
 
 loop = asyncio.get_event_loop()
 coro = coroutine_example()
 task = asyncio.create_task(coro)
 try:
-    print("返回值",task.result())
+    print("返回值", task.result())
 except asyncio.InvalidStateError:
     print("状态未完成,捕获了InvalidStateError异常")
 
 # 2. 通过回调函数,add_done_callback()
 def callback(future):
-    print("返回值",future.resul())
+    print("返回值", future.resul())
+
 
 loop = asyncio.get_event_loop()
 coro = coroutine_example()
-task = loop.create_task(coro) 
+task = loop.create_task(coro)
 task.add_done_callback(callback)  # 绑定回调函数
 # task finished后:task.result()
 loop.run_until_complete(task)
-
 
 
 #### 协程嵌套三种处理结果方式
@@ -180,7 +184,6 @@ print("Time:", now() - start)
 """
 
 
-
 #### asyncio并发的正确/错误姿势
 """
 import asyncio
@@ -255,8 +258,9 @@ if __name__ == "__main__":
 #### aysncio.get_event_loop和asyncio.new_event_loop和asyncio.set_event_loop
 
 """
-主线程:get_event_loop会创建一个event loop,并且多次调用始终返回该loop
+主线程:get_event_loop会创建一个event loop(在主线程使用),并且多次调用始终返回该loop,
 其他线程:get_event_loop会报错,正确使用是loop = asyncio.new_event_loop创建一个本地线程循环 asyncio.set_event_loop(loop)
+get_running_loop: 获取当前的事件循环(放在协程里面执行), asyncio 是单线程的，因此对于一个线程来说，只会有一个事件循环
 
 """
 
@@ -284,7 +288,7 @@ if __name__ == "__main__":
 #### 协程+多线程(协程的异步编程+Mysql(不支持异步))
 # https://www.cnblogs.com/jaydenjune/articles/10903903.html
 """
-协程里面是不能加入阻塞IO的,oop遇到某个协程阻塞调用会停止整个事件循环,从而阻止了其他协程继续执行，但某些时候(比如某个库或接口,只能提供阻塞,就可以把它放在线程中去执行)
+协程里面是不能加入阻塞IO的,loop遇到某个协程阻塞调用会停止整个事件循环,从而阻止了其他协程继续执行，但某些时候(比如某个库或接口,只能提供阻塞,就可以把它放在线程中去执行)
 在协程中集成阻塞IO,比如说MySQL库是阻塞的,PyMySQL和MySQLClient都是阻塞的,那在协程中如果去强行使用MySQL这三个库怎么办?就可以使用多线程　　
 
 loop.run_in_executor(ThreadPoolExecutor(), callback) 线程池+这个阻塞函数,没有执行器默认使用ThreadPoolExecutor
@@ -292,6 +296,8 @@ loop.call_soon_threadsafe(callback, *args) 将同步方法注册到新线程的l
 asyncio.run_coroutine_threadsafe(coroutine, loop)将异步方法注册到新线程的loop中去,返回值是concurrent.futures.Future对象,.result()获取返回结果
 3.9后使用 asyncio.to_thread(func, )
 https://docs.python.org/zh-cn/3/library/asyncio-task.html
+fastapi:  from fastapi.concurrency import run_in_threadpool newdata = await run_in_threadpool(lambda: somelongcomputation(data, otherdata))
+
 
 import time 
 import asyncio
