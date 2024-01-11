@@ -59,8 +59,9 @@ def main3():
     print("主线程开始执行>>> pid={}".format(os.getpid()))
     ps = Pool(5)
     for i in range(10):
-        # ps.apply(worker,args=(i,))          # 1.同步执行
-        ps.apply_async(worker, args=(i,))  # 2. 异步执行
+        # return_value = ps.apply(worker,args=(i,))          # 1.同步执行
+        return_obj:AsyncResult= ps.apply_async(worker, args=(i,))  # 2. 异步执行
+        return_value = return_obj.get() # 获取返回值
     """
     也可以使用map
     result = ps.map(worker,[1,2,3,4])  # 接受一个可迭代对象，将每个元素作为参数传递给worker
