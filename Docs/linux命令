@@ -133,6 +133,10 @@ crontab -e
 2.内核引导:boot(加载内核)
 3.运行init/SystemV/Systemd(pid为1):(7个运行级别)挂载文件系统等
 4.系统初始化:rc.d
+开机自启的三种方式:
+1./etc/rc.local (添加shell到该文件)
+2.cd/etc/profile.d/ (添加shell脚本到该目录下)
+3./etc/init.d/srs.sh (添加服务systemctl)
 
 
 docker run --name my_es7 -p 9200:9200  -p 9300:9300 -e "discovery.type=single-node" -e ES_JAVA_OPTS="-Xms84m -Xmx512m" -v /root/my_elasticsearch/data:/usr/share/elasticsearch/data -d elasticsearch:7

@@ -314,6 +314,12 @@ mysqldump -u root -p --databases auth mysql >auth-mysql.sql    # 备份auth和my
 mysqldump -u root -p dbname table_name >table_name.sql        # 备份数据库
 mysqldump -u root -p -d dbname table_name > table_name.sql    # 仅备份表结构
 mysqldump -u root -p -t dbname table_name > table_name.sql    # 仅备份数据
+
+mysqldump -usoc-user -pSocuser@0511 -t -T /var/lib/mysql-files/ temp loophole_cnvd --where="id<200"  --fields-terminated-by=',' --fields-enclosed-by='\"' > loophole_cnvd.csv
+-t: 不写表的创建信息
+--fields-terminated-by:输出文件中的字段以给定的字符串结尾
+--fields-enclosed-by:输出文件中的字段用给定的字符括起来。
+
 https://zhuanlan.zhihu.com/p/396005871
 ```
 
