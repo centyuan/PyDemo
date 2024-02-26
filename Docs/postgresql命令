@@ -58,6 +58,12 @@ psql -h localhost -U emmweb -d emmweb < /home/jianghai/Desktop/emmweb.bak 
 将example数据库所有权限赋予centyuan,否则centyuan只能登录，没有任何数据库操作权限。
 grant all privileges on database exampledb to centyuan;
 
+### postgresql日志
+postgresql有三种日志:
+pg_log: 数据库运行日志,内容可读,默认关闭的,需要设置参数启动
+pg_xlog: wal日志,即重做日志,内容一般不可读,强制开启
+pg_clog: 事务提交日志,记录事务的元数据,内容一般不具有可读性,强制开启
+
 ###mysql性能极限
 mysql单表字段数:建议20-50
 mysql默认单字段大小：
