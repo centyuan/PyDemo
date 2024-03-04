@@ -964,5 +964,23 @@ https://juejin.cn/post/6926039904590037005
 > 消费删除:
 > zrem key member
 > ```
-
+>
+> **哪些操作会阻塞redis?**
+> ```
+> 命令阻塞:
+> keys*  #获取所有的key操作
+> Hgetall #返回哈希表中所以字段和
+> smembers #返回集合中的所有成员
+> 命令时间复杂度是O(n)，有时候也会全表扫描，随着n的增大耗时也会越大从而导致客户端阻塞
+>
+> SAVE阻塞:
+>
+> 同步持久化: appendfsync always 每次发生数据变更会立即记录到磁盘,磁盘性能会导致阻塞
+>
+> AOF重写:
+>
+> 大key问题:key的value很大,查找or删除大key
+>
+> 清空数据库:flushdb/flushall
+> ```
 参考[Redis常见面试题](https://cloud.tencent.com/developer/article/2315477)
