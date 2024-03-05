@@ -59,7 +59,7 @@ HTTP是无状态协议,需要去维护一个状态，去告诉服务器请求是
 
 
 #### JWT
-
+>深入理解JWT的使用场景和优劣：https://www.cnblogs.com/cokeking/p/10969579.html
 >Json Web Token是目前最流行的跨域认证解决方案,是一种认证授权机制
 >
 >参考:[JWT](http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html)

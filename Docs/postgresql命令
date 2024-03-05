@@ -58,6 +58,26 @@ psql -h localhost -U emmweb -d emmweb < /home/jianghai/Desktop/emmweb.bak 
 将example数据库所有权限赋予centyuan,否则centyuan只能登录，没有任何数据库操作权限。
 grant all privileges on database exampledb to centyuan;
 
+### 什么是wal(https://zhuanlan.zhihu.com/p/137512843)
+wal(write ahead Log)预写日志,是数据库系统中保证数据的原子性和持久性的手段,所有修改在提交之前都要写入log文件中
+通常包含redo和undo等信息,场景数据库一般都会用到wal机制,不同系统会有不同的差异
+mysql: 通过redo,undo log实现
+elasicsearch: 增加了一个事务日志translog
+
+
+
+### postgresql日志
+postgresql有三种日志:
+pg_log: 数据库运行日志,文本格式内容可读,默认关闭的,需要设置参数启动
+一般是记录服务器与DB的状态,比如(各种Error信息,定位慢查询,启动关闭信息,发生checkpoint过于频繁的告警信息)
+
+pg_xlog: wal(Write Ahead Log)预写日志,即重做日志,二进制格式内容一般不可读,强制开启
+记录Postgresql的wal信息,也就是事务日志信息(transaction log)
+
+pg_clog: 事务提交日志,记录事务的提交日志,二进制格式内容一般不具有可读性,强制开启
+也是事务日志文件,与pg_xlog不同的是,它记录的是事务的元数据(metadata:告诉我们哪些事务完成,哪些事务没完成)
+
+
 ###mysql性能极限
 mysql单表字段数:建议20-50
 mysql默认单字段大小：
