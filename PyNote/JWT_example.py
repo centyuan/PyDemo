@@ -34,3 +34,11 @@ info = jwt.decode(token, salt, True, algorithm='HS256')
 
 
 """
+
+"""
+azure_ad_verify_token
+https://github.com/odwyersoftware/azure-ad-verify-token/blob/master/azure_ad_verify_token/verify.py
+https://github.com/GeneralMills/azure-ad-token-verify/blob/main/aad_token_verify/token_verifier.py
+https://robertoprevato.github.io/Validating-JWT-Bearer-tokens-from-Azure-AD-in-Python/
+
+"""

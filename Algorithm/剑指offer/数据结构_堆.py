@@ -38,7 +38,7 @@ class heap(object):
             parent = self.get_parent_index(parent)
 
     def removeMax(self):
-        # 删除堆顶元素，然后将最后一个元素放在堆顶，再从上往下依次堆化d
+        # 删除堆顶元素，然后将最后一个元素放在堆顶，再从上往下依次堆化(左右节点选个最大值和其比较,看是否交换)
         remove_data = self.data_list[0]
         self.data_list[0] = self.data_list[-1]
         del self.data_list[-1]
