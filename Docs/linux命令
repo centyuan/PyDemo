@@ -2,6 +2,9 @@
 lscpu
 # 2、查看CPU进程数、核数：
 cat /proc/cpuinfo
+cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l  # 查看物理cpu个数
+cat /proc/cpuinfo| grep "cpu cores"| uniq                 # 查看每个物理CPU中core的个数(即核数)
+cat /proc/cpuinfo| grep "processor"| wc -l                # 逻辑CPU的个数(线程数)
 # 3、查看内存总量：
 free -m
 # 4、查看磁盘挂载情况:
