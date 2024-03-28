@@ -15,6 +15,10 @@
 -y:读取OpenSSH格式密钥文件并将OpenSSH公钥输出到stdout
 输入完毕后程序同时要求输入一个密语字符串(passphrase)，空表示没有密语。
 接着会让输入2次口令(password)，空表示没有口令。
+
+测试连接
+ssh -T git@github.com
+
 2.配置多个key(./ssh/known_hosts已知的主机公钥清单):生成多个gitlab的sshkey，并且重命名为id_rsa_gitlab
 .ssh目录下：创建config文件添加如下内容：
 host github.com
