@@ -798,7 +798,7 @@ https://juejin.cn/post/6926039904590037005
 ##### 3.Cluster集群配置
 
 > 集群模式实现了数据的分布式存储和数据的分片,每个节点存储不同内容
->
+> https://www.zhihu.com/question/293357668
 > **Redis Cluster:**
 >
 > ```
