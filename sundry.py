@@ -119,22 +119,6 @@ taskkill /T /F /PID 9088
 ### 
 chrome窗口输入badidea或thisisunsafe 告诉chrome跳过证书认证c
 
-改天写个教程文档
-### aerich tortoise-orm迁移工具 pip intall aerich 
-1.aerich 初始化
-  aerich init -t settings.TORTOISE_ORM  (--location ./migrations 默认)
-2.aerich 初始化数据库
-  aerich init-db   # 数据库中有相应的表了
-3.重新生成迁移文件--一般是修改model后
-  aerich migrate   # 迁移文件本质就是sql语句
-4.执行迁移-表结构变更到数据库
-  aerich upgrade 
-5.回退上一个版本
-  aerich downgrade 
-6.查看历史迁移记录
-  aerich history
-7. 查看形成当前版本的迁移记录
-  aericH heads
 
 ### python获取异常信息 
 1. try
