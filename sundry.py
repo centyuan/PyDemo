@@ -59,27 +59,6 @@ C类地址：
       192.168.0.0-192.168.255.255
 
 
-### k8s网络模式
-k8s-service:
- ClusterIP模式:
-   serviceName.namespace.svc.cluster.local
- clusterIP=None的Headless Service:
-   podName.serviceName.namespace.svc.cluster.local
-   
-  
-
-pod开启hostNetwork为true
-dnsPolicy使用ClusterFirstWithHostNet
-
- 1.
-kubectl rollout restart 
- 2.
-kubectl sacle deployment -n --replicas=0
-kubectl sacle deployment -n --replicas=5
-
- 3.
-kubectl delete pod -n
-
 
 block:存储文件数据,8个扇区组成一个块(一个扇区512字节,是硬盘最小存储单位),是文件存取的最小单位
 inode: 索引节点,存储文件元信息(文件权限rwx,文件的属主,属组,文件大小,时间戳) stat可以查看inode信息
@@ -119,45 +98,6 @@ taskkill /T /F /PID 9088
 ### 
 chrome窗口输入badidea或thisisunsafe 告诉chrome跳过证书认证c
 
-
-### python获取异常信息 
-1. try
-
-try
-except Exception as e:
-  print(e.)
-
-2.sys.exc_info 和last_traceback
-
-3.traceback信息均来源于traceback object对象,这个对象则是通过 sys.exc_info()来获取的
-try：
-    pass
-except Exception:
-    exc_type, exc_value, exc_traceback = sys.exc_info()
-
-https://blog.csdn.net/yuanfate/article/details/119916008
-https://zhuanlan.zhihu.com/p/614825330
-
-(1: print_tb
-  traceback.print_tb(exc_traceback limit=None,file=None)
-(2: print_exception
-  traceback.print_exception(exc_type,exc_value,exc_traceback,limit=None,file=sys.stdout)
-  与print_tb相比,打印信息多了开头的 Traceback(most...)以及最后一行的异常类型和value信息
-
-(3: print_exc 简化版的print_exception，省略了sys.exc_info()
-  traceback.print_exc(limit=None,file=None,chain=True)
-  traceback.print_exc(file=open("log.txt","w+")) # 将一擦会给你信息写入到文件中
-(4: format_exc(limit=None,chain=True) 不打印,返回一个字符串,效果和print_exc一致
-  print(traceback.format_exc())
-  
-(5: extract_tb(tb, limit=None)：从traceback对象中提取堆栈跟踪信息，
-以元组的形式返回文件名、行号、函数名和源代码的文本行。limit指定提取堆栈的深度。  
-
-
-### docker build 缓存cache
-1.对大多数命令,如果命令未修改,将使用缓存中的版本(COPY 还会检测文件是否被修改)
-2.某层layer无法应用缓存,则后续层都不能从层缓存加载
-3.
 
 
 
