@@ -59,7 +59,6 @@ C类地址：
       192.168.0.0-192.168.255.255
 
 
-
 block:存储文件数据,8个扇区组成一个块(一个扇区512字节,是硬盘最小存储单位),是文件存取的最小单位
 inode: 索引节点,存储文件元信息(文件权限rwx,文件的属主,属组,文件大小,时间戳) stat可以查看inode信息
    文件名存放在文件目录,目录也是一个文件,每个inode都有一个号,系统通过inode号识别不同文件
@@ -99,17 +98,6 @@ taskkill /T /F /PID 9088
 chrome窗口输入badidea或thisisunsafe 告诉chrome跳过证书认证c
 
 
-
-
-### k8s调度
-节点污点Taint: NoSchedule 一定不被
-               PreferNoSchedule 尽量不被
-               NoExecute:不会调度,并且还会驱逐
-               
-pod调度策略:
- 1.requests/limits
- 2.节点标签选择器
- 3.节点亲和性:硬亲和和软亲和
  
 ### 几种数据
 jay/feather/hdf5/pickle/parquet/csv
@@ -126,10 +114,6 @@ pickle不可以保存lambda函数,序列化对象,dill可以保存
   read 速度排序: pkl > ftr > pqt > hdf5 >csv
   size 大小排序：ftr < pqt < pkl < hdf5 < csv
 
-### 绘图程序
-https://app.diagrams.net/
-
-
 
 #### yaml语法
 直接写成多行字符串,第二行开始必须有一个单空格缩进
@@ -139,27 +123,6 @@ https://app.diagrams.net/
 -表示删除字符串末尾的换行:
 
 
-#### yum换源
-
-yum install -y wget 
-mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
-阿里的: wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
-网易的：wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.163.com/.help/CentOS7-Base-163.repo
-
-# 方案1
-rm -f /var/lib/rpm/__db.00*  # 删除rpm数据文件
-rpm --rebuilddb              # 重建rpm数据文件
-# 方案2
-rm -f /var/lib/rpm/.rpm.lock 
-rm -f /var/lib/rpm/.dbenv.lock
-
-yum clean all  # 清除缓存
-yum makecache  # 重新建立缓存
-
-yum install -y memcached  mongodb-org-tools libmemcached-devel
-
-#### sed替换
-sed -i 's/word/new_word/g' file_name
 
 ### mysql 
 DDL: Data Definition Language
