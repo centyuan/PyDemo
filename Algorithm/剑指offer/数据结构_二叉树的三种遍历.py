@@ -69,7 +69,7 @@ class Tree:
         return res
 
     # 深度遍历->
-    # 前序遍历(根节点，左节点，右节点),
+    # 先序遍历(根节点，左节点，右节点),
     # 中序遍历(左节点，根节点，右节点),
     # 后序遍历(左节点，右节点，根节点),
 
@@ -90,7 +90,7 @@ class Tree:
         self.preorder2(root.right, res)
         return res
 
-    # 迭代
+    # 迭代 先压右孩子，在压做孩子
     def preorder3(self, root):
         res = []
         if not root:
