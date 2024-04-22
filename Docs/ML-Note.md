@@ -1,8 +1,13 @@
+---
 ML-AndrewNg-Notes：https://zhuanlan.zhihu.com/p/353905922
+---
+
+
 
 #### 1.根据数据训练方式:分为监督学习，无监督学习，强化学习
+
 监督学习：supervised learning 数据是有标签的
-无监督学习：unsupervised learning  数据没有标签的
+无监督学习：unsupervised learning  数据没 有标签的
 强化学习：Reinforcement Algorithms 对没有学习过的问题做出正确解答的泛化能力，可以理解为监督学习+无监督学习
 
 #### 2. 基本的机器学习算法:
