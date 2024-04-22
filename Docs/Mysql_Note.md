@@ -1076,13 +1076,20 @@ mysql如何保证主从数据的一致性的？
 > text:大对象,存储大字符串,有字符集(根据字符集的校对规则对值进行排序比较)最大长度16k
 
 #### **DATETIME和TIMESTAMP区别？**
-
+> DATETIME 和 TIMESTAMP 底层也是整型存储,DateTime底层实现是Bigint，索引存储上和Bigint一模一样,所以Bigint支持索引查询,datetime也支持
 > 都表示日期和时间,格式一致,存储秒后6位小数
 > 区别
 > 日期范围:DATETIME(1000-01-01到9999-12-31),TIMESTAMP(1970-01-01到2038-01-09)
-> 存储空间:DATETIM为8字节,TIMESTAMP为4字节
+> 存储空间: MySQL5.6.4之前(DATETIM为8字节,TIMESTAMP为4字节),MySQL5.6.4开发(DateTime为5~8字节,TimeStamp为4~7字节)
 > 时区:DATETIME与时区无关,TIMESTAMP与时区有关
 > 默认值:DATETIME默认为null,TIMESTAMP默认为当前时间,不为空(not null)
+
+#### Datetime/TimeStamp/integer 性能对比
+> MyISAM 引擎，无索引（推荐）：int > UNIXTIMESTAMP(timestamp) > datetime（直接和时间比较）> timestamp（直接和时间比较）> UNIXTIMESTAMP(datetime)
+> MyISAM 引擎，有索引: UNIXTIMESTAMP(timestamp) > int > datetime（直接和时间比较）>timestamp（直接和时间比较）>UNIXTIMESTAMP(datetime)
+> InnoDB无索引(不建议):int > UNIXTIMESTAMP(timestamp) > datetime（直接和时间比较） > timestamp（直接和时间比较）> UNIXTIMESTAMP(datetime)
+> InnoDB有索引:int > datetime（直接和时间比较） > timestamp（直接和时间比较）> UNIXTIMESTAMP(timestamp) > UNIXTIMESTAMP(datetime)
+>  一句话，对于 MyISAM 引擎，采用 UNIX_TIMESTAMP(timestamp) 比较；对于InnoDB 引擎，建立索引，采用 int 或 datetime直接时间比较
 
 #### **in和exists的区别？**
 
