@@ -1,21 +1,30 @@
+---
+title: asyncio的正确使用姿势
+categories: 
+   - Python从入门到放弃
+tags: 
+   - Python
+---
 ###引言
 
 > asyncio作为python协程的标准实现,使用事件循环驱动的协程实现并发,已在python3.4纳入标准库,本文是在使用asyncio过程中,基本使用和整理
 > 概述:子程序或函数在程序执行过程中,通过栈实现的层级调用。而协程在内部执行时可以中断去执行别的子程序,可以简单理解协程作为轻量级的线程。
 
-**1.基本描述**
-    1.event_loop事件循环:协程函数注册到事件循环上,会依次相应的执行,支持注册Future和task类型的对象
-    2.coroutine协程对象:async定义的函数,返回一个协程对象，函数的最终执行交给event_loop
-    3.future:是对协程的封装(提供了取消/回调等),代表一个未来对象,执行结束后会把最终结果设置到Future对象上,属于底层对象,日常开发使用task
-    4.task任务:是future的子类,对future再一次的封装
+#### 基本描述
 
-**2.协程实现的几种方式?**
-    - python2.X:利用生成器通过yield+send实现协程
-    - python3.4:利用asyncio+yield from实现协程
-    - python3.5:asyncio+async/await(比较熟悉)
-      - python3.7:引入了asyncio.create_task和asyncio.run两个高级接口
+1.event_loop事件循环:协程函数注册到事件循环上,会依次相应的执行,支持注册Future和task类型的对象
+2.coroutine协程对象:async定义的函数,返回一个协程对象，函数的最终执行交给event_loop
+3.future:是对协程的封装(提供了取消/回调等),代表一个未来对象,执行结束后会把最终结果设置到Future对象上,属于底层对象,日常开发使用task
+4.task任务:是future的子类,对future再一次的封装
 
-**3.正确使用姿势**
+#### 协程实现的几种方式
+
+- python2.X:利用生成器通过yield+send实现协程
+- python3.4:利用asyncio+yield from实现协程
+- python3.5:asyncio+async/await(比较熟悉)
+- python3.7:引入了asyncio.create_task和asyncio.run两个高级接口d
+
+#### 正确使用姿势
 
 ```
 import time 
@@ -59,12 +68,12 @@ if __name__ =="__main__":
 
 ```
 
-**4.两种方案获取返回值**
+#### 两种方案获取返回值
 
 > 1.通过回调add_done_callback()
 > 2.通过task.result()接口,若任务没有完成,result()不会阻塞去等待结果,而是直接抛出asyncio.InvalidStateError异常
 
-**one:回调**
+##### one:回调
 
 ```
 
@@ -85,7 +94,7 @@ if __name__ =="__main__":
     loop.close()
 ```
 
-**two:task**
+##### two:task
 
 ```
 import asyncio
@@ -144,7 +153,8 @@ if __name__=="__main__":
 
 ```
 
-**5.不要使用asyncio.create_task创建后台任务**
+##### 不要使用asyncio.create_task创建后台任务
+
 [create_task存在的问题](https://www.bilibili.com/read/cv17261955)
 [cpython-issue](https://github.com/python/cpython/issues/91887)
 asyncio仅仅会保留对Task的弱引用weakref,而弱引用不会阻止对象被python垃圾回收机制回收,可能导致正在运行的task被回掉
@@ -156,31 +166,60 @@ asyncio仅仅会保留对Task的弱引用weakref,而弱引用不会阻止对象�
 task = asyncio.create_task(back_task())
 ```
 
-**6.其他说明**
+
+
+#### uvloop代替asyncio默认事件循环
 
 ```
-1. wait和gather的区别
-wait:默认情况下,会等待全部任务完成,所以pending默认是空的,可以使用return_when参数来决定返回时机
-return_when:ALL_COMPLETED(默认全部返回),FIRST_COMPLETED(完成一个返回),FIRST_EXCEPTION(异常一个返回)
-done, pending = await asyncio.wait(tasks:list[task])  # 传入task列表，done为已完成的task列表
-gather:返回task执行的结果
-results = await asyncio.gather(*tasks)    # 传入多个task,可以使用*tasks
-
-1. get_event_loop和new_event_loop,set_event_loop区别
-主线程:get_event_loop会创建一个event_loop，并且多次调用始终返回该loop
-其他线程:get_event_loop会报错,正确的使用是 loop=asyncio.new_event_loop asyncio.set_event_loop(loop)
-
-
-3. asyncio.create_task vs asyncio.ensure_task vs loop.create_task
-(1.都是创建task的方法,asyncio.create_task为3.7新增的高阶用法
-(2.asyncio.create_task就是使用的loop.create_task
-(3.loop.create_task的参数是coroutine
-(4.asyncio.ensure_task可以是(coroutine/Future/awaitable对象[实现__await__方法])
-    -coroutine对象:还是使用loop.creat_task
-    -Future对象:直接返回
-    -awaitable对象:会await这个对象的__await__方法,在执行一次ensure_task,最后返回task/future
-4. asyncio.run
-asyncio.run():为3.7新增的高级接口,隐式的创建loop去执行task,直接asyncio.run(main())
-asyncio.create_task:为3.7新增的高级接口,创建任务
-
+import uvloop
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+# 使得任何对 asyncio.get_event_loop() 的调用都将返回一个 uvloop 的实例
 ```
+
+
+
+#### 其他说明
+
+>**wait和gather的区别**
+>
+>```
+>wait:默认情况下,会等待全部任务完成,所以pending默认是空的,可以使用return_when参数来决定返回时机
+>return_when:
+>	ALL_COMPLETED(默认全部返回),
+>	FIRST_COMPLETED(完成一个返回),
+>	FIRST_EXCEPTION(异常一个返回)
+>done, pending = await asyncio.wait(tasks:list[task])  # 传入task列表，done为已完成的task列表
+>
+>gather:返回task执行的结果
+>results = await asyncio.gather(*tasks)    # 传入多个task,可以使用*tasks
+>
+>```
+>
+>**get_event_loop和new_event_loop,set_event_loop区别**
+>
+>```
+>主线程:
+>	get_event_loop会创建一个event_loop，并且多次调用始终返回该loop
+>其他线程:
+>	get_event_loop会报错
+>	正确的使用是:
+>		loop=asyncio.new_event_loop()
+>		asyncio.set_event_loop(loop)
+>```
+>
+>**asyncio.create_task VS asyncio.ensure_task VS loop.create_task**
+>
+>```
+>(1.都是创建task的方法,asyncio.create_task为3.7新增的高阶用法
+>(2.asyncio.create_task就是使用的loop.create_task
+>(3.loop.create_task的参数是coroutine
+>(4.asyncio.ensure_task可以是(coroutine/Future/awaitable对象[实现__await__方法])
+>    -coroutine对象:还是使用loop.creat_task
+>    -Future对象:直接返回
+>    -awaitable对象:会await这个对象的__await__方法,在执行一次ensure_task,最后返回task/future
+>```
+>
+>**asyncio.run**
+>asyncio.run():为3.7新增的高级接口
+>
+>隐式的创建loop去执行task,直接asyncio.run(main())
