@@ -15,8 +15,8 @@ tags:
 >
 > ```
 > Kube-apiserver: 提供了HTTP Rest接口服务，是Kubernetes所有资源的增删改查等操作的唯一入口
-> Kube-controller-manager: Kubernetes所有资源对象的自动化控制中心
-> Kube-scheduler: 负责资源调度(Pod调度)的进程
+> Kube-controller-manager: Kubernetes所有资源对象的自动化控制中心，保证资源处于预期的状态
+> Kube-scheduler: 资源调度，负责决定将Pod放到那个Node上
 > Etcd: Kubernetes所有资源对象数据都保存在etcd中
 > ```
 
