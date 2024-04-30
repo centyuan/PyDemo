@@ -38,8 +38,12 @@
     增加语法：用 | 运算符连接多个类型，表示 Union 类型
 
 11. python3.11: 2022发布
-    CPython 解释器优化了加载模块、调用函数等操作，使得 Python3.11 比 Python3.10 的启动速度、运行速度快了 10%~60% 
-    增加了标准异常类型 BaseExceptionGroup、ExceptionGroup ，用于将多个异常打包为一组。异常组只能用语法 except* 捕捉
+    速度提升: CPython 解释器优化了加载模块、调用函数等操作，使得 Python3.11 比 Python3.10 的启动速度、运行速度快了 10%~60% 
+    更好的错误信息: 
+    异常说明: e.add_note("异常说明")
+    Self类： 类型提示可以使用Self-> Self: 函数的返回值可以是 self 或类本身的新实例
+    抛出和处理多个异常: 增加了标准异常类型 BaseExceptionGroup、ExceptionGroup ，用于将多个异常打包为一组。异常组只能用语法 except* 捕捉
+    TypeDict 必填字段和非必填字段： from typing import TypedDict
 
 12. python3.12:2023发布
     简化定义泛型的语法
