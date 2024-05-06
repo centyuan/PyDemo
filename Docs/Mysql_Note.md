@@ -1,5 +1,5 @@
 ---
-ititle: mysql常用操作命令和性能优化
+1ititle: mysql常用操作命令和性能优化
 categories: 
    - 数据库
 tags: 
@@ -381,7 +381,7 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 > 1:每次事务提交时,缓冲区redo log保证一定会被写入到磁盘的日志文件。这也是默认值。这是最安全的配置，但由于每次事务都需要进行磁盘I/O，所以也最慢
 > 2:每次事务提交时,缓冲区redo log异步写入(不保证)到磁盘的日志文件。这时如果 mysqld 进程崩溃，由于日志已经写入到系统缓存，所以并不会丢失数据；在操作系统崩溃的情况下，通常会导致最后 1s 的日志丢失。
 > sync_binlog:binlog刷盘的频率
-> 
+>
 > 4.innodb_flush_log_at_trx_commit和sync_binlog都设置为1 (保证主库和主从库的一致性)
 > 5.interactive_timeout:交互模式下超时时间,五分钟或十分钟
 > 6.lock_wait_timeout:表锁锁定时间
@@ -459,7 +459,7 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 
 ```
 (1)联合索引不满足最左匹配原则,联合索引最左边字段必须出现在查询条件中
-(2)错误使用like,以%开头如 like '%abc',(当like以%结尾索引有效)
+(2)错误使用like,前导模糊查询，以%开头如 like '%abc',(当like以%结尾索引有效)
 (3)错误使用or,or两边字段有一个没有创建索引(where id=2 or name="Tom")或两边为范围查询(where id>10 or id<20),导致失效
 (4)索引列参与运算, 如where id-1=10 或使用了函数 where SUBSTR(id_no,1,3)=100
 (5)类型隐式转换,where条件上进行了类型转换,比如字段是字符串类型,却填上了数字
@@ -563,6 +563,8 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 #### 什么是回表
 
 > where不在主键上，则通过非主键索引查询,select所获取的字段不能通过非主键索引获取到,只能查到主键,需要回表通过主键索引查到完整的数据。
+>
+> 所以被查询的列，数据能从索引中取得，而不是通过定位符row-locator再到row上获取，即“被查询列要被所建的索引覆盖”，这能够加速度查询。
 
 #### 覆盖索引,非覆盖索引
 
@@ -667,7 +669,8 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 
 > **问题**
 >
-> >https://cloud.tencent.com/developer/article/2136022
+>> https://cloud.tencent.com/developer/article/2136022
+>>
 >
 > ```
 > 1.脏读:读到其他事务未提交的数据(读取了事务B已修改还没提交的数据)
@@ -676,13 +679,14 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 > 2.不可重复读:前后读取的数据不一致(务A中先后多次读取同一个数据，读取的结果不一样(因为B事务在A事务两次读取之前更改了数据))
 > 	解决方法:1.事务隔离级别设置为(可重复读repeatable read)
 > 			2.读取数据时加共享锁,写入数据时加排它锁
-> 			
+> 		
 > 3.幻读:前后读取的记录数量不一致(一个事务中,select执行了两次,第二次返回了第一次没有的行)
 > ```
 >
 > **隔离级别**
 >
-> >**SQL 标准**提出了四种隔离级别来规避这些现象，隔离级别越高，性能效率就越低，这四个隔离级别如下：
+>> **SQL 标准**提出了四种隔离级别来规避这些现象，隔离级别越高，性能效率就越低，这四个隔离级别如下：
+>>
 >
 > ```
 > 读未提交（READ UNCOMMITTED）
@@ -692,9 +696,10 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 > **InnoDB默认是可重复读，实际上线上都设置可重复读(可以避免很多间隙锁,对高并发写的性能明显提升)**
 > ```
 >
-> >MySQL InnoDB 引擎的默认隔离级别虽然是「可重复读」，但是它很大程度上避免幻读现象（并不是完全解决了），解决的方案有两种：
-> >针对快照读（普通 select 语句），是通过 MVCC 方式解决了幻读，因为可重复读隔离级别下，事务执行过程中看到的数据，一直跟这个事务启动时看到的数据是一致的，即使中途有其他事务插入了一条数据，是查询不出来这条数据的，所以就很好了避免幻读问题。
-> >针对当前读（select ... for update 等语句），是通过 next-key lock（记录锁+间隙锁）方式解决了幻读，因为当执行 select ... for update 语句的时候，会加上 next-key lock，如果有其他事务在 next-key lock 锁范围内插入了一条记录，那么这个插入语句就会被阻塞，无法成功插入，所以就很好了避免幻读问题。
+>> MySQL InnoDB 引擎的默认隔离级别虽然是「可重复读」，但是它很大程度上避免幻读现象（并不是完全解决了），解决的方案有两种：
+>> 针对快照读（普通 select 语句），是通过 MVCC 方式解决了幻读，因为可重复读隔离级别下，事务执行过程中看到的数据，一直跟这个事务启动时看到的数据是一致的，即使中途有其他事务插入了一条数据，是查询不出来这条数据的，所以就很好了避免幻读问题。
+>> 针对当前读（select ... for update 等语句），是通过 next-key lock（记录锁+间隙锁）方式解决了幻读，因为当执行 select ... for update 语句的时候，会加上 next-key lock，如果有其他事务在 next-key lock 锁范围内插入了一条记录，那么这个插入语句就会被阻塞，无法成功插入，所以就很好了避免幻读问题。
+>>
 >
 > | 隔离级别 | 脏读   | 不可重复读 | 幻读   |
 > | :------- | ------ | ---------- | ------ |
@@ -793,21 +798,22 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 
 > **锁种类**
 >
-> >间隙锁: 用范围条件而不是相等条件检索数据,并请求共享和排它锁时,InnoDB会给符合条件的的已有记录的索引项加锁
-> >
-> >使用间隙锁的目的是位了防止幻读,以满足串行化的隔离级别
-> >
-> >```
-> >select * from user where userid>100 for update; userid的值(1...101)
-> >对于101会加锁,大于101但是记录不存在的也会加锁,防止其他事务在表末尾增加数据
-> >```
+>> 间隙锁: 用范围条件而不是相等条件检索数据,并请求共享和排它锁时,InnoDB会给符合条件的的已有记录的索引项加锁
+>>
+>> 使用间隙锁的目的是位了防止幻读,以满足串行化的隔离级别
+>>
+>> ```
+>> select * from user where userid>100 for update; userid的值(1...101)
+>> 对于101会加锁,大于101但是记录不存在的也会加锁,防止其他事务在表末尾增加数据
+>> ```
+>>
 >
 > ```
 > 1.锁粒度划分
 > 表锁:粒度最大的锁，开销小，加锁快，不会出现死锁，粒度大导致并发性低()
 > 页锁：介于行锁和表锁之间的一种锁,页锁是在BDB中支持的一种锁机制，也很少没人提及和使用
 > 行锁: 粒度最小，加锁开销性能大，加锁慢，并且会出现死锁，但是行锁的锁冲突的几率低，并发性能高(行锁是InnoDB默认的支持的锁机制，MyISAM不支持行锁)
-> 
+>
 > 2.使用方式划分
 > 共享锁、排它锁(如果加排他锁可以使用select …for update语句)
 > 加排它锁后，不能对该条数据再加锁，其它事务即不能查询也不能更改数据。
@@ -1076,6 +1082,7 @@ mysql如何保证主从数据的一致性的？
 > text:大对象,存储大字符串,有字符集(根据字符集的校对规则对值进行排序比较)最大长度16k
 
 #### **DATETIME和TIMESTAMP区别？**
+
 > DATETIME 和 TIMESTAMP 底层也是整型存储,DateTime底层实现是Bigint，索引存储上和Bigint一模一样,所以Bigint支持索引查询,datetime也支持
 > 都表示日期和时间,格式一致,存储秒后6位小数
 > 区别
@@ -1085,11 +1092,12 @@ mysql如何保证主从数据的一致性的？
 > 默认值:DATETIME默认为null,TIMESTAMP默认为当前时间,不为空(not null)
 
 #### Datetime/TimeStamp/integer 性能对比
+
 > MyISAM 引擎，无索引（推荐）：int > UNIXTIMESTAMP(timestamp) > datetime（直接和时间比较）> timestamp（直接和时间比较）> UNIXTIMESTAMP(datetime)
 > MyISAM 引擎，有索引: UNIXTIMESTAMP(timestamp) > int > datetime（直接和时间比较）>timestamp（直接和时间比较）>UNIXTIMESTAMP(datetime)
 > InnoDB无索引(不建议):int > UNIXTIMESTAMP(timestamp) > datetime（直接和时间比较） > timestamp（直接和时间比较）> UNIXTIMESTAMP(datetime)
 > InnoDB有索引:int > datetime（直接和时间比较） > timestamp（直接和时间比较）> UNIXTIMESTAMP(timestamp) > UNIXTIMESTAMP(datetime)
->  一句话，对于 MyISAM 引擎，采用 UNIX_TIMESTAMP(timestamp) 比较；对于InnoDB 引擎，建立索引，采用 int 或 datetime直接时间比较
+> 一句话，对于 MyISAM 引擎，采用 UNIX_TIMESTAMP(timestamp) 比较；对于InnoDB 引擎，建立索引，采用 int 或 datetime直接时间比较
 
 #### **in和exists的区别？**
 
