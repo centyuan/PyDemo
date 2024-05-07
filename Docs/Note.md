@@ -264,7 +264,7 @@ db.teams.insert({
 
 ```
 
-docker run -d --name bge_reranker -p 6006:6006 -e ACCESS_TOKEN=sk-hiMCVp1HOS4gE76D69Ff79D9D6B54d6985Ca972a9eD2Bb45 luanshaotong/reranker:v0.1
+docker run -d --name bge_reranker -p 6006:6006 -e ACCESS_TOKEN=sk-** luanshaotong/reranker:v0.1
 docker run -d --name bge_reranker -p 6006:6006 luanshaotong/reranker:v0.1
 $env:SQL_DSN="cent:123456@tcp(192.168.100.208:3306)/one_api"
 $env:REDIS_CONN_STRING="redis://192.168.100.208:6379"
@@ -755,6 +755,20 @@ curl -N -k -X 'POST' \
 
 #### Fine Tune
 
+**微调框架**
+
+>**[LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory)**
+>
+>**[xtuner](https://github.com/InternLM/xtuner)**
+>
+>[Llama3本地部署与高效微调入门](https://www.cnblogs.com/hlgnet/articles/18148788)
+>
+>[Llama3-8B-Instruct + LLaMA-Factory 中文微调 | 本地部署教程](https://caovan.com/llama3-8b-instruct-llama-factory-zhongwenweidiao-bendebushujiaocheng/.html)
+
+
+
+>7B模型需要3×28G的显存(SGD+Momentum)，至少需要2张A100的显卡才能满足要求
+
 >在预训练的模型上，通过针对特定领域的，在对应的数据集上训练来调整部分参数或全部参数
 >**什么情况下使用微调**
 >
@@ -772,14 +786,19 @@ curl -N -k -X 'POST' \
 > 方式:
 >
 > ```
-> Prompt tuning: 大模型参数不变，在输入x序列之前，增加一定长度的特殊Token，以增大生成期望序列的概率
-> Prefix tuning: 和Prompt tuning类似，而是在Transformer的Encode和Decode网络中加了些特定的前缀
-> LORA: 背后有一个假设，所有LLM都是过度参数化的，而过度参数化的LLM背后都有一个低纬的本质模型(影响LLM生成的关键参数)
+> **Prompt tuning(p-Tunning)**: 大模型参数不变，在输入x序列之前，增加一定长度的特殊Token，以增大生成期望序列的概率
+> **Prefix tuning(Prefix-Tunning)**: 和Prompt tuning类似，而是在Transformer的Encode和Decode网络中加了些特定的前缀
+> **LORA**: 背后有一个假设，所有LLM都是过度参数化的，而过度参数化的LLM背后都有一个低纬的本质模型(影响LLM生成的关键参数)
+> Lora（Low-Rank Adaptation of Large Langage Models）,大语言模型的低阶适应 https://arxiv.org/pdf/2106.09685
+> 使用LORA，训练参数仅为整体参数的万分之一、GPU显存使用量减少2/3且不会引入额外的推理耗时
+> 
 > 1.适配特定的下游任务，要训练一个特定的模型，将Y=WX变成Y=(W+∆W)X，这里面∆W主是我们要微调得到的结果
 > 2.将∆W进行低维分解∆W=AB (∆W为m * n维，A为m * r维，B为r * n维，r就是上述假设中的低维)
 > 3.接下来，用特定的训练数据，训练出A和B即可得到∆W，在推理的过程中直接将∆W加到W上去，再没有额外的成本
-> QLoRA:量化（Quantization）将原本用16bit表示的参数，降为用4bit来表示，可以在保证模型效果的同时，极大地降低成本
+> 
+> **QLoRA**:量化（Quantization）将原本用16bit表示的参数，降为用4bit来表示，可以在保证模型效果的同时，极大地降低成本
 > 65B的LLaMA 的微调要780GB的GPU内存；而用了QLoRA之后，只需要48GB
+> QLoRA是一种高效的模型微调方法，使用一种新颖的高精度技术将预训练模型量化为4-bit，然后添加一小组可学习的低秩适配器权重（ Low-rank Adapter weights），这些权重通过量化权重的反向传播梯度进行调优
 > ```
 
 
@@ -850,12 +869,6 @@ curl -N -k -X 'POST' \
 
 
 **think/action and observeration context ReAct**
-
-
-
-
-
-
 
 
 
@@ -975,7 +988,7 @@ curl 'https://api.openai.com/v1/usage?date=2024-04-28' \
 
 ```
 curl 'https://api.openai.com/dashboard/billing/credit_grants' \
-  -H "Authorization: Bearer sess-**" 
+  -H "Authorization: Bearer sess-xoxwoZQnBfl52HeoHIxHo9xTtEZVw5uIRtGT0bO3" 
 ```
 
 
@@ -1015,4 +1028,90 @@ curl 'https://api.openai.com/dashboard/billing/credit_grants' \
 
 
 
-##### 
+```sql
+SELECT DATE_FORMAT(FROM_UNIXTIME(created_at), '%Y-%m-%d') as day,model_name,sum(quota) as quota,sum(prompt_tokens) as prompt_tokens,sum(completion_tokens) as completion_tokens FROM logs GROUP BY day, model_name 
+
+
+SELECT DATE_FORMAT(FROM_UNIXTIME(created_at), '%Y%u') as weeks,model_name,sum(quota) as quota,sum(prompt_tokens) as prompt_tokens,sum(completion_tokens) as completion_tokens FROM logs GROUP BY weeks, model_name  按照周统计
+
+
+
+select DATE_FORMAT(FROM_UNIXTIME(created_at), '%Y-%m-%d') as date, log_type, count(*) as count from data_exit_logs group by day, log_type
+```
+
+
+
+
+
+#### GPM
+
+>GPM是go运行时runtime层的实现，一套自己的调度系统，
+>```
+>G: 极速goroutine
+>P: 一组goroutine队列，存储当前goroutine运行的上下文环境(函数指针、堆栈地址)P会对自己管理的goroutine队列做一些调度（比如把占用CPU时间较长的goroutine暂停、运行后续的goroutine等等）当自己的队列消费完了就去全局队列里取，如果全局队列里也消费完了会去其他P的队列里抢任务
+>M: machine 是Go运行时对操作系统内核线程的虚拟，M与内核线程一般是一一映射的关系，一个goroutine最终会放到M上执行
+>P与M一般也是一一对应的，P管理一组G，挂载在M上运行，当一个G长久阻塞在一个M时，runtime会新建一个M，阻塞G所在的P会把其他的G挂载在新建的M上执行，
+>P的个数是通过runtime.GOMAXPROCS设定（最大256），Go1.5版本之后默认为物理线程数。 在并发量大的时候会增加一些P和M，但不会太多，切换太频繁的话得不偿失。
+>```
+>
+
+
+
+#### 镜像版本选择
+
+>大小
+>python:3.7 > centos:8 > python:3.7-slim > amazonlinux:latest > debian:buster > ubuntu:18.04 > alpine:latest
+
+**传统的Linux分支(Ubuntu TLS,CentOS,Debian)**
+
+
+
+**Docker官方的Python镜像**
+
+>alpine<slim<(buster/stretch/jessie)<full official image(python:3.11.3)
+>
+>buster/stretch/jessie都是基于debian的
+>
+>```
+>buster:Debian 10
+>stretch:Debian 9
+>jessie:Debian 8
+>```
+
+**云计算上的 Linux 镜像 – Amazon Linux 2**
+
+
+
+**Alpine 镜像**
+
+>Alpine Linux
+>
+>GNU C Library(glibc)换成了迷你版的C标准款musl
+
+
+
+```
+python3 /home/devpmp/flygpt/build.py  --source_files "*.py" --data_files "gptserver/migrations/* ; gptserver/main.py" 
+```
+
+```
+ pip install nb-log==12.4 --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+```
+sse-starlette==2.0.0
+pydantic[email]
+openai==1.7.0
+redis==5.0.3
+dashscope==1.14.1
+qianfan==0.3.3
+httpx_sse
+docx2txt==0.8
+PyMuPDF==1.23.26
+python-multipart==0.0.9
+ldap3==2.9.1
+cachetools==5.3.3
+PyJWT==2.8.0
+nb-log==12.4
+```
+
