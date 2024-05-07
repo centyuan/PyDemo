@@ -1,0 +1,34 @@
+# ubuntu构建 840MB
+FROM ubuntu:22.04 
+ENV DEBIAN_FRONTEND=noninteractive 
+ENV LANG C.UTF-8 
+ENV PYTHONPATH=/var/app/enabled/flygpt
+RUN sed -i 's@http://archive.ubuntu.com/ubuntu/@http://mirrors.aliyun.com/ubuntu/@g' /etc/apt/sources.list 
+
+RUN mkdir -p /var/app/enabled 
+WORKDIR /var/app/enabled      
+COPY requirements.txt requirements.txt 
+
+RUN apt-get update 
+RUN  apt-get install -y libmysqlclient-dev tzdata wget curl vim \
+                        python3 python3-dev python3-pip libpcre3 libpcre3-dev  uwsgi-plugin-python3\
+   && apt-get clean \
+   && apt-get autoclean \
+   && pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/ \
+   && pip install -r requirements.txt \
+   && pip cache purge
+
+
+# python buster 
+FROM python:3.11-buster as builder-image
+
+### install requirements
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+FROM python:3.11-slim-buster
+COPY --from=builder-image /usr/local/bin /usr/local/bin
+COPY --from=builder-image /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+WORKDIR /var/epp/enabled
+COPY . .
+EXPOSE 80
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
