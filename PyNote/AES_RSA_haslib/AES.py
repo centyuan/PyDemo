@@ -77,27 +77,43 @@ class Encrypt:
         # rstrip 删除text末尾指定的字符
         return text.rstrip(self.coding)
 
+import base64
+
 from Crypto.Cipher import DES
+
+
 class ExpirationCheck:
-   key = b")EOz@@P*"  # 密钥 8位或16位,必须为bytes"
-   des = DES.new(key,DES.MODE_ECB)
+    key = b")EOz@@P*"  # 密钥 8位或16位,必须为bytes
+    des = DES.new(key, DES.MODE_ECB)
 
-   @classmethod
-   def encrypt(cls, text:str)->str:
+    @classmethod
+    def encrypt(cls, text: str) -> str:
         padded_text = cls.padding(text)
-        _res = cls.des.encrypt(padded_text.encode("utf-8"))
-        return base64.b16encode(_res).decode()
+        encrypted = cls.des.encrypt(padded_text.encode("utf-8"))
+        return base64.b64encode(encrypted).decode()
 
-   @classmethod
-   def decrypt(cls, text:str)->str:
-       _res = base64.b64decode(text)
-       _res = cls.des.decrypt(_res)
-       return _res.decode().rstrip(" ")
-   @classmethod
-   def padding(cls, text:str)->str:
-       while len(text) % 8 !=0:
-           text +=" "
-       return text 
+    @classmethod
+    def decrypt(cls, text: str) -> str:
+        encrypted = base64.b64decode(text)
+        decrypted = cls.des.decrypt(encrypted)
+        return decrypted.decode().rstrip(" ")
+
+    @classmethod
+    def padding(cls, text: str) -> str:
+        # Adding padding with space characters to make text multiple of 8
+        while len(text) % 8 != 0:
+            text += " "
+        return text
+
+
+# if __name__ == "__main__":
+#     text = "2024-04-03"
+#     print("Before encryption:", text)
+#     e = ExpirationCheck.encrypt(text)
+#     print("Encrypted text:", e)
+#     d = ExpirationCheck.decrypt(e)
+#     print("Decrypted text:", d)
+
  
 if __name__ == '__main__':
     key = 'ONxYDyNaCoyTzsp83JoQ3YYuMPHxk3j7'
