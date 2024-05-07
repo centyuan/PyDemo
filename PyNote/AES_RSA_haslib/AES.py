@@ -84,9 +84,9 @@ class ExpirationCheck:
 
    @classmethod
    def encrypt(cls, text:str)->str:
-       padded_text = cls.padding(text)
-       _res = cls.des.encrypt(padded_text.encode("utf-8"))
-       return base64.decode(_res).decode()
+        padded_text = cls.padding(text)
+        _res = cls.des.encrypt(padded_text.encode("utf-8"))
+        return base64.b16encode(_res).decode()
 
    @classmethod
    def decrypt(cls, text:str)->str:
