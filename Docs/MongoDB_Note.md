@@ -40,3 +40,8 @@ tags:
 >3.分片(Sharding)
 >
 >推荐使用副本集/分片
+
+**备份** 
+```
+mongodump -u 'username' -p 'password' -d fastgpt -o backup --authenticationDatabase  admin 
+```
