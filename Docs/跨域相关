@@ -10,9 +10,14 @@ XMLHttpRequest:可以访问来自同源对象的内容，受到同源策略的�
 跨域解决：
 
 前端解决方案
-1.JSONP
+1.JSONP(支持get请求的跨域)
 通过<script> src属性，请求接口放回一段js语句，并执行
 js语句为已经定义好的js 函数 但是这种方式只能走get请求(里面加入约定好的回调函数(本地js定义好的)，服务器返回调用回调函数的js)
+
+JSONP 只支持 GET 请求的根本原因是 JSONP 的工作原理。JSONP 利用动态创建 `<script>` 标签来请求数据，而浏览器对于 `<script>` 标签的跨域请求并不受同源策略的限制。因为 `<script>` 标签没有访问 DOM 的权限，所以可以用来加载外部数据而不受同源策略的阻碍。
+其他 HTTP 请求方法（如 POST、PUT、DELETE）通常需要访问 DOM，因此受到同源策略的限制。由于 JSONP 只是通过 `<script>` 标签加载数据，所以只能用于 GET 请求，以绕过浏览器的同源策略，实现跨域请求。
+这是 JSONP 只支持 GET 请求的根本原因。如果需要进行其他类型的请求，应该使用 CORS（Cross-Origin Resource Sharing）或其他跨域请求方法。
+
 
 2.VUE提供的代理配置(webpack-dev-server)
 前端可以在开发环境设置代理解决跨域问题
