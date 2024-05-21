@@ -1,37 +1,41 @@
-同源策略
+同源策略：
 影响源的因素:host(域名或ip地址)，子域名，端口，协议
 
-对script来说，存放js文件的域不重要，重要的是加载js文件所在的域
-在浏览器中，<script> <img><iframe><link> 等标签都可以跨域加载资源
-这些带src属性的标签每次加载时，实际上是由浏览器发起了一次GET请求，
+对script来说，存放js文件的域不重要，重要的是加载js文件所在的域，在浏览器中，<script> <img><iframe><link> 等标签都可以跨域加载资源，这些带src属性的标签每次加载时，实际上是由浏览器发起了一次GET请求，
+不同于XMLHttpRequest的是，通过src属性加载的资源,浏览器限制了JavaScript的权限，使其不能读，写返回的内容
 
-不同于XMLHttpRequest的是，通过src属性加载的资源,浏览器限制了JavaScript的权限，
-使其不能读，写返回的内容
-XMLHttpRequest:可以访问来自同源对象的内容，受到同源策略的约束，不能跨域访问资源，在AJAX开发中尤其注意这一点
-如果XMLHttpRequest能够跨域访问资源，可能会泄露一些敏感数据，如CSRF的token
+XMLHttpRequest:可以访问来自同源对象的内容，受到同源策略的约束，不能跨域访问资源，在AJAX开发中尤其注意这一点，如果XMLHttpRequest能够跨域访问资源，可能会泄露一些敏感数据，如CSRF的token
+跨源域资源共享（CORS）机制允许 Web 应用服务器进行跨源访问控制，从而使跨源数据传输得以安全进行。现代浏览器支持在 API 容器中（例如 XMLHttpRequest 或 Fetch）使用 CORS，以降低跨源 HTTP 请求所带来的风险
 
 跨域解决：
-1.http头Access-字段
+
+前端解决方案
+1.JSONP
+通过<script> src属性，请求接口放回一段js语句，并执行
+js语句为已经定义好的js 函数 但是这种方式只能走get请求(里面加入约定好的回调函数(本地js定义好的)，服务器返回调用回调函数的js)
+
+2.VUE提供的代理配置(webpack-dev-server)
+前端可以在开发环境设置代理解决跨域问题
+
+3.document.domain
+利用document.domain 可以修改 访问页面的域，多用在父子关系的域，子域可以设置document.domain等于父域，从而解决同父域跨域问题。
+举例子：
+www.ios.xingyu.com 访问 www.web.xingyu.com 跨域，可以利用 document.domain 设置成 www.xingyu.com
+
+除了DOM，Cookie，XMLHttpRequest会受到同源策略的限制外，浏览器加载的一些第三方插件也有各自的同源策略
+如：Flash，Java Applet，Silverlight，Google Gears等
+
+
+后端解决方案
+1.http头Access-字段(Http协议CORS头设置)
+CORS （Cross-Origin Resource Sharing，跨域资源共享）是一个系统，它由一系列传输的HTTP头组成，这些HTTP头决定浏览器是否阻止前端 JavaScript 代码获取跨域请求的响应
+
 Access-Control-Allow-Origin:*代表所有 ps:w3c委员会制定的标准
 Access-Control-Allow-Headers:表示此次请求可以使用那些header字段
 Access-Control-Allow-Methods:表示此次请求中可以使用那些请求方法
 Access-Control-Allow-Credentials:响应头表示是否可以将对请求的响应暴露给页面，返回true则可以，其他值都不可
 通过目标域返回的HTTP头来授权是否允许跨域访问(因为HTTP头对于JavaScript来说一般无法控制)
 跨域并不会阻止请求的发出，也不会阻止请求的接受，是浏览器为了保护当前页面，不会把跨域的响应交给页面上的回调
-
-2.JSONP
-通过<script> src属性，请求接口放回一段js语句，并执行
-js语句为已经定义好的js 函数 但是这种方式只能走get请求(里面加入约定好的回调函数(本地js定义好的)，服务器返回调用回调函数的js)
-
-3.VUE提供的代理配置
-
-
-除了DOM，Cookie，XMLHttpRequest会受到同源策略的限制外，浏览器加载的一些第三方插件也有各自的同源策略
-如：Flash，Java Applet，Silverlight，Google Gears等
-
-
-# 跨域头设置
-
 # ---基本配置
 CORS_ALLOW_CREDENTIALS = True  # 跨域请求时，是否运行携带cookie
 CORS_ORIGIN_ALLOW_ALL = True   # 允许来源跨域
@@ -63,3 +67,6 @@ CORS_ALLOW_HEADERS = (
     'token',
     'X-Frame-Options'
 )
+
+运维nginx解决方案
+原理同webpack-dev-server 设置代理转发解决跨域问题
