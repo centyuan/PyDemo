@@ -22,6 +22,9 @@ tags:
 
 ##### Node
 
+> kubelet: 负责维护容器的生命周期，同时也负责 Volume 和网络的管理
+> kube-proxy:负责为 Service 提供 cluster 内部的服务发现和负载均衡(实质操作防火墙规则(iptables/ipvs)来实现pod的映射)
+> Container Runtime:负责镜像管理以及 Pod 和容器的真正运行(Kubernetes 支持多个容器运行环境: Docker、 containerd、cri-o、 rktlet 以及任何实现 Kubernetes CRI(容器运行环境接口))
 > 可以在运行期间动态加入kubernetes集群,一加入集群，Node上的kubelet进程会定时向Master节点汇报自身情报(如操作系统信息，Docker版本，CPU内存情况，Pod信息)，Node超时不上报信息，会被Master判定为“失联",Node被标记为Not Ready，随后Master触发”工作负载大转移"
 
 ##### Pod
