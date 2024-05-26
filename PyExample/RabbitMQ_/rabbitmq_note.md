@@ -35,7 +35,6 @@
 >RocketMQ 出自阿里巴巴的开源产品，用 Java 语言实现
 >```
 >
->
 
 
 
@@ -63,18 +62,18 @@
 
 #### RabbitMQ Exchange分类
 
-> 常用的有direct,fanout,topic,headers
+> 有四种类型direct,fanout,topic,headers，不同类型对应不同的路由策略
 >
 > **direct:**
 >
 > ```
->  1:1,binding key和routing key都是队列的名称
+>  1:1，Bindingkey与Routingkey完全匹配，常用在处理有优先级的任务
 > ```
 >
 > **fanout:**
 >
 > ```
-> 1:N,不需要处理Route key,把消息路由到与该Exchange绑定Binding的所有Queue
+> 1:N,不需要处理Route key,把消息路由到与该Exchange绑定Binding的所有Queue，速度最快，常用来广播消息
 > ```
 >
 > **topic:**
@@ -141,7 +140,7 @@
 
 ##### 6.RPC模式
 
-#### RabbitMQ 消息确认机制ACK
+#### RabbitMQ 消息确认机制
 
 >1.生产者发送消息确认分为:Confirm消息确认(将信道设置成Confirm模式,成功失败都有返回)和Return(投递失败时才有返回)消息机制
 >**2.消费者采用ack模式:**
@@ -155,6 +154,8 @@
 
 #### 持久化
 
+>**交换器的持久化/队列的持久化/消息的持久化**
+>
 >设置了队列和消息持久化后：`当服务重启之后，消息仍然存在`
 >
 >只设置队列持久化，不设置消息持久化：`重启之后消息会丢失`
@@ -220,6 +221,14 @@
 
 
 
+#### 优先级队列
+
+>RabbitMQ 自 V3.5.0 有优先级队列实现，优先级高的队列会先被消费。
+>
+>可以通过`x-max-priority`参数来实现优先级队列。不过，当消费速度大于生产速度且 Broker 没有堆积的情况下，优先级显得没有意义
+
+
+
 #### 消息重复消费怎么处理
 
 >**1.生产时消息重复**
@@ -231,8 +240,38 @@
 >**解决方法:**
 >
 >```
->发送消息时让每个消息携带一个全局的唯一ID，在消费消息时先判断消息是否已经被消费过，保证消息消费逻辑的幂等性
+>发送消息时让每个消息携带一个全局的唯一ID(放在Redis里面)，在消费消息时先判断消息是否已经被消费过，保证消息消费逻辑的幂等性
 >```
+
+#### 如何保证消息的顺序消费
+
+>拆分成多个queue,相同订单id到同一个queue
+>或一个queue
+
+#### RabbitMQ高可用
+
+>单机模式
+>普通集群模式
+>镜像集群模式
+
+####  rabbitmq集群搭建
+
+>1.停止rabbitmq服务
+>2.启动第一个节点
+>sudo RABBITMQ_NODE_PORT=5672 RABBITMQ_NODENAME=rabbit-1 rabbit-server start &
+>3.启动第二个节点
+>sudo RABBITMQ_NODE_PORT=5673 RABBITMQ_SERVER_START_ARGS="-rabbitmq_management listener [{port,15673}]" RABBITMQ_NODENAME=rabbit-2 rabbitmq-server start &
+>4.修改rabbit-1为主节点
+>sudo rabbitmqctl -n rabbit-1 stop_app  # 1.停止应用
+>sudo rabbitmqctl -n rabbit-1 reset     # 2.重置,清除节点上的历史数据(否则无法加入节点)
+>sudo rabbitmqctl -n rabbit-1 start_app # 3.启动应用
+>5.修改rabbit-2为从节点
+>sudo rabbitmqctl -n rabbit-2 stop_app
+>sudo rabbitmqctl -n rabbit-2 reset
+>sudo rabbitmqctl -n rabbit-2 join_cluster rabbit-1@主机名
+>sudo rabbitmqctl -n rabbit-2 start_app
+>6.验证集群状态
+>sudo rabbitmqctl cluster_status -n rabbit-1
 
 
 
@@ -265,25 +304,6 @@
 >
 
 
-
-####  rabbitmq集群搭建
-
->1.停止rabbitmq服务
->2.启动第一个节点
->sudo RABBITMQ_NODE_PORT=5672 RABBITMQ_NODENAME=rabbit-1 rabbit-server start &
->3.启动第二个节点
->sudo RABBITMQ_NODE_PORT=5673 RABBITMQ_SERVER_START_ARGS="-rabbitmq_management listener [{port,15673}]" RABBITMQ_NODENAME=rabbit-2 rabbitmq-server start &
->4.修改rabbit-1为主节点
-> sudo rabbitmqctl -n rabbit-1 stop_app  # 1.停止应用
-> sudo rabbitmqctl -n rabbit-1 reset     # 2.重置,清除节点上的历史数据(否则无法加入节点)
-> sudo rabbitmqctl -n rabbit-1 start_app # 3.启动应用
->5.修改rabbit-2为从节点
-> sudo rabbitmqctl -n rabbit-2 stop_app
-> sudo rabbitmqctl -n rabbit-2 reset
-> sudo rabbitmqctl -n rabbit-2 join_cluster rabbit-1@主机名
-> sudo rabbitmqctl -n rabbit-2 start_app
->6.验证集群状态
->sudo rabbitmqctl cluster_status -n rabbit-1
 
 
 

@@ -909,78 +909,111 @@ https://juejin.cn/post/6926039904590037005
 
 #### 12.相关问题
 
-> **Redis为什么这么快?**
+>参考[Redis常见面试题](https://cloud.tencent.com/developer/article/2315477)
 >
-> ```
-> 1.Redis 是纯内存结构的，避免了磁盘 I/O 等耗时操作。
-> 2.Redis 命令处理的核心模块为单线程，减少了锁竞争，以及频繁创建线程和销毁线程的代价，减少了线程上下文切换的消耗。
-> 3.采用了 I/O 多路复用机制，大大提升了并发效率。
-> ```
->
-> **Redis为什么是单线程?**
->
-> ```
-> CPU不是redis的瓶颈,不会有太多的计算和逻辑判断,最有可能机器内存和网络带宽
->
-> ```
->
-> **Redis6.0为什么引入了多线程?**
->
-> ```
-> 瓶颈在网络I/O模块带来的CPU耗时,引入的多线程用来处理网络I/O部分。
-> ```
->
-> **是否有并发安全问题?**
->
-> ```
-> 内存操作，依然是单线程运行的。redis 的多线程部分只是用来处理网络数据的读写和协议解析，执行命令仍然是单线程顺序执行，也就不存在并发安全问题
-> ```
->
-> **如何开启多线程？**
->
-> ```
-> 配置文件开启多线程：
-> io-thread-do-reads yes
-> io-thread 线程数
-> ```
->
-> **如何实现优先级队列？**
->
-> ```
-> 使用Zset,是一个有序队列,每个元素member都有一个分数score
-> ```
->
-> **如何实现延迟队列?**
->
+>​        [Redis面试题](https://javaguide.cn/distributed-system/distributed-lock-implementations.html#%E5%9F%BA%E4%BA%8E-redis-%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81)
+
+##### Redis为什么这么快?
+
+```
+1.Redis 是纯内存结构的，避免了磁盘 I/O 等耗时操作。
+2.Redis 命令处理的核心模块为单线程，减少了锁竞争，以及频繁创建线程和销毁线程的代价，减少了线程上下文切换的消耗。
+3.单线程事件循环+I/O多路复用机制，大大提升了并发效率。
+4.多种优化过后的数据类型/结构
+```
+
+##### Redis为什么是单线程?
+
+```
+CPU不是redis的瓶颈,不会有太多的计算和逻辑判断,最有可能机器内存和网络带宽
+
+```
+
+##### Redis6.0为什么引入了多线程?
+
+```
+瓶颈在网络I/O模块带来的CPU耗时,引入的多线程用来处理网络I/O部分。
+```
+
+##### 是否有并发安全问题?
+
+````
+内存操作，依然是单线程运行的。redis 的多线程部分只是用来处理网络数据的读写和协议解析，执行命令仍然是单线程顺序执行，也就不存在并发安全问题
+````
+
+##### 如何开启多线程？
+
+```
+配置文件开启多线程：
+io-thread-do-reads yes
+io-thread 线程数
+```
+
+##### 如何实现优先级队列？
+
+>使用Zset,是一个有序队列,每个元素member都有一个分数score
+
+##### 如何实现延迟队列?
+
 > 使用Zset，score为当前时间+时间戳
+
+```
+生产者:
+# key为队列的名称，score为当前的时间戳+延迟时间，member为消息体
+zadd key score member
+消费者:一直循环从redis的zset队列获取数据
+# key为队列的名称，min为0，max为当前的时间戳，limit为单次个数
+zrangebyscore key min max limit
+消费删除:
+zrem key member
+```
+
+##### 如何实现分布式锁?
+
+**基于Redis实现**
+
+>SETNX可以实现互斥, SET if Not  eXists
+
+```
+ # 设置锁
+ SETNX lockKey uniqueValue
+ # 释放锁
+ DEL lockkey 
+ # 为防止误删,设置value,并判断
+ # 设置一个过期时间，防止死锁
+ SET lockKey uniqueValue EX 3 NX
+ lockkey: 加锁的名字
+ uniqueValue: 锁的唯一标识
+ NX: key不存在才能SET成功
+ EX: 过期时间单位秒
+```
+
+**基于ZooKeeper实现**
+
+##### 可以做消息队列吗？
+
+>Redis2.0之前：只能通过List实现,没有消息确认，没有广播机制
 >
-> ```
-> 生产者:
-> # key为队列的名称，score为当前的时间戳+延迟时间，member为消息体
-> zadd key score member
-> 消费者:一直循环从redis的zset队列获取数据
-> # key为队列的名称，min为0，max为当前的时间戳，limit为单次个数
-> zrangebyscore key min max limit
-> 消费删除:
-> zrem key member
-> ```
+>Redis2.0: 引入了pub/sub功能
 >
-> **哪些操作会阻塞redis?**
-> ```
-> 命令阻塞:
-> keys*  #获取所有的key操作
-> Hgetall #返回哈希表中所以字段和
-> smembers #返回集合中的所有成员
-> 命令时间复杂度是O(n)，有时候也会全表扫描，随着n的增大耗时也会越大从而导致客户端阻塞
->
-> SAVE阻塞:
->
-> 同步持久化: appendfsync always 每次发生数据变更会立即记录到磁盘,磁盘性能会导致阻塞
->
-> AOF重写:
->
-> 大key问题:key的value很大,查找or删除大key
->
-> 清空数据库:flushdb/flushall
-> ```
-参考[Redis常见面试题](https://cloud.tencent.com/developer/article/2315477)
+>Redis5.0: Stream实现消息队列
+
+##### 哪些操作会阻塞redis?
+
+```
+命令阻塞:
+keys*  #获取所有的key操作
+Hgetall #返回哈希表中所以字段和
+smembers #返回集合中的所有成员
+命令时间复杂度是O(n)，有时候也会全表扫描，随着n的增大耗时也会越大从而导致客户端阻塞
+
+SAVE阻塞:
+
+同步持久化: appendfsync always 每次发生数据变更会立即记录到磁盘,磁盘性能会导致阻塞
+
+AOF重写:
+
+大key问题:key的value很大,查找or删除大key
+
+清空数据库:flushdb/flushall
+```
