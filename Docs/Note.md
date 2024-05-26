@@ -767,8 +767,10 @@ curl -N -k -X 'POST' \
 >解决过拟合问题: 在测试数据上表现不佳，可能是过拟合问题，微调可解决
 >
 >用户反馈和持续改进: 微调可以根据用户特定需求和反馈进行
->
->
+
+
+
+
 
 **微调框架**
 
@@ -853,6 +855,65 @@ curl -N -k -X 'POST' \
 >```
 >
 >工具：Pytorch/Hugginface/Llama Lirary
+
+
+
+##### 模型推理框架
+
+>参考: [AI推理框架对比](https://zhuanlan.zhihu.com/p/344442534)
+>
+>​         [Transformer&LLM模型部署框架/推理引擎总结](https://zhuanlan.zhihu.com/p/663967083)
+>
+>国内<-LLaMa<-GPT<-Transformer(Attention is All You Need)
+
+
+
+>**vLLM**：由Nvidai开源,旨在降低大模型推理的显存占用，核心思想是将模型的一部分保存在CPU内存或硬盘上，只将当前计算所需的部分加载到GPU显存中
+>
+>**OpenVINO**:  英特尔针对自家硬件平台开发的一套深度学习工具库，包含推断库，模型优化等一系列深度学习模型部署相关的
+>
+>分为`模型优化器`和`推理引擎`
+>
+>```
+>模型优化器: 将训练好的模型转换为推理引擎可以识别的中间表达--IR文件,在转换过程中对模型进行优化
+>推理引擎: 接受模型优化器转换优化的网络引擎,提供高性能的神经网络推理运算
+>```
+>
+>**TensorRT-LLM**: 高性能的深度学习推理优化器，为深度学习应用提供低延迟，高吞吐率的部署推理，能支持Tensorflow,Caffe,Mxnet,Pytorch,将TensorRT和NVIDIA的GPU结合起来，能在几乎所有的框架中进行快速和高效的部署推理
+>
+>分为`build`和`deployment`
+>
+>```
+>build: 完成模型转换，将不同框架的模型转换为TensorRT,模型转换时会优化过程中的层间融合，精度校准，这一步的输出是一个针对特定GPU平台和网络模型的优化过的TensorRT模型,这个TensorRT模型可以序列化存储到磁盘或内存中，称为plan file 
+>deployment: 推理过程,将build的plan文件首先反序列化，并创建开一个runtime engine,然后输入数据，并输出结果
+>```
+>
+>**TVM**: 一款开源的，端到端的深度学习模型编译框架，用于优化深度学习模型在CPU,GPU,ARM等任意目标环境下的推理运行速度
+>
+>```
+>常见的应用场景包括：
+>- 需要兼容所有主流模型作为输入，并针对任意类型的目标硬件生成优化部署模型的场景
+>- 对部署模型的推理延迟、吞吐量等性能指标有严格要求的场景
+>- 需要自定义模型算子、自研目标硬件、自定义模型优化流程的场景
+>```
+>
+>**libtorch**:
+>
+>**llama.cpp**: 纯C/C++实现的LLaMA模型推理工具，分为两步:分别是转化和量化
+>
+>```
+>llama.cpp使用GGML模型，首先需要下载的模型转为GGML(使用C/C++实现的机器学习库)模型,
+>```
+
+**支持深度学习模型上**
+
+| 模型推理部署框架 | TensorFlow | Caffe | Mxnet | Pytorch | Kaldi | ONNX |
+| ---------------- | ---------- | ----- | ----- | ------- | ----- | ---- |
+| OpenVINO         | √          | √     | √     |         |       | √    |
+| TensorRT         | √          | √     | √     | √       |       | √    |
+| Mediapipe        | √          |       |       |         |       |      |
+
+
 
 
 
@@ -1125,8 +1186,6 @@ curl 'https://api.openai.com/v1/usage?date=2024-04-28' \
 
 
 
-
-
 #### Other
 
 **ASSA**
@@ -1196,6 +1255,7 @@ export DATABASE_USER=root
 export DATABASE_PASSWORD=root
 export DATABASE_TO=synergyai
 export REDIS_URI=redis://10.3.0.5:6379
+export REDIS_URI=redis://10.0.0.15:6379
 export LOGIN_TYPE=LOCAL
 export EXP_TIME=RFjps/2/MsduQBseZ0I6DA==
 export PORT=9999
@@ -1215,3 +1275,8 @@ sudo docker run -it -p 9999:9999 -e EXP_TIME=RFjps/2/MsduQBseZ0I6DA== -e PORT=99
 >Python打包: https://www.v2ex.com/t/970031
 >
 >FastAPI 验证码: https://github.com/JohnDoe1996/fastAPI-vue/blob/main/backend/app/utils/captcha_code.py
+
+
+
+
+
