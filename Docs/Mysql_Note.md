@@ -351,6 +351,12 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 
 >[高性能优化总结](https://javaguide.cn/database/mysql/mysql-high-performance-optimization-specification-recommendations.html#%E5%AF%B9%E4%BA%8E%E9%A2%91%E7%B9%81%E7%9A%84%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E4%BD%BF%E7%94%A8%E8%A6%86%E7%9B%96%E7%B4%A2%E5%BC%95)
 >
+>[mysql配置参数调优](https://blog.csdn.net/LJFPHP/article/details/100751502)
+>
+>[MySQL高性能优化总结](https://cloud.tencent.com/developer/article/1921568)
+>
+>[MySQL参数优化](https://cloud.tencent.com/developer/article/1655879)
+>
 >四个维度:
 >
 >1.架构
@@ -389,7 +395,7 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 > 6.lock_wait_timeout:表锁锁定时间
 > 7.time_zone:使用datetime减少性能消耗
 > 8.wait_timeout:程序连接mysql超时时间,五分钟或十分钟
-> 9.innodb_buffer_pool_size:缓冲池大小(越大,磁盘I/O减少)2个G左右
+> 9.innodb_buffer_pool_size:缓冲池大小(越大,磁盘I/O减少)建议值为系统内存的50%-70%
 > 10.innodb_buffer_pool_instances:配置多个缓冲池实例
 > 11.tmp_table_size:临时表的最大大小
 > 11.max_connections: 代表mysql的最大连接数,默认151,上限为100000,生产建议为5000-10000
@@ -478,6 +484,40 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 (9)当mysql估计全表扫描速度比索引速度快的时候不会使用索引(order by就是如果是select *则有大量回表,索引不走索引,走全表扫描到内存去排序)
 select * 不会直接导致索引失效,不走索引大概率是因为where插叙范围过大导致，无法使用索引覆盖
 ```
+
+
+
+#####  MySQL内存优化
+
+>可以增加某些缓存和缓存区来提高MySQL的性能，可以修改默认配置，以便在内存有限的系统上运行
+
+**全局共享**
+
+```
+innodb_buffer_pool_size:定义缓冲池大小,建议值为系统内存的50%-70%,它是存放表/索引/其他数据的
+innodb_buffer_pool_instances: 内存较大时，可以将缓冲池分为多个缓冲池实例来提高并发
+innodb_log_buffer_size: innoDB日志缓冲的大小
+innodb_log_file_size: 
+innodb_additional_mem_pool_size：InnoDB存放数据字典和其他内部数据结构的内存大小，5.7已被移除
+key_buffer_size：MyISAM缓存索引块的内存大小
+query_cache_size：查询缓冲的大小，8.0已被移除
+```
+
+**线程独占**
+
+```
+thread_stack：每个线程分配的堆栈大小
+sort_buffer_size：排序缓冲的大小
+join_buffer_size：连接缓冲的大小
+read_buffer_size：MyISAM顺序读缓冲的大小
+read_rnd_buffer_size：MyISAM随机读缓冲的大小、MRR缓冲的大小
+tmp_table_size/max_heap_table_size：内存临时表的大小
+binlog_cache_size：二进制日志缓冲的大小
+```
+
+
+
+
 
 ### 索引详解
 

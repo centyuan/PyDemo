@@ -2,21 +2,21 @@
 
 **面试题**
 
->Go面试复习指南: https://xmcy0011.github.io/interview-golang/
+>Go面试宝典(八股文): https://golang.design/go-questions/compile/escape/
 >
->Go常见面试题: https://zhuanlan.zhihu.com/p/471490292
+>Go面试复习指南(八股文): https://xmcy0011.github.io/interview-golang/
 >
->面试题: http://mian.topgoer.com/
+>golang roadmap(语法): https://www.golangroadmap.com/docs/introduce/1.html
 >
->go语言中文文档: https://www.topgoer.com/
+>go语言中文文档(语法): https://www.topgoer.com/
 >
->go语言设计与实现: https://draveness.me/golang/docs/
+>面试题(题): http://mian.topgoer.com/
 >
->面向信仰编程: https://draveness.me/
->
->为什么这么设计: https://draveness.me/whys-the-design/
->
->
+>go语言设计与实现(源码解读): https://draveness.me/golang/docs/
+
+
+
+
 
 ##### channel死锁场景
 
@@ -38,3 +38,40 @@
 
 
 
+##### 面试题
+
+###### 内存逃逸分析
+
+>变量内存从栈上逃逸到堆上，有些变量在函数运行结束后仍要使用，需要把这个变量在堆上分配
+>
+>栈上分配的地址一般有系统申请和释放，不会有额外的开销，堆上的需要GC来回收，变量一旦逃逸会导致性能开销变大
+>
+>**变量生命周期尽量短**,
+
+`Go语言逃逸分析最基本的原则是：如果一个函数返回对一个变量的引用，那么它就会发生逃逸。`
+
+> `go build -gcflags '-m'`命令可以观察变量是否逃逸
+
+`常见的逃逸情况总结`
+
+>指针逃逸：函数内部返回一个局部变量指针
+>
+>分配大对象：导致栈空间不足，不得不分配到堆上
+>
+>调用接口类型的方法，接口类型的方法调用是动态调度 - 实际使用的具体实现只能在运行时确定。
+>
+>尽管能够符合分配到栈的场景，但是其大小不能在编译的时候确定，也会分配到堆上。
+
+>- 栈上分配内存比在堆中分配内存效率更高
+>- 栈上分配的内存不需要GC处理，而堆上需要
+>- 逃逸分析的目的是决定内存分配地址是栈还是堆
+>- 逃逸分析在编译阶段完成
+>
+>
+
+**Map扩容机制**
+
+>哈希表在赋值、删除的动作下会触发扩容行为，条件如下：
+>
+>1. 装载因子(数据总个数/桶个数>6.5)已经超过 6.5；
+>2. 哈希使用了太多溢出桶；
