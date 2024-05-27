@@ -1278,4 +1278,31 @@ sudo docker run -it -p 9999:9999 -e EXP_TIME=RFjps/2/MsduQBseZ0I6DA== -e PORT=99
 
 
 
+FastAPI的中间件和依赖有什么区别
+
 >FastAPI：中间件主要用于对请求和响应作出一些额外的操作，例如身份验证/记录日志/错误处理依赖注入主要用于解耦和管理应用程序的各种依赖关系，如数据库连接,依赖项配置,使得代码更加模块化,可重用,易于测试
+
+Python常用的异步库
+
+>Starlette-用于构建高性能服务的轻量级ASGI框架/工具包。
+>
+>uvicorn-快如闪电的ASGI服务器。
+>
+>FastAPI-基于类型提示的非常高性能的Python 3.6+ API框架。由Starlette和Pydantic提供支持。
+>
+>aiokafka -Apache Kafka的客户端。
+>
+>asyncpg-适用于Python / asyncio的快速PostgreSQL数据库客户端库
+>
+>aiomysql-用于访问MySQL数据库的库
+>
+>aioredis - aio-libs Redis客户端（PEP 3156）
+>
+>httpx-具有请求兼容API的Python 3异步HTTP客户端。
+>
+>pytest-asyncio-对异步的Pytest支持。
+>
+>uvloop-在libuv之上的asyncio事件循环的超快速实现。
+
+
+
