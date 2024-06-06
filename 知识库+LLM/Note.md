@@ -752,11 +752,11 @@ curl -N -k -X 'POST' \
 
 
 
-##### Fine Tune
+##### Fine-Tune微调
 
 >微调是在预训练模型的基础上，对特定任务或数据领域，对部分参数或全部参数进行进一步的训练和调整，预训练模型通常在大规模数据集上训练而得到，它具有一定的通用性和泛化能力，微调的目标是在较小的目标数据集上，通过有限的训练数据，使模型更好地适应特定任务，从而提供模型在该任务上的性能
 
-**什么情况适合微调**
+###### 什么情况适合微调
 
 >特定任务需求: 当模型需要在特定任务表现更好时，例如在通用数据集上训练好的需要针对特定应用场景进行微调，以便更好理解和处理该场景下的数据
 >
@@ -768,11 +768,7 @@ curl -N -k -X 'POST' \
 >
 >用户反馈和持续改进: 微调可以根据用户特定需求和反馈进行
 
-
-
-
-
-**微调框架**
+###### 微调框架
 
 >ChatGLM3-6B以FP16精度加载,需要大概12G显存
 >
@@ -858,32 +854,60 @@ curl -N -k -X 'POST' \
 
 
 
-##### 模型推理框架
+##### 模型部署加速推理
 
->参考: [AI推理框架对比](https://zhuanlan.zhihu.com/p/344442534)
+>**模型部署**:为了部署Embedding模型，我们需要引入对应的工具库，目前主要有几类：
 >
->​         [Transformer&LLM模型部署框架/推理引擎总结](https://zhuanlan.zhihu.com/p/663967083)
+>```
+>1.Sentence-Transformers: Sentence-Transformers库是基于HuggingFace的Transformers库构建的，它专门设计用于生成句子级别的嵌入。它引入了一些特定的模型和池化技术，使得生成的嵌入能够更好地捕捉句子的语义信息。Sentence-Transformers库特别适合于需要计算句子相似度、进行语义搜索和挖掘同义词等任务
+>2.HuggingFace Transformers: HuggingFace的Transformers库是一个广泛使用的NLP库，它提供了多种预训练模型，如BERT、GPT-2、RoBERTa等。这些模型可以应用于各种NLP任务，如文本分类、命名实体识别、问答系统等。Transformers库支持多种编程语言，并且支持模型的微调和自定义模型的创建。虽然Transformers库的功能强大，但它主要关注于模型的使用，而不是直接提供句子级别的嵌入
+>3.Langchain集成的HuggingFaceBgeEmbeddings
+>4.FlagEmbedding: 这是一个相对较新的库，其核心在于能够将任意文本映射到低维稠密向量空间，以便于后续的检索、分类、聚类或语义匹配等任务。FlagEmbedding的一大特色是它可以支持为大模型调用外部知识，这意味着它不仅可以处理纯文本数据，还能整合其他类型的信息源，如知识图谱等，以提供更丰富的语义表示
+>```
 >
->国内<-LLaMa<-GPT<-Transformer(Attention is All You Need)
->
->**模型部署**
->
->>为了部署Embedding模型，我们需要引入对应的工具库，目前主要有几类：
->>
->>```
->>1.Sentence-Transformers: Sentence-Transformers库是基于HuggingFace的Transformers库构建的，它专门设计用于生成句子级别的嵌入。它引入了一些特定的模型和池化技术，使得生成的嵌入能够更好地捕捉句子的语义信息。Sentence-Transformers库特别适合于需要计算句子相似度、进行语义搜索和挖掘同义词等任务
->>2.HuggingFace Transformers: HuggingFace的Transformers库是一个广泛使用的NLP库，它提供了多种预训练模型，如BERT、GPT-2、RoBERTa等。这些模型可以应用于各种NLP任务，如文本分类、命名实体识别、问答系统等。Transformers库支持多种编程语言，并且支持模型的微调和自定义模型的创建。虽然Transformers库的功能强大，但它主要关注于模型的使用，而不是直接提供句子级别的嵌入
->>3.Langchain集成的HuggingFaceBgeEmbeddings
->>4.FlagEmbedding: 这是一个相对较新的库，其核心在于能够将任意文本映射到低维稠密向量空间，以便于后续的检索、分类、聚类或语义匹配等任务。FlagEmbedding的一大特色是它可以支持为大模型调用外部知识，这意味着它不仅可以处理纯文本数据，还能整合其他类型的信息源，如知识图谱等，以提供更丰富的语义表示
->>```
->>
->>总的来说，FlagEmbedding强调的是稠密向量的生成和外部知识的融合；HuggingFace Transformers提供了一个广泛的预训练模型集合，适用于多种NLP任务；而Sentence-Transformers则专注于生成高质量的句子嵌入，适合那些需要深入理解句子语义的应用场景。
->
->​	
+>>总的来说：FlagEmbedding强调的是稠密向量的生成和外部知识的融合；HuggingFace Transformers提供了一个广泛的预训练模型集合，适用于多种NLP任务；而Sentence-Transformers则专注于生成高质量的句子嵌入，适合那些需要深入理解句子语义的应用场景。	
 
-**推理框架**
 
->**vLLM**：由Nvidai开源,旨在降低大模型推理的显存占用，核心思想是将模型的一部分保存在CPU内存或硬盘上，只将当前计算所需的部分加载到GPU显存中
+
+###### 推理框架
+
+###### 大模型常见推理框架
+
+ [Transformer&LLM模型部署框架/推理引擎总结](https://zhuanlan.zhihu.com/p/663967083)
+
+>**vLLM:**由Nvidai开源,旨在降低大模型推理的显存占用，核心思想是将模型的一部分保存在CPU内存或硬盘上，只将当前计算所需的部分加载到GPU显存中
+>
+>```
+>vLLM支持PyTorch和FasterTransformer后端，可无缝适配现有模型。使用vLLM，在配备96GB内存+440GB A100的服务器上可运行1750亿参数模型，在配备1.5TB内存+880GB A100的服务器上可运行6万亿参数模型
+>```
+>
+>**TensorRT-LLM**: Tensorrt-LLM是Nvidia在TensorRT推理引擎基础上，针对Transformer类大模型推理优化的框架,能支持Tensorflow,Caffe,Mxnet,Pytorch,将TensorRT和NVIDIA的GPU结合起来
+>分为`build`和`deployment`
+>
+>```
+>build: 完成模型转换，将不同框架的模型转换为TensorRT,模型转换时会优化过程中的层间融合，精度校准，这一步的输出是一个针对特定GPU平台和网络模型的优化过的TensorRT模型,这个TensorRT模型可以序列化存储到磁盘或内存中，称为plan file 
+>deployment: 推理过程,将build的plan文件首先反序列化，并创建开一个runtime engine,然后输入数据，并输出结果
+>```
+>
+>**DeepSpeed:** DeepSpeed是微软开源的大模型训练加速库，最新的DeepSpeed-Inference也提供了推理加速能力
+>
+>**llama.cpp**: 纯C/C++实现的LLaMA模型推理工具，分为两步:分别是转化和量化
+>
+>```
+>llama.cpp使用GGML模型，首先需要下载的模型转为GGML(使用C/C++实现的机器学习库)模型,
+>```
+>
+>**ollama:**
+>
+>**ONNX Runtime with Transformers Optimization:**
+
+
+
+###### 其他通用推理框架
+
+>**ONNX Runtime:** 由微软开发的高性能推理引擎，支持多种硬件后端，兼容ONNX格式模型。
+>
+>**TensorRT**:NVIDIA开发的高性能推理库,TensorRT适用于广泛的深度学习模型
 >
 >**OpenVINO**:  英特尔针对自家硬件平台开发的一套深度学习工具库，包含推断库，模型优化等一系列深度学习模型部署相关的
 >
@@ -894,16 +918,7 @@ curl -N -k -X 'POST' \
 >推理引擎: 接受模型优化器转换优化的网络引擎,提供高性能的神经网络推理运算
 >```
 >
->**TensorRT-LLM**: 高性能的深度学习推理优化器，为深度学习应用提供低延迟，高吞吐率的部署推理，能支持Tensorflow,Caffe,Mxnet,Pytorch,将TensorRT和NVIDIA的GPU结合起来，能在几乎所有的框架中进行快速和高效的部署推理
->
->分为`build`和`deployment`
->
->```
->build: 完成模型转换，将不同框架的模型转换为TensorRT,模型转换时会优化过程中的层间融合，精度校准，这一步的输出是一个针对特定GPU平台和网络模型的优化过的TensorRT模型,这个TensorRT模型可以序列化存储到磁盘或内存中，称为plan file 
->deployment: 推理过程,将build的plan文件首先反序列化，并创建开一个runtime engine,然后输入数据，并输出结果
->```
->
->**TVM**: 一款开源的，端到端的深度学习模型编译框架，用于优化深度学习模型在CPU,GPU,ARM等任意目标环境下的推理运行速度
+>**TVM**: 一款开源的，端到端的深度学习模型编译框架，用于优化深度学习模型在CPU,GPU,ARM等任意目标环境下的推理运行速度: 
 >
 >```
 >常见的应用场景包括：
@@ -912,21 +927,65 @@ curl -N -k -X 'POST' \
 >- 需要自定义模型算子、自研目标硬件、自定义模型优化流程的场景
 >```
 >
->**libtorch**:
->
->**llama.cpp**: 纯C/C++实现的LLaMA模型推理工具，分为两步:分别是转化和量化
->
->```
->llama.cpp使用GGML模型，首先需要下载的模型转为GGML(使用C/C++实现的机器学习库)模型,
->```
 
-**支持深度学习模型上**
 
-| 模型推理部署框架 | TensorFlow | Caffe | Mxnet | Pytorch | Kaldi | ONNX |
-| ---------------- | ---------- | ----- | ----- | ------- | ----- | ---- |
-| OpenVINO         | √          | √     | √     |         |       | √    |
-| TensorRT         | √          | √     | √     | √       |       | √    |
-| Mediapipe        | √          |       |       |         |       |      |
+
+##### 减少神经网络模型在推理时的内存和计算资源消耗的方法
+
+>Qwen1.5-110B 
+>Qwen1.5-72B
+>Llama-3-70B
+>Mixtral-8x22B 8X7B
+
+```
+F16:FP16使用16位表示一个浮点数，具体包括1位符号位、5位指数位和10位尾数位。FP16在保留大部分精度的情况下将内存占用减半，适用于训练和推理，内存占用减半
+8-bit量化: 将模型的权重和激活值从32位浮点数（FP32）转换为8位整数（INT8)，显存占用减少到原来的1/4
+4-bit量化：4-bit量化进一步将模型权重和激活值压缩到4位整数，显存占用减少到原来的1/8
+混合精度训练(Mixed Precision Training)：结合了FP32和FP16的优势，在计算过程中动态选择最合适的精度。例如，权重参数可以用FP32表示，而中间计算结果和激活可以用FP16表示
+知识蒸馏(Knowledge Distillation)：通过训练一个较小的学生模型，使其模仿较大教师模型的输出，从而在不显著降低性能的情况下减小模型规模
+剪枝(Pruning):通过移除模型中不重要的权重和节点来减少模型规模。剪枝可以是结构化的（如移除整个卷积核）或非结构化的（如移除单个权重）。
+模型压缩: 模型压缩技术包括哈夫曼编码、低秩分解和其他压缩算法，可以在不显著降低模型性能的情况下减小其存储和传输需求
+参数共享(Parameter Sharing):在某些模型（如RNN、Transformer）中，可以通过共享权重来减少参数数量。例如，在Transformer中，多个层可以共享同一组权重
+动态量化(Dynamic Quantization):动态量化在推理过程中按需量化权重和激活，通常在模型推理时动态应用8-bit量化。
+
+```
+
+##### 大语言模型量化方法对比：GPTQ、GGUF、AWQ
+
+```
+GPTQ（GPT Quantization）
+特点：
+    精度保持：GPTQ在保持模型精度方面表现良好。它通过精细的量化技术，最大程度上减少了量化过程中的信息丢失。
+    压缩效果：GPTQ可以显著减少模型的大小，从而降低存储和计算资源的需求。
+    适用范围：主要用于GPT类模型的量化。
+技术细节：
+    逐层量化：对模型的每一层单独进行量化，从而精细控制每层的量化误差。
+    后处理调整：在量化后进行一些后处理步骤，以进一步减少量化误差。
+    
+AWQ（Adaptive Weight Quantization）
+特点：
+    自适应量化：AWQ使用自适应技术，根据不同的权重分布情况自适应地调整量化策略。
+    灵活性强：适用于多种模型架构，不仅限于GPT类模型。
+    性能平衡：在模型精度和压缩率之间找到一个较好的平衡点。
+技术细节：
+    动态范围调整：根据权重的分布动态调整量化范围，以减少量化误差。
+    误差反馈机制：在量化过程中引入误差反馈机制，逐步调整量化策略以优化模型性能。
+
+GGUF（Generic Gradient-Based Quantization Framework）
+特点：
+    通用性：GGUF是一种通用的量化框架，适用于各种深度学习模型，不局限于特定模型类型。
+    梯度驱动：利用梯度信息来指导量化过程，使得量化后的模型性能得到较好的保证。
+    精细化控制：可以对量化过程中的每一步进行精细控制，从而实现最佳量化效果。
+技术细节：
+    梯度引导：通过计算模型的梯度信息来指导量化操作，从而减少重要权重的量化误差。
+    迭代优化：采用迭代优化的方法，不断调整量化参数，以逐步逼近最优量化结果。
+总结:
+    GPTQ：专注于GPT类模型，强调在高精度和高压缩率之间的平衡，通过逐层量化和后处理技术实现。
+    AWQ：自适应的量化方法，适用于多种模型架构，强调灵活性和性能平衡，通过动态范围调整和误差反馈机制实现。
+    GGUF：通用的梯度驱动量化框架，适用于各种深度学习模型，强调通用性和精细化控制，通过梯度引导和迭代优化实现。
+```
+
+
 
 
 
@@ -1098,6 +1157,60 @@ curl -N -k -X 'POST' \
 >```
 >使用场景Diffusion模型适用于需要生成连续数据的场景，如图像生成、音频生成、视频生成等。此外，由于模型具有渐进式生成的特点，它还可以用于数据插值、风格迁移等任务
 >```
+
+
+
+##### 向量原理
+
+>向量数据:一个维度长度的数组
+>意思相近的词的向量比较接近，通过向量的相似性搜索可以得到意思相近的词的向量
+>参考: https://cloud.tencent.com/developer/article/2312534
+>
+>**向量相似度计算:**如何衡量相似性
+>
+>>曼哈顿距离：L1
+>>
+>>**欧氏距离(Euclidean Distance)**：L2 点的距离，越近越相似。适
+>>
+>>>欧几里得距离算法的优点是可以反映向量的绝对距离，适用于需要考虑向量长度的相似性计算。例如推荐系统中
+>>
+>>**余弦相似度(Cosine Similarity)**: 两个向量夹角越小越相似，计算两个向量夹角的余弦值，夹角越小，余弦值越大(-1,1)。
+>>
+>>>余弦相似度对向量的长度不敏感，只关注向量的方向，因此适用于高维向量的相似性计算。例如语义搜索和文档分类
+>>
+>>**点积相似度 (Dot product Similarity)**：向量的点积相似度是指两个向量之间的点积值
+>>
+>>> 点积相似度算法的优点在于它简单易懂，计算速度快，并且兼顾了向量的长度和方向。它适用于许多实际场景，例如[图像识别](https://cloud.tencent.com/product/tiia?from_column=20065&from=20065)、语义搜索和文档分类等。但点积相似度算法对向量的长度敏感，因此在计算高维向量的相似性时可能会出现问题。
+>>
+>>
+>
+>**最近邻算法: (确保快速和库中每个向量匹配相似度,减少匹配数量)**
+>
+>>暴搜
+>
+>**近似最近邻:**ANN
+>
+>> 减少搜索范围
+>>
+>> ```
+>> K-Means:
+>> Hash:增大hash碰撞,相似的分配在一个桶中(位置敏感的hash函数-随机超平面-分段)
+>> ```
+>>
+>> 内存开销问题优化
+>> ```
+>> PQ(Product Quantizatio):基于(乘)积量化的近邻搜索，主要目的是减少内存，一定程度提高搜索速度
+>> ```
+>
+>**导航小世界(NSW)**：基于图搜索，需要将向量数据建立图结构
+>
+>>利用德劳内(Delaunay)三角po分法构建图结构,通过长连接快速导航，短连接精细化搜索
+>
+>**分层的导航小世界(HNSW):**
+>
+>>搜索质量和搜索速度都比较高，但是它的内存开销也比较大
+
+
 
 
 
@@ -1552,3 +1665,8 @@ Python常用的异步库
 >东方证券期货资金管理系统
 
 
+
+>lspci -vnn | grep -i NVIDIA -A 12
+>查看NVIDIA的显卡
+>
+>https://developer.download.nvidia.cn/compute/cudnn/secure/8.9.7/local_installers/11.x/cudnn-linux-x86_64-8.9.7.29_cuda11-archive.tar.xz?YhjfhHLS_5QGJAknmvM-Rnn3LvEQcDl1bd8KUr7RgaSmY8JoWhDavkDgGSrO5FhASULX4X7k-IEa5X2EfNuuRbg8IG8UxYY6oV_jCpqc53g7oCPOWyQXXmCQxBFzlHpN0A2A4oewIBmC0trykl5K11sMyTLfuZR3XKydkFF4bYFaC8DZFgqA8zJEby1CmiHusZSSx6cN201mtY4gk5RjXtY=&t=eyJscyI6IndlYnNpdGUiLCJsc2QiOiJkZXZlbG9wZXIubnZpZGlhLmNvbS9jdWRhLXRvb2xraXQtYXJjaGl2ZSJ9
