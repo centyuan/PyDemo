@@ -8,6 +8,8 @@ tags:
 mysql常用操作命令
 
 mysql:单进程多线程模型,一个SQL语句无法利用多个cpu core
+>mysql8加强安全性,头次登录,会生成一个临时随机密码,使用密码进行root用户登录,且root不支持远程登录
+>查看临时密码:  grep 'temporary password' /var/log/mysqld.log
 
 ### 一:基本命令
 
@@ -349,23 +351,25 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 
 ### Mysql性能优化
 
->[高性能优化总结](https://javaguide.cn/database/mysql/mysql-high-performance-optimization-specification-recommendations.html#%E5%AF%B9%E4%BA%8E%E9%A2%91%E7%B9%81%E7%9A%84%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E4%BD%BF%E7%94%A8%E8%A6%86%E7%9B%96%E7%B4%A2%E5%BC%95)
+> [高性能优化总结](https://javaguide.cn/database/mysql/mysql-high-performance-optimization-specification-recommendations.html#%E5%AF%B9%E4%BA%8E%E9%A2%91%E7%B9%81%E7%9A%84%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E4%BD%BF%E7%94%A8%E8%A6%86%E7%9B%96%E7%B4%A2%E5%BC%95)
 >
->[mysql配置参数调优](https://blog.csdn.net/LJFPHP/article/details/100751502)
+> [超详细的MySQL高性能优化实践总结](https://cloud.tencent.com/developer/article/1921568)
 >
->[MySQL高性能优化总结](https://cloud.tencent.com/developer/article/1921568)
+> [mysql配置参数调优](https://blog.csdn.net/LJFPHP/article/details/100751502)
 >
->[MySQL参数优化](https://cloud.tencent.com/developer/article/1655879)
+> [MySQL参数优化](https://cloud.tencent.com/developer/article/1655879)
 >
->四个维度:
+> [mysql8.0配置文件优化](https://www.cnblogs.com/john-xiong/p/12099842.html)
 >
->1.架构
+> 四个维度:
 >
->2.硬件
+> 1.架构
 >
->3.DB优化
+> 2.硬件
 >
->4.sql优化
+> 3.DB优化
+>
+> 4.sql优化
 
 ##### 架构
 
@@ -465,7 +469,7 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 
 ##### 索引失效的情况
 
->参考: [索引失效](https://juejin.cn/post/7161964571853815822)
+> 参考: [索引失效](https://juejin.cn/post/7161964571853815822)
 
 ```
 (1)联合索引不满足最左匹配原则,联合索引最左边字段必须出现在查询条件中
@@ -485,11 +489,9 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 select * 不会直接导致索引失效,不走索引大概率是因为where插叙范围过大导致，无法使用索引覆盖
 ```
 
+##### MySQL内存优化
 
-
-#####  MySQL内存优化
-
->可以增加某些缓存和缓存区来提高MySQL的性能，可以修改默认配置，以便在内存有限的系统上运行
+> 可以增加某些缓存和缓存区来提高MySQL的性能，可以修改默认配置，以便在内存有限的系统上运行
 
 **全局共享**
 
@@ -513,6 +515,22 @@ read_buffer_size：MyISAM顺序读缓冲的大小
 read_rnd_buffer_size：MyISAM随机读缓冲的大小、MRR缓冲的大小
 tmp_table_size/max_heap_table_size：内存临时表的大小
 binlog_cache_size：二进制日志缓冲的大小
+```
+
+
+
+###### 优化工具
+
+```
+查看数据参数信息: show [session|global] variables
+查看数据的状态信息: show [session|global] status
+Innodb引擎的所有状态: show engine innodb status
+查看当前所有连接的session状态: show processlist
+获取语句的执行计划: explain
+慢查询记录: slow-log
+查看锁状态: show status like '%lock%'; 
+杀掉有问题的session: kill SESSION_ID
+
 ```
 
 
@@ -627,37 +645,37 @@ binlog_cache_size：二进制日志缓冲的大小
 
 **限制每张表上的索引数量**
 
->**单张表索引不超过5个**
+> **单张表索引不超过5个**
 
 **选择合适的字段建立索引**
 
->**那些情况适合建立索引?**
+> **那些情况适合建立索引?**
 >
->1.频繁查询的字段/被作为条件查询的字段
+> 1.频繁查询的字段/被作为条件查询的字段
 >
->2.频繁需要排序的字段(索引已经排序)
+> 2.频繁需要排序的字段(索引已经排序)
 >
->3.关联字段，例如外键字段，student表中的classid,   classes表中的schoolid 等
+> 3.关联字段，例如外键字段，student表中的classid,   classes表中的schoolid 等
 >
->**什么情况下不推荐使用索引?**
+> **什么情况下不推荐使用索引?**
 >
->1.数据唯一性差(比如性别只有两种数据)
->2.频繁更新的字段不用索引
->3.不用无序的的值如身份证,uuid无序不能作为索引
->4.字段不在where语句后出现(where含IS NULL/IS NULL/IS NOT NULL/like "%"等,不用索引)
->5.过长的字段使用前缀索引(**前缀索引仅限于字符串类型，较普通索引会占用更小的空间**)
->6.参与计算的字段不适合建立索引
->7.可能产生乱码的字段作为主键或唯一索引
+> 1.数据唯一性差(比如性别只有两种数据)
+> 2.频繁更新的字段不用索引
+> 3.不用无序的的值如身份证,uuid无序不能作为索引
+> 4.字段不在where语句后出现(where含IS NULL/IS NULL/IS NOT NULL/like "%"等,不用索引)
+> 5.过长的字段使用前缀索引(**前缀索引仅限于字符串类型，较普通索引会占用更小的空间**)
+> 6.参与计算的字段不适合建立索引
+> 7.可能产生乱码的字段作为主键或唯一索引
 
 **尽可能建立联合索引而不是单列索引**
 
->每个索引对应一个B+树,多个字段在一个索引上将会节约磁盘空间，修改操作效率也会提升
+> 每个索引对应一个B+树,多个字段在一个索引上将会节约磁盘空间，修改操作效率也会提升
 
 **避免索引失效**
 
 **减少回表思路**
 
->使用索引下推解决回表问题，前提是和联合索引一起使用
+> 使用索引下推解决回表问题，前提是和联合索引一起使用
 
 ### Mysql预编译
 
@@ -747,7 +765,7 @@ binlog_cache_size：二进制日志缓冲的大小
 > 2.不可重复读:前后读取的数据不一致(务A中先后多次读取同一个数据，读取的结果不一样(因为B事务在A事务两次读取之前更改了数据))
 > 	解决方法:1.事务隔离级别设置为(可重复读repeatable read)
 > 			2.读取数据时加共享锁,写入数据时加排它锁
-> 		
+> 	
 > 3.幻读:前后读取的记录数量不一致(一个事务中,select执行了两次,第二次返回了第一次没有的行)
 > ```
 >
@@ -855,7 +873,7 @@ binlog_cache_size：二进制日志缓冲的大小
 > row: 基于行的复制,文件较大
 > mixed: 前两种混合
 >
-> MySQL 会判断这条`SQL`语句是否可能引起数据不一致，如果是，就用`row`格式，否则就用`statement`格式
+> MySQL 会判断这条 `SQL`语句是否可能引起数据不一致，如果是，就用 `row`格式，否则就用 `statement`格式
 
 #### 为什么将redo log的数据写到磁盘比将Buffer数据持久化到磁盘要快?
 
@@ -872,27 +890,28 @@ binlog_cache_size：二进制日志缓冲的大小
 
 > **锁种类**
 >
-> >按功能：分为共享锁(s)，怕他锁(x)
-> >
-> >按粒度：分为表级锁,行级锁
-> >
-> >**意向锁:** 用到表锁时，需要判断表中记录是否有行锁，一行一行遍历肯定是不行，性能太差。我们需要用到一个叫做意向锁的东东来快速判断是否可以对某个表使用表锁
-> >
-> >意向锁是表级锁，共有两种：
-> >
-> >- **意向共享锁（Intention Shared Lock，IS 锁）**：事务有意向对表中的某些记录加共享锁（S 锁），加共享锁前必须先取得该表的 IS 锁。
-> >- **意向排他锁（Intention Exclusive Lock，IX 锁）**：事务有意向对表中的某些记录加排他锁（X 锁），加排他锁之前必须先取得该表的 IX 锁。
-> >
-> >**意向锁是由数据引擎自己维护的，用户无法手动操作意向锁，在为数据行加共享/排他锁之前，InooDB 会先获取该数据行所在在数据表的对应意向锁**
-> >
-> >在 InnoDB 默认的隔离级别 REPEATABLE-READ 下，行锁默认使用的是 Next-Key Lock。但是，如果操作的索引是唯一索引或主键，InnoDB 会对 Next-Key Lock 进行优化 	，将其降级为 Record Lock，即仅锁住索引本身，而不是范围	
+>> 按功能：分为共享锁(s)，怕他锁(x)
+>>
+>> 按粒度：分为表级锁,行级锁
+>>
+>> **意向锁:** 用到表锁时，需要判断表中记录是否有行锁，一行一行遍历肯定是不行，性能太差。我们需要用到一个叫做意向锁的东东来快速判断是否可以对某个表使用表锁
+>>
+>> 意向锁是表级锁，共有两种：
+>>
+>> - **意向共享锁（Intention Shared Lock，IS 锁）**：事务有意向对表中的某些记录加共享锁（S 锁），加共享锁前必须先取得该表的 IS 锁。
+>> - **意向排他锁（Intention Exclusive Lock，IX 锁）**：事务有意向对表中的某些记录加排他锁（X 锁），加排他锁之前必须先取得该表的 IX 锁。
+>>
+>> **意向锁是由数据引擎自己维护的，用户无法手动操作意向锁，在为数据行加共享/排他锁之前，InooDB 会先获取该数据行所在在数据表的对应意向锁**
+>>
+>> 在 InnoDB 默认的隔离级别 REPEATABLE-READ 下，行锁默认使用的是 Next-Key Lock。但是，如果操作的索引是唯一索引或主键，InnoDB 会对 Next-Key Lock 进行优化 	，将其降级为 Record Lock，即仅锁住索引本身，而不是范围
+>>
 >
 > ```
 > 1.锁粒度划分
 > 表锁:粒度最大的锁，开销小，加锁快，不会出现死锁，粒度大导致并发性低()
 > 页锁：介于行锁和表锁之间的一种锁,页锁是在BDB中支持的一种锁机制，也很少没人提及和使用
 > 行锁: 粒度最小，加锁开销性能大，加锁慢，并且会出现死锁，但是行锁的锁冲突的几率低，并发性能高(行锁是InnoDB默认的支持的锁机制，MyISAM不支持行锁)
-> 
+>
 > 2.使用方式划分
 > 共享锁、排它锁(如果加排他锁可以使用select …for update语句)
 > 加排它锁后，不能对该条数据再加锁，其它事务即不能查询也不能更改数据。
@@ -904,16 +923,18 @@ binlog_cache_size：二进制日志缓冲的大小
 >
 > **行锁分类:**
 >
-> >**记录锁(Record Lock):** 属于单个行记录上的锁
-> >
-> >**间隙锁(Gap Lock): **锁定一个范围，不包括记录本身(用范围条件而不是相	等条件检索数据,并请求共享和排它锁时,InnoDB会给符合条件的的已有记录的索引项加锁),使用间隙锁的目的是位了防止幻读,以满足串行化的隔离级别
-> >
-> >**临键锁(Next-Key Lock):** Record Lock +Gap Lock 锁定一个范围，包含记录本身，主要目的是为了解决幻读问题，记录锁只能锁住已经存在的记录，为了避免插入新记录，需要依赖间隙锁
+>> **记录锁(Record Lock):** 属于单个行记录上的锁
+>>
+>> **间隙锁(Gap Lock): **锁定一个范围，不包括记录本身(用范围条件而不是相	等条件检索数据,并请求共享和排它锁时,InnoDB会给符合条件的的已有记录的索引项加锁),使用间隙锁的目的是位了防止幻读,以满足串行化的隔离级别
+>>
+>> **临键锁(Next-Key Lock):** Record Lock +Gap Lock 锁定一个范围，包含记录本身，主要目的是为了解决幻读问题，记录锁只能锁住已经存在的记录，为了避免插入新记录，需要依赖间隙锁
+>>
 >
-> > ```
-> > select * from user where userid>100 for update; userid的值(1...101)
-> > 对于101会加锁,大于101但是记录不存在的也会加锁,防止其他事务在表末尾增加数据
-> > ```
+>> ```
+>> select * from user where userid>100 for update; userid的值(1...101)
+>> 对于101会加锁,大于101但是记录不存在的也会加锁,防止其他事务在表末尾增加数据
+>> ```
+>>
 >
 > **死锁**
 >
@@ -1149,19 +1170,13 @@ mysql如何保证主从数据的一致性的？
 > 第二范式:表中每一列都和主键相关,而不能只与主键一部分相关(针对联合主键)(表中只保存一种数据,不可以把多种数据保存在同一个表中)
 > 第三范式:确保每列都和主键直接相关而不是间接相关
 
-
-
-
-
 #### NULL和‘’的区别
 
->不建议使用NULL
+> 不建议使用NULL
 >
->1.''的长度是0不占用空间,NULL需要占用空间
->2.NULL代表一个不确定的值,不一定相等
->3.查询NULL时,必须使用IS NULL或IS NOT NULL,不能使用 = !=
-
-
+> 1.''的长度是0不占用空间,NULL需要占用空间
+> 2.NULL代表一个不确定的值,不一定相等
+> 3.查询NULL时,必须使用IS NULL或IS NOT NULL,不能使用 = !=
 
 #### **varcahr和char区别？**
 
@@ -1315,17 +1330,13 @@ mysql如何保证主从数据的一致性的？
 > 4.依赖该表的存储过程/函数将保留,状态为invalid
 > delete是把目录撕了，truncate是把书的内容撕下来烧了，drop是把书烧了
 
-
-
 #### 一个SQL语句在MySQL中执行流程
 
->https://javaguide.cn/database/mysql/how-sql-executed-in-mysql.html
-
-
+> https://javaguide.cn/database/mysql/how-sql-executed-in-mysql.html
 
 #### Mysql如何存储IP地址
 
->MySQL 提供了两个方法来处理 ip 地址
+> MySQL 提供了两个方法来处理 ip 地址
 >
->- `INET_ATON()`：把 ip 转为无符号整型 (4-8 位)
->- `INET_NTOA()` :把整型的 ip 转为地址
+> - `INET_ATON()`：把 ip 转为无符号整型 (4-8 位)
+> - `INET_NTOA()` :把整型的 ip 转为地址
