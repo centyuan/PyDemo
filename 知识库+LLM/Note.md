@@ -1670,3 +1670,4 @@ Python常用的异步库
 >查看NVIDIA的显卡
 >
 >https://developer.download.nvidia.cn/compute/cudnn/secure/8.9.7/local_installers/11.x/cudnn-linux-x86_64-8.9.7.29_cuda11-archive.tar.xz?YhjfhHLS_5QGJAknmvM-Rnn3LvEQcDl1bd8KUr7RgaSmY8JoWhDavkDgGSrO5FhASULX4X7k-IEa5X2EfNuuRbg8IG8UxYY6oV_jCpqc53g7oCPOWyQXXmCQxBFzlHpN0A2A4oewIBmC0trykl5K11sMyTLfuZR3XKydkFF4bYFaC8DZFgqA8zJEby1CmiHusZSSx6cN201mtY4gk5RjXtY=&t=eyJscyI6IndlYnNpdGUiLCJsc2QiOiJkZXZlbG9wZXIubnZpZGlhLmNvbS9jdWRhLXRvb2xraXQtYXJjaGl2ZSJ9
+
