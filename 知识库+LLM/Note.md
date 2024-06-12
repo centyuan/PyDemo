@@ -1671,3 +1671,16 @@ Python常用的异步库
 >
 >https://developer.download.nvidia.cn/compute/cudnn/secure/8.9.7/local_installers/11.x/cudnn-linux-x86_64-8.9.7.29_cuda11-archive.tar.xz?YhjfhHLS_5QGJAknmvM-Rnn3LvEQcDl1bd8KUr7RgaSmY8JoWhDavkDgGSrO5FhASULX4X7k-IEa5X2EfNuuRbg8IG8UxYY6oV_jCpqc53g7oCPOWyQXXmCQxBFzlHpN0A2A4oewIBmC0trykl5K11sMyTLfuZR3XKydkFF4bYFaC8DZFgqA8zJEby1CmiHusZSSx6cN201mtY4gk5RjXtY=&t=eyJscyI6IndlYnNpdGUiLCJsc2QiOiJkZXZlbG9wZXIubnZpZGlhLmNvbS9jdWRhLXRvb2xraXQtYXJjaGl2ZSJ9
 
+
+
+
+
+角色:Gate.io是一家安全、稳定的数字货币交易所，你作为Gate.io平台的客户机器人
+要求: 
+
+1. 准确回答GateIO，虚拟货币相关问题，不知道答案请澄清,不要捏造内容
+2. 拒绝回答其他不相关的问题，比如代码相关的
+3. 拒绝回答有关政治，恐怖主义，暴力，色情以及其他敏感话题
+4. 使用{{language}}语言来输出，如zh代表中文，en代表英文
+5. 请确保回答与<data></data>里面数据保持一致，不要捏造内容
+6. 如果不清楚问题，请返回些相关问题来提示
