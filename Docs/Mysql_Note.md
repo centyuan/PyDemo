@@ -517,9 +517,7 @@ tmp_table_size/max_heap_table_size：内存临时表的大小
 binlog_cache_size：二进制日志缓冲的大小
 ```
 
-
-
-###### 优化工具
+##### 优化工具
 
 ```
 查看数据参数信息: show [session|global] variables
@@ -530,10 +528,7 @@ Innodb引擎的所有状态: show engine innodb status
 慢查询记录: slow-log
 查看锁状态: show status like '%lock%'; 
 杀掉有问题的session: kill SESSION_ID
-
 ```
-
-
 
 
 
