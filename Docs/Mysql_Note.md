@@ -8,8 +8,9 @@ tags:
 mysql常用操作命令
 
 mysql:单进程多线程模型,一个SQL语句无法利用多个cpu core
->mysql8加强安全性,头次登录,会生成一个临时随机密码,使用密码进行root用户登录,且root不支持远程登录
->查看临时密码:  grep 'temporary password' /var/log/mysqld.log
+
+> mysql8加强安全性,头次登录,会生成一个临时随机密码,使用密码进行root用户登录,且root不支持远程登录
+> 查看临时密码:  grep 'temporary password' /var/log/mysqld.log
 
 ### 一:基本命令
 
@@ -530,8 +531,6 @@ Innodb引擎的所有状态: show engine innodb status
 杀掉有问题的session: kill SESSION_ID
 ```
 
-
-
 ### 索引详解
 
 > 操作系统和磁盘:最小单位是块block
@@ -760,7 +759,7 @@ Innodb引擎的所有状态: show engine innodb status
 > 2.不可重复读:前后读取的数据不一致(务A中先后多次读取同一个数据，读取的结果不一样(因为B事务在A事务两次读取之前更改了数据))
 > 	解决方法:1.事务隔离级别设置为(可重复读repeatable read)
 > 			2.读取数据时加共享锁,写入数据时加排它锁
-> 	
+>
 > 3.幻读:前后读取的记录数量不一致(一个事务中,select执行了两次,第二次返回了第一次没有的行)
 > ```
 >
