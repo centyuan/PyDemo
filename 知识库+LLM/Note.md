@@ -875,7 +875,7 @@ curl -N -k -X 'POST' \
 
  [Transformer&LLM模型部署框架/推理引擎总结](https://zhuanlan.zhihu.com/p/663967083)
 
->**vLLM:**由Nvidai开源,旨在降低大模型推理的显存占用，核心思想是将模型的一部分保存在CPU内存或硬盘上，只将当前计算所需的部分加载到GPU显存中
+>**vLLM:来自加州大学伯克利分校等机构的一个研究团队开源了 vLLM（目前已有 6700 多个 star），其使用了一种新设计的注意力算法 PagedAttention，可让服务提供商轻松、快速且低成本地发布 LLM 服务
 >
 >```
 >vLLM支持PyTorch和FasterTransformer后端，可无缝适配现有模型。使用vLLM，在配备96GB内存+440GB A100的服务器上可运行1750亿参数模型，在配备1.5TB内存+880GB A100的服务器上可运行6万亿参数模型
