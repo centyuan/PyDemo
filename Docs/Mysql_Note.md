@@ -176,9 +176,14 @@ delete from table_name; 或 delete from table_name where id=1;
 delete from table_user  where id in (select id from (select id  from table_user where sex is null) as tmp);
 
 # 2.truncate
+删除表中所有数据/立即释放空间(id从1开始)，但保留表结构,删除数据不能rollback,
 truncate table_name 
 
-# 3.use information_schema 清空所有表记录
+# 3. drop
+会删除整个表，表结构和数据，释放空间，不能回滚
+drop table table_nae
+
+# 4.use information_schema 清空所有表记录
 select table_name,table_schema from information_schema.tables where table_schema='alphacapture_bigai'
 select table_name,table_schema from information_schema.tables where table_schema like '%alphacapture_bigai%'
 select concat('truncate table',table_schema,'.',table_name,';') from information_schema.tables where table_schema in ('数据库1','数据库2')
