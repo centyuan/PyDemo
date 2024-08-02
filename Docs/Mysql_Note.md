@@ -367,6 +367,8 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 >
 > [mysql8.0配置文件优化](https://www.cnblogs.com/john-xiong/p/12099842.html)
 >
+> [mysql8配置文件说明](https://www.cnblogs.com/caiqilang/p/13356257.html)
+> [mysql8配置文件说明](https://cloud.tencent.com/developer/article/1791289)
 > 四个维度:
 >
 > 1.架构
