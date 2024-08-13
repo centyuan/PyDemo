@@ -361,12 +361,7 @@ set create_time=DATE_FORMAT(@create_time,"%Y-%m-%d %H:%i:%s")
 >
 > [超详细的MySQL高性能优化实践总结](https://cloud.tencent.com/developer/article/1921568)
 >
-> [mysql配置参数调优](https://blog.csdn.net/LJFPHP/article/details/100751502)
->
-> [MySQL参数优化](https://cloud.tencent.com/developer/article/1655879)
->
 > [mysql8.0配置文件优化](https://www.cnblogs.com/john-xiong/p/12099842.html)
->
 > [mysql8配置文件说明](https://www.cnblogs.com/caiqilang/p/13356257.html)
 > [mysql8配置文件说明](https://cloud.tencent.com/developer/article/1791289)
 > 四个维度:
