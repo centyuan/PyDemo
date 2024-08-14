@@ -408,3 +408,14 @@ OCI(open container initiative) 开放容器计划
 镜像检查分发: docker(dockr inspect)/Skopeo
 
 Lniux虚拟化技术:Linux Containers(LXC:Linux容器)
+
+
+
+#### 常见问题
+
+>1. Pod是什么，解决了什么问题
+>2. Deploment和StatefulSet有什么区别？
+>3. Service是什么，具体怎么实现的
+>4. PVC和PV是什么，解决了什么问题
+>5. 网络插件解决了什么问题，具体怎么实现的
+

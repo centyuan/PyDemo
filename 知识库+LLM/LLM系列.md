@@ -818,8 +818,37 @@ RAG(更适合知识密集性场景)三种类型
 >
 >https://developer.download.nvidia.cn/compute/cudnn/secure/8.9.7/local_installers/11.x/cudnn-linux-x86_64-8.9.7.29_cuda11-archive.tar.xz?YhjfhHLS_5QGJAknmvM-Rnn3LvEQcDl1bd8KUr7RgaSmY8JoWhDavkDgGSrO5FhASULX4X7k-IEa5X2EfNuuRbg8IG8UxYY6oV_jCpqc53g7oCPOWyQXXmCQxBFzlHpN0A2A4oewIBmC0trykl5K11sMyTLfuZR3XKydkFF4bYFaC8DZFgqA8zJEby1CmiHusZSSx6cN201mtY4gk5RjXtY=&t=eyJscyI6IndlYnNpdGUiLCJsc2QiOiJkZXZlbG9wZXIubnZpZGlhLmNvbS9jdWRhLXRvb2xraXQtYXJjaGl2ZSJ9
 
+#### 推理部署Inference
 
+>[LLM七种推理服务框架总结](https://blog.csdn.net/wshzd/article/details/132588740?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522172213414516800178553757%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fblog.%2522%257D&request_id=172213414516800178553757&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_ecpm_v1~rank_v31_ecpm-2-132588740-null-null.nonecase&utm_term=LLM%E6%8E%A8%E7%90%86%E9%83%A8%E7%BD%B2&spm=1018.2226.3001.4450)
 
 #### 其他相关AI项目
 
->https://github.com/BadToBest/EchoMimic，**音频+角色照片生成生动配嘴型视频**
+>https://github.com/mem0ai/mem0, 个性化AI记忆层
+>
+>https://github.com/Infini-AI-Lab/Sequoia,   together.ai 发布Sequoia推理框架(对投机采样进行了核心改进，显著提速)
+>
+>https://lmstudio.ai/, LM Studio
+>
+>**语音**
+>
+>https://github.com/FunAudioLLM 语音大模型(核心包括:CosyVoice[自然语音生成]，SenseVoice[语言设别/情感辨识])
+>
+>https://github.com/RVC-Boss/GPT-SoVITS， 声音克隆(1 min voice data can also be used to train a good TTS Model)
+>
+>**AI换脸**
+>
+>https://github.com/facefusion/facefusion 
+>
+>https://github.com/iperov/DeepFaceLive   
+>
+>**生成视频**
+>
+> Stable Diffusion + prompt travel +AnimateDiff 
+>
+>https://github.com/KwaiVGI/LivePortrait 数字人(图生视频-图片和一段文字或音频)
+>
+>https://github.com/BadToBest/EchoMimic 数字人**音频+角色照片生成生动配嘴型视频**
+
+
+
