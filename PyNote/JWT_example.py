@@ -42,3 +42,27 @@ https://github.com/GeneralMills/azure-ad-token-verify/blob/main/aad_token_verify
 https://robertoprevato.github.io/Validating-JWT-Bearer-tokens-from-Azure-AD-in-Python/
 
 """
+# 3. JWT常见签名算法
+1. HS256(HMAC with SHA-256)
+HS256是一种对称加密算法，同一个秘钥用于签名和验证，可以使用OpenSSL生成一个随机的对称秘钥
+```
+# 随机生成一个32位16进制表示的随机数
+openssl rand -hex 32
+```
+2.RS256(RSA Signature with SHA-256)
+RS256是一种非对称加密算法，使用一对秘钥：私钥用于签名，公钥用于验签，可以使用OpenSSL生成RSA密钥对
+```
+# 生成 2048 位的私钥
+openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
+
+# 从私钥生成公钥
+openssl rsa -pubout -in private_key.pem -out public_key.pem
+```
+3.ES256 (ECDSA with P-256 and SHA-256)
+ES256 是一种基于椭圆曲线的数字签名算法，使用一对密钥：一个用于签名（私钥），另一个用于验证（公钥）,可以使用 OpenSSL 生成 EC（椭圆曲线）密钥对。
+```
+# 生成 EC 私钥（使用 prime256v1 曲线）：
+openssl ecparam -genkey -name prime256v1 -noout -out private_key.pem
+# 从私钥生成公钥
+openssl ec -in private_key.pem -pubout -out public_key.pem
+```
