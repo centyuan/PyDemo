@@ -1,3 +1,21 @@
+Nginx负载均衡配置状态：
+状态	            概述
+down	        当前的server暂不参与负载均衡
+backup	        预留的备份服务器，当其他服务器都挂掉的时候，启用
+max_fails	    允许请求失败的次数 ，如果请求失败次数超过限制，则进过fail_timeout 时间后从虚拟服务池中kill掉该服务器
+fail_timeout	经过max_fails失败后，服务暂停时间，max_fails设置后，必须设置fail_timeout 值
+max_conns	    限制最大的连接数，用于服务器硬件配置不同的情况下
+
+Nginx负载均衡调度策略：
+调度算法	        概述
+轮询	            逐一轮询，默认方式
+weight	        加权轮询，weight越大，分配的几率越高
+ip_hash	        按照访问IP的hash结果分配，会导致来自同一IP的请求访问固定的一个后台服务器
+url_hash	    按照访问URL的hash结果分配
+least_conn	    最少链接数，那个服务器链接数少就会给分配
+hash关键数值	    hash自定义的key
+
+
 1.轮询(默认)
 # 每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。
 upstream backserver {
