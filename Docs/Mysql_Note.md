@@ -327,7 +327,8 @@ mysqldump -usoc-user -pSocuser@0511 -t -T /var/lib/mysql-files/ temp loophole_cn
 -t: 不写表的创建信息
 --fields-terminated-by:输出文件中的字段以给定的字符串结尾
 --fields-enclosed-by:输出文件中的字段用给定的字符括起来。
-
+--databases:不仅会导出数据库的表结构和数据，还会包括create database和use语句，
+--no-create-db:阻止create database和use语句生成
 https://zhuanlan.zhihu.com/p/396005871
 ```
 
