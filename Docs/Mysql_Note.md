@@ -342,7 +342,7 @@ SELECT * FROM users  INTO OUTFILE '/var/lib/mysql-files/users.sql';
 **4.导入备份的整个数据库**
 
 ```sql
-mysql -u root -p < Detector.sql     # 需要再sql文件创建或指定数据库
+mysql -u root -p target_database < Detector.sql     # 需要再sql文件创建或指定数据库
 mysql>source /home/abc/abc.sql      # 进入数据库下use Detector
 ```
 
